@@ -1,1 +1,1 @@
-# ing-sw-2022-Galbiati-Giosia-Gentile
+# Progetto ingegneria del software a.a. 2022
