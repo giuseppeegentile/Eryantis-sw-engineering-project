@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameController {
     StateGame currentState;
+    
     private GameModel gameModel;
 
     public GameController(GameModel gameModel){
