@@ -7,10 +7,11 @@ public enum ColorPawns {
     RED,
     YELLOW,
     PINK,
-    BLUE;
+    BLUE,
+    NULL;
 
 
     public static ColorPawns getRandomColor(){
-        return ColorPawns.values()[new Random().nextInt(ColorPawns.values().length)];
+        return ColorPawns.values()[new Random().nextInt(ColorPawns.values().length - 1)];
     }
 }

@@ -16,6 +16,7 @@ public class GameController {
     public GameController(GameModel gameModel){
         this.gameModel = gameModel;
     }
+
     //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
     public List<IslandModel> joinIsland(IslandModel firstIslandModel, IslandModel secondIslandModel, int indexFirstIsland){
         int sizeStudentsJoined = firstIslandModel.getStudents().size() + secondIslandModel.getStudents().size(); //calcolo studenti di entrambe le isole
@@ -32,7 +33,6 @@ public class GameController {
         //posiziono gli studenti sulla nuova isola
         islandController.addStudent(joinedStudents);
         joined.setJoined(); //setta a true il valore isJoined
-
 
         return compressIsland(this.gameModel.getIslandsModel(), joined, indexFirstIsland);
     }
@@ -60,30 +60,34 @@ public class GameController {
             }
         }
         else { //gioco a 4
-            if (colorTowers.get(0) != colorTowers.get(1) || colorTowers.get(2) != colorTowers.get(3)){
+            if (colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(2) == colorTowers.get(3)
+                || colorTowers.get(0) != colorTowers.get(2)|| colorTowers.get(1) != colorTowers.get(3)
+            ){
                 fixed.set(0, ColorTower.WHITE);
-                fixed.set(1, ColorTower.WHITE);
-                fixed.set(2, ColorTower.BLACK);
+                fixed.set(1, ColorTower.BLACK);
+                fixed.set(2, ColorTower.WHITE);
                 fixed.set(3, ColorTower.BLACK);
             }
         }
         return fixed;
     }
+
     //bagSize è da decidere in base al # di giocatori
     private void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
+        int equalNumber = bagSize/5;
         for(int i = 0; i < bagSize; i++){
-            if(i < bagSize/5)
+            if(i < equalNumber)
                 bag.set(i, ColorPawns.GREEN);
-            if(i < 2*bagSize/5  && i > bagSize/5 )
+            if(i < 2*equalNumber  && i > equalNumber )
                 bag.set(i, ColorPawns.RED);
-            if(i < 3*bagSize/5 && i > 2*bagSize/5)
+            if(i < 3*equalNumber && i > 2*equalNumber)
                 bag.set(i, ColorPawns.YELLOW);
-            if(i < 4*bagSize/5  && i > 3*bagSize/5)
+            if(i < 4*equalNumber  && i > 3*equalNumber)
                 bag.set(i, ColorPawns.PINK);
-            if(i > 4*bagSize/5 )
-                bag.set(i, ColorPawns.PINK);
+            if(i > 4*equalNumber )
+                bag.set(i, ColorPawns.BLUE);
         }
         Collections.shuffle(bag);
 
@@ -101,16 +105,18 @@ public class GameController {
         int finalNumTower = numTower; //è 0 se ho 4 giocatori
         players.forEach(p ->{
             PlayerController playerController = new PlayerController(p);
-            if(finalNumTower == 0) //4 giocatori
-                if (i.get() % 2 == 0) //e sono al secondo compagno del team(quello senza torri)
-                    playerController.setTower(colorTowers.get(i.get()), finalNumTower);
-                else                  //membro del team con tutte e 8 le torri
+            if(finalNumTower == 0) {//4
+                if(i.get() == 0 || i.get() == 1)//membri del team con tutte e 8 le torri
                     playerController.setTower(colorTowers.get(i.get()), 8);
+                else
+                    playerController.setTower(colorTowers.get(i.get()), finalNumTower);
+            }else //caso 2-3 giocatori
+                playerController.setTower(colorTowers.get(i.get()), finalNumTower);
             i.incrementAndGet();
         });
     }
-    public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, List<CloudModel> cloudModels, List<ColorPawns> bag, GameMode mode){
 
+    public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, List<CloudModel> cloudModels, List<ColorPawns> bag, GameMode mode){
         setIslandController();
         assignTowerStudent(players, colorTowers);
         if(mode == GameMode.ESPERTO){
@@ -123,7 +129,7 @@ public class GameController {
         assignBag();
         this.gameModel.init(players, cloudModels, bag, mode);
     }
-
+//--------------------sistema colori studenti
     //imposta le isole, con madre natura e studenti iniziali
     private void setIslandController(){
         int randomNum = (int)(Math.random() * 12); //numero casuale fra 0 e 11
@@ -131,7 +137,10 @@ public class GameController {
         for (int i = 0; i < 12; i++) {
             if(i != randomNum)
                 islands.add(new IslandModel(false, ColorPawns.getRandomColor()));
-            else
+            else if((i + 6) % 12 == 0){
+                islands.add(new IslandModel(false, ColorPawns.NULL));
+            }
+            else if(i == randomNum)
                 islands.add(new IslandModel(true, ColorPawns.getRandomColor()));
         }
         this.gameModel.setIslands(islands);
