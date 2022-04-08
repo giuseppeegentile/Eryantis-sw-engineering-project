@@ -32,6 +32,10 @@ public class GameModel {
         gameState = StateGame.ADD_STUDENT_CLOUD;
         //nel controller dovrò capire se attribuire chosenCards, in base alla difficoltà di gioco
     }
+
+    public void setBag(List<ColorPawns> studentsBag){
+        this.bag = studentsBag;
+    }
     private String getPlayerByNickname(String nickname){
         return playersModels.stream()
                 .filter(playerModel -> playerModel.getNickname().equals(nickname))

@@ -39,6 +39,8 @@ public class PlayerModel {
         profs.add(profToAdd);
     }
 
+
+
     private static void playCard(){ }
 
     private int getCoins(){

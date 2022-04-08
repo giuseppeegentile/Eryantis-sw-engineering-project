@@ -3,12 +3,14 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameController {
     StateGame currentState;
-    
+
     private GameModel gameModel;
 
     public GameController(GameModel gameModel){
@@ -67,6 +69,26 @@ public class GameController {
         }
         return fixed;
     }
+    //bagSize è da decidere in base al # di giocatori
+    private void assignBag(){
+        int bagSize = 120;
+        List<ColorPawns> bag = new ArrayList<>(bagSize);
+        for(int i = 0; i < bagSize; i++){
+            if(i < bagSize/5)
+                bag.set(i, ColorPawns.GREEN);
+            if(i < 2*bagSize/5  && i > bagSize/5 )
+                bag.set(i, ColorPawns.RED);
+            if(i < 3*bagSize/5 && i > 2*bagSize/5)
+                bag.set(i, ColorPawns.YELLOW);
+            if(i < 4*bagSize/5  && i > 3*bagSize/5)
+                bag.set(i, ColorPawns.PINK);
+            if(i > 4*bagSize/5 )
+                bag.set(i, ColorPawns.PINK);
+        }
+        Collections.shuffle(bag);
+
+        this.gameModel.setBag(bag);
+    }
 
     private void assignTowerStudent(List<PlayerModel> players, List<ColorTower> colorTowers){
         AtomicInteger i = new AtomicInteger();
@@ -98,7 +120,7 @@ public class GameController {
             });
             //imposta carte personaggio
         }
-
+        assignBag();
         this.gameModel.init(players, cloudModels, bag, mode);
     }
 
