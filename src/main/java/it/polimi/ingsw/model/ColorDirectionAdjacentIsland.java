@@ -7,7 +7,10 @@ public enum ColorDirectionAdjacentIsland {
     NONE
 }
 
-//implementare metodo colori adiacenti (che chiama join island)
-//gestire AssistanCard
+//implementare metodo colori adiacenti (che chiama join island) ---------
+//gestire AssistanCard                                          ---------
 //gestire stati di gioco
 //playerController: muovere student hall
+
+
+//moveTowerToIsland-> in checkIfConqueredState                  ---------

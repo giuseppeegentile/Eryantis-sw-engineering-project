@@ -35,12 +35,12 @@ public class IslandModel {
         return students;
     }
 
-    private ColorTower getTowerColor(){
+    protected ColorTower getTowerColor(){
         return colorTower;
     }
 
-    public ColorTower setTowerColor(ColorTower colorTower){
-        return colorTower;
+    public void setTowerColor(ColorTower colorTower){
+        this.colorTower = colorTower;
     }
 
     private ColorDirectionAdjacentIsland isAdjacentSameColor(){

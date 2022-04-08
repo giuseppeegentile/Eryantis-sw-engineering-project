@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,20 +78,8 @@ public class GameController {
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
         int equalNumber = bagSize/5;
-        for(int i = 0; i < bagSize; i++){
-            if(i < equalNumber)
-                bag.set(i, ColorPawns.GREEN);
-            if(i < 2*equalNumber  && i > equalNumber )
-                bag.set(i, ColorPawns.RED);
-            if(i < 3*equalNumber && i > 2*equalNumber)
-                bag.set(i, ColorPawns.YELLOW);
-            if(i < 4*equalNumber  && i > 3*equalNumber)
-                bag.set(i, ColorPawns.PINK);
-            if(i > 4*equalNumber )
-                bag.set(i, ColorPawns.BLUE);
-        }
-        Collections.shuffle(bag);
 
+        bag = fillListWithColors( bag,  bagSize, equalNumber);
         this.gameModel.setBag(bag);
     }
 
@@ -129,21 +118,61 @@ public class GameController {
         assignBag();
         this.gameModel.init(players, cloudModels, bag, mode);
     }
-//--------------------sistema colori studenti
+
+    private List<ColorPawns> fillListWithColors(List<ColorPawns> list, int size, int equalNumber){
+        for(int i = 0; i < size; i++){
+            if(i < equalNumber)
+                list.set(i, ColorPawns.GREEN);
+            if(i < 2*equalNumber  && i > equalNumber )
+                list.set(i, ColorPawns.RED);
+            if(i < 3*equalNumber && i > 2*equalNumber)
+                list.set(i, ColorPawns.YELLOW);
+            if(i < 4*equalNumber  && i > 3*equalNumber)
+                list.set(i, ColorPawns.PINK);
+            if(i > 4*equalNumber )
+                list.set(i, ColorPawns.BLUE);
+        }
+        Collections.shuffle(list);
+        return list;
+    }
+
     //imposta le isole, con madre natura e studenti iniziali
     private void setIslandController(){
-        int randomNum = (int)(Math.random() * 12); //numero casuale fra 0 e 11
+        int motherNatureIndex = (int)(Math.random() * 12); //numero casuale fra 0 e 11
         List<IslandModel> islands = new ArrayList<>(12);
-        for (int i = 0; i < 12; i++) {
-            if(i != randomNum)
-                islands.add(new IslandModel(false, ColorPawns.getRandomColor()));
-            else if((i + 6) % 12 == 0){
+
+        int sizeIslandWithStudents = 10;
+        int equalNumber = 10/2;
+        List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
+        colors = fillListWithColors(colors, sizeIslandWithStudents, equalNumber);
+        //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
+
+        //counterForColors mi scorre gli elementi dell'array colors, viene incrementato solo quando assegno a un isola
+        for (int i = 0, counterForColors = 0; i < 12; i++) {
+            if(i != motherNatureIndex) {
+                islands.add(new IslandModel(false, colors.get(counterForColors)));
+                counterForColors++;
+            }
+            else if((i + 6) % 12 == 0){//posizione specchio di madre natura dove non ci sono studenti
                 islands.add(new IslandModel(false, ColorPawns.NULL));
             }
-            else if(i == randomNum)
-                islands.add(new IslandModel(true, ColorPawns.getRandomColor()));
+            else if(i == motherNatureIndex) //posizione di madre natura
+                islands.add(new IslandModel(true,  ColorPawns.NULL));
         }
         this.gameModel.setIslands(islands);
     }
 
+    //***********************************************************////
+    //controlla se un giocatore già possiede il prof, nel caso lo toglie e lo assegna al giocatore conquistatore
+    private void assignProfToPlayer(PlayerModel playerConquerer, ColorPawns color){
+        List<PlayerModel> playersModels = gameModel.getPlayersModel();
+        playersModels.get(playersModels.indexOf(playerConquerer)).incrementNumProfs();
+        /*
+        for(int i=0; i<playersModels.size(); i++){
+            if(playersModels.get(i).constains(color))
+                playersModels.get(i).removeProf(playersModels.getProfs());
+            playersModels.get(i).decrementNumProfs();
+            gameModel.playersModels(gameModel.playersModels.indexOf(playerConquerer)).profs.add(color);
+        }*/
+    }
 }

@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static it.polimi.ingsw.model.ColorPawns.*;
+
 public class PlayerModel {
     private String nickname;
     private List<ColorPawns> profs;
+    private int numProfs;
     private int towerNumber; //da settare con il controller, strategy
     private ColorTower colorTower;
     private List<AssistantCardModel> deckAssistantCardModel;
     private Map<ColorPawns, Integer> studentInHall;
-    private List<ColorPawns> studentAvailable;
+    private List<ColorPawns> studentInEntrance;
     private StatePlayer state;
     private int coins;
 
@@ -19,6 +22,35 @@ public class PlayerModel {
         this.nickname = nickname;
         this.colorTower = colorTower;
         this.coins = coins;
+        this.numProfs = 0;
+        this.studentInHall = Map.of(
+                GREEN, 0,
+                RED, 0,
+                YELLOW, 0,
+                PINK, 0,
+                BLUE, 0
+        );
+    }
+
+    public int getNumProfs(){
+        return this.numProfs;
+    }
+
+    public void incrementNumProfs(){
+        this.numProfs += 1;
+    }
+
+    public void decrementNumProfs(){
+        if(this.numProfs > 0)
+            this.numProfs -= 1;
+    }
+
+    public void removeProf(int index){
+        this.profs.remove(index);
+    }
+
+    public List<ColorPawns> getProfs(){
+        return this.profs;
     }
 
     protected String getNickname(){
@@ -39,8 +71,6 @@ public class PlayerModel {
         profs.add(profToAdd);
     }
 
-
-
     private static void playCard(){ }
 
     private int getCoins(){
@@ -59,9 +89,16 @@ public class PlayerModel {
         this.coins = 1;
     }
 
-
     public void setStudentHall(Map<ColorPawns, Integer> studentInHall){
         this.studentInHall = studentInHall;
+    }
+
+    public Map<ColorPawns, Integer> getStudentInHall(){
+        return this.studentInHall;
+    }
+
+    public int getTowerNumber(){
+        return this.towerNumber;
     }
 
     public void setColorTower(ColorTower colorTower, int towerNumber){
