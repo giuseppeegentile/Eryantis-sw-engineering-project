@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.ColorTower;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.model.PlayerModel;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +22,11 @@ public class PlayerController {
     }
 
     public void setTower(ColorTower colorTower, int towerNumber){
-        this.playerModel.setColorTower(colorTower, towerNumber);
+        this.playerModel.setTowers(colorTower, towerNumber);
     }
 
-    //dato un'array di studenti crea la mappa della hall
-    public void setStudentHall(List<ColorPawns> studentToAddToHall, GameMode gameMode){
+    //dato un'array di studenti crea la mappa della hall, per la prima volta imposta la mappa
+    public void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode){
         Map<ColorPawns, Integer> hall = Map.of(
                 GREEN, 0,
                 RED, 0,
@@ -52,13 +51,13 @@ public class PlayerController {
         this.playerModel.setStudentHall(hall);
     }
 
-    public void moveStudentToHall(ColorPawns color, GameMode gamemode){
+    //sposta il singolo studente nella hall
+    public void moveStudentToHall(ColorPawns student, GameMode gameMode){
         //conta le occorrenze per ogni studente di un colore
-        if(gamemode == GameMode.ESPERTO){
-            if(playerModel.getStudentInHall().get(color)+1 % 3 == 0) //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
-                playerModel.addCoins();
-        }
-        playerModel.getStudentInHall().put(color, playerModel.getStudentInHall().get(color)+1);
+        if(playerModel.getStudentInHall().get(student) + 1 % 3 == 0 && gameMode == GameMode.ESPERTO) //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+            addCoins();
+
+        playerModel.getStudentInHall().put(student, playerModel.getStudentInHall().get(student)+1);
     }
 
     public void addCoins(){

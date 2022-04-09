@@ -44,7 +44,7 @@ public class IslandModel {
         return students;
     }
 
-    protected ColorTower getTowerColor(){
+    public ColorTower getTowerColor(){
         return colorTower;
     }
 

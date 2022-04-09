@@ -103,7 +103,7 @@ public class PlayerModel {
         return this.towerNumber;
     }
 
-    public void setColorTower(ColorTower colorTower, int towerNumber){
+    public void setTowers(ColorTower colorTower, int towerNumber){
         this.colorTower = colorTower;
         this.towerNumber = towerNumber;
     }
@@ -128,7 +128,7 @@ public class PlayerModel {
         return colorTower;
     }
 
-    public void setColorTower(ColorTower colorTower) {
+    public void setTowers(ColorTower colorTower) {
         this.colorTower = colorTower;
     }
 

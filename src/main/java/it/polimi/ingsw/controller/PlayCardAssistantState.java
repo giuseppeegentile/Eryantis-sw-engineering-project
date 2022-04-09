@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.AssistantCardModel;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.IslandModel;
 import it.polimi.ingsw.model.PlayerModel;
 
@@ -11,9 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //3
 
-//implementare metodo moveMotherNature
-public class PlayCardAssistantState extends GameControllerState{
 
+public class PlayCardAssistantState extends PlayerState{
     //restituisce la lista di Isole con madre natura aggiornata
     public List<IslandModel> moveMotherNature(List<IslandModel> islandsModels, byte movementMotherNature){
         int indexOldMotherNature = 0;

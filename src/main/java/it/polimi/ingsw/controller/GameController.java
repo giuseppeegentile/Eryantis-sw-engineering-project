@@ -18,62 +18,44 @@ public class GameController {
         this.gameModel = gameModel;
     }
 
-    //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
-    public List<IslandModel> joinIsland(IslandModel firstIslandModel, IslandModel secondIslandModel, int indexFirstIsland){
-        int sizeStudentsJoined = firstIslandModel.getStudents().size() + secondIslandModel.getStudents().size(); //calcolo studenti di entrambe le isole
-        List<ColorPawns> joinedStudents = new ArrayList<>(sizeStudentsJoined); //inizializzo array degli studenti
-
-        //per lo studente iniziale del costruttore ne prendo uno a caso (il primo della prima isola), che non dovò riaggiungere ovviamente. Quindi creo l'isola joinata
-        IslandModel joined = new IslandModel(firstIslandModel.getMotherNature() || secondIslandModel.getMotherNature(), firstIslandModel.getStudents().get(0));
-
-        //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
-        joinedStudents.addAll(firstIslandModel.getStudents());
-        joinedStudents.addAll(secondIslandModel.getStudents());
-        IslandController islandController = new IslandController(joined);
-
-        //posiziono gli studenti sulla nuova isola
-        islandController.addStudent(joinedStudents);
-        joined.setJoined(); //setta a true il valore isJoined
-
-        return compressIsland(this.gameModel.getIslandsModel(), joined, indexFirstIsland);
+    public GameModel getGameModel(){
+        return this.gameModel;
     }
 
-    private List<IslandModel> compressIsland(List<IslandModel> islandModels, IslandModel joined, int indexFirstIsland){
-        islandModels.set(indexFirstIsland, joined);
-        islandModels.remove(indexFirstIsland + 1);
-        return islandModels;
-    }
-
+    //se per errore ho dei colori delle torri assegnati due volte a utenti diversi li sistemo con valori di default
     private List<ColorTower> checkAndFixTower(List<ColorTower> colorTowers){
         List<ColorTower> fixed = new ArrayList<>(colorTowers.size());
-        //se per errore ho dei colori delle torri assegnati due volte a utenti diversi li sistemo
+
         if(colorTowers.size() == 3) {
             if (colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(0) == colorTowers.get(2) || colorTowers.get(1) == colorTowers.get(2)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
                 fixed.set(2, ColorTower.GREY);
+
+                return fixed;
             }
         }
         else if (colorTowers.size() == 2) {
             if (colorTowers.get(0) == colorTowers.get(1)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
+                return fixed;
             }
         }
         else { //gioco a 4
             if (colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(2) == colorTowers.get(3)
-                || colorTowers.get(0) != colorTowers.get(2)|| colorTowers.get(1) != colorTowers.get(3)
-            ){
+                || colorTowers.get(0) != colorTowers.get(2)|| colorTowers.get(1) != colorTowers.get(3)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
                 fixed.set(2, ColorTower.WHITE);
                 fixed.set(3, ColorTower.BLACK);
+                return fixed;
             }
         }
-        return fixed;
+        //se andava bene come era all'inizio restituisco quella iniziale non modificata
+        return colorTowers;
     }
 
-    //bagSize è da decidere in base al # di giocatori
     private void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
@@ -84,6 +66,7 @@ public class GameController {
     }
 
     private void assignTowerStudent(List<PlayerModel> players, List<ColorTower> colorTowers){
+        List<ColorTower> fixedColorTowers = checkAndFixTower(colorTowers); //controllo che non ci siano errori nella lista delle torri
         AtomicInteger i = new AtomicInteger();
         int numTower = 0;
         if(players.size() == 2)
@@ -92,15 +75,16 @@ public class GameController {
             numTower = 6;
 
         int finalNumTower = numTower; //è 0 se ho 4 giocatori
+
         players.forEach(p ->{
             PlayerController playerController = new PlayerController(p);
             if(finalNumTower == 0) {//4
                 if(i.get() == 0 || i.get() == 1)//membri del team con tutte e 8 le torri
-                    playerController.setTower(colorTowers.get(i.get()), 8);
+                    playerController.setTower(fixedColorTowers.get(i.get()), 8);
                 else
-                    playerController.setTower(colorTowers.get(i.get()), finalNumTower);
+                    playerController.setTower(fixedColorTowers.get(i.get()), finalNumTower);
             }else //caso 2-3 giocatori
-                playerController.setTower(colorTowers.get(i.get()), finalNumTower);
+                playerController.setTower(fixedColorTowers.get(i.get()), finalNumTower);
             i.incrementAndGet();
         });
     }

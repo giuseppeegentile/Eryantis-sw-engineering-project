@@ -1,4 +1,4 @@
 package it.polimi.ingsw.controller;
 //4.0
-public class StudentToHallState extends GameControllerState {
+public class StudentToHallState  extends PlayerState {
 }

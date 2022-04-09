@@ -98,28 +98,6 @@ public class GameModel {
         this.islandModels = islandsModel;
     }
 
-    public ColorDirectionAdjacentIsland getAdjacentSameColor(int indexIslandToChekAdjacent){
-        if(indexIslandToChekAdjacent == 0 && islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(11).getTowerColor()){
-            if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent + 1).getTowerColor()){
-                return ColorDirectionAdjacentIsland.BOTH;
-            }
-            return ColorDirectionAdjacentIsland.LEFT;
-        }
-        if(indexIslandToChekAdjacent == 11 && islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(0).getTowerColor()){
-            if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent - 1).getTowerColor()){
-                return ColorDirectionAdjacentIsland.BOTH;
-            }
-            return ColorDirectionAdjacentIsland.RIGHT;
-        }
-        if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent + 1).getTowerColor()){
-            return ColorDirectionAdjacentIsland.RIGHT;
-        }
-        if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent - 1).getTowerColor()){
-            return ColorDirectionAdjacentIsland.LEFT;
-        }
-        return ColorDirectionAdjacentIsland.NONE;
-    }
-
     public List<IslandModel> getIslandsModel(){
         return this.islandModels;
     }
