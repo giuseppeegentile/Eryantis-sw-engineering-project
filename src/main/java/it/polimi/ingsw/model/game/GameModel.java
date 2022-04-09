@@ -1,4 +1,10 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.game;
+
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.ChacterCardModel;
+import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +17,7 @@ public class GameModel {
     private List<PlayerModel> playersModels = new ArrayList<>(playersNumber);
     private List<CloudModel> cloudsModel;
     private List<ColorPawns> bag = new ArrayList<>(130); //non sicuro sui 130
-    private StateGame gameState;
+    private PhaseGame gameState;
     public GameMode mode;
     public List<ChacterCardModel> chosenCards;
     List<AssistantCardModel> deck;
@@ -34,7 +40,6 @@ public class GameModel {
         return istance;
     }
 
-
     //inizializza il Game, non posso fare il costruttore con parametri, altrimenti non avrebbe senso il singleton
     public void init(List<PlayerModel> playersModels, List<CloudModel> cloudModels, List<ColorPawns> bag, GameMode mode){
         this.playersModels = playersModels; //lista dei giocatori
@@ -43,55 +48,18 @@ public class GameModel {
         this.bag = bag;
 
         this.mode = mode;
-        gameState = StateGame.ADD_STUDENT_CLOUD;
+        gameState = PhaseGame.ADD_STUDENT_CLOUD;
         //nel controller dovrò capire se attribuire chosenCards, in base alla difficoltà di gioco
     }
 
     public void setBag(List<ColorPawns> studentsBag){
         this.bag = studentsBag;
     }
+
     private String getPlayerByNickname(String nickname){
         return playersModels.stream()
                 .filter(playerModel -> playerModel.getNickname().equals(nickname))
                 .findAny().get().getNickname();
-    }
-
-    //da chiamare quando rimangono solo 3 isole unificate
-    //alla fine del round in cui viene pescato l'ultimo studente o giocata l'ultima carta
-    private PlayerModel checkWin() {
-        PlayerModel winner = null;
-        //corrispondenza indice(studente) - valore (numero torre)
-        List<Integer> towersNumber = new ArrayList<>(playersModels.size());
-        //corrispondenza indice(studente) - valore (numero prof)
-        List<Integer> profNumber = new ArrayList<>(playersModels.size());
-        playersModels.forEach(p -> {
-            towersNumber.add(p.getTowerNumber());
-            profNumber.add(p.getNumProfs());
-        });
-        byte count = 0; //numero di giocatori con stesso numero di torri
-        int minNumTower, maxNumProf;
-        int indexMinTower;
-        minNumTower = Collections.min(towersNumber);
-        indexMinTower = towersNumber.indexOf(minNumTower);
-        int i = 0; // is the index Of Player With Same Tower Number (if any)
-        for (i = 0; i < playersModels.size(); i++) {
-            if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
-                count++;
-                break; //esci dal ciclo, ci sono due giocatori con stesso numero di torri
-            }
-        }
-        if (count != 0) { //se ci sono giocatori con stesso # di torri -> controlla numProf
-            //caso in cui non giocatori hanno stesso numero di torri, e stesso numero di prof
-            /*if (playersModels.get(i).getNumProfs() == playersModels.get(indexMinTower).getNumProfs()){
-                return new PlayerModel("_NO_WINNER_CASE_",ColorTower.GREY,0);
-            }*/
-            //prende, tra i due a parità di torri, il giocatore con più prof
-            return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
-                    playersModels.get(i) : playersModels.get(indexMinTower);
-        } else {        //controlla torri -> restituisce quello con minimo numero di torri
-            return playersModels.get(towersNumber.indexOf(minNumTower));
-
-        }
     }
 
     public void setIslands(List<IslandModel> islandsModel) {

@@ -1,9 +1,13 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.islands;
+
+import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.model.ColorDirectionAdjacentIsland.NONE;
+import static it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland.NONE;
 
 public class IslandModel {
     private boolean motherNature;

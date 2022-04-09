@@ -1,21 +1,28 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.model.ColorDirectionAdjacentIsland;
+import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.IslandModel;
+import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.model.islands.IslandModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //7
-public class CheckIfJoinableState extends GameControllerState{
+public class CheckIfJoinableState implements GameState {
 
     List<IslandModel> islandModels;
 
+    private GameModel gameModel;
+
+    @Override
+    public GameModel getGameModel() {
+        return this.gameModel;
+    }
+
     public CheckIfJoinableState(GameModel gameModel) {
-        super(gameModel);
-        islandModels = this.getGameModel().getIslandsModel();
+        this.gameModel = gameModel;
+        this.islandModels = this.getGameModel().getIslandsModel();
     }
 
     public ColorDirectionAdjacentIsland getAdjacentSameColor(int indexIslandToChekAdjacent){

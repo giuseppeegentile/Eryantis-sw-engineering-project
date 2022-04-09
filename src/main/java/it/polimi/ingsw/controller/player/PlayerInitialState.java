@@ -1,32 +1,30 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.player;
 
+//stessa cosa del GameControllerState
 import it.polimi.ingsw.model.ColorPawns;
 import it.polimi.ingsw.model.ColorTower;
-import it.polimi.ingsw.model.GameMode;
-import it.polimi.ingsw.model.PlayerModel;
+import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 import java.util.Map;
 
 import static it.polimi.ingsw.model.ColorPawns.*;
 
-public class PlayerController {
-    PlayerModel playerModel;
+public class PlayerInitialState implements PlayerState {
+    public PlayerModel playerModel;
 
-    public PlayerController(PlayerModel playerModel){
+    public PlayerInitialState(PlayerModel playerModel){
         this.playerModel = playerModel;
     }
 
-    public void addProf(ColorPawns profToAdd){
-        this.playerModel.setProfs(profToAdd);
-    }
 
     public void setTower(ColorTower colorTower, int towerNumber){
         this.playerModel.setTowers(colorTower, towerNumber);
     }
 
     //dato un'array di studenti crea la mappa della hall, per la prima volta imposta la mappa
-    public void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode){
+    private void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode){
         Map<ColorPawns, Integer> hall = Map.of(
                 GREEN, 0,
                 RED, 0,
@@ -49,15 +47,6 @@ public class PlayerController {
         //                PINK, 1,
         //                BLUE, 2
         this.playerModel.setStudentHall(hall);
-    }
-
-    //sposta il singolo studente nella hall
-    public void moveStudentToHall(ColorPawns student, GameMode gameMode){
-        //conta le occorrenze per ogni studente di un colore
-        if(playerModel.getStudentInHall().get(student) + 1 % 3 == 0 && gameMode == GameMode.ESPERTO) //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
-            addCoins();
-
-        playerModel.getStudentInHall().put(student, playerModel.getStudentInHall().get(student)+1);
     }
 
     public void addCoins(){

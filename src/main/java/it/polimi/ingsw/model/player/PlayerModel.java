@@ -1,4 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.player;
+
+import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +59,7 @@ public class PlayerModel {
         return this.profs;
     }
 
-    protected String getNickname(){
+    public String getNickname(){
         return this.nickname;
     }
 
@@ -68,9 +72,9 @@ public class PlayerModel {
     }
 
     public void setProfs(ColorPawns profToAdd){
-        if(profs == null)
-            profs = new ArrayList<>();
-        profs.add(profToAdd);
+        if(this.profs == null)
+            this.profs = new ArrayList<>();
+        this.profs.add(profToAdd);
     }
 
     private static void playCard(){ }

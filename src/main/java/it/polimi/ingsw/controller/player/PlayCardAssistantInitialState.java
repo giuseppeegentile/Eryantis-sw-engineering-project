@@ -1,9 +1,8 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.model.AssistantCardModel;
-import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.IslandModel;
-import it.polimi.ingsw.model.PlayerModel;
+import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,8 +11,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //3
 
+public class PlayCardAssistantInitialState implements PlayerState {
 
-public class PlayCardAssistantState extends PlayerState{
+    public PlayerModel playerModel;
+
+    public PlayCardAssistantInitialState(PlayerModel playerModel){
+        this.playerModel = playerModel;
+    }
+
+    @Override
+    public void addCoins() {
+
+    }
+
+    @Override
+    public void setCoins() {
+
+    }
+
+    @Override
+    public void decrementCoins(int coinsUsed) {
+
+    }
+
     //restituisce la lista di Isole con madre natura aggiornata
     public List<IslandModel> moveMotherNature(List<IslandModel> islandsModels, byte movementMotherNature){
         int indexOldMotherNature = 0;
@@ -45,4 +65,6 @@ public class PlayCardAssistantState extends PlayerState{
 
         return playersActionPhase;
     }
+
+
 }

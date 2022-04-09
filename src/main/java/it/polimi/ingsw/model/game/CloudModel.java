@@ -1,4 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.game;
+
+import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.game.GameMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +11,10 @@ public class CloudModel {
     GameMode mode;
 
     private List<ColorPawns> getStudent(){
-        return students;
+        return this.students;
     }
 
     public CloudModel(List<ColorPawns> initialStudents){
-        students = new ArrayList<ColorPawns>(initialStudents.size());
         this.students = initialStudents;
 
     }
