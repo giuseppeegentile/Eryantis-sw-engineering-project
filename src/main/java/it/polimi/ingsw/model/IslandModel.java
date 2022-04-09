@@ -20,7 +20,16 @@ public class IslandModel {
         this.students.add(initialStudent);
         this.motherNature = motherNature;
         this.isJoined = false;
+    }
+    public IslandModel(boolean motherNature, List<ColorPawns> students){
+        this.students = new ArrayList<ColorPawns>();
+        this.students.addAll(students);
+        this.motherNature = motherNature;
+        this.isJoined = false;
+    }
 
+    public void setStudents(List<ColorPawns> students){
+        this.students = students;
     }
 
     public void setJoined(){

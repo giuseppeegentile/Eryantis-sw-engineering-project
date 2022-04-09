@@ -59,29 +59,39 @@ public class GameModel {
     //da chiamare quando rimangono solo 3 isole unificate
     //alla fine del round in cui viene pescato l'ultimo studente o giocata l'ultima carta
     private PlayerModel checkWin() {
-        PlayerModel winner;
-        int minNumTower, maxNumProf, ind, i;
-        int count = 0;
-
+        PlayerModel winner = null;
+        //corrispondenza indice(studente) - valore (numero torre)
         List<Integer> towersNumber = new ArrayList<>(playersModels.size());
+        //corrispondenza indice(studente) - valore (numero prof)
         List<Integer> profNumber = new ArrayList<>(playersModels.size());
         playersModels.forEach(p -> {
             towersNumber.add(p.getTowerNumber());
             profNumber.add(p.getNumProfs());
         });
+        byte count = 0; //numero di giocatori con stesso numero di torri
+        int minNumTower, maxNumProf;
+        int indexMinTower;
         minNumTower = Collections.min(towersNumber);
+        indexMinTower = towersNumber.indexOf(minNumTower);
+        int i = 0; // is the index Of Player With Same Tower Number (if any)
         for (i = 0; i < playersModels.size(); i++) {
-            if (playersModels.get(i).getTowerNumber() == minNumTower)
-                count++; //verifica se ci sono più giocatori con stesso numero di torri
+            if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
+                count++;
+                break; //esci dal ciclo, ci sono due giocatori con stesso numero di torri
+            }
         }
-        if (count > 1) { //a parità di numero di torri -> controlla numProf
-            maxNumProf = Collections.max(profNumber);
-            winner = playersModels.get(profNumber.indexOf(maxNumProf));
-        } else {        //controlla torri
-            winner = playersModels.get(towersNumber.indexOf(minNumTower));
+        if (count != 0) { //se ci sono giocatori con stesso # di torri -> controlla numProf
+            //caso in cui non giocatori hanno stesso numero di torri, e stesso numero di prof
+            /*if (playersModels.get(i).getNumProfs() == playersModels.get(indexMinTower).getNumProfs()){
+                return new PlayerModel("_NO_WINNER_CASE_",ColorTower.GREY,0);
+            }*/
+            //prende, tra i due a parità di torri, il giocatore con più prof
+            return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
+                    playersModels.get(i) : playersModels.get(indexMinTower);
+        } else {        //controlla torri -> restituisce quello con minimo numero di torri
+            return playersModels.get(towersNumber.indexOf(minNumTower));
 
         }
-        return winner;
     }
 
     public void setIslands(List<IslandModel> islandsModel) {

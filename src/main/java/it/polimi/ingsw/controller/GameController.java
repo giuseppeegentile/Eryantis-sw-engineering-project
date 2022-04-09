@@ -119,6 +119,10 @@ public class GameController {
         this.gameModel.init(players, cloudModels, bag, mode);
     }
 
+    //prende una generica lista di studenti e la riempie casualmente
+    //usata per riempire la bag e le isole iniziali
+    //size: dimensione da riempire (bag: 120, isole: 10)
+    //equalNumber: quantità uguali per ogni colore (bag: 24(=120/5)  isole: 2)
     private List<ColorPawns> fillListWithColors(List<ColorPawns> list, int size, int equalNumber){
         for(int i = 0; i < size; i++){
             if(i < equalNumber)
@@ -163,6 +167,7 @@ public class GameController {
     }
 
     //***********************************************************////
+    //DA SISTEMARE
     //controlla se un giocatore già possiede il prof, nel caso lo toglie e lo assegna al giocatore conquistatore
     private void assignProfToPlayer(PlayerModel playerConquerer, ColorPawns color){
         List<PlayerModel> playersModels = gameModel.getPlayersModel();

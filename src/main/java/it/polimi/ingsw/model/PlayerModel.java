@@ -16,6 +16,7 @@ public class PlayerModel {
     private Map<ColorPawns, Integer> studentInHall;
     private List<ColorPawns> studentInEntrance;
     private StatePlayer state;
+    private byte movementMotherNatureCurrentActionPhase;
     private int coins;
 
     PlayerModel(String nickname, ColorTower colorTower, int coins){
@@ -23,6 +24,7 @@ public class PlayerModel {
         this.colorTower = colorTower;
         this.coins = coins;
         this.numProfs = 0;
+        this.movementMotherNatureCurrentActionPhase = 0;
         this.studentInHall = Map.of(
                 GREEN, 0,
                 RED, 0,
@@ -106,5 +108,39 @@ public class PlayerModel {
         this.towerNumber = towerNumber;
     }
 
+    public byte getMovementMotherNatureCurrentActionPhase() {
+        return movementMotherNatureCurrentActionPhase;
+    }
 
+    public void setMovementMotherNatureCurrentActionPhase(byte movementMotherNatureCurrentActionPhase) {
+        this.movementMotherNatureCurrentActionPhase = movementMotherNatureCurrentActionPhase;
+    }
+
+    public List<AssistantCardModel> getDeckAssistantCardModel() {
+        return deckAssistantCardModel;
+    }
+
+    public void setDeckAssistantCardModel(List<AssistantCardModel> deckAssistantCardModel) {
+        this.deckAssistantCardModel = deckAssistantCardModel;
+    }
+
+    public ColorTower getColorTower() {
+        return colorTower;
+    }
+
+    public void setColorTower(ColorTower colorTower) {
+        this.colorTower = colorTower;
+    }
+
+    public List<ColorPawns> getStudentInEntrance() {
+        return studentInEntrance;
+    }
+
+    public void setStudentInEntrance(List<ColorPawns> studentInEntrance) {
+        this.studentInEntrance = studentInEntrance;
+    }
+
+    public void setState(StatePlayer state) {
+        this.state = state;
+    }
 }
