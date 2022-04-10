@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller.player;
 import it.polimi.ingsw.model.ColorPawns;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.model.player.StatePlayer;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +14,7 @@ public class StudentToHallState implements PlayerState {
 
     public StudentToHallState(PlayerModel playerModel){
         this.playerModel = playerModel;
+        this.playerModel.setState(StatePlayer.MOVE_STUDENT);
     }
 
     @Override

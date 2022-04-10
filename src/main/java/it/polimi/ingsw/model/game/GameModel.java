@@ -96,4 +96,12 @@ public class GameModel {
     public GameMode getGameMode(GameMode mode){
         return mode;
     }
+
+    public PhaseGame getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(PhaseGame gameState) {
+        this.gameState = gameState;
+    }
 }

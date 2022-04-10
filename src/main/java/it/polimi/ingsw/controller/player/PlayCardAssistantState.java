@@ -17,7 +17,11 @@ public class PlayCardAssistantState implements PlayerState {
 
     public PlayCardAssistantState(PlayerModel playerModel){
         this.playerModel = playerModel;
+
     }
+
+
+
 
     @Override
     public void addCoins() {
@@ -65,6 +69,4 @@ public class PlayCardAssistantState implements PlayerState {
 
         return playersActionPhase;
     }
-
-
 }

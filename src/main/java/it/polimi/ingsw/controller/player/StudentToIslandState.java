@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.ColorPawns;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.model.player.StatePlayer;
 
 //4.1
 public class StudentToIslandState implements PlayerState {
@@ -11,6 +12,7 @@ public class StudentToIslandState implements PlayerState {
 
     public StudentToIslandState(PlayerModel playerModel, IslandModel islandModel){
         this.playerModel = playerModel;
+        this.playerModel.setState(StatePlayer.MOVE_STUDENT);
     }
 
     @Override

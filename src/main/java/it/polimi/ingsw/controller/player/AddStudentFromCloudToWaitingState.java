@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.model.player.StatePlayer;
 
 //last state
 public class AddStudentFromCloudToWaitingState implements PlayerState {
@@ -8,6 +9,7 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
 
     public AddStudentFromCloudToWaitingState(PlayerModel playerModel){
         this.playerModel = playerModel;
+        this.playerModel.setState(StatePlayer.CHOOSE_CLOUD_PICK_STUDENT);
     }
 
     @Override
