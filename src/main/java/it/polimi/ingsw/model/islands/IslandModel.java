@@ -14,26 +14,34 @@ public class IslandModel {
     private List<ColorPawns> students;
     private ColorTower colorTower;
     private boolean isJoined;
-    private int numJoined;
     private PlayerModel influence;
+
+
+    public IslandModel(boolean motherNature){
+        this.students = null;
+        this.motherNature = motherNature;
+        this.isJoined = false;
+    }
 
     //quando creo l'isola so già dove va madre natura (ricorda vincolo solo su un'isola, questo vincolo non va in questa classe ma dove creo l'array di isole, cioè Game)
     //e so anche il colore dello studente che ci piazzo su
     public IslandModel(boolean motherNature, ColorPawns initialStudent){
-        this.students = new ArrayList<ColorPawns>();
+        this.students = new ArrayList<>();
         this.students.add(initialStudent);
         this.motherNature = motherNature;
         this.isJoined = false;
     }
+    //usato principalmente nell'unione delle isole, quando devo traslocare tutti gli studenti di un'isola in un'altra
     public IslandModel(boolean motherNature, List<ColorPawns> students){
-        this.students = new ArrayList<ColorPawns>();
+        this.students = new ArrayList<>();
         this.students.addAll(students);
         this.motherNature = motherNature;
         this.isJoined = false;
     }
 
-    public void setStudents(List<ColorPawns> students){
-        this.students = students;
+    public void addStudent(ColorPawns student){
+        if(this.students == null) this.students = new ArrayList<>();
+        this.students.add(student);
     }
 
     public void setJoined(){
@@ -56,12 +64,8 @@ public class IslandModel {
         this.colorTower = colorTower;
     }
 
-    private ColorDirectionAdjacentIsland isAdjacentSameColor(){
-        return NONE; //da sistemare, temporaneo
-    }
-
-    private PlayerModel getInfluece(){
+   /* private PlayerModel getInfluece(){
         return new PlayerModel("", ColorTower.GREY, 0);
-    }
+    }*/
 
 }

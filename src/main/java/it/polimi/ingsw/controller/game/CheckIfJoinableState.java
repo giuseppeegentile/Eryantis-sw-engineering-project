@@ -11,37 +11,46 @@ import java.util.List;
 //7
 public class CheckIfJoinableState implements GameState {
 
-    List<IslandModel> islandModels;
+    private List<IslandModel> islandModels;
 
     private GameModel gameModel;
+    private IslandModel islandModelToCheck;
 
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
     }
 
-    public CheckIfJoinableState(GameModel gameModel) {
+    public CheckIfJoinableState(GameModel gameModel, IslandModel islandModel) {
         this.gameModel = gameModel;
+        this.islandModelToCheck = islandModel;
         this.islandModels = this.getGameModel().getIslandsModel();
     }
 
-    public ColorDirectionAdjacentIsland getAdjacentSameColor(int indexIslandToChekAdjacent){
-        if(indexIslandToChekAdjacent == 0 && islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(11).getTowerColor()){
-            if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent + 1).getTowerColor()){
+    //convenzione: senso orario
+    public ColorDirectionAdjacentIsland getAdjacentSameColor(){
+        //indice dell'isola nell'array delle isole
+        int indexIslandToChekAdjacent = this.islandModels.indexOf(this.islandModelToCheck);
+
+        int right = indexIslandToChekAdjacent + 1;
+        int left = indexIslandToChekAdjacent - 1;
+
+        if(indexIslandToChekAdjacent == 0 && islandModelToCheck.getTowerColor() == islandModels.get(11).getTowerColor()){
+            if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor()){
                 return ColorDirectionAdjacentIsland.BOTH;
             }
             return ColorDirectionAdjacentIsland.LEFT;
         }
-        if(indexIslandToChekAdjacent == 11 && islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(0).getTowerColor()){
-            if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent - 1).getTowerColor()){
+        if(indexIslandToChekAdjacent == 11 && islandModelToCheck.getTowerColor() == islandModels.get(0).getTowerColor()){
+            if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor()){
                 return ColorDirectionAdjacentIsland.BOTH;
             }
             return ColorDirectionAdjacentIsland.RIGHT;
         }
-        if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent + 1).getTowerColor()){
+        if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor()){
             return ColorDirectionAdjacentIsland.RIGHT;
         }
-        if(islandModels.get(indexIslandToChekAdjacent).getTowerColor() == islandModels.get(indexIslandToChekAdjacent - 1).getTowerColor()){
+        if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor()){
             return ColorDirectionAdjacentIsland.LEFT;
         }
         return ColorDirectionAdjacentIsland.NONE;
@@ -49,16 +58,17 @@ public class CheckIfJoinableState implements GameState {
 
 
     //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
-    public List<IslandModel> joinIsland(IslandModel firstIslandModel, IslandModel secondIslandModel, int indexFirstIsland){
-        int sizeStudentsJoined = firstIslandModel.getStudents().size() + secondIslandModel.getStudents().size(); //calcolo studenti di entrambe le isole
+    public List<IslandModel> joinIsland(IslandModel islandToJoin, int indexFirstIsland){
+        int sizeStudentsJoined = this.islandModelToCheck.getStudents().size() + islandToJoin.getStudents().size(); //calcolo studenti di entrambe le isole
         List<ColorPawns> joinedStudents = new ArrayList<>(sizeStudentsJoined); //inizializzo array degli studenti
 
-        //per lo studente iniziale del costruttore ne prendo uno a caso (il primo della prima isola), che non dovò riaggiungere ovviamente. Quindi creo l'isola joinata
-        IslandModel joined = new IslandModel(firstIslandModel.getMotherNature() || secondIslandModel.getMotherNature(), firstIslandModel.getStudents().get(0));
-
         //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
-        joinedStudents.addAll(firstIslandModel.getStudents());
-        joinedStudents.addAll(secondIslandModel.getStudents());
+        joinedStudents.addAll(this.islandModelToCheck.getStudents());
+        joinedStudents.addAll(islandToJoin.getStudents());
+
+
+        IslandModel joined = new IslandModel(this.islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
+
         IslandController islandController = new IslandController(joined);
 
         //posiziono gli studenti sulla nuova isola

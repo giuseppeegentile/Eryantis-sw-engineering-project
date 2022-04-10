@@ -2,11 +2,11 @@ package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.model.player.PlayerModel;
 
-//last state
-public class AddStudentFromCloudToWaitingInitialState implements PlayerState {
+//5
+public class MoveMotherNatureState implements PlayerState {
     public PlayerModel playerModel;
 
-    public AddStudentFromCloudToWaitingInitialState(PlayerModel playerModel){
+    public MoveMotherNatureState(PlayerModel playerModel){
         this.playerModel = playerModel;
     }
 
