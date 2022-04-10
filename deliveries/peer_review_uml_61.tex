@@ -1,0 +1,31 @@
+
+# Peer-Review 1: UML
+
+[Davide Galbiati], [Christian Giosia], [Giuseppe Gentile]
+
+Gruppo [62]
+
+Valutazione del diagramma UML delle classi del gruppo [61].
+
+## Lati positivi
+
+Gestita in maniera elegante l'appartenenza ai team dei giocatori.
+Buon uso del pattern strategy per quanto riguarda gli effetti delle carte personaggio. Buon'idea per l'uso della struttura Set per i teacher, in quanto sono tutti diversi e non possono esserci ripetizioni di essi.
+
+## Lati negativi
+
+Mancano le cardinalità fra le entità, e i tipi di ritorno per alcuni metodi (forse sono void).
+Poichè le entità collegate a Game non sono a sè stanti, sarebbe più adatto collegarle con le aggregazioni. Stessa cosa per aggregare Player con Board.
+Mancano i metodi in AssistentCard: devono poter muovere madre natura come conseguenza del loro utilizzo.
+Dal nostro punto di vista sarebbe più efficace, per quanto riguarda l'implementazione delle carte personaggio, fare uso di un altro livello di ereditarietà: distinguere quelle con configurazione iniziale (studenti e carte divieto), da quelle senza.
+Consigliamo di mettere gli stati anche per il gioco, distinguendo tra la fase in cui si spostano gli studenti dalle nuvole a quella in cui si giocano le carte assistente. Inoltre, si dovrebbe aggiungere un metodo per unire le isole (dentro la classe Game), e di conseguenza uno per verificare se le isole adiacenti possono essere conquistate o no.
+Nella classe Game non c'è un'attributo che specifica che modalità di gioco è state scelta.
+Manca il metodo per il calcolo dell'influenza nella classe isola.
+Il metodo nextPlayer della classe Game andrebbe nel controller. 
+Manca il metodo getter per il costo della CharacterCard.
+
+## Confronto tra le architetture
+
+A differenza nostra che abbiamo preferito tenere conto di quanti studenti sono stati pescati dalla bag all'interno della classe Game, loro hanno esplicitato meglio le winning condition con una classe bag apposita.
+Rispetto al nostro diagramma hanno separato Board da Player, noi abbiamo optato per un'integrazione delle due classi in Player. 
+
