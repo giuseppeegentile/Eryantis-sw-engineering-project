@@ -13,14 +13,9 @@ public class AssistantCardModel {
         this.priority = priority;
         this.motherNatureMovement = motherNatureMovement;
         this.isPlayed = false;
+        this.owner = null;
     }
 
-    AssistantCardModel(int priority, byte motherNatureMovement, PlayerModel owner) {
-        this.priority = priority;
-        this.motherNatureMovement = motherNatureMovement;
-        this.isPlayed = false;
-        this.owner = owner;
-    }
 
     public void setOwner(PlayerModel owner){
         this.owner = owner;
@@ -38,12 +33,20 @@ public class AssistantCardModel {
         return isPlayed;
     }
 
+    public void setMotherNatureMovement(byte motherNatureMovement) {
+        this.motherNatureMovement = motherNatureMovement;
+    }
+
     public byte getMotherNatureMovement() {
         return motherNatureMovement;
     }
 
     public int getPriority() {
         return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
 

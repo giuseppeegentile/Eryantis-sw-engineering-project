@@ -9,18 +9,19 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameModel {
     private List<IslandModel> islandModels;
 
     private int playersNumber;
-    private List<PlayerModel> playersModels = new ArrayList<>(playersNumber);
+    private List<PlayerModel> playersModels;
     private List<CloudModel> cloudsModel;
-    private List<ColorPawns> bag = new ArrayList<>(130); //non sicuro sui 130
+    private List<ColorPawns> bag; //non sicuro sui 130
     private PhaseGame gameState;
     public GameMode mode;
     public List<ChacterCardModel> chosenCards;
-    List<AssistantCardModel> deck;
+    private List<AssistantCardModel> deck;
     private static GameModel istance = new GameModel();
 
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
@@ -40,25 +41,34 @@ public class GameModel {
         return istance;
     }
 
-    //inizializza il Game, non posso fare il costruttore con parametri, altrimenti non avrebbe senso il singleton
-    public void init(List<PlayerModel> playersModels, List<CloudModel> cloudModels, List<ColorPawns> bag, GameMode mode){
+    public void setPlayers(List<PlayerModel> playersModels){
         this.playersModels = playersModels; //lista dei giocatori
         this.playersNumber = playersModels.size();
-        this.cloudsModel = cloudModels;
-        this.bag = bag;
-
-        this.mode = mode;
-        gameState = PhaseGame.ADD_STUDENT_CLOUD;
-        //nel controller dovrò capire se attribuire chosenCards, in base alla difficoltà di gioco
     }
 
     public void setBag(List<ColorPawns> studentsBag){
         this.bag = studentsBag;
     }
 
-    private String getPlayerByNickname(String nickname){
+    public void addCardToDeck(int index, AssistantCardModel assistantCardModel){
+        if(deck == null) deck = new ArrayList<>(40);
+        this.deck.set(index, assistantCardModel);
+    }
+
+    public int getPlayersNumber(){
+        return this.playersNumber;
+    }
+    public List<AssistantCardModel> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(List<AssistantCardModel> deck) {
+        this.deck = deck;
+    }
+
+    public String getPlayerByNickname(String nickname){
         return playersModels.stream()
-                .filter(playerModel -> playerModel.getNickname().equals(nickname))
+                .filter(p -> p.getNickname().equals(nickname))
                 .findAny().get().getNickname();
     }
 
@@ -70,11 +80,20 @@ public class GameModel {
         return this.islandModels;
     }
 
-    private void generateDeck(){
-        byte j = 1;
-        for(int i = 0; i < 10; i++ ){
-            deck.set(i, new AssistantCardModel(i+1, j));
-            if(i%2 == 1) j++;
-        }
+
+    public List<CloudModel> getCloudsModel() {
+        return cloudsModel;
+    }
+
+    public void setCloudsModel(List<CloudModel> cloudsModel) {
+        this.cloudsModel = cloudsModel;
+    }
+
+    public void setGameMode(GameMode mode){
+        this.mode = mode;
+    }
+
+    public GameMode getGameMode(GameMode mode){
+        return mode;
     }
 }

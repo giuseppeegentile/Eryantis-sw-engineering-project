@@ -11,11 +11,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //3
 
-public class PlayCardAssistantInitialState implements PlayerState {
+public class PlayCardAssistantState implements PlayerState {
 
     public PlayerModel playerModel;
 
-    public PlayCardAssistantInitialState(PlayerModel playerModel){
+    public PlayCardAssistantState(PlayerModel playerModel){
         this.playerModel = playerModel;
     }
 

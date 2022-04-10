@@ -4,15 +4,13 @@ import it.polimi.ingsw.model.ColorPawns;
 import it.polimi.ingsw.model.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static it.polimi.ingsw.model.ColorPawns.*;
 
 public class PlayerModel {
     private String nickname;
-    private List<ColorPawns> profs;
+    private Set<ColorPawns> profs; //i prof sono univoci e non possono essere ripetuti, conviene Set
     private int numProfs;
     private int towerNumber; //da settare con il controller, strategy
     private ColorTower colorTower;
@@ -42,20 +40,12 @@ public class PlayerModel {
         return this.numProfs;
     }
 
-    public void incrementNumProfs(){
-        this.numProfs += 1;
+    public void removeProf(ColorPawns prof){
+        this.profs.remove(prof);
+        this.numProfs -= 1;
     }
 
-    public void decrementNumProfs(){
-        if(this.numProfs > 0)
-            this.numProfs -= 1;
-    }
-
-    public void removeProf(int index){
-        this.profs.remove(index);
-    }
-
-    public List<ColorPawns> getProfs(){
+    public Set<ColorPawns> getProfs(){
         return this.profs;
     }
 
@@ -71,10 +61,15 @@ public class PlayerModel {
         return this.state;
     }
 
-    public void setProfs(ColorPawns profToAdd){
+    public void addProf(ColorPawns profToAdd){
         if(this.profs == null)
-            this.profs = new ArrayList<>();
+            this.profs = new HashSet<>();
         this.profs.add(profToAdd);
+        this.numProfs += 1;
+    }
+
+    public void removeStudentFromEntrance(ColorPawns studentToRemove){
+        this.studentInEntrance.remove(studentToRemove);
     }
 
     private static void playCard(){ }
