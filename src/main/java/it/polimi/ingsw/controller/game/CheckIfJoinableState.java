@@ -12,7 +12,6 @@ import java.util.List;
 public class CheckIfJoinableState implements GameState {
 
     private List<IslandModel> islandModels;
-
     private GameModel gameModel;
     private IslandModel islandModelToCheck;
 
@@ -31,10 +30,8 @@ public class CheckIfJoinableState implements GameState {
     public ColorDirectionAdjacentIsland getAdjacentSameColor(){
         //indice dell'isola nell'array delle isole
         int indexIslandToChekAdjacent = this.islandModels.indexOf(this.islandModelToCheck);
-
         int right = indexIslandToChekAdjacent + 1;
         int left = indexIslandToChekAdjacent - 1;
-
         if(indexIslandToChekAdjacent == 0 && islandModelToCheck.getTowerColor() == islandModels.get(11).getTowerColor()){
             if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor()){
                 return ColorDirectionAdjacentIsland.BOTH;
@@ -61,20 +58,15 @@ public class CheckIfJoinableState implements GameState {
     public List<IslandModel> joinIsland(IslandModel islandToJoin, int indexFirstIsland){
         int sizeStudentsJoined = this.islandModelToCheck.getStudents().size() + islandToJoin.getStudents().size(); //calcolo studenti di entrambe le isole
         List<ColorPawns> joinedStudents = new ArrayList<>(sizeStudentsJoined); //inizializzo array degli studenti
-
         //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
         joinedStudents.addAll(this.islandModelToCheck.getStudents());
         joinedStudents.addAll(islandToJoin.getStudents());
-
-
         IslandModel joined = new IslandModel(this.islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
-
         IslandController islandController = new IslandController(joined);
 
         //posiziono gli studenti sulla nuova isola
         islandController.addStudent(joinedStudents);
         joined.setJoined(); //setta a true il valore isJoined
-
         return compressIsland(this.getGameModel().getIslandsModel(), joined, indexFirstIsland);
     }
 
