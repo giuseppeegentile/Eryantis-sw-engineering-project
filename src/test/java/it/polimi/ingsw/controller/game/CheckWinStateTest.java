@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,7 @@ class CheckWinStateTest {
     @Test
     void playerWithMajorNumberOfTowerOnIsland(){
         GameModel testGame = GameModel.getInstance();
-        List<PlayerModel> playersModels = testGame.getPlayersModel();
+        List<PlayerModel> playersModels = new ArrayList<PlayerModel>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 2);
         playersModels.add(player1);
@@ -29,6 +30,6 @@ class CheckWinStateTest {
         testGame.setPlayers(playersModels);
         CheckWinState tester = new CheckWinState();
         tester.setGameModel(testGame);
-        assertEquals("GREY", "tester.checkWin()");
+        assertEquals("GREY", tester.checkWin());
     }
 }
