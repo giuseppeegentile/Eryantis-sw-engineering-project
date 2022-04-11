@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.game;
 
+import it.polimi.ingsw.model.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
@@ -15,14 +16,14 @@ public class CheckWinState implements GameState {
         return this.gameModel;
     }
 
-    public CheckWinState(GameModel gameModel){
+    public void setGameModel(GameModel gameModel){
         this.gameModel = gameModel;
     }
 
 
     //da chiamare quando rimangono solo 3 isole unificate
     //alla fine del round in cui viene pescato l'ultimo studente o giocata l'ultima carta
-    private PlayerModel checkWin() {
+    public ColorTower checkWin() {
         PlayerModel winner = null;
         List<PlayerModel> playersModels = getGameModel().getPlayersModel();
         //corrispondenza indice(studente) - valore (numero torre)
@@ -52,9 +53,9 @@ public class CheckWinState implements GameState {
             }*/
             //prende, tra i due a parità di torri, il giocatore con più prof
             return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
-                    playersModels.get(i) : playersModels.get(indexMinTower);
+                    playersModels.get(i).getColorTower() : playersModels.get(indexMinTower).getColorTower();
         } else {        //controlla torri -> restituisce quello con minimo numero di torri
-            return playersModels.get(towersNumber.indexOf(minNumTower));
+            return playersModels.get(towersNumber.indexOf(minNumTower)).getColorTower();
 
         }
     }
