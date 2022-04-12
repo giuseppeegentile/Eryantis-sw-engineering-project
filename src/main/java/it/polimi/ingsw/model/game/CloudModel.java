@@ -7,15 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CloudModel {
-    List<ColorPawns> students;
-    GameMode mode;
+    private List<ColorPawns> students;
+    private final int size; //number of student in the cloud
 
-    private List<ColorPawns> getStudent(){
+    public List<ColorPawns> getStudent(){
         return this.students;
     }
 
-    public CloudModel(List<ColorPawns> initialStudents){
-        this.students = initialStudents;
+    public void cleanStudent(){
+        this.students = new ArrayList<>(size);
+    }
 
+    public CloudModel(int size){
+        this.size = size;
+    }
+
+    public void setStudents(List<ColorPawns> students) {
+        this.students = students;
     }
 }

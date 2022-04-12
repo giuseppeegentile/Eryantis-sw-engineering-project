@@ -30,14 +30,18 @@ public class StartGameState implements GameState {
         this.gameModel = gameModel;
     }
 
-    public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, List<CloudModel> cloudModels, GameMode mode){
+    public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, GameMode mode){
         setIslandController();
         assignTowerColorToStudent(players, colorTowers);
 
         assignBag();
         generateDeck();
         assignCardsToPlayers();
-        this.gameModel.setCloudsModel(cloudModels);
+        setClouds(players.size());
+
+        setInitialStudentEntrance(players);
+
+
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
 
@@ -51,7 +55,29 @@ public class StartGameState implements GameState {
     }
 
     //UTILITY METHODS
+    private void setInitialStudentEntrance(List<PlayerModel> players){
+        int playerNumber = players.size();
+        players.forEach(p->{
+            int bagSize = this.gameModel.getBag().size();
+            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - playerNumber,bagSize - 1);
+            this.gameModel.getBag().subList(bagSize - 1 - playerNumber,bagSize - 1).clear();
+            p.setStudentInEntrance(studentInEntrance);
+        });
+    }
 
+    private void setClouds(int playerSize){
+        int cloudsNumber, sizeStudentsClouds;
+
+        if(playerSize % 2 == 0) sizeStudentsClouds = 3;
+        else sizeStudentsClouds = 4;
+
+        cloudsNumber = playerSize;
+        List<CloudModel> cloudModels = new ArrayList<>(cloudsNumber);
+        for(int i = 0; i < cloudsNumber; i++){
+            cloudModels.add(new CloudModel(sizeStudentsClouds));
+        }
+        this.gameModel.setCloudsModel(cloudModels);
+    }
     private void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);

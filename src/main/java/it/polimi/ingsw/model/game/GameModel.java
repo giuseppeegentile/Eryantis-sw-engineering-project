@@ -28,7 +28,7 @@ public class GameModel {
         try{
             return playersModels;
         }catch (NullPointerException e){
-            return new ArrayList<PlayerModel>();
+            return new ArrayList<>();
         }
     }
 
@@ -103,5 +103,9 @@ public class GameModel {
 
     public void setGameState(PhaseGame gameState) {
         this.gameState = gameState;
+    }
+
+    public List<ColorPawns> getBag() {
+        return bag;
     }
 }
