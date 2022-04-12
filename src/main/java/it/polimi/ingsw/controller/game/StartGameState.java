@@ -258,10 +258,23 @@ public class StartGameState implements GameState {
     private void assignCardsToPlayers(){
         List<AssistantCardModel> deck = this.gameModel.getDeck();
         Collections.shuffle(deck);
+        AtomicInteger i = new AtomicInteger();
+        deck.forEach(c->{
+            if(i.get() < 10)
+                c.setOwner(this.gameModel.getPlayersModel().get(0));
+            if(i.get() < 20 && i.get() >=10)
+                c.setOwner(this.gameModel.getPlayersModel().get(1));
+            if(i.get() < 30 && i.get() >=20 && this.gameModel.getPlayersNumber() != 2)
+                c.setOwner(this.gameModel.getPlayersModel().get(2));
+            if(i.get() < 40 && i.get() >=30 && this.gameModel.getPlayersNumber() == 4)
+                c.setOwner(this.gameModel.getPlayersModel().get(3));
+            i.getAndIncrement();
+        });
         this.gameModel.getPlayersModel().get(0).setDeckAssistantCardModel(deck.subList(0, 9));
         this.gameModel.getPlayersModel().get(1).setDeckAssistantCardModel(deck.subList(10, 19));
         if(this.gameModel.getPlayersNumber() != 2) this.gameModel.getPlayersModel().get(2).setDeckAssistantCardModel(deck.subList(20, 29)); //se ho 3 o 4 giocatori
         if(this.gameModel.getPlayersNumber() == 4) this.gameModel.getPlayersModel().get(3).setDeckAssistantCardModel(deck.subList(30, 39));
+
     }
 
 

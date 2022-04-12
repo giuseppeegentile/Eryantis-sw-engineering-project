@@ -22,6 +22,7 @@ public class GameModel {
     public GameMode mode;
     public List<ChacterCardModel> chosenCards;
     private List<AssistantCardModel> deck;
+    private List<AssistantCardModel> cemetery;
     private static GameModel istance = new GameModel();
 
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
@@ -44,6 +45,7 @@ public class GameModel {
     public void setPlayers(List<PlayerModel> playersModels){
         this.playersModels = playersModels; //lista dei giocatori
         this.playersNumber = playersModels.size();
+        this.cemetery = new ArrayList<>(playersNumber);
     }
 
     public void setBag(List<ColorPawns> studentsBag){
@@ -108,4 +110,17 @@ public class GameModel {
     public List<ColorPawns> getBag() {
         return bag;
     }
+
+    public List<AssistantCardModel> getCemetery() {
+        return cemetery;
+    }
+
+    public void addToCemetery(AssistantCardModel card) {
+        this.cemetery.add(card);
+    }
+
+    public void clearCemetery(){
+        this.cemetery = new ArrayList<>(playersNumber);
+    }
+
 }

@@ -221,4 +221,9 @@ public class PlayerModel {
     public void setState(StatePlayer state) {
         this.state = state;
     }
+
+
+    public void removeCard(AssistantCardModel assistantCardModel){
+        this.deckAssistantCardModel.remove(assistantCardModel);
+    }
 }
