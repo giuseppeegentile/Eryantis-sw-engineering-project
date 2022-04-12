@@ -57,10 +57,14 @@ public class StartGameState implements GameState {
     //UTILITY METHODS
     private void setInitialStudentEntrance(List<PlayerModel> players){
         int playerNumber = players.size();
+        int initialSizeStudentEntrance = 7; //gioco a 4 o 2
+        if (playerNumber == 3) initialSizeStudentEntrance = 9; //gioco a 3
+
+        int finalInitialSizeStudentEntrance = initialSizeStudentEntrance;
         players.forEach(p->{
             int bagSize = this.gameModel.getBag().size();
-            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - playerNumber,bagSize - 1);
-            this.gameModel.getBag().subList(bagSize - 1 - playerNumber,bagSize - 1).clear();
+            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1);
+            this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1).clear(); //toglie gli studenti appena spostati
             p.setStudentInEntrance(studentInEntrance);
         });
     }
