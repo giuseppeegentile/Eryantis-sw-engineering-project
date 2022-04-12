@@ -36,7 +36,7 @@ public class StartGameState implements GameState {
 
         assignBag();
         generateDeck();
-        assignCardsToPlayers();
+
         setClouds(players.size());
 
         setInitialStudentEntrance(players);
@@ -44,6 +44,8 @@ public class StartGameState implements GameState {
 
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
+
+        assignCardsToPlayers();
 
         if(mode == GameMode.ESPERTO){
             players.forEach(p ->{
