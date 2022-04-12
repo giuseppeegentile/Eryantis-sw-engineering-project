@@ -32,7 +32,7 @@ public class StartGameState implements GameState {
 
     public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, GameMode mode){
         setIslandController();
-        assignTowerColorToStudent(players, colorTowers);
+
 
         assignBag();
         generateDeck();
@@ -44,6 +44,7 @@ public class StartGameState implements GameState {
 
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
+        assignTowerColorToStudent(colorTowers);
 
         assignCardsToPlayers();
 
@@ -148,8 +149,9 @@ public class StartGameState implements GameState {
         return colorTowers;
     }
 
-    private void assignTowerColorToStudent(List<PlayerModel> players, List<ColorTower> colorTowers){
+    private void assignTowerColorToStudent(List<ColorTower> colorTowers){
         List<ColorTower> fixedColorTowers = checkAndFixTower(colorTowers); //controllo che non ci siano errori nella lista delle torri
+        List<PlayerModel> players = this.gameModel.getPlayersModel();
         AtomicInteger i = new AtomicInteger();
         int numTower = 0;
         if(players.size() == 2)
