@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //l'unico metodo che serve dall'esterno è setInitialGameConfiguration. Tutti gli altri sono dei metodi utility ma non servono al di fuori della classe
 public class StartGameState implements GameState {
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     @Override
     public GameModel getGameModel() {
@@ -30,22 +30,26 @@ public class StartGameState implements GameState {
         this.gameModel = gameModel;
     }
 
+    /**
+     * Methods that initialize the game configuration. In particular:
+     * instantiate the 12 islands with mother nature and random students,instantiate the bag with the students, the clouds,the tower for the players and the students in the entrance
+     *
+     * @param players List of the players
+     * @param colorTowers List of the color of the tower in the same order of the player that own them. (i.e. player1 in position 0 own the tower Grey -> the tower grey is in the 0 position of this List)
+     * @param mode The Game Mode: beginner or advanced. Based on this the player will have coins at the start.
+     */
     public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, GameMode mode){
-        setIslandController();
-
-
-        assignBag();
-        generateDeck();
+        setIslandController(); //initialize the 12 islands
+        assignBag();            //generate the bag randomly with 120 students
+        generateDeck();         //generate the deck
 
         setClouds(players.size());
 
-        setInitialStudentEntrance(players);
-
-
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
-        assignTowerColorToStudent(colorTowers);
 
+        assignTowerColorToStudent(colorTowers);
+        setInitialStudentEntrance();
         assignCardsToPlayers();
 
         if(mode == GameMode.ESPERTO){
@@ -58,13 +62,17 @@ public class StartGameState implements GameState {
     }
 
     //UTILITY METHODS
-    private void setInitialStudentEntrance(List<PlayerModel> players){
-        int playerNumber = players.size();
+
+    /**
+     * Utility method, called in setInitialGameConfiguration. Set the student in entrance based on the players number.
+     */
+    private void setInitialStudentEntrance(){
+        int playerNumber = this.gameModel.getPlayersModel().size();
         int initialSizeStudentEntrance = 7; //gioco a 4 o 2
         if (playerNumber == 3) initialSizeStudentEntrance = 9; //gioco a 3
 
         int finalInitialSizeStudentEntrance = initialSizeStudentEntrance;
-        players.forEach(p->{
+        this.gameModel.getPlayersModel().forEach(p->{
             int bagSize = this.gameModel.getBag().size();
             List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1);
             this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1).clear(); //toglie gli studenti appena spostati
@@ -72,6 +80,10 @@ public class StartGameState implements GameState {
         });
     }
 
+    /**
+     * Utility method, called in setInitialGameConfiguration.
+     * @param playerSize Number of players in the Game. Is the same number of clouds.
+     */
     private void setClouds(int playerSize){
         int cloudsNumber, sizeStudentsClouds;
 
@@ -85,12 +97,17 @@ public class StartGameState implements GameState {
         }
         this.gameModel.setCloudsModel(cloudModels);
     }
+
+    /**
+     * Utility method, called in setInitialGameConfiguration.
+     * Create randomly a bag of students of size 120. With all colours.
+     */
     private void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
         int equalNumber = bagSize/5;
 
-        bag = fillListWithColors( bag,  bagSize, equalNumber);
+        bag = fillListWithColors( bag, equalNumber);
         this.gameModel.setBag(bag);
     }
 
@@ -98,8 +115,14 @@ public class StartGameState implements GameState {
     //usata per riempire la bag e le isole iniziali
     //size: dimensione da riempire (bag: 120, isole: 10)
     //equalNumber: quantità uguali per ogni colore (bag: 24(=120/5)  isole: 2)
-    private List<ColorPawns> fillListWithColors(List<ColorPawns> list, int size, int equalNumber){
-        for(int i = 0; i < size; i++){
+    /**
+     * Takes a generic list of ColorPawns and fills it randomly. Mainly used for the bag and initial islands.
+     * @param list List of ColorPawns to fill randomly.
+     * @param equalNumber Number of same colors that will be in the List.
+     * @return A list of ColorPawns filled with random values in the same quantity for every value.
+     */
+    private List<ColorPawns> fillListWithColors(List<ColorPawns> list, int equalNumber){
+        for(int i = 0; i < list.size(); i++){
             if(i < equalNumber)
                 list.set(i, ColorPawns.GREEN);
             if(i < 2*equalNumber  && i > equalNumber )
@@ -116,6 +139,12 @@ public class StartGameState implements GameState {
     }
 
     //se per errore ho dei colori delle torri assegnati due volte a utenti diversi li sistemo con valori di default
+
+    /**
+     * Check the List of towers of the player correspondence. If two players choose the same color of tower it assign default values.
+     * @param colorTowers List of tower-player correspondence.
+     * @return The list of the tower-player correspondence updated (if errors occurred).
+     */
     private List<ColorTower> checkAndFixTower(List<ColorTower> colorTowers){
         List<ColorTower> fixed = new ArrayList<>(colorTowers.size());
 
@@ -149,6 +178,10 @@ public class StartGameState implements GameState {
         return colorTowers;
     }
 
+    /**
+     * Set the tower color to the student correspondence.
+     * @param colorTowers Tower-player correspondence List.
+     */
     private void assignTowerColorToStudent(List<ColorTower> colorTowers){
         List<ColorTower> fixedColorTowers = checkAndFixTower(colorTowers); //controllo che non ci siano errori nella lista delle torri
         List<PlayerModel> players = this.gameModel.getPlayersModel();
@@ -176,6 +209,10 @@ public class StartGameState implements GameState {
 
 
     //imposta le isole, con madre natura e studenti INIZIALI
+
+    /**
+     * Set islands, with mother nature and initial students configuration.
+     */
     private void setIslandController(){
         int motherNatureIndex = (int)(Math.random() * 12); //numero casuale fra 0 e 11
         List<IslandModel> islands = new ArrayList<>(12);
@@ -183,8 +220,10 @@ public class StartGameState implements GameState {
         int sizeIslandWithStudents = 10;
         int equalNumber = 10/2;
         List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
-        colors = fillListWithColors(colors, sizeIslandWithStudents, equalNumber);
+        colors = fillListWithColors(colors, equalNumber);
         //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
+
+        int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;
 
         //counterForColors mi scorre gli elementi dell'array colors, viene incrementato solo quando assegno a un'isola
         for (int i = 0, counterForColors = 0; i < 12; i++) {
@@ -192,15 +231,19 @@ public class StartGameState implements GameState {
                 islands.add(new IslandModel(false, colors.get(counterForColors)));
                 counterForColors++;
             }
-            else if((i + 6) % 12 == 0){//posizione specchio di madre natura dove non ci sono studenti
-                islands.add(new IslandModel(false, ColorPawns.NULL));
+            else if(i == indexMirrorMotherNature){//posizione specchio di madre natura dove non ci sono studenti
+                islands.add(new IslandModel(false));
             }
             else if(i == motherNatureIndex) //posizione di madre natura
-                islands.add(new IslandModel(true,  ColorPawns.NULL));
+                islands.add(new IslandModel(true));
         }
         this.gameModel.setIslands(islands);
     }
 
+
+    /**
+     * Generate random cards and put them in deck of GameModel.
+     */
     private void generateDeck(){
         byte j = 0;
         for(int i = 0; i < 10; i++ ){
@@ -209,6 +252,9 @@ public class StartGameState implements GameState {
         }
     }
 
+    /**
+     * Shuffle the deck and gives ten card to each player.
+     */
     private void assignCardsToPlayers(){
         List<AssistantCardModel> deck = this.gameModel.getDeck();
         Collections.shuffle(deck);

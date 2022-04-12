@@ -10,7 +10,7 @@ import java.util.List;
 import static it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland.NONE;
 
 public class IslandModel {
-    private boolean motherNature;
+    private final boolean motherNature;
     private List<ColorPawns> students;
     private ColorTower colorTower;
     private boolean isJoined;
@@ -18,7 +18,7 @@ public class IslandModel {
 
 
     public IslandModel(boolean motherNature){
-        this.students = null;
+        this.students = new ArrayList<>();;
         this.motherNature = motherNature;
         this.isJoined = false;
     }
