@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.model.game.PhaseGame;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
@@ -20,6 +21,7 @@ public class PlayCardAssistantState implements PlayerState {
     public PlayCardAssistantState(PlayerModel playerModel,GameModel gameModel){
         this.playerModel = playerModel;
         this.gameModel = gameModel;
+        this.gameModel.setGameState(PhaseGame.PLAY_CARD_ASSISTANT);
     }
 
 

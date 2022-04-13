@@ -125,7 +125,7 @@ public class GameModel {
 
     public PlayerModel getPlayerByColorTower(ColorTower colorTower){
         for(PlayerModel p : this.playersModels) {
-            if(p.getColorTower().equals(colorTower)) return p;
+            if(p.getColorTower().equals(colorTower) && p.getTowerNumber() != 0) return p;
         }
         return new PlayerModel();
     }

@@ -83,7 +83,7 @@ public class IslandModel {
                         Collections.frequency(this.getStudents(), s)+1); //for each color of student count the frequency on the island and put in the map
             }else {
                 studentInIslandNumber.put(s,
-                        Collections.frequency(this.getStudents(), s) + 1); //for each color of student count the frequency on the island and put in the map
+                        Collections.frequency(this.getStudents(), s)); //for each color of student count the frequency on the island and put in the map
             }
         });
 
