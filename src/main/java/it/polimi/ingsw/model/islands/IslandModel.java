@@ -18,7 +18,7 @@ public class IslandModel {
 
 
     public IslandModel(boolean motherNature){
-        this.students = new ArrayList<>();;
+        this.students = new ArrayList<>();
         this.motherNature = motherNature;
         this.isJoined = false;
     }

@@ -12,9 +12,12 @@ import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 //l'unico metodo che serve dall'esterno è setInitialGameConfiguration. Tutti gli altri sono dei metodi utility ma non servono al di fuori della classe
@@ -107,7 +110,7 @@ public class StartGameState implements GameState {
         List<ColorPawns> bag = new ArrayList<>(bagSize);
         int equalNumber = bagSize/5;
 
-        bag = fillListWithColors( bag, equalNumber);
+        bag = fillListWithColors( bag, bagSize, equalNumber);
         this.gameModel.setBag(bag);
     }
 
@@ -121,21 +124,19 @@ public class StartGameState implements GameState {
      * @param equalNumber Number of same colors that will be in the List.
      * @return A list of ColorPawns filled with random values in the same quantity for every value.
      */
-    private List<ColorPawns> fillListWithColors(List<ColorPawns> list, int equalNumber){
-        for(int i = 0; i < list.size(); i++){
-            if(i < equalNumber)
-                list.set(i, ColorPawns.GREEN);
-            if(i < 2*equalNumber  && i > equalNumber )
-                list.set(i, ColorPawns.RED);
-            if(i < 3*equalNumber && i > 2*equalNumber)
-                list.set(i, ColorPawns.YELLOW);
-            if(i < 4*equalNumber  && i > 3*equalNumber)
-                list.set(i, ColorPawns.PINK);
-            if(i > 4*equalNumber )
-                list.set(i, ColorPawns.BLUE);
-        }
-        Collections.shuffle(list);
-        return list;
+    List<ColorPawns> fillListWithColors(List<ColorPawns> list, int size, int equalNumber){
+        List<ColorPawns> listGreen = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.GREEN));
+        List<ColorPawns> listRed = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.RED));
+        List<ColorPawns> listYellow = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.YELLOW));
+        List<ColorPawns> listPink = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.PINK));
+        List<ColorPawns> listBlue = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.BLUE));
+
+        List<ColorPawns> listToRet = Stream.of(listGreen, listRed, listYellow, listPink, listBlue)
+                        .flatMap(Collection::stream)
+                                .collect(Collectors.toList());
+        Collections.shuffle(listToRet);
+
+        return listToRet;
     }
 
     //se per errore ho dei colori delle torri assegnati due volte a utenti diversi li sistemo con valori di default
@@ -179,7 +180,7 @@ public class StartGameState implements GameState {
     }
 
     /**
-     * Set the tower color to the student correspondence.
+     * Set the tower color and number to the student correspondence.
      * @param colorTowers Tower-player correspondence List.
      */
     private void assignTowerColorToStudent(List<ColorTower> colorTowers){
@@ -218,16 +219,16 @@ public class StartGameState implements GameState {
         List<IslandModel> islands = new ArrayList<>(12);
 
         int sizeIslandWithStudents = 10;
-        int equalNumber = 10/2;
+        int equalNumber = 2;
         List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
-        colors = fillListWithColors(colors, equalNumber);
+        colors = fillListWithColors(colors, sizeIslandWithStudents, equalNumber);
         //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
 
         int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;
 
         //counterForColors mi scorre gli elementi dell'array colors, viene incrementato solo quando assegno a un'isola
         for (int i = 0, counterForColors = 0; i < 12; i++) {
-            if(i != motherNatureIndex) {
+            if(i != motherNatureIndex && i != indexMirrorMotherNature) {
                 islands.add(new IslandModel(false, colors.get(counterForColors)));
                 counterForColors++;
             }
@@ -246,9 +247,11 @@ public class StartGameState implements GameState {
      */
     private void generateDeck(){
         byte j = 0;
-        for(int i = 0; i < 10; i++ ){
-            if(i % 2 == 0) j++;
-            this.gameModel.addCardToDeck(i, new AssistantCardModel(i + 1, j));
+        for(int k = 0; k < 4; k++) {
+            for (int i = 0; i < 10; i++) {
+                if (i % 2 == 0) j++;
+                this.gameModel.addCardToDeck(new AssistantCardModel(i + 1, j));
+            }
         }
     }
 
@@ -259,6 +262,7 @@ public class StartGameState implements GameState {
         List<AssistantCardModel> deck = this.gameModel.getDeck();
         Collections.shuffle(deck);
         AtomicInteger i = new AtomicInteger();
+
         deck.forEach(c->{
             if(i.get() < 10)
                 c.setOwner(this.gameModel.getPlayersModel().get(0));

@@ -16,7 +16,7 @@ class CheckWinStateTest {
     @Test
     void playerWithMajorNumberOfTowerOnIslandIsGray() {
         GameModel testGame = GameModel.getInstance();
-        List<PlayerModel> playersModels = new ArrayList<PlayerModel>();
+        List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 2);
         playersModels.add(player1);
@@ -38,7 +38,7 @@ class CheckWinStateTest {
     @Test
     void playerWithMajorNumberOfTowerOnIslandIsBlack() {
         GameModel testGame = GameModel.getInstance();
-        List<PlayerModel> playersModels = new ArrayList<PlayerModel>();
+        List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 5);
         playersModels.add(player1);
@@ -60,7 +60,7 @@ class CheckWinStateTest {
     @Test
     void playerWithMajorNumberOfProfsIsGrey() {
         GameModel testGame = GameModel.getInstance();
-        List<PlayerModel> playersModels = new ArrayList<PlayerModel>();
+        List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 5);
         player1.addProf(ColorPawns.BLUE);

@@ -44,6 +44,20 @@ public class PlayerModel {
         );
     }
 
+    public PlayerModel(String nickname){
+        this.nickname = nickname;
+        this.coins = 0;
+        this.numProfs = 0;
+        this.movementMotherNatureCurrentActionPhase = 0;
+        this.studentInHall = Map.of(
+                GREEN, 0,
+                RED, 0,
+                YELLOW, 0,
+                PINK, 0,
+                BLUE, 0
+        );
+    }
+
     public PlayerModel(){
         this.colorTower = ColorTower.NULL;
     }

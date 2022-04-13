@@ -21,7 +21,7 @@ public class GameModel {
     private PhaseGame gameState;
     public GameMode mode;
     public List<ChacterCardModel> chosenCards;
-    private List<AssistantCardModel> deck;
+    private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery;
     private static GameModel istance = new GameModel();
 
@@ -52,9 +52,9 @@ public class GameModel {
         this.bag = studentsBag;
     }
 
-    public void addCardToDeck(int index, AssistantCardModel assistantCardModel){
+    public void addCardToDeck(AssistantCardModel assistantCardModel){
         if(deck == null) deck = new ArrayList<>(40);
-        this.deck.set(index, assistantCardModel);
+        this.deck.add(assistantCardModel);
     }
 
     public int getPlayersNumber(){
@@ -62,10 +62,6 @@ public class GameModel {
     }
     public List<AssistantCardModel> getDeck() {
         return deck;
-    }
-
-    public void setDeck(List<AssistantCardModel> deck) {
-        this.deck = deck;
     }
 
     public String getPlayerByNickname(String nickname){
