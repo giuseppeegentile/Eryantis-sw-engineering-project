@@ -17,12 +17,14 @@ public class CheckIfConqueredState implements GameState {
         this.gameModel = gameModel;
     }
 
-    private void moveTowerToIsland(ColorTower colorTower, IslandModel islandModel){
+    public void moveTowerToIsland(ColorTower colorTower, IslandModel islandModel){
         islandModel.setTowerColor(colorTower);
     }
 
-    private void removeTowerFromIsland(IslandModel islandModel){
+    public void removeTowerFromIsland(IslandModel islandModel){
         islandModel.setTowerColor(ColorTower.NULL);
     }
+
+
 
 }

@@ -44,6 +44,11 @@ public class PlayerModel {
         );
     }
 
+    public PlayerModel(){
+        this.colorTower = ColorTower.NULL;
+    }
+
+
     /**
      *
      * @return the number of prof owned by the player
@@ -88,6 +93,9 @@ public class PlayerModel {
         return this.nickname;
     }
 
+    public boolean hasProf(ColorPawns prof){
+        return this.getProfs().contains(prof);
+    }
 
     /**
      *
@@ -220,5 +228,10 @@ public class PlayerModel {
 
     public void setState(StatePlayer state) {
         this.state = state;
+    }
+
+
+    public void removeCard(AssistantCardModel assistantCardModel){
+        this.deckAssistantCardModel.remove(assistantCardModel);
     }
 }
