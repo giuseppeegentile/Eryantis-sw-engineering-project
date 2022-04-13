@@ -29,28 +29,24 @@ public class CheckIfJoinableState implements GameState {
     //convenzione: senso orario
     public ColorDirectionAdjacentIsland getAdjacentSameColor(){
         //indice dell'isola nell'array delle isole
+        int right, left;
         int indexIslandToChekAdjacent = this.islandModels.indexOf(this.islandModelToCheck);
-        int right = indexIslandToChekAdjacent + 1;
-        int left = indexIslandToChekAdjacent - 1;
-        if(indexIslandToChekAdjacent == 0 && islandModelToCheck.getTowerColor() == islandModels.get(11).getTowerColor()){
-            if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor()){
-                return ColorDirectionAdjacentIsland.BOTH;
-            }
-            return ColorDirectionAdjacentIsland.LEFT;
-        }
-        if(indexIslandToChekAdjacent == 11 && islandModelToCheck.getTowerColor() == islandModels.get(0).getTowerColor()){
-            if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor()){
-                return ColorDirectionAdjacentIsland.BOTH;
-            }
+        if (indexIslandToChekAdjacent != 11)
+            right = indexIslandToChekAdjacent + 1;
+        else
+            right = 0;
+        if (indexIslandToChekAdjacent != 0)
+            left = indexIslandToChekAdjacent - 1;
+        else
+            left = 11;
+        if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
+            return ColorDirectionAdjacentIsland.BOTH;
+        else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
             return ColorDirectionAdjacentIsland.RIGHT;
-        }
-        if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor()){
-            return ColorDirectionAdjacentIsland.RIGHT;
-        }
-        if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor()){
+        else if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor())
             return ColorDirectionAdjacentIsland.LEFT;
-        }
-        return ColorDirectionAdjacentIsland.NONE;
+        else
+            return ColorDirectionAdjacentIsland.NONE;
     }
 
 
@@ -75,7 +71,4 @@ public class CheckIfJoinableState implements GameState {
         islandModels.remove(indexFirstIsland + 1);
         return islandModels;
     }
-
-
-
 }
