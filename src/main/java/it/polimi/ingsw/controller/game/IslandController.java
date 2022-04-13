@@ -1,13 +1,16 @@
 package it.polimi.ingsw.controller.game;
 
 import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.player.PlayerModel;
 
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IslandController {
-    IslandModel islandModel;
+    private IslandModel islandModel;
     //IslandView islandView;
 
 
@@ -22,5 +25,7 @@ public class IslandController {
     public void setTowerColor(ColorTower colorTower){
         islandModel.setTowerColor(colorTower);
     }
+
+
 
 }

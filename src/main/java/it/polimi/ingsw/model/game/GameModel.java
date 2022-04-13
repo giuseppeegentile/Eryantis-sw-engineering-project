@@ -123,4 +123,11 @@ public class GameModel {
         this.cemetery = new ArrayList<>(playersNumber);
     }
 
+    public PlayerModel getPlayerByColorTower(ColorTower colorTower){
+        for(PlayerModel p : this.playersModels) {
+            if(p.getColorTower().equals(colorTower)) return p;
+        }
+        return new PlayerModel();
+    }
+
 }
