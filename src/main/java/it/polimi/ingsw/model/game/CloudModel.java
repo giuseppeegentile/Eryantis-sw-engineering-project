@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.GameMode;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CloudModel {
     private List<ColorPawns> students;
     private final int size; //number of student in the cloud

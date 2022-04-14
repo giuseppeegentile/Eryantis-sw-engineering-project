@@ -105,7 +105,7 @@ public class StartGameState implements GameState {
      * Utility method, called in setInitialGameConfiguration.
      * Create randomly a bag of students of size 120. With all colours.
      */
-    private void assignBag(){
+    void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
         int equalNumber = bagSize/5;
