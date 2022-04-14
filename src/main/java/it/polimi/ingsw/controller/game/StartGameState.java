@@ -245,9 +245,9 @@ public class StartGameState implements GameState {
     /**
      * Generate random cards and put them in deck of GameModel.
      */
-    private void generateDeck(){
-        byte j = 0;
+    void generateDeck(){
         for(int k = 0; k < 4; k++) {
+            byte j = 0;
             for (int i = 0; i < 10; i++) {
                 if (i % 2 == 0) j++;
                 this.gameModel.addCardToDeck(new AssistantCardModel(i + 1, j));
@@ -274,10 +274,10 @@ public class StartGameState implements GameState {
                 c.setOwner(this.gameModel.getPlayersModel().get(3));
             i.getAndIncrement();
         });
-        this.gameModel.getPlayersModel().get(0).setDeckAssistantCardModel(deck.subList(0, 9));
-        this.gameModel.getPlayersModel().get(1).setDeckAssistantCardModel(deck.subList(10, 19));
-        if(this.gameModel.getPlayersNumber() != 2) this.gameModel.getPlayersModel().get(2).setDeckAssistantCardModel(deck.subList(20, 29)); //se ho 3 o 4 giocatori
-        if(this.gameModel.getPlayersNumber() == 4) this.gameModel.getPlayersModel().get(3).setDeckAssistantCardModel(deck.subList(30, 39));
+        this.gameModel.getPlayersModel().get(0).setDeckAssistantCardModel(deck.subList(0, 10));
+        this.gameModel.getPlayersModel().get(1).setDeckAssistantCardModel(deck.subList(10, 20));
+        if(this.gameModel.getPlayersNumber() != 2) this.gameModel.getPlayersModel().get(2).setDeckAssistantCardModel(deck.subList(20, 30)); //se ho 3 o 4 giocatori
+        if(this.gameModel.getPlayersNumber() == 4) this.gameModel.getPlayersModel().get(3).setDeckAssistantCardModel(deck.subList(30, 40));
 
     }
 

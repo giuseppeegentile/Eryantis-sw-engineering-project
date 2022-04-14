@@ -60,6 +60,7 @@ public class GameModel {
     public int getPlayersNumber(){
         return this.playersNumber;
     }
+    
     public List<AssistantCardModel> getDeck() {
         return deck;
     }
