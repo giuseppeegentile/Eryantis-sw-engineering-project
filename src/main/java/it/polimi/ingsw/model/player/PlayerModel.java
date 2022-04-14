@@ -10,7 +10,7 @@ import static it.polimi.ingsw.model.ColorPawns.*;
 
 public class PlayerModel {
     private String nickname;
-    private Set<ColorPawns> profs; //i prof sono univoci e non possono essere ripetuti, conviene Set
+    private List<ColorPawns> profs = null;
     private int numProfs;
     private int towerNumber; //da settare con il controller, strategy
     private ColorTower colorTower;
@@ -68,6 +68,7 @@ public class PlayerModel {
      * @return the number of prof owned by the player
      */
     public int getNumProfs(){
+        if(this.profs == null) return 0;
         return this.numProfs;
     }
 
@@ -84,7 +85,7 @@ public class PlayerModel {
      *
      * @return the set of profs owned by the player
      */
-    public Set<ColorPawns> getProfs(){
+    public List<ColorPawns> getProfs(){
         return this.profs;
     }
 
@@ -94,7 +95,7 @@ public class PlayerModel {
      */
     public void addProf(ColorPawns profToAdd){
         if(this.profs == null)
-            this.profs = new HashSet<>();
+            this.profs = new ArrayList<>();
         this.profs.add(profToAdd);
         this.numProfs += 1;
     }

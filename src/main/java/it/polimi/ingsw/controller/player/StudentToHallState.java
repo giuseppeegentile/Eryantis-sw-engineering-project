@@ -7,10 +7,11 @@ import it.polimi.ingsw.model.player.StatePlayer;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 //4.0
 public class StudentToHallState implements PlayerState {
-    public PlayerModel playerModel;
+    private PlayerModel playerModel;
 
     public StudentToHallState(PlayerModel playerModel){
         this.playerModel = playerModel;
@@ -47,14 +48,18 @@ public class StudentToHallState implements PlayerState {
     }
 
     public void assignProfToPlayer(List<PlayerModel> playersModels, ColorPawns prof){
+        AtomicBoolean i = new AtomicBoolean(false);
         playersModels.forEach(p ->{
             //se un altro giocatore ha già il prof
-            if (!Objects.equals(this.playerModel.getNickname(), p.getNickname()) && p.getProfs().contains(prof)){
-                //aggiungo il prof e lo tolgo a chi lo aveva prima
-                addProf(prof);
+            if (!Objects.equals(this.playerModel.getNickname(), p.getNickname()) && p.getProfs().contains(prof)) {
+                //lo tolgo a chi lo aveva prima
                 p.removeProf(prof);
+                playerModel.addProf(prof);
+                i.set(true);
             }
         });
+        if(!i.get())
+            playerModel.addProf(prof);
 
     }
 }
