@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.game;
 
+import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.game.PhaseGame;
 
@@ -22,13 +23,16 @@ public class AddStudentFromBagToCloudState implements GameState {
         if(this.gameModel.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
             numStudentToMove = 4;
 
-        int finalNumStudentToMove = numStudentToMove;
-        this.gameModel.getCloudsModel().forEach(c ->{
-            int bagSize = this.gameModel.getBag().size();
-            c.setStudents(this.gameModel.getBag().subList(bagSize - finalNumStudentToMove - 1, bagSize - 1));
-            this.gameModel.getBag().subList(bagSize - finalNumStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+        int bagSize = this.gameModel.getBag().size();
+        int i = 0;
+        for (CloudModel c :this.gameModel.getCloudsModel()) {
 
-        });
+            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove - i - 1, bagSize-i));// prendo dalla bag gli ultimi 3 studenti
+            //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+            i++;
+        }
+        //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
+        this.gameModel.getBag().subList(this.gameModel.getPlayersNumber()*numStudentToMove - 1, bagSize);
     }
 }
 

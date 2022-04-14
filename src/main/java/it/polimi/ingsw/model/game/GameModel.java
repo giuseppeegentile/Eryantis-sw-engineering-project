@@ -81,7 +81,7 @@ public class GameModel {
 
 
     public List<CloudModel> getCloudsModel() {
-        return cloudsModel;
+        return this.cloudsModel;
     }
 
     public void setCloudsModel(List<CloudModel> cloudsModel) {

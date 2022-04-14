@@ -10,7 +10,7 @@ public class CloudModel {
     private List<ColorPawns> students;
     private final int size; //number of student in the cloud
 
-    public List<ColorPawns> getStudent(){
+    public List<ColorPawns> getStudents(){
         return this.students;
     }
 

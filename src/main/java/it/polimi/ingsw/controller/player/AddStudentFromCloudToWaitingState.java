@@ -29,7 +29,7 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
     }
 
     public void moveStudentFromCloudToWaiting(CloudModel choosenCloudByPlayer){
-        this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudent());
+        this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudents());
         choosenCloudByPlayer.cleanStudent();
     }
 }
