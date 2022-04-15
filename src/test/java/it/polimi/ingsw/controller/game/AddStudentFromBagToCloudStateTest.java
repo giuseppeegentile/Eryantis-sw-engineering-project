@@ -40,12 +40,12 @@ class AddStudentFromBagToCloudStateTest {
     public void movingStudentsFromBagToCloud(){  //non funziona
         init();
 
-        ssg.assignBag();
+        //ssg.assignBag();
 
         AddStudentFromBagToCloudState addStudentTest = new AddStudentFromBagToCloudState(testGame);
 
-        List<ColorPawns> studentFromBag = testGame.getBag().subList(116, 120);
-        List<ColorPawns> studentFromBag2 = testGame.getBag().subList(113, 117);
+        List<ColorPawns> studentFromBag = testGame.getBag().subList(88, 92);
+        List<ColorPawns> studentFromBag2 = testGame.getBag().subList(85, 89);
         addStudentTest.moveStudentFromBagToClouds();
 
         List<ColorPawns> studentOfFirstCloud = testGame.getCloudsModel().get(0).getStudents();
@@ -57,7 +57,7 @@ class AddStudentFromBagToCloudStateTest {
             numCloud++;
         }
         //System.out.println("Dalla bag " + studentFromBag);
-        assertTrue(studentFromBag.containsAll(studentOfFirstCloud) );
-        assertTrue(studentFromBag2.containsAll(studentOfSecondCloud) );
+        assertEquals(studentFromBag, studentOfFirstCloud);
+        assertEquals(studentFromBag2,studentOfSecondCloud );
     }
 }

@@ -27,12 +27,12 @@ public class AddStudentFromBagToCloudState implements GameState {
         int i = 0;
         for (CloudModel c :this.gameModel.getCloudsModel()) {
 
-            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove - i - 1, bagSize-i));// prendo dalla bag gli ultimi 3 studenti
+            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove*(i+1) - 1, bagSize-numStudentToMove*i));// prendo dalla bag gli ultimi 3 studenti
             //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
             i++;
         }
         //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
-        this.gameModel.getBag().subList(this.gameModel.getPlayersNumber()*numStudentToMove - 1, bagSize);
+        this.gameModel.setBag(this.gameModel.getBag().subList(0, this.gameModel.getBag().size() - this.gameModel.getPlayersNumber()*numStudentToMove));
     }
 }
 

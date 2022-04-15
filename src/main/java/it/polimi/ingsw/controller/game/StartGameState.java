@@ -44,6 +44,7 @@ public class StartGameState implements GameState {
     public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, GameMode mode){
         setIslandController(); //initialize the 12 islands
         assignBag();            //generate the bag randomly with 120 students
+
         generateDeck();         //generate the deck
 
         setClouds(players.size());
@@ -53,6 +54,7 @@ public class StartGameState implements GameState {
 
         assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();
+        //System.out.println(this.gameModel.getBag().size());
         assignCardsToPlayers();
 
         if(mode == GameMode.ESPERTO){
@@ -71,16 +73,24 @@ public class StartGameState implements GameState {
      */
     private void setInitialStudentEntrance(){
         int playerNumber = this.gameModel.getPlayersModel().size();
-        int initialSizeStudentEntrance = 7; //gioco a 4 o 2
-        if (playerNumber == 3) initialSizeStudentEntrance = 9; //gioco a 3
+        int numStudentEntrance = 7; //gioco a 4 o 2
+        if (playerNumber == 3) numStudentEntrance = 9; //gioco a 3
 
-        int finalInitialSizeStudentEntrance = initialSizeStudentEntrance;
-        this.gameModel.getPlayersModel().forEach(p->{
-            int bagSize = this.gameModel.getBag().size();
-            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1);
-            this.gameModel.getBag().subList(bagSize - 1 - finalInitialSizeStudentEntrance,bagSize - 1).clear(); //toglie gli studenti appena spostati
+        int i = 0;
+        int bagSize = this.gameModel.getBag().size();
+
+        for (PlayerModel p :this.gameModel.getPlayersModel()) {
+            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - (1+i)*numStudentEntrance,bagSize - i*numStudentEntrance);
             p.setStudentInEntrance(studentInEntrance);
-        });
+            i++;
+            //System.out.println(i);
+        }
+        //System.out.println(bagSize - 1 - numStudentEntrance - (i-1)*numStudentEntrance);
+        //this.gameModel.getBag().subList(bagSize - numStudentEntrance - (i-1)*numStudentEntrance, bagSize).clear();
+        //for(int j = bagSize-1; j > bagSize - numStudentEntrance -1 - (i-1)*numStudentEntrance; j--) this.gameModel.getBag().remove(j);
+        this.gameModel.setBag(this.gameModel.getBag().subList(0, bagSize - numStudentEntrance - (i-1)*numStudentEntrance));
+
+        //System.out.println(this.gameModel.getBag().size());
     }
 
     /**
@@ -107,7 +117,7 @@ public class StartGameState implements GameState {
     void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
-        int equalNumber = bagSize/5;
+        int equalNumber = 24;
 
         bag = fillListWithColors( bag, bagSize, equalNumber);
         this.gameModel.setBag(bag);
@@ -133,8 +143,8 @@ public class StartGameState implements GameState {
         List<ColorPawns> listToRet = Stream.of(listGreen, listRed, listYellow, listPink, listBlue)
                         .flatMap(Collection::stream)
                                 .collect(Collectors.toList());
-        Collections.shuffle(listToRet);
 
+        Collections.shuffle(listToRet);
         return listToRet;
     }
 
