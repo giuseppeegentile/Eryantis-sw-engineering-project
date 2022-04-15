@@ -90,7 +90,7 @@ class PlayCardAssistantStateTest {
         assertFalse(playCardPlayerOne.canPlayCard(player4.getDeckAssistantCardModel().get(0)));
 
 
-        
+
 
     }
 }

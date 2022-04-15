@@ -48,17 +48,17 @@ public class StudentToHallState implements PlayerState {
     }
 
     public void assignProfToPlayer(List<PlayerModel> playersModels, ColorPawns prof){
-        AtomicBoolean i = new AtomicBoolean(false);
-        playersModels.forEach(p ->{
+        boolean alreadyHave = false;
+        for (PlayerModel p : playersModels) {
             //se un altro giocatore ha già il prof
             if (!Objects.equals(this.playerModel.getNickname(), p.getNickname()) && p.getProfs().contains(prof)) {
                 //lo tolgo a chi lo aveva prima
                 p.removeProf(prof);
                 playerModel.addProf(prof);
-                i.set(true);
+                alreadyHave = true;
             }
-        });
-        if(!i.get())
+        }
+        if(!alreadyHave)
             playerModel.addProf(prof);
 
     }
