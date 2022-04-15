@@ -57,18 +57,20 @@ public class CheckIfJoinableState implements GameState {
         //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
         joinedStudents.addAll(this.islandModelToCheck.getStudents());
         joinedStudents.addAll(islandToJoin.getStudents());
+
+
         IslandModel joined = new IslandModel(this.islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
-        IslandController islandController = new IslandController(joined);
 
         //posiziono gli studenti sulla nuova isola
-        islandController.addStudent(joinedStudents);
+        //islandController.addStudent(joinedStudents);
         joined.setJoined(); //setta a true il valore isJoined
-        return compressIsland(this.getGameModel().getIslandsModel(), joined, indexFirstIsland);
+        int indexToRemove = this.islandModels.indexOf(islandToJoin);
+        return compressIsland(this.getGameModel().getIslandsModel(), joined, indexFirstIsland, indexToRemove);
     }
 
-    private List<IslandModel> compressIsland(List<IslandModel> islandModels, IslandModel joined, int indexFirstIsland){
+    private List<IslandModel> compressIsland(List<IslandModel> islandModels, IslandModel joined, int indexFirstIsland, int indexToRemove){
         islandModels.set(indexFirstIsland, joined);
-        islandModels.remove(indexFirstIsland + 1);
+        islandModels.remove(indexToRemove);
         return islandModels;
     }
 }

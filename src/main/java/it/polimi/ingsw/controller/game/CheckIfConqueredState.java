@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.islands.IslandModel;
 
 //6
 public class CheckIfConqueredState implements GameState {
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     @Override
     public GameModel getGameModel() {

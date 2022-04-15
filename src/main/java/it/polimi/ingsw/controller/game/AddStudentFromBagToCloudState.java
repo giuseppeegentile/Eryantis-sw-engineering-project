@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.game.PhaseGame;
 
 //2
 public class AddStudentFromBagToCloudState implements GameState {
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     @Override
     public GameModel getGameModel() {

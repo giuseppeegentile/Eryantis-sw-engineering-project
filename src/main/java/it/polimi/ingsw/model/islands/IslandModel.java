@@ -13,7 +13,7 @@ import static it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland.NONE;
 public class IslandModel {
     private final boolean motherNature;
     private List<ColorPawns> students;
-    private ColorTower colorTower = null;
+    private ColorTower colorTower;
     private boolean isJoined;
     private PlayerModel influence;
 
@@ -22,6 +22,7 @@ public class IslandModel {
         this.students = new ArrayList<>();
         this.motherNature = motherNature;
         this.isJoined = false;
+        this.colorTower = ColorTower.NULL;
     }
 
     //quando creo l'isola so già dove va madre natura (ricorda vincolo solo su un'isola, questo vincolo non va in questa classe ma dove creo l'array di isole, cioè Game)
@@ -31,6 +32,7 @@ public class IslandModel {
         this.students.add(initialStudent);
         this.motherNature = motherNature;
         this.isJoined = false;
+        this.colorTower = ColorTower.NULL;
     }
     //usato principalmente nell'unione delle isole, quando devo traslocare tutti gli studenti di un'isola in un'altra
     public IslandModel(boolean motherNature, List<ColorPawns> students){
@@ -38,6 +40,7 @@ public class IslandModel {
         this.students.addAll(students);
         this.motherNature = motherNature;
         this.isJoined = false;
+        this.colorTower = ColorTower.NULL;
     }
 
     public void addStudent(ColorPawns student){
@@ -58,7 +61,6 @@ public class IslandModel {
     }
 
     public ColorTower getTowerColor(){
-        if(colorTower == null) return ColorTower.NULL;
         return colorTower;
     }
 
