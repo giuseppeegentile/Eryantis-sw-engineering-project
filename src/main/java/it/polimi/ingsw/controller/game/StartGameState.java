@@ -272,6 +272,7 @@ public class StartGameState implements GameState {
         Collections.shuffle(deck);
         AtomicInteger i = new AtomicInteger();
 
+
         deck.forEach(c->{
             if(i.get() < 10)
                 c.setOwner(this.gameModel.getPlayersModel().get(0));

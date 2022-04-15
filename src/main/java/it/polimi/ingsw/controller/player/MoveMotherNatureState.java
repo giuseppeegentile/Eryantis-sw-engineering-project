@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.player;
 
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.player.StatePlayer;
@@ -8,10 +9,12 @@ import java.util.List;
 
 //5
 public class MoveMotherNatureState implements PlayerState {
-    public PlayerModel playerModel;
+    private PlayerModel playerModel;
+    private GameModel gameModel;
 
-    public MoveMotherNatureState(PlayerModel playerModel){
+    public MoveMotherNatureState(PlayerModel playerModel, GameModel gameModel){
         this.playerModel = playerModel;
+        this.gameModel = gameModel;
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
     }
 
@@ -31,8 +34,9 @@ public class MoveMotherNatureState implements PlayerState {
     }
 
     //restituisce la lista di Isole con madre natura aggiornata
-    public List<IslandModel> moveMotherNature(List<IslandModel> islandsModels, byte movementMotherNature){
+    public void moveMotherNature(byte movementMotherNature){
         int indexOldMotherNature = 0;
+        List<IslandModel> islandsModels = this.gameModel.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
         int newIndex = indexOldMotherNature + movementMotherNature;
         IslandModel oldIslandWithMotherNature = new IslandModel(false, islandsModels.get(indexOldMotherNature).getStudents());
@@ -40,7 +44,7 @@ public class MoveMotherNatureState implements PlayerState {
 
         islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
         islandsModels.set(newIndex, newIslandWithMotherNature);
-        return islandsModels;
+        this.gameModel.setIslands(islandsModels);
     }
 
 }

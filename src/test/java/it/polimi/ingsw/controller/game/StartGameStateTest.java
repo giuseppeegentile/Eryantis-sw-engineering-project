@@ -25,7 +25,7 @@ class StartGameStateTest {
 
     @Test
     @Order(1)
-    void initialConfigurationIslandSize() {
+    void testIslands() {
         List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide");
         playersModels.add(player1);

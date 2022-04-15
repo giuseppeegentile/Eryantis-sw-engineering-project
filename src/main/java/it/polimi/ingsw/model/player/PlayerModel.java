@@ -218,7 +218,7 @@ public class PlayerModel {
     }
 
     public List<AssistantCardModel> getDeckAssistantCardModel() {
-        return deckAssistantCardModel;
+        return this.deckAssistantCardModel;
     }
 
     public void setDeckAssistantCardModel(List<AssistantCardModel> deckAssistantCardModel) {
@@ -246,7 +246,8 @@ public class PlayerModel {
     }
 
 
-    public void removeCard(AssistantCardModel assistantCardModel){
-        this.deckAssistantCardModel.remove(assistantCardModel);
+    public void removeCard(int index){
+        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
+
     }
 }
