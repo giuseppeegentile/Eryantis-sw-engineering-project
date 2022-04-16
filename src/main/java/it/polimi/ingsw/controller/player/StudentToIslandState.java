@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.player.StatePlayer;
 public class StudentToIslandState implements PlayerState {
     private final PlayerModel playerModel;
 
-    public StudentToIslandState(PlayerModel playerModel, IslandModel islandModel){
+    public StudentToIslandState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.MOVE_STUDENT);
     }

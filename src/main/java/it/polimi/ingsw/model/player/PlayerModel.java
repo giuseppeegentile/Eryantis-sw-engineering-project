@@ -134,8 +134,7 @@ public class PlayerModel {
      */
     public void removeStudentFromEntrance(ColorPawns studentToRemove){
         int i;
-        for(i = this.studentInEntrance.size(); this.studentInEntrance.get(i).equals(studentToRemove) || i >= 0 ; i--);
-        this.studentInEntrance.remove(i);
+        this.studentInEntrance.remove(studentToRemove);
     }
 
     private static void playCard(){ }

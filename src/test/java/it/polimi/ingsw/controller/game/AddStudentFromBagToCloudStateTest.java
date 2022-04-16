@@ -1,40 +1,14 @@
 package it.polimi.ingsw.controller.game;
 
 import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameMode;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddStudentFromBagToCloudStateTest {
-    GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState(testGame);
-
-    void init(){
-        List<PlayerModel> playersModels = new ArrayList<>();
-        PlayerModel player1 = new PlayerModel("davide");
-        playersModels.add(player1);
-        PlayerModel player2 = new PlayerModel("christian");
-        playersModels.add(player2);
-        PlayerModel player3 = new PlayerModel("giuseppe");
-        playersModels.add(player3);
-        PlayerModel player4 = new PlayerModel("quarto");
-        playersModels.add(player4);
-
-        List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
-        GameMode princ = GameMode.PRINCIPIANTE;
-
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
-    }
+class AddStudentFromBagToCloudStateTest extends StartGameStateTest{
 
     @Test
     public void movingStudentsFromBagToCloud(){  //non funziona

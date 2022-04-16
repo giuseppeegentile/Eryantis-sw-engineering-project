@@ -20,8 +20,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StartGameStateTest {
-    GameModel gameModel = GameModel.getInstance();
-    StartGameState ssg= new StartGameState(gameModel);
+    GameModel testGame = GameModel.getInstance();
+    StartGameState ssg= new StartGameState(testGame);
+
+    void init(){
+        List<PlayerModel> playersModels = new ArrayList<>();
+        PlayerModel player1 = new PlayerModel("davide");
+        playersModels.add(player1);
+        PlayerModel player2 = new PlayerModel("christian");
+        playersModels.add(player2);
+        PlayerModel player3 = new PlayerModel("giuseppe");
+        playersModels.add(player3);
+        PlayerModel player4 = new PlayerModel("quarto");
+        playersModels.add(player4);
+
+        List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
+        GameMode princ = GameMode.PRINCIPIANTE;
+
+        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+    }
 
     @Test
     @Order(1)
@@ -40,11 +57,11 @@ class StartGameStateTest {
         GameMode princ = GameMode.PRINCIPIANTE;
 
         ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
-        assertEquals(12, gameModel.getIslandsModel().size());
+        assertEquals(12, testGame.getIslandsModel().size());
         AtomicInteger numNoMother = new AtomicInteger(0);
         AtomicInteger numYesMother = new AtomicInteger(0);
         AtomicInteger numNoStudent = new AtomicInteger(0);
-        gameModel.getIslandsModel().forEach(island -> {
+        testGame.getIslandsModel().forEach(island -> {
             if(!island.getMotherNature()) numNoMother.getAndIncrement();
             else numYesMother.getAndIncrement();
             if(island.getStudents().size() == 0) numNoStudent.getAndIncrement();
@@ -52,8 +69,8 @@ class StartGameStateTest {
         assertEquals(1,numYesMother.get());
         assertEquals(11,numNoMother.get());
         assertEquals(2,numNoStudent.get());
-        gameModel.getIslandsModel().get(0).setTowerColor(ColorTower.BLACK);
-        assertEquals(ColorTower.BLACK,gameModel.getIslandsModel().get(0).getTowerColor());
+        testGame.getIslandsModel().get(0).setTowerColor(ColorTower.BLACK);
+        assertEquals(ColorTower.BLACK, testGame.getIslandsModel().get(0).getTowerColor());
     }
 
 
@@ -74,19 +91,19 @@ class StartGameStateTest {
     @Test
     @Order(2)
     void testGenerationOfDeck(){
-        assertEquals(40, gameModel.getDeck().size());
-        int countPriorityEven = (int) gameModel.getDeck().stream().filter(c -> c.getPriority() % 2 == 0).count();
-        int countPriorityOdd = (int) gameModel.getDeck().stream().filter(c -> c.getPriority() % 2 != 0).count();
-        int countMovementFive = (int) gameModel.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 5).count();
-        int countMovementFour = (int) gameModel.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 4).count();
-        int countMovementThree = (int) gameModel.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 3).count();
-        int countMovementTwo = (int) gameModel.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 2).count();
-        int countMovementone = (int) gameModel.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 1).count();
+        //assertEquals(40, gameModel.getDeck().size());
+        int countPriorityEven = (int) testGame.getDeck().stream().filter(c -> c.getPriority() % 2 == 0).count();
+        int countPriorityOdd = (int) testGame.getDeck().stream().filter(c -> c.getPriority() % 2 != 0).count();
+        int countMovementFive = (int) testGame.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 5).count();
+        int countMovementFour = (int) testGame.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 4).count();
+        int countMovementThree = (int) testGame.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 3).count();
+        int countMovementTwo = (int) testGame.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 2).count();
+        int countMovementOne = (int) testGame.getDeck().stream().filter(c -> c.getMotherNatureMovement() == 1).count();
         assertEquals(8, countMovementFive);  //ci sono 8 valori di madre natura di 5
         assertEquals(8, countMovementThree);//ci sono 8 valori di madre natura di 3
         assertEquals(8, countMovementFour);//ci sono 8 valori di madre natura di 4
         assertEquals(8, countMovementTwo);//ci sono 8 valori di madre natura di 2
-        assertEquals(8, countMovementone);//ci sono 8 valori di madre natura di 1
+        assertEquals(8, countMovementOne);//ci sono 8 valori di madre natura di 1
 
 
         assertEquals(20, countPriorityOdd); //ci sono 20 numeri dispari di priorità
@@ -95,7 +112,7 @@ class StartGameStateTest {
         AtomicInteger i = new AtomicInteger(1);
         AtomicInteger j = new AtomicInteger(1);
         //non posso testarlo perchè è randomico
-        gameModel.getDeck().forEach(c ->{
+        testGame.getDeck().forEach(c ->{
             //System.out.println("Priorità: " +  c.getPriority() + ", movimento mn: " + c.getMotherNatureMovement());
             //System.out.println(i.get() + "  " +j.get() );
             if(i.get() %2 == 0) j.getAndIncrement();
@@ -110,8 +127,8 @@ class StartGameStateTest {
     @Test
     @Order(3)
     void testAssignmentDeckToPlayers(){
-        assertEquals(4, gameModel.getPlayersModel().size());
-        gameModel.getPlayersModel().forEach(p ->{
+        assertEquals(4, testGame.getPlayersModel().size());
+        testGame.getPlayersModel().forEach(p ->{
             p.getDeckAssistantCardModel().forEach(c ->{
                 assertEquals(p, c.getOwner());
             });
