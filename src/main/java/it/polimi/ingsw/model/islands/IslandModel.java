@@ -76,7 +76,7 @@ public class IslandModel {
             playerToAssignAdditionalInfluence = gameModel.getPlayerByColorTower(towerOnIsland);
         }
 
-        Map<ColorPawns, Integer> studentInIsland = new HashMap<>(Map.of(
+        HashMap<ColorPawns, Integer> studentInIsland = new HashMap<>(Map.of(
                 GREEN, 0,
                 RED, 0,
                 YELLOW, 0,

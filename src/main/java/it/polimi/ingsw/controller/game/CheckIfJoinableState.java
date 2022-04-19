@@ -11,9 +11,9 @@ import java.util.List;
 //7
 public class CheckIfJoinableState implements GameState {
 
-    private List<IslandModel> islandModels;
-    private GameModel gameModel;
-    private IslandModel islandModelToCheck;
+    private final List<IslandModel> islandModels;
+    private final GameModel gameModel;
+    private final IslandModel islandModelToCheck;
 
     @Override
     public GameModel getGameModel() {

@@ -15,6 +15,7 @@ public class CloudModel {
     }
 
     public void cleanStudent(){
+        this.students.clear();
         this.students = new ArrayList<>(size);
     }
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 //5
 public class MoveMotherNatureState implements PlayerState {
-    private PlayerModel playerModel;
-    private GameModel gameModel;
+    private final PlayerModel playerModel;
+    private final GameModel gameModel;
 
     public MoveMotherNatureState(PlayerModel playerModel, GameModel gameModel){
         this.playerModel = playerModel;
@@ -24,14 +24,10 @@ public class MoveMotherNatureState implements PlayerState {
     }
 
     @Override
-    public void setCoins() {
-
+    public PlayerModel getPlayerModel() {
+        return this.playerModel;
     }
 
-    @Override
-    public void decrementCoins(int coinsUsed) {
-
-    }
 
     //restituisce la lista di Isole con madre natura aggiornata
     public void moveMotherNature(byte movementMotherNature){

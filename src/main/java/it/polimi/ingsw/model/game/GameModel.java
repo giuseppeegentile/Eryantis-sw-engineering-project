@@ -23,6 +23,7 @@ public class GameModel {
     public List<ChacterCardModel> chosenCards;
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery;
+    private List<PlayerModel> phaseOrder; //ordine della fase di azione
     private static GameModel istance = new GameModel();
 
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
@@ -46,6 +47,20 @@ public class GameModel {
         this.playersModels = playersModels; //lista dei giocatori
         this.playersNumber = playersModels.size();
         this.cemetery = new ArrayList<>(playersNumber);
+        this.phaseOrder = playersModels; //quando non hanno ancora giocato la carta l'ordine è quello in della lista dei player
+    }
+
+    public void setPhaseOrder(List<PlayerModel> phaseOrder){
+        this.phaseOrder = phaseOrder;
+    }
+
+    public List<PlayerModel> getPhaseOrder(){
+        return this.phaseOrder;
+    }
+
+    public void clearPhaseOrder(){
+        this.phaseOrder.clear();
+        this.phaseOrder = new ArrayList<>(playersNumber);
     }
 
     public void setBag(List<ColorPawns> studentsBag){

@@ -21,14 +21,10 @@ public class StudentToIslandState implements PlayerState {
     }
 
     @Override
-    public void setCoins() {
-
+    public PlayerModel getPlayerModel() {
+        return this.playerModel;
     }
 
-    @Override
-    public void decrementCoins(int coinsUsed) {
-
-    }
 
     public void moveStudentToIsland(ColorPawns student, IslandModel islandModel){
         islandModel.addStudent(student);

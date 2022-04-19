@@ -13,32 +13,33 @@ import java.util.Map;
 import static it.polimi.ingsw.model.ColorPawns.*;
 
 public class PlayerInitialState implements PlayerState {
-    public PlayerModel playerModel;
+    private final PlayerModel playerModel;
+    private HashMap<ColorPawns, Integer> hall = new HashMap<>();
 
-    public PlayerInitialState(PlayerModel playerModel){
+    public PlayerInitialState(PlayerModel playerModel) {
         this.playerModel = playerModel;
-    }
-
-
-    public void setTower(ColorTower colorTower, int towerNumber){
-        this.playerModel.setTowers(colorTower, towerNumber);
-    }
-
-    //dato un'array di studenti crea la mappa della hall, per la prima volta imposta la mappa
-    private void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode){
-        Map<ColorPawns, Integer> hall = new HashMap<>(Map.of(
+        hall = new HashMap<>(Map.of(
                 GREEN, 0,
                 RED, 0,
                 YELLOW, 0,
                 PINK, 0,
                 BLUE, 0
         ));
+    }
+
+
+    public void setTower(ColorTower colorTower, int towerNumber) {
+        this.playerModel.setTowers(colorTower, towerNumber);
+    }
+
+    //dato un'array di studenti crea la mappa della hall, per la prima volta imposta la mappa
+    private void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode) {
         //conta le occorrenze per ogni studente di un colore.
-        studentToAddToHall.forEach (s -> {
-            if(hall.get(s)+1 % 3 == 0 && gameMode == GameMode.ESPERTO) {//se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+        studentToAddToHall.forEach(s -> {
+            if (hall.get(s) + 1 % 3 == 0 && gameMode == GameMode.ESPERTO) {//se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 addCoins();
             }
-            hall.put(s, hall.get(s)+1);
+            hall.put(s, hall.get(s) + 1);
         });
 
         //avrò una cosa del genere:
@@ -50,15 +51,14 @@ public class PlayerInitialState implements PlayerState {
         this.playerModel.setStudentHall(hall);
     }
 
-    public void addCoins(){
+    @Override
+    public void addCoins() {
         this.playerModel.addCoins();
     }
 
-    public void setCoins(){
-        this.playerModel.setCoins();
-    }
-
-    public void decrementCoins(int coinsUsed){
-        this.playerModel.removeCoins(coinsUsed);
+    @Override
+    public PlayerModel getPlayerModel() {
+        return this.playerModel;
     }
 }
+

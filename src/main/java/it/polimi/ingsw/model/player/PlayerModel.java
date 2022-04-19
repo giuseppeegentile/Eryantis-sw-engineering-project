@@ -15,7 +15,7 @@ public class PlayerModel {
     private int towerNumber; //da settare con il controller, strategy
     private ColorTower colorTower;
     private List<AssistantCardModel> deckAssistantCardModel;
-    private Map<ColorPawns, Integer> studentInHall;
+    private Map<ColorPawns, Integer> studentInHall = new HashMap<>();
     private List<ColorPawns> studentInEntrance;
     private StatePlayer state;
     private byte movementMotherNatureCurrentActionPhase;
@@ -35,13 +35,13 @@ public class PlayerModel {
         this.coins = 0;
         this.numProfs = 0;
         this.movementMotherNatureCurrentActionPhase = 0;
-        this.studentInHall = Map.of(
+        this.studentInHall =new HashMap<>( Map.of(
                 GREEN, 0,
                 RED, 0,
                 YELLOW, 0,
                 PINK, 0,
                 BLUE, 0
-        );
+        ));
     }
 
     public PlayerModel(String nickname){
@@ -49,13 +49,13 @@ public class PlayerModel {
         this.coins = 0;
         this.numProfs = 0;
         this.movementMotherNatureCurrentActionPhase = 0;
-        this.studentInHall = Map.of(
+        this.studentInHall = new HashMap<>(Map.of(
                 GREEN, 0,
                 RED, 0,
                 YELLOW, 0,
                 PINK, 0,
                 BLUE, 0
-        );
+        ));
     }
 
     public PlayerModel(){
@@ -132,9 +132,14 @@ public class PlayerModel {
      *
      * @param studentToRemove the color of the student to remove from the entrance
      */
-    public void removeStudentFromEntrance(ColorPawns studentToRemove){
-        int i;
+    public void removeStudentFromEntrance(ColorPawns studentToRemove) {
         this.studentInEntrance.remove(studentToRemove);
+        for(int i = 0; i < this.studentInEntrance.size() && !this.studentInEntrance.get(i).equals(studentToRemove); i++){
+            if(this.studentInEntrance.get(i).equals(studentToRemove)) {
+                this.studentInEntrance.remove(i);
+
+            }
+        }
     }
 
     private static void playCard(){ }
@@ -237,7 +242,7 @@ public class PlayerModel {
     }
 
     public void setStudentInEntrance(List<ColorPawns> studentInEntrance) {
-        this.studentInEntrance = studentInEntrance;
+        this.studentInEntrance = new ArrayList(studentInEntrance);
     }
 
     public void setState(StatePlayer state) {

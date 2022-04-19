@@ -19,14 +19,10 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
     }
 
     @Override
-    public void setCoins() {
-
+    public PlayerModel getPlayerModel() {
+        return this.playerModel;
     }
 
-    @Override
-    public void decrementCoins(int coinsUsed) {
-
-    }
 
     public void moveStudentFromCloudToWaiting(CloudModel choosenCloudByPlayer){
         this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudents());

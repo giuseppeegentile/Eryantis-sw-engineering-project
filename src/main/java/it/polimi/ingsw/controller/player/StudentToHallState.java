@@ -11,30 +11,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 //4.0
 public class StudentToHallState implements PlayerState {
-    private PlayerModel playerModel;
+    private final PlayerModel playerModel;
 
     public StudentToHallState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.MOVE_STUDENT);
     }
 
-    @Override
-    public void addCoins() {
-
-    }
-
-    @Override
-    public void setCoins() {
-
-    }
-
-    @Override
-    public void decrementCoins(int coinsUsed) {
-
-    }
 
     //sposta il singolo studente nella hall
-    public void moveStudentToHall(ColorPawns student, GameMode gameMode){
+    public void moveStudentToHall(ColorPawns student, GameMode gameMode) {
         //conta le occorrenze per ogni studente di un colore
         if(this.playerModel.getStudentInHall().get(student) + 1 % 3 == 0 && gameMode == GameMode.ESPERTO) //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
             this.addCoins();
@@ -43,23 +29,33 @@ public class StudentToHallState implements PlayerState {
         this.playerModel.removeStudentFromEntrance(student);
     }
 
-    public void addProf(ColorPawns profToAdd){
-        this.playerModel.addProf(profToAdd);
-    }
-
     public void assignProfToPlayer(List<PlayerModel> playersModels, ColorPawns prof){
         boolean alreadyHave = false;
         for (PlayerModel p : playersModels) {
             //se un altro giocatore ha già il prof
-            if (!Objects.equals(this.playerModel.getNickname(), p.getNickname()) && p.getProfs().contains(prof)) {
-                //lo tolgo a chi lo aveva prima
-                p.removeProf(prof);
-                playerModel.addProf(prof);
-                alreadyHave = true;
+            if(p.getProfs() != null) {
+                if (!Objects.equals(this.playerModel.getNickname(), p.getNickname()) && p.getProfs().contains(prof)) {
+                    //lo tolgo a chi lo aveva prima
+                    p.removeProf(prof);
+                    playerModel.addProf(prof);
+                    alreadyHave = true;
+                }
             }
         }
         if(!alreadyHave)
             playerModel.addProf(prof);
 
     }
+
+
+    @Override
+    public void addCoins() {
+
+    }
+
+    @Override
+    public PlayerModel getPlayerModel() {
+        return this.playerModel;
+    }
+
 }
