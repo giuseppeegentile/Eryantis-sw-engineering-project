@@ -1,14 +1,13 @@
 package it.polimi.ingsw.model.islands;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.*;
 
-import static it.polimi.ingsw.model.ColorPawns.*;
-import static it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland.NONE;
+import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
 public class IslandModel {
     private final boolean motherNature;

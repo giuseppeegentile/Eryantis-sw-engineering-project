@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;

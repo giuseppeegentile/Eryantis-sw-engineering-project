@@ -1,13 +1,10 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
-import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

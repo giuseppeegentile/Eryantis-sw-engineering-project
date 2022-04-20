@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.player.StatePlayer;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 //4.0
 public class StudentToHallState implements PlayerState {

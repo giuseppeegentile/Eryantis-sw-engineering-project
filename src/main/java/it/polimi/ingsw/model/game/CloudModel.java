@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.colors.ColorPawns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +25,6 @@ public class CloudModel {
     public void setStudents(List<ColorPawns> students) {
         this.students = students;
     }
+
+
 }

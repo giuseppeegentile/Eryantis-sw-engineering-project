@@ -1,15 +1,18 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.ChacterCardModel;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class GameModel {
     private List<IslandModel> islandModels;
@@ -24,6 +27,12 @@ public class GameModel {
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery;
     private List<PlayerModel> phaseOrder; //ordine della fase di azione
+
+    private transient Map<String, VirtualView> virtualViewMap;
+
+
+    public static final String SERVER_NICKNAME = "server";
+
     private static GameModel istance = new GameModel();
 
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
@@ -33,7 +42,9 @@ public class GameModel {
             return new ArrayList<>();
         }
     }
-
+    public static void resetInstance() {
+        GameModel.istance = null;
+    }
     //singleton pattern: quando dovrò usare Game in un'altra classe dovrò fare:
     //Game g = Game.getInstance();
     //e usare g come oggetto normale
@@ -141,5 +152,28 @@ public class GameModel {
         }
         return new PlayerModel();
     }
+    public boolean isNicknameTaken(String nickname) {
+        return playersModels.stream()
+                .anyMatch(p -> nickname.equals(p.getNickname()));
+    }
+    public void endGame() {
+        GameModel.resetInstance();
 
+        Server.LOGGER.info("Game finished. ");
+    }
+
+    public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showDisconnectionMessage(nicknameDisconnected, text);
+        }
+    }
+
+    public void setVirtualViewMap(Map<String, VirtualView> virtualViewMap) {
+        this.virtualViewMap = virtualViewMap;
+    }
+
+
+    public Map<String, VirtualView> getVirtualViewMap() {
+        return this.virtualViewMap;
+    }
 }

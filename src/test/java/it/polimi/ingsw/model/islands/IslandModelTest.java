@@ -1,8 +1,7 @@
 package it.polimi.ingsw.model.islands;
 
-import it.polimi.ingsw.controller.game.CheckWinState;
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;

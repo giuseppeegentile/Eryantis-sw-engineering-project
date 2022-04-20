@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller.player;
 
 //stessa cosa del GameControllerState
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static it.polimi.ingsw.model.ColorPawns.*;
+import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
 public class PlayerInitialState implements PlayerState {
     private final PlayerModel playerModel;

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.util.List;
 
@@ -18,6 +20,12 @@ public class CheckIslandState implements GameState {
     public GameModel getGameModel() {
         return this.gameModel;
     }
+
+    @Override
+    public void onMessageReceived(Message receivedMessage) {
+        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
+    }
+
 
     public CheckIslandState(GameModel gameModel, IslandModel islandModel){
         this.gameModel = gameModel;

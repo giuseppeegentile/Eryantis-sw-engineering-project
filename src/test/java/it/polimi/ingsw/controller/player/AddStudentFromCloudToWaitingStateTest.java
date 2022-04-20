@@ -1,8 +1,7 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.model.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 

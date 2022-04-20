@@ -2,19 +2,20 @@ package it.polimi.ingsw.controller.game;
 
 import it.polimi.ingsw.controller.player.PlayerState;
 import it.polimi.ingsw.controller.player.PlayerInitialState;
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.model.game.PhaseGame;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.view.VirtualView;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,6 +29,12 @@ public class StartGameState implements GameState {
     public GameModel getGameModel() {
         return this.gameModel;
     }
+
+    @Override
+    public void onMessageReceived(Message receivedMessage) {
+        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
+    }
+
 
     public StartGameState(GameModel gameModel){
         this.gameModel = gameModel;
@@ -51,6 +58,7 @@ public class StartGameState implements GameState {
 
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
+        this.gameModel.setVirtualViewMap(Collections.synchronizedMap(new HashMap<>()));
 
         assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();

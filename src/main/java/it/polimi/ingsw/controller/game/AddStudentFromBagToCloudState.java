@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.game;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.game.PhaseGame;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.view.VirtualView;
 
 //2
 public class AddStudentFromBagToCloudState implements GameState {
@@ -11,6 +14,11 @@ public class AddStudentFromBagToCloudState implements GameState {
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
+    }
+
+    @Override
+    public void onMessageReceived(Message receivedMessage) {
+        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
     }
 
     public AddStudentFromBagToCloudState(GameModel gameModel) {

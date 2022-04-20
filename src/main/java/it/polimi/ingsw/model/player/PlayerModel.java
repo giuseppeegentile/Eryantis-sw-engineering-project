@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 
 import java.util.*;
 
-import static it.polimi.ingsw.model.ColorPawns.*;
+import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
 public class PlayerModel {
     private String nickname;

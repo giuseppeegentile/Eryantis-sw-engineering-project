@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.controller.game.StartGameState;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;

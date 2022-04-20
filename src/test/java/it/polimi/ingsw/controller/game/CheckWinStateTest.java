@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.model.ColorPawns;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState();
+        CheckWinState tester = new CheckWinState(testGame);
         tester.setGameModel(testGame);
         assertEquals(ColorTower.GREY, tester.checkWin());
     }
@@ -52,7 +52,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState();
+        CheckWinState tester = new CheckWinState(testGame);
         tester.setGameModel(testGame);
         assertEquals(ColorTower.BLACK, tester.checkWin());
     }
@@ -78,7 +78,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState();
+        CheckWinState tester = new CheckWinState(testGame);
         tester.setGameModel(testGame);
         assertEquals(ColorTower.GREY, tester.checkWin());
     }
@@ -104,7 +104,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState();
+        CheckWinState tester = new CheckWinState(testGame);
         tester.setGameModel(testGame);
         assertEquals(ColorTower.BLACK, tester.checkWin());
     }

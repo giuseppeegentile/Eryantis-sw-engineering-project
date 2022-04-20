@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.controller.game.DecideFirstPlayerState;
 import it.polimi.ingsw.controller.game.StartGameState;
-import it.polimi.ingsw.model.ColorTower;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
