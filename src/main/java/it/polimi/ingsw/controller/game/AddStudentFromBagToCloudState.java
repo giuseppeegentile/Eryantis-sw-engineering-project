@@ -7,16 +7,27 @@ import it.polimi.ingsw.model.game.PhaseGame;
 public class AddStudentFromBagToCloudState implements GameState {
     private GameModel gameModel;
 
+    /**
+     *
+     * @return The current gameModel
+     */
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
     }
 
+    /**
+     * Change the state of the game with the one that add students from bag to clouds
+     * @param gameModel The current gameModel
+     */
     public AddStudentFromBagToCloudState(GameModel gameModel) {
         this.gameModel = gameModel;
         this.gameModel.setGameState(PhaseGame.ADD_STUDENT_CLOUD);
     }
 
+    /**
+     * Adds students taken from the bag to the clouds. The number depends on the game mode
+     */
     public void moveStudentFromBagToClouds(){
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
         if(this.gameModel.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
