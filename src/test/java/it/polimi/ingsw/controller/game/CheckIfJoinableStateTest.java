@@ -103,5 +103,4 @@ class CheckIfJoinableStateTest {
         CheckIfJoinableState tester = new CheckIfJoinableState(testGame, islandList.get(11));
         assertEquals(ColorDirectionAdjacentIsland.RIGHT, tester.getAdjacentSameColor());
     }
-
 }
