@@ -14,14 +14,26 @@ public class IslandController {
     //IslandView islandView;
 
 
+    /**
+     * Constructor for IslandController
+     * @param islandModel The island to be initialized
+     */
     public IslandController(IslandModel islandModel){
         this.islandModel = islandModel;
     }
 
+    /**
+     *
+     * @param studentsToAdd The list of students to add to the island
+     */
     public void addStudent(List<ColorPawns> studentsToAdd){
         islandModel.getStudents().addAll(studentsToAdd);
     }
 
+    /**
+     * Sets the tower color of the island when this is conquered by a player
+     * @param colorTower The tower color of the conquering player
+     */
     public void setTowerColor(ColorTower colorTower){
         islandModel.setTowerColor(colorTower);
     }

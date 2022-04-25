@@ -10,6 +10,10 @@ import java.util.List;
 public class MoveMotherNatureState implements PlayerState {
     public PlayerModel playerModel;
 
+    /**
+     * Constructor for MoveMotherNatureState: sets the player state to MOVE_MOTHER_NATURE
+     * @param playerModel The player who can move mother nature
+     */
     public MoveMotherNatureState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
@@ -30,6 +34,12 @@ public class MoveMotherNatureState implements PlayerState {
 
     }
 
+    /**
+     * Updates the list of island with the new position of mother nature
+     * @param islandsModels The list of the island
+     * @param movementMotherNature The number of movements mother nature is allowed to do
+     * @return The updated list of islands
+     */
     //restituisce la lista di Isole con madre natura aggiornata
     public List<IslandModel> moveMotherNature(List<IslandModel> islandsModels, byte movementMotherNature){
         int indexOldMotherNature = 0;

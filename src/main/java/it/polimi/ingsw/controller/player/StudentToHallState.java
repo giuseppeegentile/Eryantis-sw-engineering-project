@@ -12,6 +12,10 @@ import java.util.Objects;
 public class StudentToHallState implements PlayerState {
     public PlayerModel playerModel;
 
+    /**
+     * Constructor for StudentToHallState: sets the player state to MOVE_STUDENT
+     * @param playerModel The player to be initialized
+     */
     public StudentToHallState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.MOVE_STUDENT);
@@ -32,6 +36,11 @@ public class StudentToHallState implements PlayerState {
 
     }
 
+    /**
+     * Moves a student from the entrance to the hall of the player
+     * @param student The student that the player moves
+     * @param gameMode The current game mode
+     */
     //sposta il singolo studente nella hall
     public void moveStudentToHall(ColorPawns student, GameMode gameMode){
         //conta le occorrenze per ogni studente di un colore
@@ -42,10 +51,19 @@ public class StudentToHallState implements PlayerState {
         this.playerModel.removeStudentFromEntrance(student);
     }
 
+    /**
+     * Adds a prof to the hall of the player
+     * @param profToAdd The prof obtained by the player
+     */
     public void addProf(ColorPawns profToAdd){
         this.playerModel.addProf(profToAdd);
     }
 
+    /**
+     * Assign a prof to the player. If another player has that prof, it removes the prof from him
+     * @param playersModels
+     * @param prof
+     */
     public void assignProfToPlayer(List<PlayerModel> playersModels, ColorPawns prof){
         playersModels.forEach(p ->{
             //se un altro giocatore ha già il prof

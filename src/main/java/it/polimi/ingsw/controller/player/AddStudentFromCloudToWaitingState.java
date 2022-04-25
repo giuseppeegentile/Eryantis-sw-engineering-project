@@ -13,23 +13,37 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
         this.playerModel.setState(StatePlayer.CHOOSE_CLOUD_PICK_STUDENT);
     }
 
+    /**
+     *
+     */
     @Override
     public void addCoins() {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void setCoins() {
 
     }
 
+    /**
+     *
+     * @param coinsUsed
+     */
     @Override
     public void decrementCoins(int coinsUsed) {
 
     }
 
-    public void moveStudentFromCloudToWaiting(CloudModel choosenCloudByPlayer){
-        this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudent());
-        choosenCloudByPlayer.cleanStudent();
+    /**
+     * Moves the students from a cloud chosen by the player to his entrance
+     * @param chosenCloudByPlayer The cloud from which the player takes the students
+     */
+    public void moveStudentFromCloudToWaiting(CloudModel chosenCloudByPlayer){
+        this.playerModel.setStudentInEntrance(chosenCloudByPlayer.getStudent());
+        chosenCloudByPlayer.cleanStudent();
     }
 }

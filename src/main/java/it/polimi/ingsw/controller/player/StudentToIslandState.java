@@ -10,7 +10,11 @@ import it.polimi.ingsw.model.player.StatePlayer;
 public class StudentToIslandState implements PlayerState {
     private final PlayerModel playerModel;
 
-    public StudentToIslandState(PlayerModel playerModel, IslandModel islandModel){
+    /**
+     * Constructor for StudentToIslandState: sets the player state to MOVE_STUDENT
+     * @param playerModel The player who is moving the student
+     */
+    public StudentToIslandState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.MOVE_STUDENT);
     }
@@ -30,6 +34,11 @@ public class StudentToIslandState implements PlayerState {
 
     }
 
+    /**
+     * Moves the selected student from the entrance to the island
+     * @param student The student to place on the island
+     * @param islandModel The island where the student has to be placed
+     */
     public void moveStudentToIsland(ColorPawns student, IslandModel islandModel){
         islandModel.addStudent(student);
         this.playerModel.removeStudentFromEntrance(student);

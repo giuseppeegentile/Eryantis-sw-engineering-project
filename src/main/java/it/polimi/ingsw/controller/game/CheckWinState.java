@@ -11,16 +11,28 @@ import java.util.List;
 public class CheckWinState implements GameState {
     private GameModel gameModel;
 
+    /**
+     *
+     * @return The current gameModel
+     */
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
     }
 
+    /**
+     *
+     * @param gameModel The current gameModel
+     */
     public void setGameModel(GameModel gameModel){
         this.gameModel = gameModel;
     }
 
 
+    /**
+     * Checks which player is the winner. It depends on the number of tower placed on island or in case of draw on the number of prof owned. It's called when there are only 3 islands, the last card is played or the last student is taken from the bag
+     * @return The tower color of the winning player
+     */
     //da chiamare quando rimangono solo 3 isole unificate
     //alla fine del round in cui viene pescato l'ultimo studente o giocata l'ultima carta
     public ColorTower checkWin() {

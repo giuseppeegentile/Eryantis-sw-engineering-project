@@ -86,7 +86,7 @@ public class CheckIfJoinableState implements GameState {
     }
 
     /**
-     * Sets in the position of the first joined island the joining result and remove
+     * Sets in the position of the first joined island the joining result and remove the other one
      * @param islandModels The list of island in the current game
      * @param joined The joining result of the two islands
      * @param indexFirstIsland Index of the first joined island
