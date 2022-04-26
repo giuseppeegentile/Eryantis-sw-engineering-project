@@ -30,9 +30,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState(testGame);
-        tester.setGameModel(testGame);
-        assertEquals(ColorTower.GREY, tester.checkWin());
+        assertEquals(ColorTower.GREY, testGame.checkWin());
     }
 
     @Test
@@ -52,9 +50,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState(testGame);
-        tester.setGameModel(testGame);
-        assertEquals(ColorTower.BLACK, tester.checkWin());
+        assertEquals(ColorTower.BLACK, testGame.checkWin());
     }
 
     @Test
@@ -78,9 +74,7 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState(testGame);
-        tester.setGameModel(testGame);
-        assertEquals(ColorTower.GREY, tester.checkWin());
+        assertEquals(ColorTower.GREY, testGame.checkWin());
     }
 
     @Test
@@ -104,8 +98,6 @@ class CheckWinStateTest {
         player4.setTowers(ColorTower.BLACK, 0);
         playersModels.add(player4);
         testGame.setPlayers(playersModels);
-        CheckWinState tester = new CheckWinState(testGame);
-        tester.setGameModel(testGame);
-        assertEquals(ColorTower.BLACK, tester.checkWin());
+        assertEquals(ColorTower.BLACK, testGame.checkWin());
     }
 }

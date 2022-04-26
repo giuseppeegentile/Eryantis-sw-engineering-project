@@ -225,9 +225,7 @@ public class StartGameState implements GameState {
         });
     }
 
-
-    //imposta le isole, con madre natura e studenti INIZIALI
-
+    
     /**
      * Set islands, with mother nature and initial students configuration.
      */

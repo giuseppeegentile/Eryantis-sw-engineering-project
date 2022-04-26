@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.ChacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -175,5 +177,62 @@ public class GameModel {
 
     public Map<String, VirtualView> getVirtualViewMap() {
         return this.virtualViewMap;
+    }
+
+    //convenzione: senso orario
+    public ColorDirectionAdjacentIsland getAdjacentSameColor(IslandModel islandModelToCheck){
+        //indice dell'isola nell'array delle isole
+        int right, left;
+        int indexIslandToChekAdjacent = this.islandModels.indexOf(islandModelToCheck);
+        if (indexIslandToChekAdjacent != 11)
+            right = indexIslandToChekAdjacent + 1;
+        else
+            right = 0;
+        if (indexIslandToChekAdjacent != 0)
+            left = indexIslandToChekAdjacent - 1;
+        else
+            left = 11;
+        if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
+            return ColorDirectionAdjacentIsland.BOTH;
+        else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
+            return ColorDirectionAdjacentIsland.RIGHT;
+        else if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor())
+            return ColorDirectionAdjacentIsland.LEFT;
+        else
+            return ColorDirectionAdjacentIsland.NONE;
+    }
+
+    //da chiamare quando rimangono solo 3 isole unificate
+    //alla fine del round in cui viene pescato l'ultimo studente o giocata l'ultima carta
+    public ColorTower checkWin() {
+        List<PlayerModel> playersModels = this.getPlayersModel();
+        //corrispondenza indice(studente) - valore (numero torre)
+        List<Integer> towersNumber = new ArrayList<>(playersModels.size());
+        //corrispondenza indice(studente) - valore (numero prof)
+        List<Integer> profNumber = new ArrayList<>(playersModels.size());
+        playersModels.forEach(p -> {
+            if(p.getTowerNumber() != 0)
+                towersNumber.add(p.getTowerNumber());
+            profNumber.add(p.getNumProfs());
+        });
+        byte count = 0; //numero di giocatori con stesso numero di torri
+        int minNumTower = Collections.min(towersNumber);
+        int indexMinTower;
+        indexMinTower = towersNumber.indexOf(minNumTower);
+        int i = 0; // is the index Of Player With Same Tower Number (if any)
+        for (i = 0; i < playersModels.size(); i++) {
+            if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
+                count++;
+                break; //esci dal ciclo, ci sono due giocatori con stesso numero di torri
+            }
+        }
+        if (count != 0) { //se ci sono giocatori con stesso # di torri -> controlla numProf
+            //prende, tra i due a parità di torri, il giocatore con più prof
+            return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
+                    playersModels.get(i).getColorTower() : playersModels.get(indexMinTower).getColorTower();
+        } else {        //controlla torri -> restituisce quello con minimo numero di torri
+            return playersModels.get(towersNumber.indexOf(minNumTower)).getColorTower();
+
+        }
     }
 }

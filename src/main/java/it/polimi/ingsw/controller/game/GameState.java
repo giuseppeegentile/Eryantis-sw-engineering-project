@@ -1,10 +1,6 @@
 package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
 
 import java.util.List;

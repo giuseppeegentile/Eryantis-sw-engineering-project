@@ -59,8 +59,7 @@ class CheckIfJoinableStateTest {
         islandList.add(island2);
         islandList.add(island3);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, island2);
-        assertEquals(ColorDirectionAdjacentIsland.RIGHT, tester.getAdjacentSameColor());
+        assertEquals(ColorDirectionAdjacentIsland.RIGHT, testGame.getAdjacentSameColor(island2));
     }
 
     @Test
@@ -77,8 +76,7 @@ class CheckIfJoinableStateTest {
         islandList.add(island2);
         islandList.add(island3);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, island2);
-        assertEquals(ColorDirectionAdjacentIsland.LEFT, tester.getAdjacentSameColor());
+        assertEquals(ColorDirectionAdjacentIsland.LEFT, testGame.getAdjacentSameColor(island2));
     }
 
     @Test
@@ -95,8 +93,7 @@ class CheckIfJoinableStateTest {
         islandList.add(island2);
         islandList.add(island3);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, island2);
-        assertEquals(ColorDirectionAdjacentIsland.BOTH, tester.getAdjacentSameColor());
+        assertEquals(ColorDirectionAdjacentIsland.BOTH, testGame.getAdjacentSameColor(island2));
     }
 
     @Test
@@ -113,8 +110,7 @@ class CheckIfJoinableStateTest {
         island2.setTowerColor(ColorTower.BLACK);
         islandList.add(island2);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, islandList.get(0));
-        assertEquals(ColorDirectionAdjacentIsland.LEFT, tester.getAdjacentSameColor());
+        assertEquals(ColorDirectionAdjacentIsland.LEFT, testGame.getAdjacentSameColor(islandList.get(0)));
     }
 
     @Test
@@ -131,8 +127,7 @@ class CheckIfJoinableStateTest {
         island2.setTowerColor(ColorTower.BLACK);
         islandList.add(island2);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, islandList.get(11));
-        assertEquals(ColorDirectionAdjacentIsland.RIGHT, tester.getAdjacentSameColor());
+        assertEquals(ColorDirectionAdjacentIsland.RIGHT, testGame.getAdjacentSameColor(islandList.get(11)));
     }
 
 }

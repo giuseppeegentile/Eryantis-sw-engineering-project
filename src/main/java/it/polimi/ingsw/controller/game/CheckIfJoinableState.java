@@ -34,30 +34,6 @@ public class CheckIfJoinableState implements GameState {
         this.islandModels = this.getGameModel().getIslandsModel();
     }
 
-    //convenzione: senso orario
-    public ColorDirectionAdjacentIsland getAdjacentSameColor(){
-        //indice dell'isola nell'array delle isole
-        int right, left;
-        int indexIslandToChekAdjacent = this.islandModels.indexOf(this.islandModelToCheck);
-        if (indexIslandToChekAdjacent != 11)
-            right = indexIslandToChekAdjacent + 1;
-        else
-            right = 0;
-        if (indexIslandToChekAdjacent != 0)
-            left = indexIslandToChekAdjacent - 1;
-        else
-            left = 11;
-        if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
-            return ColorDirectionAdjacentIsland.BOTH;
-        else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
-            return ColorDirectionAdjacentIsland.RIGHT;
-        else if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor())
-            return ColorDirectionAdjacentIsland.LEFT;
-        else
-            return ColorDirectionAdjacentIsland.NONE;
-    }
-
-
     //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
     public List<IslandModel> joinIsland(IslandModel islandToJoin, int indexFirstIsland){
         int sizeStudentsJoined = this.islandModelToCheck.getStudents().size() + islandToJoin.getStudents().size(); //calcolo studenti di entrambe le isole
