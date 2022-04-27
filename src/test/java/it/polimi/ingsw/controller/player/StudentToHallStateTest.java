@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.player;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 

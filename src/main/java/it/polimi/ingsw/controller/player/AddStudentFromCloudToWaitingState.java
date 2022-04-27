@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller.player;
 
+import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.model.player.StatePlayer;
+import it.polimi.ingsw.model.enums.StatePlayer;
 
 //last state
 public class AddStudentFromCloudToWaitingState implements PlayerState {
@@ -23,9 +24,17 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
         return this.playerModel;
     }
 
+    @Override
+    public StatePlayer getState() {
+        return this.playerModel.getState();
+    }
 
+    /**
+     * Moves the students from a cloud chosen by the player to his entrance
+     * @param choosenCloudByPlayer The cloud from which the player takes the students
+     */
     public void moveStudentFromCloudToWaiting(CloudModel choosenCloudByPlayer){
-        this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudents());
+        this.playerModel.setStudentInEntrance(choosenCloudByPlayer.getStudent());
         choosenCloudByPlayer.cleanStudent();
     }
 }

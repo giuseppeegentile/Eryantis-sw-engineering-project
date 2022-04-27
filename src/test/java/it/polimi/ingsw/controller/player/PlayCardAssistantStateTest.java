@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.controller.game.DecideFirstPlayerState;
+import it.polimi.ingsw.controller.game.DecideOrderPlayerState;
 import it.polimi.ingsw.controller.game.StartGameState;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.MethodOrderer;
@@ -109,7 +109,7 @@ class PlayCardAssistantStateTest {
     @Order(2)
     void setPlayersOrderForActionPhaseTest(){
         testPlayCard();
-        DecideFirstPlayerState playCardAssistantState = new DecideFirstPlayerState(testGame);
+        DecideOrderPlayerState playCardAssistantState = new DecideOrderPlayerState(testGame);
 
         playCardAssistantState.setPlayersOrderForActionPhase(this.testGame.getCemetery());
 

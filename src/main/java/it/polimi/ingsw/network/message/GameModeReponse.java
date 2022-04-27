@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.enums.GameMode;
 
 class GameModeResponse extends Message{
 

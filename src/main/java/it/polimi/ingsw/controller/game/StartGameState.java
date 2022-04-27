@@ -5,14 +5,13 @@ import it.polimi.ingsw.controller.player.PlayerInitialState;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.game.PhaseGame;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.*;
@@ -25,6 +24,12 @@ import java.util.stream.Stream;
 public class StartGameState implements GameState {
     private final GameModel gameModel;
 
+
+    public StartGameState(GameModel gameModel){
+        this.gameModel = gameModel;
+        this.gameModel.setGameState(PhaseGame.START);
+    }
+
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
@@ -35,9 +40,9 @@ public class StartGameState implements GameState {
         VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
     }
 
-
-    public StartGameState(GameModel gameModel){
-        this.gameModel = gameModel;
+    @Override
+    public PhaseGame getState() {
+        return this.gameModel.getGameState();
     }
 
     /**

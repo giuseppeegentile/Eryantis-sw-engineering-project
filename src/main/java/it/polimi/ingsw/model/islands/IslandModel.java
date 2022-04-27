@@ -16,7 +16,10 @@ public class IslandModel {
     private boolean isJoined;
     private PlayerModel influence;
 
-
+    /**
+     * Constructor for island in the model: initializes isJoined tho the false value and motherNature
+     * @param motherNature The value of motherNature. It's true only if the island is chosen as the starting position for mother nature
+     */
     public IslandModel(boolean motherNature){
         this.students = new ArrayList<>();
         this.motherNature = motherNature;
@@ -26,6 +29,11 @@ public class IslandModel {
 
     //quando creo l'isola so già dove va madre natura (ricorda vincolo solo su un'isola, questo vincolo non va in questa classe ma dove creo l'array di isole, cioè Game)
     //e so anche il colore dello studente che ci piazzo su
+    /**
+     * Constructor for island in the model: initializes isJoined tho the false value and motherNature and set the initial student on the island
+     * @param motherNature The value of motherNature. It's true only if the island is chosen as the starting position for mother nature
+     * @param initialStudent The color of the initial student placed on the island
+     */
     public IslandModel(boolean motherNature, ColorPawns initialStudent){
         this.students = new ArrayList<>();
         this.students.add(initialStudent);
@@ -34,6 +42,11 @@ public class IslandModel {
         this.colorTower = ColorTower.NULL;
     }
     //usato principalmente nell'unione delle isole, quando devo traslocare tutti gli studenti di un'isola in un'altra
+    /**
+     * Constructor for island in the model: initializes isJoined tho the false value and motherNature and set the list of the students on the island. It's used when joining islands
+     * @param motherNature
+     * @param students
+     */
     public IslandModel(boolean motherNature, List<ColorPawns> students){
         this.students = new ArrayList<>();
         this.students.addAll(students);
@@ -42,31 +55,58 @@ public class IslandModel {
         this.colorTower = ColorTower.NULL;
     }
 
+    /**
+     * Adds student chosen by the player to the island
+     * @param student Student moved by the player from a cloud or his entrance
+     */
     public void addStudent(ColorPawns student){
         if(this.students == null) this.students = new ArrayList<>();
         this.students.add(student);
     }
-
+    /**
+     * Sets isJoined to true value
+     */
     public void setJoined(){
         this.isJoined = true;
     }
 
+    /**
+     *
+     * @return The value of motherNature. It depends on whether mother nature is on the island or not
+     */
     public boolean getMotherNature(){
         return motherNature;
     }
 
+    /**
+     *
+     * @return The list of students on the island
+     */
     public List<ColorPawns> getStudents(){
         return students;
     }
 
+    /**
+     *
+     * @return The tower color of the player who conquered the island
+     */
     public ColorTower getTowerColor(){
         return colorTower;
     }
 
+    /**
+     *
+     * @param colorTower The tower color of the player who conquered the island
+     */
     public void setTowerColor(ColorTower colorTower){
         this.colorTower = colorTower;
     }
 
+    /**
+     * Calculates the influence of the island and returns the player who conquered the island
+     * @param gameModel The istance of the current match
+     * @return The player who has the major influence on the island. It depends on how many students of the same color of the prof owned by player are on the island
+     */
     public PlayerModel getInfluence(GameModel gameModel){
 
         ColorTower towerOnIsland = this.getTowerColor();

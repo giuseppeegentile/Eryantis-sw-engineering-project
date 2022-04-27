@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.player;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.enums.StatePlayer;
 
 import java.util.*;
 
@@ -124,7 +125,7 @@ public class PlayerModel {
      *
      * @return the state of the player, which is an enum
      */
-    private StatePlayer getState(){
+    public StatePlayer getState(){
         return this.state;
     }
 
@@ -221,35 +222,65 @@ public class PlayerModel {
         this.movementMotherNatureCurrentActionPhase = movementMotherNatureCurrentActionPhase;
     }
 
+    /**
+     *
+     * @return The deck of assistant cards of the player
+     */
     public List<AssistantCardModel> getDeckAssistantCardModel() {
         return this.deckAssistantCardModel;
     }
 
+    /**
+     *
+     * @param deckAssistantCardModel The deck of assistant cards to be assigned to the player
+     */
     public void setDeckAssistantCardModel(List<AssistantCardModel> deckAssistantCardModel) {
         this.deckAssistantCardModel = deckAssistantCardModel;
     }
 
+    /**
+     *
+     * @return The tower color of the player
+     */
     public ColorTower getColorTower() {
         return colorTower;
     }
 
+    /**
+     *
+     * @param colorTower The tower color chosen for the player
+     */
     public void setTowers(ColorTower colorTower) {
         this.colorTower = colorTower;
     }
-
+    /**
+     *
+     * @return The list of students placed in the entrance of the player board
+     */
     public List<ColorPawns> getStudentInEntrance() {
         return studentInEntrance;
     }
 
+    /**
+     *
+     * @param studentInEntrance The list of students that has to be placed in the entrance of the player board
+     */
     public void setStudentInEntrance(List<ColorPawns> studentInEntrance) {
         this.studentInEntrance = new ArrayList(studentInEntrance);
     }
 
+    /**
+     *
+     * @param state The next state of the player's turn
+     */
     public void setState(StatePlayer state) {
         this.state = state;
     }
 
-
+    /**
+     *
+     * @param index The index of the player's deck played that has to be removed from the player's deck
+     */
     public void removeCard(int index){
         this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
 

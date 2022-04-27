@@ -1,7 +1,7 @@
 package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.GameMode;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;

@@ -5,6 +5,7 @@ package it.polimi.ingsw.controller.game;
 //scelto dai giocatori (ordine della lista di PlayersModel)
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
@@ -15,10 +16,21 @@ import java.util.Comparator;
 import java.util.List;
 
 //SINGLETON
-public class DecideFirstPlayerState implements GameState {
+public class DecideOrderPlayerState implements GameState {
     private final GameModel gameModel;
 
-
+    /**
+     * Constructor for DecideFirstPlayerState
+     * @param gameModel The current gameModel
+     */
+    public DecideOrderPlayerState(GameModel gameModel){
+        this.gameModel = gameModel;
+        this.gameModel.setGameState(PhaseGame.DECIDE_ORDER_PHASE);
+    }
+    /**
+     *
+     * @return The current gameModel
+     */
     @Override
     public GameModel getGameModel() {
         return this.gameModel;
@@ -29,14 +41,18 @@ public class DecideFirstPlayerState implements GameState {
         VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
     }
 
-
-    public DecideFirstPlayerState(GameModel gameModel){
-        this.gameModel = gameModel;
+    @Override
+    public PhaseGame getState() {
+        return this.gameModel.getGameState();
     }
 
     //chiamato quando tutti  i giocatori hanno usato la loro carta
     //prende in input: la lista delle carte giocate, nell ordine di gioco. Restituisce una lista modificata con l ordine per la prossima fase azione
     //NON MODIFICARE LA LISTA DEI PLAYER DEL GAME, L'ORDINE INIZIALE DEVE ESSERE PRESERVATO
+    /**
+     * Called when all the players have played their card. Sets the order phase list.
+     * @param cemetery The list of cards played in the current turn in the order they were played
+     */
     public void setPlayersOrderForActionPhase(List<AssistantCardModel> cemetery){
         List<PlayerModel> playersActionPhase = new ArrayList<>(cemetery.size());
 
