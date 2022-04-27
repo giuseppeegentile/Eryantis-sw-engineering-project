@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -22,6 +23,10 @@ public interface View {
     void askMoveEntranceToIsland(PlayerModel player,ColorPawns colorPawns, IslandModel islandModel);
 
     void showDisconnectionMessage();
+
+    void showMoveMotherNatureMessage(PlayerModel player, IslandModel island, AssistantCardModel assistantCard);
+
+    void showPlayAssistantCardMessage(PlayerModel player, AssistantCardModel assistantCard);
 
     void showIslands();
 

@@ -1,12 +1,10 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.DisconnectionMessage;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.MoveMessage;
-import it.polimi.ingsw.network.message.WinMessage;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
@@ -63,6 +61,17 @@ public class VirtualView implements View, Observer {
     public void showDisconnectionMessage() {
         clientHandler.sendMessage(new DisconnectionMessage());
 
+    }
+
+    @Override
+    public void showMoveMotherNatureMessage(PlayerModel player, IslandModel island, AssistantCardModel assistantCard) {
+        clientHandler.sendMessage(new MoveMotherNatureMessage(player, island, assistantCard));
+
+    }
+
+    @Override
+    public void showPlayAssistantCardMessage(PlayerModel player, AssistantCardModel assistantCard){
+        clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
 
     @Override
