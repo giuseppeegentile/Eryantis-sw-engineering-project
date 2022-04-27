@@ -131,12 +131,16 @@ public class GameModel {
      * @param nickname The name of the player to find
      * @return The player who matches the given nickname
      */
-    public String getPlayerByNickname(String nickname){
+    public PlayerModel getPlayerByNickname(String nickname){
         return playersModels.stream()
                 .filter(p -> p.getNickname().equals(nickname))
-                .findAny().get().getNickname();
+                .findAny().get();
     }
 
+    //DA TESTARE
+    public int getIndexOfPlayer(PlayerModel playerModel){
+        return this.playersModels.indexOf(playerModel);
+    }
     /**
      *
      * @param islandsModel The island to add to the game

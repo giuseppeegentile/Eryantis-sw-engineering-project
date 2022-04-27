@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 
 import java.io.Serializable;
@@ -35,4 +36,6 @@ public abstract class Message  implements Serializable {
                 ", messageType=" + messageType +
                 '}';
     }
+
+    public abstract AssistantCardModel getCard();
 }
