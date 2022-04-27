@@ -4,10 +4,11 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serial;
+
 public class MoveMotherNatureMessage extends Message{
 
-
-
+    private static final long serialVersionUID = 1566360713494368537L;
     IslandModel islandModel;
 
     PlayerModel playerModel;

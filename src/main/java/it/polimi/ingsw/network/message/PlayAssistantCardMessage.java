@@ -3,8 +3,11 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
-public class PlayAssistantCardMessage extends Message{
+import java.io.Serial;
 
+public class PlayAssistantCardMessage extends Message{
+    
+    private static final long serialVersionUID = -7852587909172148582L;
     PlayerModel playerModel;
 
     AssistantCardModel assistantCardModel;
