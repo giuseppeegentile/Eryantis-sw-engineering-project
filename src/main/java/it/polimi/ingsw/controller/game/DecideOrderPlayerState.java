@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 //SINGLETON
-public class DecideOrderPlayerState implements GameState {
+public class DecideOrderPlayerState extends GameController implements GameState {
     private final GameModel gameModel;
 
     /**

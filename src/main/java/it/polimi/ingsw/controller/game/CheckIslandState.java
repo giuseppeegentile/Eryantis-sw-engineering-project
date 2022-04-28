@@ -13,7 +13,7 @@ import java.util.List;
 //6
 //sostituisce IslandController, fanno le stesse cose
 //island conquered
-public class CheckIslandState implements GameState {
+public class CheckIslandState extends GameController implements GameState {
     private final GameModel gameModel;
     private final IslandModel islandModel;
 

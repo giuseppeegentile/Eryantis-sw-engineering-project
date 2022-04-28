@@ -7,7 +7,7 @@ import it.polimi.ingsw.view.VirtualView;
 
 
 
-public class CheckWinState implements GameState {
+public class CheckWinState extends GameController implements GameState {
 
     private GameModel gameModel;
 

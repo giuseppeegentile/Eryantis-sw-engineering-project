@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 
 //2
-public class AddStudentFromBagToCloudState implements GameState {
+public class AddStudentFromBagToCloudState extends GameController implements GameState {
     private final GameModel gameModel;
 
     /**

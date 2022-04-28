@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.game;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.player.PlayerState;
 import it.polimi.ingsw.controller.player.PlayerInitialState;
 import it.polimi.ingsw.model.colors.ColorPawns;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 
 
 //l'unico metodo che serve dall'esterno è setInitialGameConfiguration. Tutti gli altri sono dei metodi utility ma non servono al di fuori della classe
-public class StartGameState implements GameState {
+public class StartGameState extends GameController implements GameState {
     private final GameModel gameModel;
 
 
@@ -44,7 +45,7 @@ public class StartGameState implements GameState {
     public PhaseGame getState() {
         return this.gameModel.getGameState();
     }
-
+    //WILL BE DELETED
     /**
      * Methods that initialize the game configuration. In particular:
      * instantiate the 12 islands with mother nature and random students,instantiate the bag with the students, the clouds,the tower for the players and the students in the entrance
@@ -54,6 +55,49 @@ public class StartGameState implements GameState {
      * @param mode The Game Mode: beginner or advanced. Based on this the player will have coins at the start.
      */
     public void setInitialGameConfiguration(List<PlayerModel> players, List<ColorTower> colorTowers, GameMode mode){
+        setIslandController(); //initialize the 12 islands
+        assignBag();            //generate the bag randomly with 120 students
+
+        generateDeck();         //generate the deck
+
+        setClouds(players.size());
+
+        this.gameModel.setGameMode(mode);
+        this.gameModel.setPlayers(players);
+        this.gameModel.setVirtualViewMap(Collections.synchronizedMap(new HashMap<>()));
+
+        assignTowerColorToStudent(colorTowers);
+        setInitialStudentEntrance();
+        //System.out.println(this.gameModel.getBag().size());
+        assignCardsToPlayers();
+
+        if(mode == GameMode.ESPERTO){
+            players.forEach(p ->{
+                PlayerState playerState = new PlayerInitialState(p);
+                playerState.addCoins();
+            });
+            //imposta carte personaggio
+        }
+    }
+
+    /**
+     * Methods that initialize the game configuration. In particular:
+     * instantiate the 12 islands with mother nature and random students,instantiate the bag with the students, the clouds,the tower for the players and the students in the entrance
+     *
+     * @param players List of the players
+     * @param colorTowers List of the color of the tower in the same order of the player that own them. (i.e. player1 in position 0 own the tower Grey -> the tower grey is in the 0 position of this List)
+     * @param mode The Game Mode: beginner or advanced. Based on this the player will have coins at the start.
+     */
+    public void setInitialGameConfiguration(Message receivedMessage){
+        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
+        JsonObject playersJson = obj.getAsJsonObject("players");
+        JsonObject towersJson = obj.getAsJsonObject("towers");
+        List<PlayerModel> players = new Gson().fromJson(playersJson, List.class);
+        List<ColorTower> colorTowers = new Gson().fromJson(towersJson, List.class);
+
+        GameMode mode = GameMode.valueOf(obj.get("mode").getAsString());
+
+
         setIslandController(); //initialize the 12 islands
         assignBag();            //generate the bag randomly with 120 students
 

@@ -2,5 +2,10 @@ package it.polimi.ingsw.model.enums;
 
 public enum GameMode {
     PRINCIPIANTE,
-    ESPERTO
+    ESPERTO;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
