@@ -1,9 +1,13 @@
 package it.polimi.ingsw.controller.player;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
+import it.polimi.ingsw.network.message.Message;
 
 import java.util.List;
 
@@ -19,6 +23,17 @@ public class MoveMotherNatureState implements PlayerState {
     public MoveMotherNatureState(PlayerModel playerModel, GameModel gameModel){
         this.playerModel = playerModel;
         this.gameModel = gameModel;
+        this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
+    }
+
+
+    public MoveMotherNatureState(Message receivedMessage){
+        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
+        JsonObject playersJson = obj.getAsJsonObject("player");
+        this.playerModel = new Gson().fromJson(playersJson, PlayerModel.class);
+        this.gameModel = GameModel.getInstance();
+        byte movement = obj.get("motherMovement").getAsByte();
+        moveMotherNature(movement);
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
     }
 
@@ -38,7 +53,7 @@ public class MoveMotherNatureState implements PlayerState {
     }
 
 
-    //restituisce la lista di Isole con madre natura aggiornata
+    //modifica la lista di Isole con madre natura aggiornata
     /**
      * Updates the list of island with the new position of mother nature
      * @param movementMotherNature The number of movements mother nature is allowed to do

@@ -37,11 +37,6 @@ public class DecideOrderPlayerState extends GameController implements GameState 
     }
 
     @Override
-    public void onMessageReceived(Message receivedMessage) {
-        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
-    }
-
-    @Override
     public PhaseGame getState() {
         return this.gameModel.getGameState();
     }

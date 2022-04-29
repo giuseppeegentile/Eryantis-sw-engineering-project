@@ -39,10 +39,6 @@ public class CheckIfJoinableState extends GameController implements GameState {
         return this.gameModel;
     }
 
-    @Override
-    public void onMessageReceived(Message receivedMessage) {
-        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
-    }
 
     @Override
     public PhaseGame getState() {

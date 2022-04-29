@@ -8,5 +8,8 @@ public enum PhaseGame {
     CHECK_ISLAND,
     CHECK_JOIN,
     DECIDE_ORDER_PHASE,
+    ADD_STUDENT_TO_ISLAND,
+    ADD_STUDENT_TO_HALL,
+    MOVE_MOTHER,
     LOGIN
 }

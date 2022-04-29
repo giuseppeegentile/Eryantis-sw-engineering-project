@@ -188,6 +188,19 @@ public class IslandModel {
         }
         return new PlayerModel(); //default value, meaning no player has influence
     }
+
+    /**********************************************************/
+    //DA TESTARE
+    public void addStudent(List<ColorPawns> studentsToAdd){
+        this.students.addAll(studentsToAdd);
+    }
+
+    public boolean hasTower(){
+        return ColorTower.NULL != colorTower;
+    }
+
+
+
 /*
     public PlayerModel getInfluence(GameModel gameModel){
 

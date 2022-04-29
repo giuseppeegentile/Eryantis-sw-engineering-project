@@ -29,11 +29,6 @@ public class AddStudentFromBagToCloudState extends GameController implements Gam
     }
 
     @Override
-    public void onMessageReceived(Message receivedMessage) {
-        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
-    }
-
-    @Override
     public PhaseGame getState() {
         return this.gameModel.getGameState();
     }

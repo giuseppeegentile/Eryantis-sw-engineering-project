@@ -338,4 +338,9 @@ public class GameModel {
 
         }
     }
+
+    //********************DA TESTARE
+    public IslandModel getIslandWithMother(){
+        return this.islandModels.stream().filter(IslandModel::getMotherNature).findAny().orElse(null);
+    }
 }

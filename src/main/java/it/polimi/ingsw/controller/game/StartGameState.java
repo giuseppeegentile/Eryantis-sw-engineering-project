@@ -37,15 +37,10 @@ public class StartGameState extends GameController implements GameState {
     }
 
     @Override
-    public void onMessageReceived(Message receivedMessage) {
-        VirtualView virtualView = gameModel.getVirtualViewMap().get(receivedMessage.getNickname());
-    }
-
-    @Override
     public PhaseGame getState() {
         return this.gameModel.getGameState();
     }
-    //WILL BE DELETED
+    //DA TOGLIERE, LO SOSTITUISCE QUELLO CHE ACCETTA I MESSAGGI (IDEM PER LE ALTRE CLASSI)
     /**
      * Methods that initialize the game configuration. In particular:
      * instantiate the 12 islands with mother nature and random students,instantiate the bag with the students, the clouds,the tower for the players and the students in the entrance
@@ -80,14 +75,7 @@ public class StartGameState extends GameController implements GameState {
         }
     }
 
-    /**
-     * Methods that initialize the game configuration. In particular:
-     * instantiate the 12 islands with mother nature and random students,instantiate the bag with the students, the clouds,the tower for the players and the students in the entrance
-     *
-     * @param players List of the players
-     * @param colorTowers List of the color of the tower in the same order of the player that own them. (i.e. player1 in position 0 own the tower Grey -> the tower grey is in the 0 position of this List)
-     * @param mode The Game Mode: beginner or advanced. Based on this the player will have coins at the start.
-     */
+
     public void setInitialGameConfiguration(Message receivedMessage){
         JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
         JsonObject playersJson = obj.getAsJsonObject("players");

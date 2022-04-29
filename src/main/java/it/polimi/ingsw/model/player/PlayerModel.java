@@ -285,4 +285,26 @@ public class PlayerModel {
         this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
 
     }
+
+    //**********************************
+    //DA TESTARE
+    public void removeStudentFromEntrance(List<ColorPawns> studentsToRemove){
+        for (ColorPawns student :studentsToRemove) {
+            for (ColorPawns entranceStudent: studentInEntrance){
+                if(student.equals(entranceStudent)) {
+                    studentInEntrance.remove(student);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void addTowerToBoard(){
+        this.towerNumber++;
+    }
+
+    public void removeTowerFromBoard(){
+        if(this.towerNumber!= 0)
+            this.towerNumber--;
+    }
 }

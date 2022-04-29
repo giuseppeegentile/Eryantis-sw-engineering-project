@@ -9,6 +9,5 @@ import java.util.List;
 public interface GameState {
 
     GameModel getGameModel();
-    void onMessageReceived(Message receivedMessage);
     PhaseGame getState();
 }
