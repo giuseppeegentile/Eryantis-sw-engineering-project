@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller.game;
 
-import it.polimi.ingsw.controller.player.MoveMotherNatureState;
-import it.polimi.ingsw.controller.player.PlayCardAssistantState;
-import it.polimi.ingsw.controller.player.StudentToHallState;
-import it.polimi.ingsw.controller.player.StudentToIslandState;
+import it.polimi.ingsw.controller.player.*;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
@@ -20,6 +17,8 @@ public class GameController {
         switch (this.phase) {
             case START:
                 new StartGameState(GameModel.getInstance()).setInitialGameConfiguration(receivedMessage);
+                new AddStudentFromBagToCloudState(GameModel.getInstance()).moveStudentFromBagToClouds();
+                phase = PhaseGame.PLAY_CARDS_ASSISTANT;
                 break;
             case CHECK_WIN:
                 GameModel.getInstance().checkWin();
@@ -63,12 +62,22 @@ public class GameController {
                         new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
                 }
                 if(direction == ColorDirectionAdjacentIsland.BOTH){
-
+                    if(indexOfMother == 0) {
+                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
+                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(1), 0);
+                    }
+                    if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
+                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+                    }
                 }
-                
+                this.phase = PhaseGame.ADD_STUDENT_CLOUD;
                 break;
             case ADD_STUDENT_CLOUD:
                 new AddStudentFromBagToCloudState(GameModel.getInstance());
+                break;
+            case PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE:
+                new AddStudentFromCloudToWaitingState(receivedMessage).moveStudentFromCloudToWaiting(receivedMessage);
                 break;
             case PLAY_CARDS_ASSISTANT:
                 PlayerModel player = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
@@ -79,6 +88,7 @@ public class GameController {
                 if (GameModel.getInstance().getIndexOfPlayer(player) == GameModel.getInstance().getPlayersNumber() - 1) {//se è l'ultimo giocatore che ha giocato la carta
                     new DecideOrderPlayerState(GameModel.getInstance()).setPlayersOrderForActionPhase(GameModel.getInstance().getCemetery());
                 }
+                this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
                 break;
         }
     }
