@@ -1,12 +1,17 @@
 package it.polimi.ingsw.controller.game;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.player.*;
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
+
+import java.util.List;
 
 public class GameController {
     private PhaseGame phase;
@@ -73,17 +78,25 @@ public class GameController {
                 }
                 this.phase = PhaseGame.ADD_STUDENT_CLOUD;
                 break;
-            case ADD_STUDENT_CLOUD:
-                new AddStudentFromBagToCloudState(GameModel.getInstance());
-                break;
             case PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE:
                 new AddStudentFromCloudToWaitingState(receivedMessage).moveStudentFromCloudToWaiting(receivedMessage);
+                this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
+                //picking new player from here?
                 break;
             case PLAY_CARDS_ASSISTANT:
                 PlayerModel player = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
                 PlayCardAssistantState play = new PlayCardAssistantState(player, GameModel.getInstance());
-                if(play.canPlayCard(receivedMessage.getCard())){
-                    play.playCard(receivedMessage.getCard());
+
+                JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
+                JsonObject priorityJson = obj.getAsJsonObject("priority");
+                int priority = new Gson().fromJson(priorityJson, int.class);
+
+                JsonObject movementJson = obj.getAsJsonObject("movement");
+                byte movement = new Gson().fromJson(movementJson, byte.class);
+                AssistantCardModel card = new AssistantCardModel(priority, movement);
+
+                if(play.canPlayCard(card)){
+                    play.playCard(card);
                 }
                 if (GameModel.getInstance().getIndexOfPlayer(player) == GameModel.getInstance().getPlayersNumber() - 1) {//se è l'ultimo giocatore che ha giocato la carta
                     new DecideOrderPlayerState(GameModel.getInstance()).setPlayersOrderForActionPhase(GameModel.getInstance().getCemetery());

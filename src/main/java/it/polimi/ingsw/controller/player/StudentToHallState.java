@@ -26,8 +26,7 @@ public class StudentToHallState implements PlayerState {
 
     public StudentToHallState(Message receivedMessage){
         JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
-        JsonObject playersJson = obj.getAsJsonObject("player");
-        this.playerModel = new Gson().fromJson(playersJson, PlayerModel.class);
+        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
         JsonObject studentsJson = obj.getAsJsonObject("students");
         moveStudentToHall(new Gson().fromJson(studentsJson, List.class));
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_HALL);

@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller.player;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
@@ -24,10 +25,9 @@ public class StudentToIslandState implements PlayerState {
 
     public StudentToIslandState(Message receivedMessage){
         JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
-        JsonObject playersJson = obj.getAsJsonObject("player");
-        this.playerModel = new Gson().fromJson(playersJson, PlayerModel.class);
+        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
         JsonObject studentJson = obj.getAsJsonObject("students");
-        JsonObject islandJson = obj.getAsJsonObject("students");
+        JsonObject islandJson = obj.getAsJsonObject("island");
         newMoveStudentToIsland(new Gson().fromJson(studentJson, List.class), new Gson().fromJson(islandJson, IslandModel.class));
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
 

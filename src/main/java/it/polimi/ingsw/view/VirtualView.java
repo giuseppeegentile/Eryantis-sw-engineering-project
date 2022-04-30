@@ -64,8 +64,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showMoveMotherNatureMessage(PlayerModel player, IslandModel island, AssistantCardModel assistantCard) {
-        clientHandler.sendMessage(new MoveMotherNatureMessage(player, island, assistantCard));
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
+        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
 
     }
 

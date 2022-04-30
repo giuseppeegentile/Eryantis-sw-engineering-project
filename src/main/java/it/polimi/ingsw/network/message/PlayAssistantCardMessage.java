@@ -23,7 +23,7 @@ public class PlayAssistantCardMessage extends Message{
         return "PlayAssistantCardMessage{" +
                 "nickname=" + playerModel.getNickname() +
                 ", priority=" + assistantCardModel.getPriority() +
-                ", mother nature movement=" + assistantCardModel.getMotherNatureMovement() +
+                ", movement=" + assistantCardModel.getMotherNatureMovement() +
                 '}';
     }
 }

@@ -24,7 +24,7 @@ public interface View {
 
     void showDisconnectionMessage();
 
-    void showMoveMotherNatureMessage(PlayerModel player, IslandModel island, AssistantCardModel assistantCard);
+    void showMoveMotherNatureMessage(PlayerModel player, byte movement);
 
     void showPlayAssistantCardMessage(PlayerModel player, AssistantCardModel assistantCard);
 

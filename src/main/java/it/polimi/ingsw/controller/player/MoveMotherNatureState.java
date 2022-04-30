@@ -29,8 +29,7 @@ public class MoveMotherNatureState implements PlayerState {
 
     public MoveMotherNatureState(Message receivedMessage){
         JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
-        JsonObject playersJson = obj.getAsJsonObject("player");
-        this.playerModel = new Gson().fromJson(playersJson, PlayerModel.class);
+        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
         this.gameModel = GameModel.getInstance();
         byte movement = obj.get("motherMovement").getAsByte();
         moveMotherNature(movement);

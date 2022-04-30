@@ -36,6 +36,4 @@ public abstract class Message  implements Serializable {
                 ", messageType=" + messageType +
                 '}';
     }
-
-    public abstract AssistantCardModel getCard();
 }

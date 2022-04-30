@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
+
 /**
  * Message used by the client to request a login to the server.
  */
