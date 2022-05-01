@@ -12,6 +12,7 @@ public class MoveMessage extends Message{
     PlayerModel playerModel;
     ColorPawns colorPawns;
 
+    //to island
     public MoveMessage(PlayerModel playerModel, ColorPawns colorPawns, IslandModel islandModel) {
         super(playerModel.getNickname(), MessageType.MOVE);
         this.islandModel = islandModel;

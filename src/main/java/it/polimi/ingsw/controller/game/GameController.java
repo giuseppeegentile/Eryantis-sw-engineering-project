@@ -16,6 +16,10 @@ import java.util.List;
 public class GameController {
     private PhaseGame phase;
 
+    public void setPhaseGame(PhaseGame phase){
+        this.phase = phase;
+    }
+
     public void onMessageReceived(Message receivedMessage){
         switch (this.phase) {
             case START:
