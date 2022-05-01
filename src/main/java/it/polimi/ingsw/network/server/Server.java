@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 
+import it.polimi.ingsw.controller.game.GameController;
 import it.polimi.ingsw.controller.game.GameState;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.network.message.Message;
@@ -17,6 +18,7 @@ public class Server {
     private final GameState gameState;
     private final GameModel gameModel;
     private final Map<String, ClientHandler> clientHandlerMap;
+    private final GameController controller;
 
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
@@ -27,6 +29,7 @@ public class Server {
         this.lock = new Object();
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
         this.gameModel = gameState.getGameModel();
+        this.controller = new GameController();
     }
 
     /**
@@ -34,7 +37,7 @@ public class Server {
      * @param message the message to be forwarded.
      */
     public void onMessageReceived(Message message) {
-        gameState.onMessageReceived(message);
+        controller.onMessageReceived(message);
     }
     /**
      * Adds a client to be managed by the server instance.

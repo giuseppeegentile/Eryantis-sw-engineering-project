@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
-import java.io.Serial;
 
 public class PlayAssistantCardMessage extends Message{
     
