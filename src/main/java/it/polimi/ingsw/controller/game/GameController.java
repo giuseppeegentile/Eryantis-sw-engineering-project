@@ -40,7 +40,8 @@ public class GameController {
                 new AddStudentFromBagToCloudState(gameInstance).moveStudentFromBagToClouds();
                 for (String player : virtualViewMap.keySet()) {
                     PlayerModel p = gameInstance.getPlayerByNickname(player);
-                    virtualViewMap.get(player).showInitialMessage(p, p.getDeckAssistantCardModel(), p.getColorTower(), p.getTowerNumber());
+                    virtualViewMap.get(player).showInitialTowerMessage(player, p.getColorTower(), p.getTowerNumber());
+                    virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
                 }
                 phase = PhaseGame.PLAY_CARDS_ASSISTANT;
                 break;
@@ -153,7 +154,6 @@ public class GameController {
 
                 if(play.canPlayCard(card)){
                     play.playCard(card);
-
                     for (String gamer : virtualViewMap.keySet()) {
                         virtualViewMap.get(gamer).updateCemetery(card);
                     }

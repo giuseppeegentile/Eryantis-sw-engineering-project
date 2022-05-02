@@ -30,8 +30,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askPlayers() {
-
+    public void askNickname() {
+        clientHandler.sendMessage(new LoginReply(false, true));
     }
 
     @Override
@@ -39,16 +39,9 @@ public class VirtualView implements View, Observer {
 
     }
 
-
-
     @Override
-    public void askMoveMotherNature(int movement) {
-
-    }
-
-    @Override
-    public void askTowerColor(int playersNumber) {
-
+    public void commandMoveMotherNature(String player, byte movement) {
+        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
     }
 
     @Override
@@ -114,18 +107,18 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askShowClouds() {
-
-    }
-
-    @Override
     public void showDisconnectionMessage(String nicknameDisconnected, String text) {
 
     }
 
     @Override
-    public void showInitialMessage(PlayerModel player, List<AssistantCardModel> playerDeck, ColorTower colorTower, int towerNumber) {
+    public void showInitialTowerMessage(String player, ColorTower colorTower, int towerNumber) {
+        clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
+    }
 
+    @Override
+    public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
+        clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(player,playerDeck));
     }
 
     @Override

@@ -13,11 +13,10 @@ import java.util.List;
 public interface View {
     void showWinMessage(PlayerModel winner);
 
-    void askPlayers();
+    void askNickname();
 
-    void askMoveMotherNature(int movement);
+    void commandMoveMotherNature(String player, byte movement);
 
-    void askTowerColor(int playersNumber);
 
     void askMoveCloudToEntrance(List<ColorPawns> students);
 
@@ -43,9 +42,10 @@ public interface View {
 
     void askGetFromBag();
 
-    void askShowClouds();
 
-    void showInitialMessage(PlayerModel player, List<AssistantCardModel> playerDeck, ColorTower colorTower, int towerNumber);
+    void showInitialTowerMessage(String player, ColorTower colorTower, int towerNumber);
+
+    void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
     void showNewIsland(String nickname, IslandModel islandModel, int islandIndex);
 

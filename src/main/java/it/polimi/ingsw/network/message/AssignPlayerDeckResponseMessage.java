@@ -13,8 +13,8 @@ public class AssignPlayerDeckResponseMessage extends Message {
     private final List<AssistantCardModel> assistantCardModels;
 
     //è una response
-    public AssignPlayerDeckResponseMessage(String nickname, List<AssistantCardModel> assistantCardModels, MessageType messageType) {
-        super(nickname, messageType);
+    public AssignPlayerDeckResponseMessage(String nickname, List<AssistantCardModel> assistantCardModels) {
+        super(nickname, MessageType.PLAYERS_RESPONSE);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(nickname);
         this.assistantCardModels = assistantCardModels;
     }
