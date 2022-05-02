@@ -1,13 +1,8 @@
 package it.polimi.ingsw.network.message;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.player.PlayerModel;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class InitialConfigurationRequestMessage extends Message {
@@ -24,11 +19,23 @@ public class InitialConfigurationRequestMessage extends Message {
         this.towers = towers;
     }
 
+    public List<String> getPlayers() {
+        return players;
+    }
+
+    public List<ColorTower> getTowers() {
+        return towers;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
     @Override
     public String toString() {
         return "InitialConfigurationMessage{" +
-                "players=" + new Gson().toJson(players)+
-                ", towers=" + new Gson().toJson(towers) +
+                "players=" + players+
+                ", towers=" + towers +
                 ", mode=" + gameMode +
                 '}';
     }

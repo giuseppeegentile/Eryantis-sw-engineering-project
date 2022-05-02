@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
@@ -13,16 +14,16 @@ public class MoveMessage extends Message{
     ColorPawns colorPawns;
 
     //to island
-    public MoveMessage(PlayerModel playerModel, ColorPawns colorPawns, IslandModel islandModel) {
-        super(playerModel.getNickname(), MessageType.MOVE);
+    public MoveMessage(String playerModel, ColorPawns colorPawns, IslandModel islandModel) {
+        super(playerModel, MessageType.MOVE);
         this.islandModel = islandModel;
-        this.playerModel = playerModel;
+        this.playerModel = GameModel.getInstance().getPlayerByNickname(playerModel);
         this.colorPawns = colorPawns;
     }
     //to hall
-    public MoveMessage(PlayerModel playerModel,ColorPawns colorPawns) {
-        super(playerModel.getNickname(), MessageType.MOVE);
-        this.playerModel = playerModel;
+    public MoveMessage(String player,ColorPawns colorPawns) {
+        super(player, MessageType.MOVE);
+        this.playerModel = GameModel.getInstance().getPlayerByNickname(player);
         this.colorPawns = colorPawns;
     }
 

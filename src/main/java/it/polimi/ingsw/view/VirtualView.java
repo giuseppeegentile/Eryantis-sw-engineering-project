@@ -2,12 +2,14 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class VirtualView implements View, Observer {
@@ -33,6 +35,13 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showNewIsland(String nickname, IslandModel islandModel, int islandIndex){
+
+    }
+
+
+
+    @Override
     public void askMoveMotherNature(int movement) {
 
     }
@@ -48,12 +57,12 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askMoveEntranceToHall(PlayerModel player,ColorPawns colorPawns) {
+    public void askMoveEntranceToHall(String player,ColorPawns colorPawns) {
         clientHandler.sendMessage(new MoveMessage(player, colorPawns));
     }
 
     @Override
-    public void askMoveEntranceToIsland(PlayerModel player,ColorPawns colorPawns, IslandModel islandModel) {
+    public void askMoveEntranceToIsland(String player,ColorPawns colorPawns, IslandModel islandModel) {
         clientHandler.sendMessage(new MoveMessage(player, colorPawns, islandModel));
     }
 
@@ -64,13 +73,13 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
+    public void showMoveMotherNatureMessage(String player, byte movement) {
         clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
 
     }
 
     @Override
-    public void showPlayAssistantCardMessage(PlayerModel player, AssistantCardModel assistantCard){
+    public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){
         clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
 
@@ -112,6 +121,49 @@ public class VirtualView implements View, Observer {
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected, String text) {
 
+    }
+
+    @Override
+    public void showInitialMessage(PlayerModel player, List<AssistantCardModel> playerDeck, ColorTower colorTower, int towerNumber) {
+
+    }
+
+    @Override
+    public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
+
+    }
+    @Override
+    public void updateTowerOnIsland(IslandModel islandModel){
+
+    }
+
+    @Override
+    public void updateTowerOnBoard(String nickname, int towerNumber){
+
+    }
+
+    @Override
+    public void updateIslands(List<IslandModel> islandModel){
+
+    }
+
+    @Override
+    public void showEndTurn(String nick){
+
+    }
+
+    @Override
+    public void showStartTurn(String nick){
+
+    }
+    @Override
+    public void updateCemetery(AssistantCardModel card){
+
+    }
+
+    @Override
+    public void errorCard(String player, AssistantCardModel card){
+        clientHandler.sendMessage(new ErrorCardMessageResponse(player, card));
     }
 
     public ClientHandler getClientHandler() {

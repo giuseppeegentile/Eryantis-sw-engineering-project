@@ -34,7 +34,6 @@ public class AddStudentFromBagToCloudState extends GameController implements Gam
     }
 
 
-
     /**
      * Adds students taken from the bag to the clouds. The number depends on the game mode
      */

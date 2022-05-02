@@ -23,13 +23,15 @@ public class PlayersResponse extends Message{
     public String toString() {
         StringBuilder strToBuild = new StringBuilder();
         for(int i = 0; i < players.size(); i++){
-            strToBuild.append("player").append(i).append("=").append(players.get(i).getNickname());
+            strToBuild.append("player").append(i).append("=").append(players.get(i).getNickname()).append(", ");
             strToBuild.append("tower").append(i).append("=").append(players.get(i).getColorTower());
+            if(i!=players.size()-1) strToBuild.append(", ");
+            else strToBuild.append("}");
         }
 
         return "PlayersResponse{" +
                 "nickname=" + getNickname() +
-                ", " + strToBuild +
+                ", {" + strToBuild +
                 '}';
     }
 }

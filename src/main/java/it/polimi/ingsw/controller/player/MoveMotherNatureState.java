@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.MoveMotherNatureMessage;
 
 import java.util.List;
 
@@ -28,12 +29,11 @@ public class MoveMotherNatureState implements PlayerState {
 
 
     public MoveMotherNatureState(Message receivedMessage){
-        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
         this.gameModel = GameModel.getInstance();
-        byte movement = obj.get("motherMovement").getAsByte();
-        moveMotherNature(movement);
+        byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
+        moveMotherNature(movement);
     }
 
     @Override

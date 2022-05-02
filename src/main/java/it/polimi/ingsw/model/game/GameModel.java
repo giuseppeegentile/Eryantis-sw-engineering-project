@@ -31,9 +31,6 @@ public class GameModel {
     private List<AssistantCardModel> cemetery;
     private List<PlayerModel> phaseOrder; //ordine della fase di azione
 
-    private transient Map<String, VirtualView> virtualViewMap;
-
-
     public static final String SERVER_NICKNAME = "server";
 
     private static GameModel istance = new GameModel();
@@ -258,20 +255,6 @@ public class GameModel {
         Server.LOGGER.info("Game finished. ");
     }
 
-    public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
-        for (VirtualView vv : virtualViewMap.values()) {
-            vv.showDisconnectionMessage(nicknameDisconnected, text);
-        }
-    }
-
-    public void setVirtualViewMap(Map<String, VirtualView> virtualViewMap) {
-        this.virtualViewMap = virtualViewMap;
-    }
-
-
-    public Map<String, VirtualView> getVirtualViewMap() {
-        return this.virtualViewMap;
-    }
 
     //convenzione: senso orario
     /**

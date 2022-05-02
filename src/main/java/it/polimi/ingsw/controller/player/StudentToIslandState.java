@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller.player;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.StudentToIslandMessage;
 
 import java.util.List;
 
@@ -24,15 +23,12 @@ public class StudentToIslandState implements PlayerState {
     }
 
     public StudentToIslandState(Message receivedMessage){
-        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
-        JsonObject studentJson = obj.getAsJsonObject("students");
-        JsonObject islandJson = obj.getAsJsonObject("island");
-        newMoveStudentToIsland(new Gson().fromJson(studentJson, List.class), new Gson().fromJson(islandJson, IslandModel.class));
+        newMoveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
 
     }
-
+    //da testare
     private void newMoveStudentToIsland(List<ColorPawns> student, IslandModel islandModel){
         islandModel.addStudent(student);
         this.playerModel.removeStudentFromEntrance(student);

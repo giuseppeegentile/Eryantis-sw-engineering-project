@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.StudentToHallMessage;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,10 +26,8 @@ public class StudentToHallState implements PlayerState {
     }
 
     public StudentToHallState(Message receivedMessage){
-        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
-        JsonObject studentsJson = obj.getAsJsonObject("students");
-        moveStudentToHall(new Gson().fromJson(studentsJson, List.class));
+        moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_HALL);
     }
 

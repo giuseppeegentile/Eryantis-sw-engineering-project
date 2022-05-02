@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.InitialConfigurationRequestMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 
@@ -59,7 +60,6 @@ public class StartGameState extends GameController implements GameState {
 
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
-        this.gameModel.setVirtualViewMap(Collections.synchronizedMap(new HashMap<>()));
 
         assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();
@@ -77,13 +77,15 @@ public class StartGameState extends GameController implements GameState {
 
 
     public void setInitialGameConfiguration(Message receivedMessage){
-        JsonObject obj = (new Gson()).fromJson(receivedMessage.toString(), JsonObject.class);
-        JsonObject playersJson = obj.getAsJsonObject("players");
-        JsonObject towersJson = obj.getAsJsonObject("towers");
-        List<PlayerModel> players = new Gson().fromJson(playersJson, List.class);
-        List<ColorTower> colorTowers = new Gson().fromJson(towersJson, List.class);
+        List<String> playersString = ((InitialConfigurationRequestMessage) receivedMessage).getPlayers();
+        List<PlayerModel> players = new ArrayList<>();
+        playersString.forEach(p->{
+            players.add(GameModel.getInstance().getPlayerByNickname(p));
+        });
 
-        GameMode mode = GameMode.valueOf(obj.get("mode").getAsString());
+        List<ColorTower> colorTowers = ((InitialConfigurationRequestMessage) receivedMessage).getTowers();
+
+        GameMode mode = ((InitialConfigurationRequestMessage) receivedMessage).getGameMode();
 
 
         setIslandController(); //initialize the 12 islands
@@ -95,7 +97,6 @@ public class StartGameState extends GameController implements GameState {
 
         this.gameModel.setGameMode(mode);
         this.gameModel.setPlayers(players);
-        this.gameModel.setVirtualViewMap(Collections.synchronizedMap(new HashMap<>()));
 
         assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();
@@ -134,6 +135,26 @@ public class StartGameState extends GameController implements GameState {
         //this.gameModel.getBag().subList(bagSize - numStudentEntrance - (i-1)*numStudentEntrance, bagSize).clear();
         //for(int j = bagSize-1; j > bagSize - numStudentEntrance -1 - (i-1)*numStudentEntrance; j--) this.gameModel.getBag().remove(j);
         this.gameModel.setBag(this.gameModel.getBag().subList(0, bagSize - numStudentEntrance - (i-1)*numStudentEntrance));
+
+        //System.out.println(this.gameModel.getBag().size());
+    }
+
+    //da testare
+    public void setInitialStudentEntranceForSinglePlayer(PlayerModel player){
+        int playerNumber = this.gameModel.getPlayersModel().size();
+        int numStudentEntrance = 7; //gioco a 4 o 2
+        if (playerNumber == 3) numStudentEntrance = 9; //gioco a 3
+
+        int bagSize = this.gameModel.getBag().size();
+
+        List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - numStudentEntrance,bagSize - numStudentEntrance);
+        player.setStudentInEntrance(studentInEntrance);
+
+
+        //System.out.println(bagSize - 1 - numStudentEntrance - (i-1)*numStudentEntrance);
+        //this.gameModel.getBag().subList(bagSize - numStudentEntrance - (i-1)*numStudentEntrance, bagSize).clear();
+        //for(int j = bagSize-1; j > bagSize - numStudentEntrance -1 - (i-1)*numStudentEntrance; j--) this.gameModel.getBag().remove(j);
+        this.gameModel.setBag(this.gameModel.getBag().subList(0, bagSize - numStudentEntrance));
 
         //System.out.println(this.gameModel.getBag().size());
     }
