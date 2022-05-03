@@ -30,7 +30,7 @@ public class GameModel {
     private List<PlayerModel> phaseOrder; //ordine della fase di azione
     private List<ColorTower> colorTowers;
 
-
+    private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
 
     private static GameModel istance = new GameModel();
@@ -345,5 +345,13 @@ public class GameModel {
 
     public List<ColorTower> getColorTowers() {
         return colorTowers;
+    }
+
+    public boolean isHavePlayerFinishedCards() {
+        return havePlayerFinishedCards;
+    }
+
+    public void setTrueHavePlayerFinishedCards(){
+        this.havePlayerFinishedCards = true;
     }
 }

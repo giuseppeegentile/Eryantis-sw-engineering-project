@@ -57,14 +57,15 @@ public class GameController {
                 }
                 phase = PhaseGame.START;
                 break;
-            case CHECK_WIN:
-                ColorTower winner = gameInstance.checkWin();
-                if(winner != ColorTower.NULL){ //se c'è un vincitore
-                    String winnerNick = gameInstance.getPlayerByColorTower(winner).getNickname();
-                    virtualViewMap.get(winnerNick).showWinMessage(gameInstance.getPlayerByNickname(winnerNick));
-                }else{
-                    //manda in un altro stato
+
+            case MOVE_FROM_BAG_TO_CLOUD:
+                if(gameInstance.isHavePlayerFinishedCards()) {
+                    this.checkWin();
+                    break;
                 }
+                break;
+            case CHECK_WIN:
+                this.checkWin();
                 break;
             case ADD_STUDENT_TO_ISLAND:
                 new StudentToIslandState(receivedMessage);
@@ -175,6 +176,8 @@ public class GameController {
 
                     if (gameInstance.getIndexOfPlayer(player) == gameInstance.getPlayersNumber() - 1) {//se è l'ultimo giocatore che ha giocato la carta
                         new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
+                        if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
+                            gameInstance.setTrueHavePlayerFinishedCards();
                         this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
                     }else
                         this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
@@ -189,7 +192,6 @@ public class GameController {
         }
     }
 
-
     public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
         for (VirtualView vv : virtualViewMap.values()) {
             vv.showDisconnectionMessage(nicknameDisconnected, text);
@@ -200,9 +202,18 @@ public class GameController {
         this.virtualViewMap = virtualViewMap;
     }
 
-
     public Map<String, VirtualView> getVirtualViewMap() {
         return this.virtualViewMap;
     }
 
+
+    private void checkWin(){
+        ColorTower winner = gameInstance.checkWin();
+        if(winner != ColorTower.NULL){ //se c'è un vincitore
+            String winnerNick = gameInstance.getPlayerByColorTower(winner).getNickname();
+            virtualViewMap.get(winnerNick).showWinMessage(gameInstance.getPlayerByNickname(winnerNick));
+        }else{
+            //manda in un altro stato
+        }
+    }
 }
