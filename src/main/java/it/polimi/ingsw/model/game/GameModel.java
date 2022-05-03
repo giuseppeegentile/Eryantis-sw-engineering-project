@@ -10,17 +10,15 @@ import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.view.VirtualView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class GameModel {
     private List<IslandModel> islandModels;
 
-    private int playersNumber;
+    private int playersNumber=0;
     private List<PlayerModel> playersModels;
     private List<CloudModel> cloudsModel;
     private List<ColorPawns> bag; //non sicuro sui 130
@@ -30,6 +28,8 @@ public class GameModel {
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery;
     private List<PlayerModel> phaseOrder; //ordine della fase di azione
+    private List<ColorTower> colorTowers;
+
 
     public static final String SERVER_NICKNAME = "server";
 
@@ -48,6 +48,14 @@ public class GameModel {
         }
     }
 
+
+    public void setPlayerNumber(int playersNumber){
+        this.playersNumber = playersNumber;
+    }
+    //da testare
+    public void addPlayer(PlayerModel player){
+        this.playersModels.add(player);
+    }
 
     public static void resetInstance() {
         GameModel.istance = null;
@@ -325,5 +333,17 @@ public class GameModel {
     //********************DA TESTARE
     public IslandModel getIslandWithMother(){
         return this.islandModels.stream().filter(IslandModel::getMotherNature).findAny().orElse(null);
+    }
+
+    public void setColorTowers(List<ColorTower> colorTowers){
+        this.colorTowers = colorTowers;
+    }
+
+    public void addColorTowers(ColorTower colorTowers) {
+        this.colorTowers.add(colorTowers);
+    }
+
+    public List<ColorTower> getColorTowers() {
+        return colorTowers;
     }
 }

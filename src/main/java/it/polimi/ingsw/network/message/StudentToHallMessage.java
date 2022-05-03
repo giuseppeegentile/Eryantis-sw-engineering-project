@@ -9,8 +9,8 @@ public class StudentToHallMessage extends  Message{
     private final List<ColorPawns> students;
 
 
-    StudentToHallMessage(String nickname, List<ColorPawns> students, MessageType messageType) {
-        super(nickname, messageType);
+    public StudentToHallMessage(String nickname, List<ColorPawns> students) {
+        super(nickname, MessageType.MOVE);
         this.students = students;
     }
 

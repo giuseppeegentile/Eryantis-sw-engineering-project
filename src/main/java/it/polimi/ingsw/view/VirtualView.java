@@ -3,14 +3,17 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VirtualView implements View, Observer {
     private final ClientHandler clientHandler;
@@ -45,18 +48,35 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showMessageJoiningIsland(Message message) {
+        clientHandler.sendMessage(new TextMessage(message.getNickname(),((TextMessage)message).getText()));
+
+    }
+
+    @Override
     public void askMoveCloudToEntrance(List<ColorPawns> students) {
 
     }
 
     @Override
-    public void askMoveEntranceToHall(String player,ColorPawns colorPawns) {
-        clientHandler.sendMessage(new MoveMessage(player, colorPawns));
+    public void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns) {
+        clientHandler.sendMessage(new StudentToHallMessage(player, colorPawns));
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player,ColorPawns colorPawns, IslandModel islandModel) {
-        clientHandler.sendMessage(new MoveMessage(player, colorPawns, islandModel));
+    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel) {
+        int index = GameModel.getInstance().getIslandsModel().indexOf(islandModel);
+        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns,index));
+    }
+
+    @Override
+    public void showHallMessage(String player, Map<ColorPawns, Integer> hall){
+        clientHandler.sendMessage(new DisplayHallMessage(player, hall));
+    }
+
+    @Override
+    public void showEntranceMessage(String player, List<ColorPawns> entrance){
+        clientHandler.sendMessage(new DisplayEntranceMessage(player, entrance));
     }
 
     @Override

@@ -5,10 +5,12 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface View {
     void showWinMessage(PlayerModel winner);
@@ -17,12 +19,17 @@ public interface View {
 
     void commandMoveMotherNature(String player, byte movement);
 
+    void showMessageJoiningIsland(Message message);
 
     void askMoveCloudToEntrance(List<ColorPawns> students);
 
-    void askMoveEntranceToHall(String player,ColorPawns colorPawns);
+    void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns);
 
-    void askMoveEntranceToIsland(String player,ColorPawns colorPawns, IslandModel islandModel);
+    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel);
+
+    void showHallMessage(String player, Map<ColorPawns, Integer> hall);
+
+    void showEntranceMessage(String player, List<ColorPawns> entrance);
 
     void showDisconnectionMessage();
 

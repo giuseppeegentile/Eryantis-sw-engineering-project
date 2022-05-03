@@ -13,8 +13,8 @@ public class StudentToIslandMessage extends Message{
     private final IslandModel islandModel;
     private final int indexIsland;
 
-    public StudentToIslandMessage(String nickname, List<ColorPawns> students, int indexIsland, MessageType messageType) {
-        super(nickname, messageType);
+    public StudentToIslandMessage(String nickname, List<ColorPawns> students, int indexIsland) {
+        super(nickname, MessageType.MOVE);
         this.students = students;
         this.islandModel = GameModel.getInstance().getIslandsModel().get(indexIsland);
         this.indexIsland = indexIsland;

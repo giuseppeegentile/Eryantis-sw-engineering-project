@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.PlayAssistantCardMessage;
 import it.polimi.ingsw.network.message.StudentToIslandMessage;
+import it.polimi.ingsw.network.message.TextMessage;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.Collections;
@@ -36,14 +37,25 @@ public class GameController {
     public void onMessageReceived(Message receivedMessage){
         switch (this.phase) {
             case START:
-                new StartGameState(gameInstance).setInitialGameConfiguration(receivedMessage);
-                new AddStudentFromBagToCloudState(gameInstance).moveStudentFromBagToClouds();
-                for (String player : virtualViewMap.keySet()) {
-                    PlayerModel p = gameInstance.getPlayerByNickname(player);
-                    virtualViewMap.get(player).showInitialTowerMessage(player, p.getColorTower(), p.getTowerNumber());
-                    virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
+                if(gameInstance.getPlayersNumber()==0 || gameInstance.getPlayersNumber()!=gameInstance.getPlayersNumber())
+                    new StartGameState(gameInstance).receiveAndSetTowerAndPlayer(receivedMessage);
+                else{
+                    new StartGameState(gameInstance).setInitialGameConfiguration();
+                    new AddStudentFromBagToCloudState(gameInstance).moveStudentFromBagToClouds();
+                    for (String player : virtualViewMap.keySet()) {
+                        PlayerModel p = gameInstance.getPlayerByNickname(player);
+                        virtualViewMap.get(player).showInitialTowerMessage(player, p.getColorTower(), p.getTowerNumber());
+                        virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
+
+                        virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
+
+                        virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
+                    }
+
+                    phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+                    break;
                 }
-                phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+                phase = PhaseGame.START;
                 break;
             case CHECK_WIN:
                 ColorTower winner = gameInstance.checkWin();
@@ -91,7 +103,10 @@ public class GameController {
                 }
 
                 //messaggio di attrazione delle isole
-
+                for (String player : virtualViewMap.keySet()) {
+                    PlayerModel p = gameInstance.getPlayerByNickname(player);
+                    virtualViewMap.get(player).showMessageJoiningIsland(new TextMessage(p.getNickname(), "JOINING ISLANDS..."));
+                }
 
                 //controllo se posso unificare, se sì, le unisco
                 ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);

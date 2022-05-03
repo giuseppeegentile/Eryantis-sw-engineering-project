@@ -1,6 +1,4 @@
 package it.polimi.ingsw.controller.game;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.player.PlayerState;
 import it.polimi.ingsw.controller.player.PlayerInitialState;
 import it.polimi.ingsw.model.colors.ColorPawns;
@@ -12,9 +10,8 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.InitialConfigurationRequestMessage;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.view.VirtualView;
+import it.polimi.ingsw.network.message.PlayerNicknameMessage;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -76,16 +73,27 @@ public class StartGameState extends GameController implements GameState {
     }
 
 
-    public void setInitialGameConfiguration(Message receivedMessage){
-        List<String> playersString = ((InitialConfigurationRequestMessage) receivedMessage).getPlayers();
-        List<PlayerModel> players = new ArrayList<>();
-        playersString.forEach(p->{
-            players.add(GameModel.getInstance().getPlayerByNickname(p));
-        });
+    public void receiveAndSetTowerAndPlayer(Message receivedMessage){
+        String playerNick = receivedMessage.getNickname();
+        int numPlayers = ((PlayerNicknameMessage)receivedMessage).getNumPlayers();
+        ColorTower colorTower = ((PlayerNicknameMessage)receivedMessage).getColorTower();
+        PlayerModel playerModel = new PlayerModel(playerNick, colorTower);
+        this.gameModel.setPlayerNumber(numPlayers);
+        this.gameModel.addColorTowers(colorTower);
 
-        List<ColorTower> colorTowers = ((InitialConfigurationRequestMessage) receivedMessage).getTowers();
+        this.gameModel.addPlayer(playerModel);
+        checkAndFixTower(this.gameModel.getColorTowers());
 
-        GameMode mode = ((InitialConfigurationRequestMessage) receivedMessage).getGameMode();
+        this.gameModel.setGameMode(((PlayerNicknameMessage)receivedMessage).getGameMode());
+    }
+
+    //DA TESTARE
+    public void setInitialGameConfiguration(){
+        List<PlayerModel> players = this.gameModel.getPlayersModel();
+
+        List<ColorTower> colorTowers = this.gameModel.getColorTowers();
+
+        GameMode mode = this.gameModel.getGameMode();
 
 
         setIslandController(); //initialize the 12 islands
@@ -100,6 +108,7 @@ public class StartGameState extends GameController implements GameState {
 
         assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();
+
         //System.out.println(this.gameModel.getBag().size());
         assignCardsToPlayers();
 
