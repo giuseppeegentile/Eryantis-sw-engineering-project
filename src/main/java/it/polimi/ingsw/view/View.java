@@ -3,6 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
@@ -39,7 +40,7 @@ public interface View {
 
     void showIslands();
 
-    void showClouds();
+    public void showClouds();
 
     void showPlayerBoard(PlayerModel playerModel);
 

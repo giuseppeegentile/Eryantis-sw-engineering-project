@@ -28,8 +28,8 @@ public class MoveMotherNatureState implements PlayerState {
     }
 
 
-    public MoveMotherNatureState(Message receivedMessage){
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
+    public MoveMotherNatureState(Message receivedMessage, PlayerModel activePlayer){
+        this.playerModel = activePlayer;
         this.gameModel = GameModel.getInstance();
         byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);

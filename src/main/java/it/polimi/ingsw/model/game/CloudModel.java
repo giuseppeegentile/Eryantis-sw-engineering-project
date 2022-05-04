@@ -15,7 +15,7 @@ public class CloudModel {
      *
      * @return The list of students on the cloud
      */
-    public List<ColorPawns> getStudent(){
+    public List<ColorPawns> getStudents(){
         return this.students;
     }
 

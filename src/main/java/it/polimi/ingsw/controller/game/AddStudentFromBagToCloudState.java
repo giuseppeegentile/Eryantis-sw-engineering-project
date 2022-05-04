@@ -37,6 +37,7 @@ public class AddStudentFromBagToCloudState extends GameController implements Gam
     /**
      * Adds students taken from the bag to the clouds. The number depends on the game mode
      */
+    //da testare di nuovo
     public void moveStudentFromBagToClouds(){
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
         if(this.gameModel.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
@@ -46,8 +47,9 @@ public class AddStudentFromBagToCloudState extends GameController implements Gam
         int i = 0;
         for (CloudModel c :this.gameModel.getCloudsModel()) {
 
-            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove*(i+1) - 1, bagSize-numStudentToMove*i));// prendo dalla bag gli ultimi 3 studenti
+            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));// prendo dalla bag gli ultimi 3 studenti
             //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+
             i++;
         }
         //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI

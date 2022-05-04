@@ -1,33 +1,50 @@
 package it.polimi.ingsw.controller.game;
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.PhaseGame;
+import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.network.message.PlayerNicknameMessage;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.*;
 class GameControllerTest {
-    GameController gameController = new GameController();
-    List<String> players = new ArrayList<>();
-    List<ColorTower> towers = new ArrayList<>();
-    void init() {
-        players.add("thirteen");
-        players.add("house");
-        players.add("wilson");
-        players.add("foreman");
-        towers.add(ColorTower.GREY);
-        towers.add(ColorTower.BLACK);
-        towers.add(ColorTower.GREY);
-        towers.add(ColorTower.BLACK);
-    }
+    private final GameController gameController = new GameController();
+    private final String player1 = "pl1";
+    private final ColorTower tower1 = ColorTower.BLACK;
+    private final GameModel gameInstance = GameModel.getInstance();
+    private final String player2 = "pl2";
+    private final ColorTower tower2 = ColorTower.WHITE;
+    private final String player3 = "pl3";
+    private final ColorTower tower3 = ColorTower.GREY;
 
     @Test
     void onMessageReceivedStart(){
-/*        init();
-        InitialConfigurationRequestMessage message = new InitialConfigurationRequestMessage(players, towers, GameMode.PRINCIPIANTE);
         gameController.setPhaseGame(PhaseGame.START);
-        gameController.onMessageReceived(message);*/
+        PlayerNicknameMessage message = new PlayerNicknameMessage(this.player1, 3, tower1, GameMode.PRINCIPIANTE);
+
+        gameController.onMessageReceived(message);
+        assertEquals(gameInstance.getPlayersModel().get(0).getNickname(), player1);
+        assertEquals(gameInstance.getPlayersModel().get(0).getColorTower(), ColorTower.BLACK);
+
+        PlayerNicknameMessage message2 = new PlayerNicknameMessage(this.player2, 3, tower2, GameMode.PRINCIPIANTE);
+        gameController.onMessageReceived(message2);
+        assertEquals(gameInstance.getPlayersModel().get(1).getNickname(), player2);
+        assertEquals(gameInstance.getPlayersModel().get(1).getColorTower(), ColorTower.WHITE);
+        assertEquals(PhaseGame.START, gameController.getPhaseGame());
+
+        PlayerNicknameMessage message3 = new PlayerNicknameMessage(this.player3, 3, tower3, GameMode.PRINCIPIANTE);
+        gameController.onMessageReceived(message3);
+        assertEquals(gameInstance.getPlayersModel().get(2).getNickname(), player3);
+        assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), ColorTower.GREY);
+        assertEquals(PhaseGame.PLAY_CARDS_ASSISTANT, gameController.getPhaseGame());
+
+        //DA TESTARE CON 4 per il discorso delle torri
+
+        assertEquals( 0,gameInstance.getPlayersModel().get(0).getStudentInHall().get(ColorPawns.RED));
+        assertEquals(0,gameInstance.getPlayersModel().get(2).getStudentInHall().get(ColorPawns.BLUE));
+        assertEquals(4, gameInstance.getCloudsModel().get(0).getStudents().size());
+        assertEquals(gameInstance.getPlayersModel().get(0), gameController.getPlayerActive());
     }
 
     @Test

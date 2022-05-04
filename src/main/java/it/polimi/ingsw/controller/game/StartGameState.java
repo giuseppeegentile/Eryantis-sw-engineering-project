@@ -72,19 +72,39 @@ public class StartGameState extends GameController implements GameState {
         }
     }
 
-
-    public void receiveAndSetTowerAndPlayer(Message receivedMessage){
+    //ritorna true se andato a buon fine, false se ce stato errore
+    public boolean receiveAndSetTowerAndPlayer(Message receivedMessage){
         String playerNick = receivedMessage.getNickname();
         int numPlayers = ((PlayerNicknameMessage)receivedMessage).getNumPlayers();
+
         ColorTower colorTower = ((PlayerNicknameMessage)receivedMessage).getColorTower();
+
+        gameModel.setPlayerNumber(numPlayers);
         PlayerModel playerModel = new PlayerModel(playerNick, colorTower);
-        this.gameModel.setPlayerNumber(numPlayers);
-        this.gameModel.addColorTowers(colorTower);
+        //bisogna pensare a come gestire il caso 4 giocatori
+        if(!gameModel.getColorTowers().contains(colorTower)&& numPlayers != 4) {
+            gameModel.addColorTowers(colorTower);
 
-        this.gameModel.addPlayer(playerModel);
-        checkAndFixTower(this.gameModel.getColorTowers());
+            if (numPlayers == 3)
+                playerModel.setTowers(colorTower, 6);
+            else
+                playerModel.setTowers(colorTower, 8);
+        }
+        else{ //un altro giocatore ha già preso la torre del colore che voleva playerNick
+            if(numPlayers != 4)
+                return false;
+            //se invece sono a 4 giocatori, avrò il team mate
+            if(!gameModel.getColorTowers().contains(colorTower))
+                playerModel.setTowers(colorTower, 8);
+            else
+                playerModel.setTowers(colorTower, 0);
+        }
 
-        this.gameModel.setGameMode(((PlayerNicknameMessage)receivedMessage).getGameMode());
+        gameModel.addPlayer(playerModel);
+
+
+        gameModel.setGameMode(((PlayerNicknameMessage)receivedMessage).getGameMode());
+        return true;
     }
 
     //DA TESTARE
@@ -103,10 +123,7 @@ public class StartGameState extends GameController implements GameState {
 
         setClouds(players.size());
 
-        this.gameModel.setGameMode(mode);
-        this.gameModel.setPlayers(players);
-
-        assignTowerColorToStudent(colorTowers);
+        //assignTowerColorToStudent(colorTowers);
         setInitialStudentEntrance();
 
         //System.out.println(this.gameModel.getBag().size());
@@ -148,26 +165,6 @@ public class StartGameState extends GameController implements GameState {
         //System.out.println(this.gameModel.getBag().size());
     }
 
-    //da testare
-    public void setInitialStudentEntranceForSinglePlayer(PlayerModel player){
-        int playerNumber = this.gameModel.getPlayersModel().size();
-        int numStudentEntrance = 7; //gioco a 4 o 2
-        if (playerNumber == 3) numStudentEntrance = 9; //gioco a 3
-
-        int bagSize = this.gameModel.getBag().size();
-
-        List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - numStudentEntrance,bagSize - numStudentEntrance);
-        player.setStudentInEntrance(studentInEntrance);
-
-
-        //System.out.println(bagSize - 1 - numStudentEntrance - (i-1)*numStudentEntrance);
-        //this.gameModel.getBag().subList(bagSize - numStudentEntrance - (i-1)*numStudentEntrance, bagSize).clear();
-        //for(int j = bagSize-1; j > bagSize - numStudentEntrance -1 - (i-1)*numStudentEntrance; j--) this.gameModel.getBag().remove(j);
-        this.gameModel.setBag(this.gameModel.getBag().subList(0, bagSize - numStudentEntrance));
-
-        //System.out.println(this.gameModel.getBag().size());
-    }
-
     /**
      * Utility method, called in setInitialGameConfiguration.
      * @param playerSize Number of players in the Game. Is the same number of clouds.
@@ -189,7 +186,7 @@ public class StartGameState extends GameController implements GameState {
      * Utility method, called in setInitialGameConfiguration.
      * Create randomly a bag of students of size 120. With all colours.
      */
-    void assignBag(){
+    private void assignBag(){
         int bagSize = 120;
         List<ColorPawns> bag = new ArrayList<>(bagSize);
         int equalNumber = 24;
@@ -230,10 +227,11 @@ public class StartGameState extends GameController implements GameState {
      * @param colorTowers List of tower-player correspondence.
      * @return The list of the tower-player correspondence updated (if errors occurred).
      */
+    //SUPERFLUO, DA TOGLIERE
     private List<ColorTower> checkAndFixTower(List<ColorTower> colorTowers){
         List<ColorTower> fixed = new ArrayList<>(colorTowers.size());
 
-        if(colorTowers.size() == 3) {
+        if(GameModel.getInstance().getPlayersNumber() == 3 && colorTowers.size() == 3) {
             if (colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(0) == colorTowers.get(2) || colorTowers.get(1) == colorTowers.get(2)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
@@ -242,7 +240,7 @@ public class StartGameState extends GameController implements GameState {
                 return fixed;
             }
         }
-        else if (colorTowers.size() == 2) {
+        else if (GameModel.getInstance().getPlayersNumber() == 2 && colorTowers.size() == 2) {
             if (colorTowers.get(0) == colorTowers.get(1)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
@@ -250,7 +248,7 @@ public class StartGameState extends GameController implements GameState {
             }
         }
         else { //gioco a 4
-            if (colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(2) == colorTowers.get(3)
+            if (GameModel.getInstance().getPlayersNumber() == 4 && colorTowers.size()==4 && colorTowers.get(0) == colorTowers.get(1) || colorTowers.get(2) == colorTowers.get(3)
                     || colorTowers.get(0) != colorTowers.get(2)|| colorTowers.get(1) != colorTowers.get(3)){
                 fixed.set(0, ColorTower.WHITE);
                 fixed.set(1, ColorTower.BLACK);
@@ -267,6 +265,7 @@ public class StartGameState extends GameController implements GameState {
      * Set the tower color and number to the student correspondence.
      * @param colorTowers Tower-player correspondence List.
      */
+    //SUPERFLUO, DA TOGLIERE
     private void assignTowerColorToStudent(List<ColorTower> colorTowers){
         List<ColorTower> fixedColorTowers = checkAndFixTower(colorTowers); //controllo che non ci siano errori nella lista delle torri
         List<PlayerModel> players = this.gameModel.getPlayersModel();
@@ -344,7 +343,6 @@ public class StartGameState extends GameController implements GameState {
         List<AssistantCardModel> deck = this.gameModel.getDeck();
         Collections.shuffle(deck);
         AtomicInteger i = new AtomicInteger();
-
 
         deck.forEach(c->{
             if(i.get() < 10)

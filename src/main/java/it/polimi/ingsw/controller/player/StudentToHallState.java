@@ -25,8 +25,8 @@ public class StudentToHallState implements PlayerState {
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_HALL);
     }
 
-    public StudentToHallState(Message receivedMessage){
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
+    public StudentToHallState(Message receivedMessage, PlayerModel activePlayer){
+        this.playerModel = activePlayer;
         moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_HALL);
     }

@@ -18,15 +18,15 @@ public class PlayerNicknameMessage extends Message{
     }
 
     public int getNumPlayers() {
-        return numPlayers;
+        return this.numPlayers;
     }
 
     public ColorTower getColorTower() {
-        return colorTower;
+        return this.colorTower;
     }
 
     public GameMode getGameMode() {
-        return gameMode;
+        return this.gameMode;
     }
 
     @Override

@@ -22,9 +22,9 @@ class AddStudentFromBagToCloudStateTest extends StartGameStateTest{
         List<ColorPawns> studentFromBag2 = testGame.getBag().subList(85, 89);
         addStudentTest.moveStudentFromBagToClouds();
 
-        List<ColorPawns> studentOfFirstCloud = testGame.getCloudsModel().get(0).getStudent();
+        List<ColorPawns> studentOfFirstCloud = testGame.getCloudsModel().get(0).getStudents();
 
-        List<ColorPawns> studentOfSecondCloud = testGame.getCloudsModel().get(1).getStudent();
+        List<ColorPawns> studentOfSecondCloud = testGame.getCloudsModel().get(1).getStudents();
         int numCloud= 0;
         for (CloudModel c: this.testGame.getCloudsModel()) {
             //System.out.println("Cloud_" + numCloud + " has: " + c.getStudents());

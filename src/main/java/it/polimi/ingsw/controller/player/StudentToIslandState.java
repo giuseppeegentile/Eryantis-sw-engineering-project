@@ -22,8 +22,8 @@ public class StudentToIslandState implements PlayerState {
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
     }
 
-    public StudentToIslandState(Message receivedMessage){
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(receivedMessage.getNickname());
+    public StudentToIslandState(Message receivedMessage, PlayerModel activePlayer){
+        this.playerModel = activePlayer;
         newMoveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
 

@@ -19,16 +19,16 @@ public class GameModel {
     private List<IslandModel> islandModels;
 
     private int playersNumber=0;
-    private List<PlayerModel> playersModels;
+    private List<PlayerModel> playersModels = new ArrayList<>();
     private List<CloudModel> cloudsModel;
     private List<ColorPawns> bag; //non sicuro sui 130
     private PhaseGame gameState;
     public GameMode mode;
     public List<ChacterCardModel> chosenCards;
     private List<AssistantCardModel> deck = null;
-    private List<AssistantCardModel> cemetery;
+    private List<AssistantCardModel> cemetery = new ArrayList<>();
     private List<PlayerModel> phaseOrder; //ordine della fase di azione
-    private List<ColorTower> colorTowers;
+    private List<ColorTower> colorTowers = new ArrayList<>();
 
     private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
@@ -347,7 +347,7 @@ public class GameModel {
         return colorTowers;
     }
 
-    public boolean isHavePlayerFinishedCards() {
+    public boolean havePlayersFinishedCards() {
         return havePlayerFinishedCards;
     }
 
