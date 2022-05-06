@@ -323,7 +323,7 @@ public class GameModel {
         int minNumTower = Collections.min(towersNumber);
         int indexMinTower;
         indexMinTower = towersNumber.indexOf(minNumTower);
-        int i = 0; // is the index Of Player With Same Tower Number (if any)
+        int i; // is the index Of Player With Same Tower Number (if any)
         for (i = 0; i < playersModels.size(); i++) {
             if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
                 count++;

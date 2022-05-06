@@ -74,11 +74,15 @@ public interface View {
 
     void updateCemetery(String nick, List<AssistantCardModel> cemetery);
 
+    void showInvalidCloud(String nick);
+
     void errorCard(String player, AssistantCardModel card);
 
     void showDisconnectionMessage(String nicknameDisconnected, String text);
 
     void showGenericMessage(String message);
+
+    void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted);
 
     void showInvalidNumberOfStudentMoved(String nickname);
 }

@@ -6,10 +6,7 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.PlayAssistantCardMessage;
-import it.polimi.ingsw.network.message.PlayerNicknameMessage;
-import it.polimi.ingsw.network.message.StudentToHallMessage;
-import it.polimi.ingsw.network.message.StudentToIslandMessage;
+import it.polimi.ingsw.network.message.*;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -98,8 +95,8 @@ class GameControllerTest {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority());
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getMotherNatureMovement());
                 assertEquals(3, gameInstance.getCemetery().size());
-
-/*                System.out.println("carta " + player1 + " " + msgCardPl1.getCard().getPriority() + ", "+ msgCardPl1.getCard().getMotherNatureMovement() );
+/*
+                System.out.println("carta " + player1 + " " + msgCardPl1.getCard().getPriority() + ", "+ msgCardPl1.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player2 + " " + msgCardPl2.getCard().getPriority() + ", "+ msgCardPl2.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player3 + " " + msgCardPl3.getCard().getPriority() + ", "+ msgCardPl3.getCard().getMotherNatureMovement() );
                 System.out.println("cimitero:");
@@ -139,28 +136,46 @@ class GameControllerTest {
                 }
             }
 
+            PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
 /*            System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
-            ColorPawns student1ToMove = gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0);
-            ColorPawns student2ToMove = gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1);
+            ColorPawns student1ToMove = firstPlayer.getStudentInEntrance().get(0);
+            ColorPawns student2ToMove = firstPlayer.getStudentInEntrance().get(1);
             List<ColorPawns> playersToMove = new ArrayList<>();
             playersToMove.add(student1ToMove);
             playersToMove.add(student2ToMove);
-            StudentToIslandMessage msgPlayer1 = new StudentToIslandMessage(player1, playersToMove, 1);
+            StudentToIslandMessage msgPlayer1 = new StudentToIslandMessage(firstPlayer.getNickname(), playersToMove, 1);
             gameController.onMessageReceived(msgPlayer1);
-            assertEquals(gameController.getPlayerActive().getNickname(), player1);
+            assertEquals(gameController.getPlayerActive().getNickname(), firstPlayer.getNickname());
 
             //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);
             assertTrue(gameInstance.getIslandsModel().get(1).getStudents().containsAll(playersToMove));
 
             assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
-            ColorPawns color = gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0);
+            ColorPawns color = firstPlayer.getStudentInEntrance().get(0);
+            assertEquals(firstPlayer, gameController.getPlayerActive());
             StudentToHallMessage toHallMessage = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color));
             gameController.onMessageReceived(toHallMessage);
-            assertEquals(1, gameInstance.getPlayerByNickname(player1).getStudentInHall().get(color));
-        }
+            assertEquals(1, firstPlayer.getStudentInHall().get(color));
 
+            assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
+
+
+            int indexOldMother = 0;
+            for(; !gameInstance.getIslandsModel().get(indexOldMother).getMotherNature() && indexOldMother < gameInstance.getIslandsModel().size(); indexOldMother++);
+
+            MoveMotherNatureMessage motherNatureMessage = new MoveMotherNatureMessage(firstPlayer.getNickname(), (byte)1);
+            gameController.onMessageReceived(motherNatureMessage);
+            int indexNewMother = 0;
+            for(; !gameInstance.getIslandsModel().get(indexNewMother).getMotherNature() && indexNewMother < gameInstance.getIslandsModel().size(); indexNewMother++);
+            assertEquals(indexNewMother, indexOldMother+1);
+            assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
+
+            AddStudentFromCloudToWaitingMessage msgCloudToWaiting = new AddStudentFromCloudToWaitingMessage(firstPlayer.getNickname(), 1);
+            gameController.onMessageReceived(msgCloudToWaiting);
+            assertEquals(0, gameInstance.getCloudsModel().get(1).getStudents().size());
+        }
     }
 
     @Test

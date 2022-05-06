@@ -161,12 +161,12 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showEndTurn(String nick){
-
+        clientHandler.sendMessage(new TextMessage(nick, "Your turn is over"));
     }
 
     @Override
     public void showStartTurn(String nick){
-
+        clientHandler.sendMessage(new TextMessage(nick, "It's your turn"));
     }
     @Override
     public void updateCemetery(String nick, List<AssistantCardModel> cemetery){
@@ -198,6 +198,16 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new InvalidNumberStudentsMovedMessage(nickname));
     }
 
+    @Override
+    public void showInvalidCloud(String nick){
+        clientHandler.sendMessage(new TextMessage(nick, "Choose a valid cloud"));
+    }
+
+
+    @Override
+    public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){
+        clientHandler.sendMessage(new InvalidMovementMessage(nick, movementAllowed, movementInserted));
+    }
     public ClientHandler getClientHandler() {
         return clientHandler;
     }

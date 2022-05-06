@@ -5,8 +5,8 @@ public class AddStudentFromCloudToWaitingMessage extends Message {
 
     private final int cloudIndex;
 
-    public AddStudentFromCloudToWaitingMessage(String nickname, int cloudIndex, MessageType messageType) {
-        super(nickname, messageType);
+    public AddStudentFromCloudToWaitingMessage(String nickname, int cloudIndex) {
+        super(nickname, MessageType.MOVE);
         this.cloudIndex = cloudIndex;
     }
 
