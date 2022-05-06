@@ -38,7 +38,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showNewIsland(String nickname, IslandModel islandModel, int islandIndex){
-
+        clientHandler.sendMessage(new DisplayIslandMessage(nickname, islandModel, islandIndex));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showClouds() {
-        clientHandler.sendMessage(new CloudsMessage("", GameModel.getInstance().getCloudsModel()));
+        clientHandler.sendMessage(new DisplayCloudsMessage("", GameModel.getInstance().getCloudsModel()));
     }
 
     @Override
@@ -131,7 +131,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showInitialTowerMessage(String player, ColorTower colorTower, int towerNumber) {
+    public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
         clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
     }
 
@@ -169,8 +169,8 @@ public class VirtualView implements View, Observer {
 
     }
     @Override
-    public void updateCemetery(AssistantCardModel card){
-
+    public void updateCemetery(String nick, List<AssistantCardModel> cemetery){
+        clientHandler.sendMessage(new DisplayCemeteryMessage(nick, cemetery));
     }
 
     @Override

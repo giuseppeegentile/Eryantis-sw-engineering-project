@@ -54,7 +54,7 @@ public interface View {
 
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 
-    void showInitialTowerMessage(String player, ColorTower colorTower, int towerNumber);
+    void showTowerMessage(String player, ColorTower colorTower, int towerNumber);
 
     void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
@@ -72,7 +72,7 @@ public interface View {
 
     void showStartTurn(String nick);
 
-    void updateCemetery(AssistantCardModel card);
+    void updateCemetery(String nick, List<AssistantCardModel> cemetery);
 
     void errorCard(String player, AssistantCardModel card);
 
