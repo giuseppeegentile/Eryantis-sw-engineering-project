@@ -283,20 +283,32 @@ public class PlayerModel {
      */
     public void removeCard(int index){
         this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
-
     }
 
     //**********************************
     //DA TESTARE
     public void removeStudentFromEntrance(List<ColorPawns> studentsToRemove){
-        for (ColorPawns student :studentsToRemove) {
-            for (ColorPawns entranceStudent: studentInEntrance){
-                if(student.equals(entranceStudent)) {
+        for (ColorPawns student : new ArrayList<>(studentsToRemove)) {
+            for (ColorPawns entranceStudent : new ArrayList<>(studentInEntrance)) {
+                if (student.equals(entranceStudent)) {
                     studentInEntrance.remove(student);
                     break;
                 }
             }
         }
+/*
+
+Iterator<ColorPawns> iteratorStudentsToRemove = studentsToRemove.iterator();
+        Iterator<ColorPawns> iteratorEntranceStudent = studentInEntrance.iterator();
+        while(iteratorStudentsToRemove.hasNext()){
+            while(iteratorEntranceStudent.hasNext()){
+                if(iteratorEntranceStudent.next().equals(iteratorStudentsToRemove.next())){
+                    iteratorEntranceStudent.remove();
+                    break;
+                }
+            }
+        }*/
+
     }
 
     public void addTowerToBoard(){

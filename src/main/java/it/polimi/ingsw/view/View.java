@@ -50,6 +50,9 @@ public interface View {
 
     void askGetFromBag();
 
+    void showInvalidTower(String player);
+
+    void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 
     void showInitialTowerMessage(String player, ColorTower colorTower, int towerNumber);
 
@@ -74,4 +77,8 @@ public interface View {
     void errorCard(String player, AssistantCardModel card);
 
     void showDisconnectionMessage(String nicknameDisconnected, String text);
+
+    void showGenericMessage(String message);
+
+    void showInvalidNumberOfStudentMoved(String nickname);
 }

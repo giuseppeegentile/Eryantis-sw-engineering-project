@@ -94,7 +94,6 @@ public class GameModel {
     }
 
     public void clearPhaseOrder(){
-        this.phaseOrder.clear();
         this.phaseOrder = new ArrayList<>(playersNumber);
     }
 
@@ -144,7 +143,18 @@ public class GameModel {
 
     //DA TESTARE
     public int getIndexOfPlayer(PlayerModel playerModel){
-        return this.playersModels.indexOf(playerModel);
+       // return this.playersModels.indexOf(playerModel);
+
+
+        int index = -1;
+        // Iterate over the elements of the list
+        for (PlayerModel pl : playersModels) {
+            if (pl.getNickname().equals(playerModel.getNickname())) index = playersModels.indexOf(pl);
+        }
+        // If you didn't know here we have if / else
+        // if index == -1 print song not found else print the index
+        // If song isn't found index is -1
+        return index;
     }
     /**
      *

@@ -15,21 +15,17 @@ import java.util.logging.Logger;
 
 public class Server {
 
-    private final GameState gameState;
-    private final GameModel gameModel;
     private final Map<String, ClientHandler> clientHandlerMap;
-    private final GameController controller;
+    private final GameController gameController;
 
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     private final Object lock;
 
-    public Server(GameState gameState) {
-        this.gameState = gameState;
+    public Server(GameController gameController) {
         this.lock = new Object();
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
-        this.gameModel = gameState.getGameModel();
-        this.controller = new GameController();
+        this.gameController = gameController;
     }
 
     /**
@@ -37,7 +33,7 @@ public class Server {
      * @param message the message to be forwarded.
      */
     public void onMessageReceived(Message message) {
-        controller.onMessageReceived(message);
+        gameController.onMessageReceived(message);
     }
     /**
      * Adds a client to be managed by the server instance.
@@ -48,17 +44,17 @@ public class Server {
     public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
+        if (!gameController.isGameStarted()) {
+            if (gameController.checkLoginNickname(nickname, vv)) {
+                clientHandlerMap.put(nickname, clientHandler);
+                gameController.handleLogin(nickname, vv);
+            }
+        } else {
+            vv.showLoginResult(true, false, null);
+            clientHandler.disconnect();
+        }
     }
-    /**
-     * Handles the disconnection of a client.
-     *
-     * @param clientHandler the client disconnecting.
-     */
-    public void onDisconnect(ClientHandler clientHandler) {
-        String nickname = getNicknameFromClientHandler(clientHandler);
 
-
-    }
 
     /**
      * Returns the corresponding nickname of a ClientHandler.

@@ -68,6 +68,6 @@ public class SocketServer implements Runnable {
      * @param clientHandler the ClientHandler of the disconnecting client.
      */
     public void onDisconnect(ClientHandler clientHandler) {
-        server.onDisconnect(clientHandler);
+        //server.onDisconnect(clientHandler);
     }
 }

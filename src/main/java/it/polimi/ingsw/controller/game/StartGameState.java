@@ -81,7 +81,7 @@ public class StartGameState extends GameController implements GameState {
 
         gameModel.setPlayerNumber(numPlayers);
         PlayerModel playerModel = new PlayerModel(playerNick, colorTower);
-        //bisogna pensare a come gestire il caso 4 giocatori
+
         if(!gameModel.getColorTowers().contains(colorTower)&& numPlayers != 4) {
             gameModel.addColorTowers(colorTower);
 
@@ -111,7 +111,7 @@ public class StartGameState extends GameController implements GameState {
     public void setInitialGameConfiguration(){
         List<PlayerModel> players = this.gameModel.getPlayersModel();
 
-        List<ColorTower> colorTowers = this.gameModel.getColorTowers();
+        //List<ColorTower> colorTowers = this.gameModel.getColorTowers();
 
         GameMode mode = this.gameModel.getGameMode();
 
@@ -152,12 +152,11 @@ public class StartGameState extends GameController implements GameState {
         int bagSize = this.gameModel.getBag().size();
 
         for (PlayerModel p :this.gameModel.getPlayersModel()) {
-            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - 1 - (1+i)*numStudentEntrance,bagSize - i*numStudentEntrance);
+            List<ColorPawns> studentInEntrance = this.gameModel.getBag().subList(bagSize - (1+i)*numStudentEntrance,bagSize - i*numStudentEntrance);
             p.setStudentInEntrance(studentInEntrance);
             i++;
             //System.out.println(i);
         }
-        //System.out.println(bagSize - 1 - numStudentEntrance - (i-1)*numStudentEntrance);
         //this.gameModel.getBag().subList(bagSize - numStudentEntrance - (i-1)*numStudentEntrance, bagSize).clear();
         //for(int j = bagSize-1; j > bagSize - numStudentEntrance -1 - (i-1)*numStudentEntrance; j--) this.gameModel.getBag().remove(j);
         this.gameModel.setBag(this.gameModel.getBag().subList(0, bagSize - numStudentEntrance - (i-1)*numStudentEntrance));

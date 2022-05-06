@@ -74,6 +74,7 @@ public class PlayCardAssistantState implements PlayerState {
         this.gameModel.addToCemetery(assistantCardModel);
 
         int index = this.playerModel.getDeckAssistantCardModel().indexOf(assistantCardModel);
+
         this.playerModel.removeCard(index);
     }
 

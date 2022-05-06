@@ -3,14 +3,12 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -178,6 +176,26 @@ public class VirtualView implements View, Observer {
     @Override
     public void errorCard(String player, AssistantCardModel card){
         clientHandler.sendMessage(new ErrorCardMessageResponse(player, card));
+    }
+
+    @Override
+    public void showInvalidTower(String player){
+        clientHandler.sendMessage(new InvalidTowerMessage(player));
+    }
+
+    @Override
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+        clientHandler.sendMessage(new LoginReply(nicknameAccepted, connectionSuccessful));
+    }
+
+    @Override
+    public void showGenericMessage(String message){
+        clientHandler.sendMessage(new GenericMessage(message));
+    }
+
+    @Override
+    public void showInvalidNumberOfStudentMoved(String nickname){
+        clientHandler.sendMessage(new InvalidNumberStudentsMovedMessage(nickname));
     }
 
     public ClientHandler getClientHandler() {

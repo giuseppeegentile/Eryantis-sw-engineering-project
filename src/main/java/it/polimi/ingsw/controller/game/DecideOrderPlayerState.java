@@ -51,14 +51,15 @@ public class DecideOrderPlayerState extends GameController implements GameState 
     public void setPlayersOrderForActionPhase(List<AssistantCardModel> cemetery){
         List<PlayerModel> playersActionPhase = new ArrayList<>(cemetery.size());
 
+        List<AssistantCardModel> copyOfCemetery = new ArrayList<>(cemetery);
+
         //ordina le carte in base alla priorità, a pari priorità si basa sull indice
-        cemetery.sort(Comparator.comparing(AssistantCardModel::getPriority)
-                .thenComparingInt(cemetery::indexOf));
+        copyOfCemetery.sort(Comparator.comparing(AssistantCardModel::getPriority)
+                .thenComparingInt(copyOfCemetery::indexOf));
 
         int i = 0;
         this.gameModel.clearPhaseOrder();
-
-        for(AssistantCardModel c: cemetery){
+        for(AssistantCardModel c: copyOfCemetery){
             //aggiunge il giocatore alla lista nell ordine della priorità
             playersActionPhase.add(c.getOwner());
             //imposta il movimento di madre natura per la fase azione (lo ricavo dalla carta assistente)
