@@ -9,7 +9,7 @@ public class DisplayHallMessage extends Message{
 
     private final Map<ColorPawns, Integer> hall;
 
-    public DisplayHallMessage(String nickname,Map<ColorPawns, Integer> hall) {
+    public DisplayHallMessage(String nickname, Map<ColorPawns, Integer> hall) {
         super(nickname, MessageType.DISPLAY);
         this.hall = hall;
 
