@@ -9,10 +9,12 @@ public class DisplayCloudsMessage extends Message {
     private static final long serialVersionUID = 3791217817387328964L;
 
     private final List<CloudModel> clouds;
+    private final ObjectDisplay objectDisplay;
 
     public DisplayCloudsMessage(String nickname, List<CloudModel> clouds) {
         super(nickname, MessageType.DISPLAY);
         this.clouds = clouds;
+        this.objectDisplay = ObjectDisplay.CLOUDS;
     }
 
     public List<CloudModel> getClouds() {
@@ -23,7 +25,12 @@ public class DisplayCloudsMessage extends Message {
     public String toString() {
         return "CloudsMessage{" +
                 "player=" + getNickname() +
+                "objectDisplay=" + getObjectDisplay() +
                 "clouds=" + clouds +
                 '}';
+    }
+
+    public ObjectDisplay getObjectDisplay() {
+        return objectDisplay;
     }
 }

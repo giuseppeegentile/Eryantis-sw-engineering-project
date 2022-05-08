@@ -10,7 +10,7 @@ public class TowerMessage extends Message {
     private final int towerNumber;
 
     public TowerMessage(String nickname, ColorTower colorTower, int towerNumber) {
-        super(nickname, MessageType.PLAYERS_RESPONSE);
+        super(nickname, MessageType.DISPLAY);
 
         this.colorTower = colorTower;
         this.towerNumber = towerNumber;

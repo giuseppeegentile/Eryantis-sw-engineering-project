@@ -20,7 +20,7 @@ public class WinMessage  extends Message {
     @Override
     public String toString() {
         return "WinMessage{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 ", winnerNickname=" + winner.getNickname() +
                 '}';
     }

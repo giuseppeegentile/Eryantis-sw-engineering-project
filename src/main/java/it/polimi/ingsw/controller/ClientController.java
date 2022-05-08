@@ -52,12 +52,31 @@ public class ClientController implements ViewObserver, Observer {
             case LOBBY:
                 break;
             case DISPLAY:
+                ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
+                switch (objectDisplay){
+                    case ISLAND:
+                        break;
+                    case CLOUDS:
+                        break;
+                    case HALL:
+                        break;
+                    case ENTRANCE:
+                        break;
+                    case CEMETERY:
+                        break;
+                }
+
                 break;
             case GENERIC_MESSAGE:
                 break;
             case LOGIN_REPLY:
-                LoginReply loginReply = (LoginReply) message;
-                queueTasks.execute(() -> view.showLoginResult(loginReply.isNicknameAccepted(), loginReply.isConnectionSuccessful(), this.nickname));
+                queueTasks.execute(() -> view.showLoginResult(((LoginReply) message).isNicknameAccepted(), ((LoginReply) message).isConnectionSuccessful(), this.nickname));
+                break;
+            case START_TURN:
+                queueTasks.execute(() -> view.showStartTurn(message.getNickname()));
+                break;
+            case END_TURN:
+                queueTasks.execute(() -> view.showEndTurn(message.getNickname()));
                 break;
         }
     }
@@ -69,7 +88,7 @@ public class ClientController implements ViewObserver, Observer {
             client.addObserver(this);
             client.readMessage(); // Starts an asynchronous reading from the server.
             client.enablePinger(true);
-            queueTasks.execute(view::askNickname);
+            queueTasks.execute(view::askNickname); //askInitialConfig
         } catch (IOException e) {
             queueTasks.execute(() -> view.showLoginResult(false, false, this.nickname));
         }
@@ -108,6 +127,6 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onDisconnection() {
-
+        client.disconnect();
     }
 }

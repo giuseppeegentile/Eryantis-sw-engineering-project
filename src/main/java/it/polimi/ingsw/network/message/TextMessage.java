@@ -17,7 +17,7 @@ public class TextMessage extends Message{
     @Override
     public String toString() {
         return "TextMessage{" +
-                "player" + getNickname() +
+                "player=" + getNickname() +
                 "text='" + text + '\'' +
                 '}';
     }

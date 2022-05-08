@@ -115,7 +115,7 @@ public class GameController implements Observer, Serializable {
                 }
                 new StudentToHallState(receivedMessage, playerActive);
                 if(!virtualViewMap.isEmpty())
-                    virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), (HashMap<ColorPawns, Integer>) playerActive.getStudentInHall());
+                    virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
                 this.phase = PhaseGame.MOVE_MOTHER;
                 break;
             case MOVE_MOTHER:

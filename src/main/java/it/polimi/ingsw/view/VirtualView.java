@@ -154,12 +154,12 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showEndTurn(String nick){
-        clientHandler.sendMessage(new TextMessage(nick, "Your turn is over"));
+        clientHandler.sendMessage(new EndTurnMessage(nick));
     }
 
     @Override
     public void showStartTurn(String nick){
-        clientHandler.sendMessage(new TextMessage(nick, "It's your turn"));
+        clientHandler.sendMessage(new StartTurnMessage(nick));
     }
     @Override
     public void updateCemetery(String nick, List<AssistantCardModel> cemetery){

@@ -26,7 +26,7 @@ public class PlayAssistantCardMessage extends Message{
     @Override
     public String toString() {
         return "PlayAssistantCardMessage{" +
-                "nickname=" + playerModel.getNickname() +
+                "player=" + playerModel.getNickname() +
                 ", priority=" + assistantCardModel.getPriority() +
                 ", movement=" + assistantCardModel.getMotherNatureMovement() +
                 '}';
