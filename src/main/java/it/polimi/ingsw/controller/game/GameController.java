@@ -13,12 +13,15 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
+import it.polimi.ingsw.observer.Observer;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameController {
+public class GameController implements Observer, Serializable {
+    private static final long serialVersionUID = 5892236063958381739L;
     private PhaseGame phase;
     private boolean gameStarted = false;
     private transient Map<String, VirtualView> virtualViewMap;
@@ -191,8 +194,11 @@ public class GameController {
                 for(PlayerModel p: gameInstance.getPlayersModel()) { //DA CREARE IL MESSAGGIO PER QUESTO: MOSTRARE TUTTE LE ISOLE DEL GAME
                     //•	DisplayIslandMessage
                     //virtualViewMap.get(p.getNickname()).updateIslands(gameInstance.getIslandsModel());
-                    if(!virtualViewMap.isEmpty())
+                    if(!virtualViewMap.isEmpty()) {
                         virtualViewMap.get(p.getNickname()).showIslands();
+                        if(!p.getProfs().isEmpty())
+                            virtualViewMap.get(p.getNickname()).showProfs(p.getNickname(), p.getProfs());
+                    }
                 }
                 if(gameInstance.getIslandsModel().size()==3){
                     checkWin();
@@ -264,7 +270,7 @@ public class GameController {
     public void handleLogin(String nickame, VirtualView vv){
         this.virtualViewMap.put(nickame, vv);
 
-//        gameIstance.addObserver(vv);
+        gameInstance.addObserver(vv);
 //        game.getBoard().addObserver(virtualView);
         vv.showLoginResult(true, true, "SERVER_NICKNAME");
 
@@ -277,8 +283,10 @@ public class GameController {
         }
     }
 
-    public void setVirtualViewMap(Map<String, VirtualView> virtualViewMap) {
-        this.virtualViewMap = virtualViewMap;
+    public void addVirtualViewMap(String nickname, VirtualView virtualView) {
+        virtualViewMap.put(nickname, virtualView);
+        gameInstance.addObserver(virtualView);
+
     }
 
     public Map<String, VirtualView> getVirtualViewMap() {
@@ -333,11 +341,25 @@ public class GameController {
         }
     }
 
+    public void removeVirtualView(String nickname) {
+        VirtualView vv = virtualViewMap.remove(nickname);
+
+        gameInstance.removeObserver(vv);
+        gameInstance.removePlayerByNickname(nickname);
+    }
+
+
     public boolean isGameStarted() {
         return gameStarted;
     }
 
     public boolean isBoolForTestPlayedCard() {
         return boolForTestPlayedCard;
+    }
+
+    @Override
+    public void update(Message message) {
+        VirtualView virtualView = virtualViewMap.get(playerActive.getNickname());
+        //...
     }
 }

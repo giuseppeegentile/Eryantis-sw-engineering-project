@@ -1,5 +1,7 @@
 package it.polimi.ingsw.observer;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -20,30 +22,27 @@ public interface ViewObserver {
     void onUpdateServerInfo(Map<String, String> serverInfo);
 
     /**
-     * Sends a message to the server with the updated players.
+     * Sends an initial message to the server for the configuration
      *
-     * @param players the players to be sent.
+     * @param nickname the player to be sent.
+     * @param numPlayers the number of player to be sent.
+     * @param colorTower the color of tower chosen by the player to be sent.
+     * @param gameMode the mode of the game to be sent.
      */
-    void onUpdatePlayers(List<PlayerModel> players);
+    void onUpdateInitialConfiguration(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode);
+
+    void onUpdateStudentToIsland(String nickname, List<ColorPawns> students, int indexIsland);
+
+    void onUpdateStudentToHall(String nickname, List<ColorPawns> students);
+
+    void onUpdateMotherNature(String player, byte movement);
+
+    void onUpdateWaiting(String nickname, int cloudIndex);
+
+    void onCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
 
     /**
-     * Sends a message to the server with the tower colors chosen by the players.
-     *
-     * @param colorTower the color of the towers.
-     */
-    void onUpdateWorkersColor(ColorTower colorTower);
-
-
-    /**
-     * Sends a message to the server with the mode of the game choosen.
-     *
-     * @param gameMode the mode of the game.
-     */
-    void onUpdateGameMode(GameMode gameMode);
-
-    /**
-     * Handles a disconnection wanted by the user.
-     * (e.g. a click on the back button into the GUI).
+     * Handles a disconnection desired by the user.
      */
     void onDisconnection();
 }

@@ -71,7 +71,7 @@ public class StartGameState extends GameController implements GameState {
             //imposta carte personaggio
         }
     }
-
+    //testato solo per 3 giocatori
     //ritorna true se andato a buon fine, false se ce stato errore
     public boolean receiveAndSetTowerAndPlayer(Message receivedMessage){
         String playerNick = receivedMessage.getNickname();

@@ -31,10 +31,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new WinMessage(winner));
     }
 
-    @Override
+    /*@Override
     public void askNickname() {
         clientHandler.sendMessage(new LoginReply(false, true));
-    }
+    }*/
 
     @Override
     public void showNewIsland(String nickname, IslandModel islandModel, int islandIndex){
@@ -79,15 +79,13 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showDisconnectionMessage() {
-        clientHandler.sendMessage(new DisconnectionMessage());
-
+    public void showDisconnectionMessage(String nickname, String message) {
+        clientHandler.sendMessage(new DisconnectionMessage(nickname, message));
     }
 
     @Override
     public void showMoveMotherNatureMessage(String player, byte movement) {
         clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
-
     }
 
     @Override
@@ -126,11 +124,6 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showDisconnectionMessage(String nicknameDisconnected, String text) {
-
-    }
-
-    @Override
     public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
         clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
     }
@@ -140,10 +133,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(player,playerDeck));
     }
 
-    @Override
+/*    @Override
     public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
 
-    }
+    }*/
     @Override
     public void updateTowerOnIsland(IslandModel islandModel){
 
@@ -199,10 +192,24 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void askNickname() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        clientHandler.sendMessage(new ErrorMessage("Server_Nickname", error));
+    }
+
+    @Override
     public void showInvalidCloud(String nick){
         clientHandler.sendMessage(new TextMessage(nick, "Choose a valid cloud"));
     }
 
+    @Override
+    public void showProfs(String player, List<ColorPawns> profs){
+        clientHandler.sendMessage(new AssignProfResponseMessage(player, profs));
+    }
 
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){
