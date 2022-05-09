@@ -3,6 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -101,6 +102,16 @@ public class VirtualView implements View, Observer {
     @Override
     public void showLobbyMessage(List<String> nicknameList) {
         clientHandler.sendMessage(new LobbyInfoMessage(nicknameList));
+    }
+
+    @Override
+    public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
+        clientHandler.sendMessage(new DisplayIslandMessage(nickname, islandModel, islandIndex));
+    }
+
+    @Override
+    public void showCloudsMessage(String nickname, List<CloudModel> clouds) {
+        clientHandler.sendMessage(new DisplayCloudsMessage(nickname, clouds));
     }
 
     @Override

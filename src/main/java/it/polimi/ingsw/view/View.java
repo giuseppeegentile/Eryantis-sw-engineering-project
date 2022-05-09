@@ -38,6 +38,10 @@ public interface View {
 
     void showLobbyMessage(List<String> nicknameList);
 
+    void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex);
+
+    void showCloudsMessage(String nickname, List<CloudModel> clouds);
+
     void showMoveMotherNatureMessage(String player, byte movement);
 
     void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);

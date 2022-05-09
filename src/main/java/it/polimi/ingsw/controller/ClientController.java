@@ -61,10 +61,12 @@ public class ClientController implements ViewObserver, Observer {
                 ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
                 switch (objectDisplay){
                     case ISLAND:
-                        queueTasks.execute(view::showIslands);
+                        DisplayIslandMessage displayIsland = (DisplayIslandMessage)message;
+                        queueTasks.execute(() -> view.showIslandMessage(displayIsland.getNickname(), displayIsland.getIslandModel(), displayIsland.getIslandIndex()));
                         break;
                     case CLOUDS:
-                        queueTasks.execute(view::showClouds);
+                        DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
+                        queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
                     case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;
