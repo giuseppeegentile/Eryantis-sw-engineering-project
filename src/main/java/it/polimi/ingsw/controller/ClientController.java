@@ -39,35 +39,50 @@ public class ClientController implements ViewObserver, Observer {
     public void update(Message message) {
         switch (message.getMessageType()){
             case WIN:
+                WinMessage winMessage = (WinMessage)message;
+                queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
             case DISCONNECTION:
                 client.disconnect();
-                view.showDisconnectionMessage(message.getNickname(), ((DisconnectionMessage) message).getMessageStr());
+                queueTasks.execute(() -> view.showDisconnectionMessage(message.getNickname(), ((DisconnectionMessage) message).getMessageStr()));
                 break;
             case ERROR:
-                view.showError(((ErrorMessage)message).getError());
+                queueTasks.execute(() -> view.showError(((ErrorMessage)message).getError()));
                 break;
             case TEXT:
+                TextMessage textMessage = (TextMessage)message;
+                queueTasks.execute(() -> view.showTextMessage(textMessage.getNickname(), textMessage.getText()));
                 break;
             case LOBBY:
+                LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
+                queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
                 break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
                 switch (objectDisplay){
                     case ISLAND:
+                        queueTasks.execute(view::showIslands);
                         break;
                     case CLOUDS:
+                        queueTasks.execute(view::showClouds);
                         break;
                     case HALL:
+                        DisplayHallMessage displayHall = (DisplayHallMessage)message;
+                        queueTasks.execute(() -> view.showHallMessage(displayHall.getNickname(), displayHall.getHall()));
                         break;
                     case ENTRANCE:
+                        DisplayEntranceMessage displayEntrance = (DisplayEntranceMessage)message;
+                        queueTasks.execute(() -> view.showEntranceMessage(displayEntrance.getNickname(), displayEntrance.getEntrance()));
                         break;
                     case CEMETERY:
+                        DisplayCemeteryMessage displayCemetery = (DisplayCemeteryMessage)message;
+                        queueTasks.execute(() -> view.showCemeteryMessage(displayCemetery.getNickname(), displayCemetery.getCemetery()));
                         break;
                 }
 
                 break;
             case GENERIC_MESSAGE:
+                queueTasks.execute(() -> view.showGenericMessage(message.toString()));
                 break;
             case LOGIN_REPLY:
                 queueTasks.execute(() -> view.showLoginResult(((LoginReply) message).isNicknameAccepted(), ((LoginReply) message).isConnectionSuccessful(), this.nickname));
@@ -129,4 +144,29 @@ public class ClientController implements ViewObserver, Observer {
     public void onDisconnection() {
         client.disconnect();
     }
+
+    public static boolean isValidIpAddress(String ip) {
+        String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+        return ip.matches(regex);
+    }
+
+    /**
+     * Checks if the given port string is in the range of allowed ports.
+     *
+     * @param portStr the ports to be checked.
+     * @return {@code true} if the port is valid, {@code false} otherwise.
+     */
+    public static boolean isValidPort(String portStr) {
+        try {
+            int port = Integer.parseInt(portStr);
+            return port >= 1 && port <= 65535;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
+
+

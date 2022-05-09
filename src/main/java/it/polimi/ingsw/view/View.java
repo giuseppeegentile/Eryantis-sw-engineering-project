@@ -32,6 +32,11 @@ public interface View {
 
     void showEntranceMessage(String player, List<ColorPawns> entrance);
 
+    void showCemeteryMessage(String player, List<AssistantCardModel> cemetery);
+
+    void showTextMessage(String player, String text);
+
+    void showLobbyMessage(List<String> nicknameList);
 
     void showMoveMotherNatureMessage(String player, byte movement);
 

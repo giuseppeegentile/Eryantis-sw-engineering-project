@@ -14,7 +14,7 @@ public abstract class Message  implements Serializable {
 
     private final String nickname;
     private final MessageType messageType;
-//    private final IslandModel islandModelsland;
+//    private final IslandModel islandModels;
 
     Message(String nickname, MessageType messageType) {
         this.nickname = nickname;

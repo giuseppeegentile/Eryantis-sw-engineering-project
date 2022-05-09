@@ -89,6 +89,21 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery){
+        clientHandler.sendMessage(new DisplayCemeteryMessage(player, cemetery));
+    }
+
+    @Override
+    public void showTextMessage(String player, String text){
+        clientHandler.sendMessage(new TextMessage(player, text));
+    }
+
+    @Override
+    public void showLobbyMessage(List<String> nicknameList) {
+        clientHandler.sendMessage(new LobbyInfoMessage(nicknameList));
+    }
+
+    @Override
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){
         clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
