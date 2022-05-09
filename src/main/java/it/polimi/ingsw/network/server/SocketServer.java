@@ -25,7 +25,7 @@ public class SocketServer implements Runnable {
             serverSocket = new ServerSocket(port);
             Server.LOGGER.info(() -> "Socket server started on port " + port + ".");
         } catch (IOException e) {
-            Server.LOGGER.severe("Server could not start!");
+            Server.LOGGER.severe("Server error!");
             return;
         }
 
@@ -68,6 +68,6 @@ public class SocketServer implements Runnable {
      * @param clientHandler the ClientHandler of the disconnecting client.
      */
     public void onDisconnect(ClientHandler clientHandler) {
-        //server.onDisconnect(clientHandler);
+        server.onDisconnect(clientHandler);
     }
 }

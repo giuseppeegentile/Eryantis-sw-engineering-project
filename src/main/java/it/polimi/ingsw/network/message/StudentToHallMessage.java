@@ -21,7 +21,7 @@ public class StudentToHallMessage extends  Message{
     @Override
     public String toString() {
         return "StudentToHallMessage{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 "students=" + students +
                 '}';
     }

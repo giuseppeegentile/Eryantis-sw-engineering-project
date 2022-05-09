@@ -32,7 +32,7 @@ public abstract class Message  implements Serializable {
     @Override
     public String toString() {
         return "Message{" +
-                "nickname=" + nickname +
+                "player=" + nickname +
                 ", messageType=" + messageType +
                 '}';
     }

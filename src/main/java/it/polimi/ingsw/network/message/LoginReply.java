@@ -28,7 +28,7 @@ public class LoginReply extends Message {
     @Override
     public String toString() {
         return "LoginReply{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 ", nicknameAccepted=" + nicknameAccepted +
                 ", connectionSuccessful=" + connectionSuccessful +
                 '}';

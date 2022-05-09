@@ -9,13 +9,18 @@ import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.LobbyInfoMessage;
 import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.observer.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class GameModel {
+public class GameModel extends Observable implements Serializable {
+    private static final long serialVersionUID = -8113521898963437960L;
     private List<IslandModel> islandModels;
 
     private int playersNumber=0;
@@ -56,6 +61,18 @@ public class GameModel {
     public void addPlayer(PlayerModel player){
         this.playersModels.add(player);
     }
+
+    public boolean removePlayerByNickname(String nickname) {
+        boolean result = playersModels.remove(getPlayerByNickname(nickname));
+
+        List<String> nicknames = playersModels.stream().map(PlayerModel::getNickname).collect(Collectors.toList());
+
+        notifyObserver(new LobbyInfoMessage(nicknames));
+
+
+        return result;
+    }
+
 
     public static void resetInstance() {
         GameModel.istance = null;

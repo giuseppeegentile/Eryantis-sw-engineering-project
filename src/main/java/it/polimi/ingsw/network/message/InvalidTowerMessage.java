@@ -11,7 +11,7 @@ public class InvalidTowerMessage extends Message{
     @Override
     public String toString() {
         return "InvalidTowerMessage{" +
-                "player" + getNickname() +
+                "player=" + getNickname() +
                 '}';
     }
 }

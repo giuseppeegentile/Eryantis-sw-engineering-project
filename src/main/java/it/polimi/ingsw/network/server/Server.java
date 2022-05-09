@@ -54,7 +54,47 @@ public class Server {
             clientHandler.disconnect();
         }
     }
+    /**
+     * Handles the disconnection of a client.
+     *
+     * @param clientHandler the client disconnecting.
+     */
+    public void onDisconnect(ClientHandler clientHandler) {
+        synchronized (lock) {
+            String nickname = getNicknameFromClientHandler(clientHandler);
 
+            if (nickname != null) {
+
+                boolean gameStarted = gameController.isGameStarted();
+                removeClient(nickname);
+
+                if(!gameController.getPlayerActive().getNickname().equals(nickname)) {
+                    return;
+                }
+
+
+                //se il gioco è iniziato resetto il gioco, altrimenti aspetto nuovi giocatori che si connettano
+                if (gameStarted) {
+                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
+
+                    //da fare un metodo del genere:
+                    //GameModel.getInstance().resetGame();
+                    clientHandlerMap.clear();
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes a client given his nickname.
+     *
+     * @param nickname      the VirtualView to be removed.
+     */
+    private void removeClient(String nickname) {
+        clientHandlerMap.remove(nickname);
+        gameController.removeVirtualView(nickname);
+        LOGGER.info(() -> "Removed " + nickname + " from the client list.");
+    }
 
     /**
      * Returns the corresponding nickname of a ClientHandler.

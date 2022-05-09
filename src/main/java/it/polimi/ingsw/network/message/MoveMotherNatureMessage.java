@@ -25,7 +25,7 @@ public class MoveMotherNatureMessage extends Message{
     @Override
     public String toString() {
         return "MoveMotherNatureMessage{" +
-                "nickname=" + playerModel.getNickname() +
+                "player=" + playerModel.getNickname() +
                 ", motherMovement=" + movement +
                 '}';
     }

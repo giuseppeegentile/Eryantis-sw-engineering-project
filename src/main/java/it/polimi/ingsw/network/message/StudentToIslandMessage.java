@@ -31,7 +31,7 @@ public class StudentToIslandMessage extends Message{
     @Override
     public String toString() {
         return "StudentToIslandMessage{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 "students=" + students +
                 ", islandModel=" + islandModel +
                 '}';

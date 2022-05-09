@@ -16,7 +16,7 @@ import java.util.Map;
 public interface View {
     void showWinMessage(PlayerModel winner);
 
-    void askNickname();
+    //void askNickname();
 
     void commandMoveMotherNature(String player, byte movement);
 
@@ -32,7 +32,6 @@ public interface View {
 
     void showEntranceMessage(String player, List<ColorPawns> entrance);
 
-    void showDisconnectionMessage();
 
     void showMoveMotherNatureMessage(String player, byte movement);
 
@@ -50,6 +49,8 @@ public interface View {
 
     void askGetFromBag();
 
+    void showProfs(String player, List<ColorPawns> profs);
+
     void showInvalidTower(String player);
 
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
@@ -60,7 +61,7 @@ public interface View {
 
     void showNewIsland(String nickname, IslandModel islandModel, int islandIndex);
 
-    void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall);
+    //void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall);
 
     void updateTowerOnIsland(IslandModel islandModel);
 
@@ -78,11 +79,15 @@ public interface View {
 
     void errorCard(String player, AssistantCardModel card);
 
-    void showDisconnectionMessage(String nicknameDisconnected, String text);
+    void showDisconnectionMessage(String nickname, String message);
 
     void showGenericMessage(String message);
 
     void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted);
 
     void showInvalidNumberOfStudentMoved(String nickname);
+
+    void askNickname();
+
+    void showError(String error);
 }

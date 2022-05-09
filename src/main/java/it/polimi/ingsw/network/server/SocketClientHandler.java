@@ -50,7 +50,7 @@ public class SocketClientHandler implements ClientHandler, Runnable {
         try {
             handleClientConnection();
         } catch (IOException e) {
-            Server.LOGGER.severe("Client " + client.getInetAddress() + " connection dropped.");
+            Server.LOGGER.severe("Client with address: " + client.getInetAddress() + " lost connection.");
             disconnect();
         }
     }
@@ -61,7 +61,7 @@ public class SocketClientHandler implements ClientHandler, Runnable {
      * @throws IOException any of the usual Input/Output related exceptions.
      */
     private void handleClientConnection() throws IOException {
-        Server.LOGGER.info("Client connected from " + client.getInetAddress());
+        Server.LOGGER.info("Client address: " + client.getInetAddress());
 
         try {
             while (!Thread.currentThread().isInterrupted()) {
