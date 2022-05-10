@@ -136,11 +136,13 @@ class GameControllerTest {
                 }
             }
 
+            //turno primo giocatore
+
             PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
-/*            System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
-            ColorPawns student1ToMove = firstPlayer.getStudentInEntrance().get(0);
+            ColorPawns student1ToMove = firstPlayer.getStudentInEntrance().get(0); //to island
             ColorPawns student2ToMove = firstPlayer.getStudentInEntrance().get(1);
             List<ColorPawns> playersToMove = new ArrayList<>();
             playersToMove.add(student1ToMove);
@@ -168,15 +170,99 @@ class GameControllerTest {
             MoveMotherNatureMessage motherNatureMessage = new MoveMotherNatureMessage(firstPlayer.getNickname(), (byte)1);
             gameController.onMessageReceived(motherNatureMessage);
             int indexNewMother = 0;
-            for(; !gameInstance.getIslandsModel().get(indexNewMother).getMotherNature() && indexNewMother < gameInstance.getIslandsModel().size(); indexNewMother++);
-            assertEquals(indexNewMother, indexOldMother+1);
+            if(indexOldMother!=11) {
+                for (; !gameInstance.getIslandsModel().get(indexNewMother).getMotherNature() && indexNewMother < gameInstance.getIslandsModel().size(); indexNewMother++);
+
+            }
+            assertEquals(indexNewMother, (indexOldMother+1)%11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
             AddStudentFromCloudToWaitingMessage msgCloudToWaiting = new AddStudentFromCloudToWaitingMessage(firstPlayer.getNickname(), 1);
             gameController.onMessageReceived(msgCloudToWaiting);
+            System.out.println(gameInstance.getCloudsModel().get(1).getStudents());
             assertEquals(0, gameInstance.getCloudsModel().get(1).getStudents().size());
 
+            //turno secondo giocatore
+            PlayerModel secondPlayer = gameInstance.getPhaseOrder().get(1);
+/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
+            ColorPawns secondStudent1ToMove = secondPlayer.getStudentInEntrance().get(0); //to island
+            ColorPawns secondStudent2ToMove = secondPlayer.getStudentInEntrance().get(1);
+            List<ColorPawns> secondStudentsToMove = new ArrayList<>();
+            secondStudentsToMove.add(secondStudent1ToMove);
+            secondStudentsToMove.add(secondStudent2ToMove);
+            StudentToIslandMessage msgPlayer2 = new StudentToIslandMessage(secondPlayer.getNickname(), secondStudentsToMove, 5);
+            gameController.onMessageReceived(msgPlayer2);
+            assertEquals(gameController.getPlayerActive().getNickname(), secondPlayer.getNickname());
 
+            //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);
+            assertTrue(gameInstance.getIslandsModel().get(5).getStudents().containsAll(secondStudentsToMove));
+
+            assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
+            ColorPawns color2 = secondPlayer.getStudentInEntrance().get(0);
+            assertEquals(secondPlayer, gameController.getPlayerActive());
+            StudentToHallMessage toHallMessage2 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color2));
+            gameController.onMessageReceived(toHallMessage2);
+            assertEquals(1, secondPlayer.getStudentInHall().get(color2));
+
+            assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
+
+            indexOldMother = indexNewMother;
+            MoveMotherNatureMessage motherNatureMessage2 = new MoveMotherNatureMessage(secondPlayer.getNickname(), (byte)1);
+            gameController.onMessageReceived(motherNatureMessage2);
+            indexNewMother = (indexOldMother + 1)%11;
+            int newIndex = 0;
+            for(; !gameInstance.getIslandsModel().get(newIndex).getMotherNature() && newIndex < gameInstance.getIslandsModel().size(); newIndex++);
+            assertEquals(indexNewMother, newIndex);
+            assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
+
+            AddStudentFromCloudToWaitingMessage msgCloudToWaiting2 = new AddStudentFromCloudToWaitingMessage(secondPlayer.getNickname(), 0);
+            gameController.onMessageReceived(msgCloudToWaiting2);
+            assertEquals(0, gameInstance.getCloudsModel().get(0).getStudents().size());
+
+            //turno terzo giocatore
+            PlayerModel thirdPlayer = gameInstance.getPhaseOrder().get(2);
+/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
+            ColorPawns thirdStudent1ToMove = thirdPlayer.getStudentInEntrance().get(0); //to island
+            ColorPawns thirdStudent2ToMove = thirdPlayer.getStudentInEntrance().get(1);
+            List<ColorPawns> thirdStudentsToMove = new ArrayList<>();
+            thirdStudentsToMove.add(thirdStudent1ToMove);
+            thirdStudentsToMove.add(thirdStudent2ToMove);
+            StudentToIslandMessage msgPlayer3 = new StudentToIslandMessage(thirdPlayer.getNickname(), thirdStudentsToMove, 8);
+            gameController.onMessageReceived(msgPlayer3);
+            assertEquals(gameController.getPlayerActive().getNickname(), thirdPlayer.getNickname());
+
+            //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);
+            assertTrue(gameInstance.getIslandsModel().get(8).getStudents().containsAll(thirdStudentsToMove));
+
+            assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
+            ColorPawns color3 = thirdPlayer.getStudentInEntrance().get(0);
+            assertEquals(thirdPlayer, gameController.getPlayerActive());
+            StudentToHallMessage toHallMessage3 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color3));
+            gameController.onMessageReceived(toHallMessage3);
+            assertEquals(1, thirdPlayer.getStudentInHall().get(color3));
+
+            assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
+
+            indexOldMother = indexNewMother;
+            MoveMotherNatureMessage motherNatureMessage3 = new MoveMotherNatureMessage(thirdPlayer.getNickname(), (byte)1);
+            gameController.onMessageReceived(motherNatureMessage3);
+            indexNewMother = (indexOldMother + 1)%11;
+            int newIndex2 = 0;
+            for(; !gameInstance.getIslandsModel().get(newIndex2).getMotherNature() && newIndex2 < gameInstance.getIslandsModel().size(); newIndex2++);
+            assertEquals(indexNewMother, newIndex2);
+            assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
+
+            AddStudentFromCloudToWaitingMessage msgCloudToWaiting3 = new AddStudentFromCloudToWaitingMessage(thirdPlayer.getNickname(), 2);
+            gameController.onMessageReceived(msgCloudToWaiting3);
+            assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
+            System.out.println(gameInstance.getCloudsModel().get(0).getStudents());
+            System.out.println(gameInstance.getCloudsModel().get(1).getStudents());
+            System.out.println(gameInstance.getCloudsModel().get(2).getStudents());
+            assertEquals(0, gameInstance.getCloudsModel().get(2).getStudents().size());
         }
     }
 
