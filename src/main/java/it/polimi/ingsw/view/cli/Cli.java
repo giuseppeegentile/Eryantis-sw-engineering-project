@@ -70,11 +70,6 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showLobbyMessage(List<String> nicknameList) {
-
-    }
-
-    @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
 
     }
@@ -235,7 +230,6 @@ public class Cli extends ViewObservable implements View {
         for (String nick : nicknameList) {
             out.println(nick + "\n");
         }
-        out.println("Current players in lobby: " + nicknameList.size() + " / " + numPlayers);
     }
 
 
