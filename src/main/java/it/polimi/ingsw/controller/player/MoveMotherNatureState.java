@@ -62,7 +62,7 @@ public class MoveMotherNatureState implements PlayerState {
         List<IslandModel> islandsModels = this.gameModel.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
 
-        int newIndex = (indexOldMotherNature + movementMotherNature) % 12;
+        int newIndex = (indexOldMotherNature + movementMotherNature) % 11;
         IslandModel oldIslandWithMotherNature = new IslandModel(false, islandsModels.get(indexOldMotherNature).getStudents());
         IslandModel newIslandWithMotherNature = new IslandModel(true,  islandsModels.get(newIndex).getStudents());
 

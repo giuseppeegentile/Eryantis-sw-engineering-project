@@ -14,7 +14,7 @@ public class AssignPlayerDeckResponseMessage extends Message {
 
     //è una response
     public AssignPlayerDeckResponseMessage(String nickname, List<AssistantCardModel> assistantCardModels) {
-        super(nickname, MessageType.PLAYERS_RESPONSE);
+        super(nickname, MessageType.DISPLAY);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(nickname);
         this.assistantCardModels = assistantCardModels;
     }

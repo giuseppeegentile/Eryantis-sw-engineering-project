@@ -11,7 +11,6 @@ import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,20 +36,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new LoginReply(false, true));
     }*/
 
-    @Override
-    public void showNewIsland(String nickname, IslandModel islandModel, int islandIndex){
-        clientHandler.sendMessage(new DisplayIslandMessage(nickname, islandModel, islandIndex));
-    }
-
-    @Override
-    public void commandMoveMotherNature(String player, byte movement) {
-        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
-    }
 
     @Override
     public void showMessageJoiningIsland(Message message) {
         clientHandler.sendMessage(new TextMessage(message.getNickname(),((TextMessage)message).getText()));
-
     }
 
     @Override
@@ -119,10 +108,6 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
 
-    @Override
-    public void showIslands() {
-
-    }
 
     @Override
     public void showClouds() {
@@ -173,9 +158,10 @@ public class VirtualView implements View, Observer {
 
     }
 
+    //da mettere nel gameController
     @Override
-    public void updateIslands(List<IslandModel> islandModel){
-
+    public void updateIslands(String nickname, List<IslandModel> islandModel){
+        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, islandModel));
     }
 
     @Override
@@ -186,10 +172,6 @@ public class VirtualView implements View, Observer {
     @Override
     public void showStartTurn(String nick){
         clientHandler.sendMessage(new StartTurnMessage(nick));
-    }
-    @Override
-    public void updateCemetery(String nick, List<AssistantCardModel> cemetery){
-        clientHandler.sendMessage(new DisplayCemeteryMessage(nick, cemetery));
     }
 
     @Override
@@ -219,7 +201,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askNickname() {
-
+        clientHandler.sendMessage(new LoginReply(false, true));
     }
 
     @Override
@@ -243,5 +225,11 @@ public class VirtualView implements View, Observer {
     }
     public ClientHandler getClientHandler() {
         return clientHandler;
+    }
+
+    @Override
+    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){
+        clientHandler.sendMessage(new TextMessage(nickname, "Choose a card"));
+        clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(nickname, playerDeck));
     }
 }

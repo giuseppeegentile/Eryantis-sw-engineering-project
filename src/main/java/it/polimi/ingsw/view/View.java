@@ -18,8 +18,6 @@ public interface View {
 
     //void askNickname();
 
-    void commandMoveMotherNature(String player, byte movement);
-
     void showMessageJoiningIsland(Message message);
 
     void askMoveCloudToEntrance(List<ColorPawns> students);
@@ -46,9 +44,9 @@ public interface View {
 
     void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
 
-    void showIslands();
+    void showClouds();
 
-    public void showClouds();
+    void updateIslands(String nickname, List<IslandModel> islandModel);
 
     void showPlayerBoard(PlayerModel playerModel);
 
@@ -68,21 +66,15 @@ public interface View {
 
     void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
-    void showNewIsland(String nickname, IslandModel islandModel, int islandIndex);
-
     //void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall);
 
     void updateTowerOnIsland(IslandModel islandModel);
 
     void updateTowerOnBoard(String nickname, int towerNumber);
 
-    void updateIslands(List<IslandModel> islandModel);
-
     void showEndTurn(String nick);
 
     void showStartTurn(String nick);
-
-    void updateCemetery(String nick, List<AssistantCardModel> cemetery);
 
     void showInvalidCloud(String nick);
 
@@ -99,4 +91,6 @@ public interface View {
     void askNickname();
 
     void showError(String error);
+
+    void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
 }

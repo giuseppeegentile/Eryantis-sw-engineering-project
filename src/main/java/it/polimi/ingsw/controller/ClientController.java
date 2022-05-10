@@ -68,6 +68,10 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
+                    case DECK:
+                        /*DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
+                        queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));*/
+                        break;
                     case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;
                         queueTasks.execute(() -> view.showHallMessage(displayHall.getNickname(), displayHall.getHall()));
