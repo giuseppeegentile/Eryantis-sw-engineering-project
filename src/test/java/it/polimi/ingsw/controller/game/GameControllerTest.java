@@ -175,6 +175,8 @@ class GameControllerTest {
             AddStudentFromCloudToWaitingMessage msgCloudToWaiting = new AddStudentFromCloudToWaitingMessage(firstPlayer.getNickname(), 1);
             gameController.onMessageReceived(msgCloudToWaiting);
             assertEquals(0, gameInstance.getCloudsModel().get(1).getStudents().size());
+
+
         }
     }
 
