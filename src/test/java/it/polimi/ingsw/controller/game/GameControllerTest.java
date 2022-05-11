@@ -277,10 +277,10 @@ class GameControllerTest {
         gameController.onMessageReceived(msgCardPl1);
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getPriority());
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getMotherNatureMovement());
-        assertEquals(4, gameInstance.getCemetery().size());
+        assertEquals(1, gameInstance.getCemetery().size());
 
-        assertEquals(priority1, gameInstance.getCemetery().get(3).getPriority());
-        assertEquals(movement1, gameInstance.getCemetery().get(3).getMotherNatureMovement());
+        assertEquals(priority1, gameInstance.getCemetery().get(0).getPriority());
+        assertEquals(movement1, gameInstance.getCemetery().get(0).getMotherNatureMovement());
 
         priority2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getPriority();
         movement2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getMotherNatureMovement();
@@ -291,8 +291,8 @@ class GameControllerTest {
             assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getMotherNatureMovement());
             assertEquals(2, gameInstance.getCemetery().size());
 
-            assertEquals(priority2, gameInstance.getCemetery().get(4).getPriority());
-            assertEquals(movement2, gameInstance.getCemetery().get(4).getMotherNatureMovement());
+            assertEquals(priority2, gameInstance.getCemetery().get(1).getPriority());
+            assertEquals(movement2, gameInstance.getCemetery().get(1).getMotherNatureMovement());
 
 
             int priority3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getPriority();
@@ -313,8 +313,8 @@ class GameControllerTest {
                 System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*/
 
 
-                assertEquals(priority3, gameInstance.getCemetery().get(5).getPriority());
-                assertEquals(movement3, gameInstance.getCemetery().get(5).getMotherNatureMovement());
+                assertEquals(priority3, gameInstance.getCemetery().get(2).getPriority());
+                assertEquals(movement3, gameInstance.getCemetery().get(2).getMotherNatureMovement());
                 assertEquals(PhaseGame.ADD_STUDENT_TO_ISLAND, gameController.getPhaseGame());
 
                 int i = 0;
@@ -333,8 +333,8 @@ class GameControllerTest {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(1).getMotherNatureMovement());
                 assertEquals(3, gameInstance.getCemetery().size());
 
-                assertEquals(priority4, gameInstance.getCemetery().get(5).getPriority());
-                assertEquals(movement4, gameInstance.getCemetery().get(5).getMotherNatureMovement());
+                assertEquals(priority4, gameInstance.getCemetery().get(2).getPriority());
+                assertEquals(movement4, gameInstance.getCemetery().get(2).getMotherNatureMovement());
                 assertEquals(PhaseGame.ADD_STUDENT_TO_ISLAND, gameController.getPhaseGame());
 
                 int i = 0;
