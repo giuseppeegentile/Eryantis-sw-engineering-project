@@ -166,7 +166,7 @@ public class GameModel extends Observable implements Serializable {
         int index = -1;
         // Iterate over the elements of the list
         for (PlayerModel pl : playersModels) {
-            if (pl.getNickname().equals(playerModel.getNickname())) index = playersModels.indexOf(pl);
+            if (pl.getNickname().equals(playerModel.getNickname())) index = getPhaseOrder().indexOf(pl);
         }
         // If you didn't know here we have if / else
         // if index == -1 print song not found else print the index

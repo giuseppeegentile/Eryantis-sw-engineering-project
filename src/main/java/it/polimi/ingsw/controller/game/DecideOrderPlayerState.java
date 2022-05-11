@@ -41,9 +41,8 @@ public class DecideOrderPlayerState extends GameController implements GameState 
         return this.gameModel.getGameState();
     }
 
-    //chiamato quando tutti  i giocatori hanno usato la loro carta
+    //chiamato quando tutti i giocatori hanno usato la loro carta
     //prende in input: la lista delle carte giocate, nell ordine di gioco. Restituisce una lista modificata con l ordine per la prossima fase azione
-    //NON MODIFICARE LA LISTA DEI PLAYER DEL GAME, L'ORDINE INIZIALE DEVE ESSERE PRESERVATO
     /**
      * Called when all the players have played their card. Sets the order phase list.
      * @param cemetery The list of cards played in the current turn in the order they were played

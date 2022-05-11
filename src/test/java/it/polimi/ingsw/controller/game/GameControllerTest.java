@@ -157,10 +157,16 @@ class GameControllerTest {
 
             assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
             ColorPawns color = firstPlayer.getStudentInEntrance().get(0);
+            ColorPawns color2 = firstPlayer.getStudentInEntrance().get(1);
             assertEquals(firstPlayer, gameController.getPlayerActive());
-            StudentToHallMessage toHallMessage = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color));
+            StudentToHallMessage toHallMessage = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color, color2));
             gameController.onMessageReceived(toHallMessage);
-            assertEquals(1, firstPlayer.getStudentInHall().get(color));
+            if(color != color2) {
+                assertEquals(1, firstPlayer.getStudentInHall().get(color));
+                assertEquals(1, firstPlayer.getStudentInHall().get(color2));
+            }
+            else
+                assertEquals(2, firstPlayer.getStudentInHall().get(color));
 
             assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
 
@@ -175,9 +181,10 @@ class GameControllerTest {
             if (indexOldMother != 11) {
                 for (; !gameInstance.getIslandsModel().get(indexNewMother).getMotherNature() && indexNewMother < gameInstance.getIslandsModel().size(); indexNewMother++)
                     ;
+                assertEquals(indexNewMother, (indexOldMother + 1) % 11);
+            }else
+                assertEquals(indexNewMother, 0);
 
-            }
-            assertEquals(indexNewMother, (indexOldMother + 1) % 11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
             AddStudentFromCloudToWaitingMessage msgCloudToWaiting = new AddStudentFromCloudToWaitingMessage(firstPlayer.getNickname(), 1);
@@ -192,9 +199,11 @@ class GameControllerTest {
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
             ColorPawns secondStudent1ToMove = secondPlayer.getStudentInEntrance().get(0); //to island
             ColorPawns secondStudent2ToMove = secondPlayer.getStudentInEntrance().get(1);
+            ColorPawns secondStudent3ToMove = secondPlayer.getStudentInEntrance().get(2);
             List<ColorPawns> secondStudentsToMove = new ArrayList<>();
             secondStudentsToMove.add(secondStudent1ToMove);
             secondStudentsToMove.add(secondStudent2ToMove);
+            secondStudentsToMove.add(secondStudent3ToMove);
             StudentToIslandMessage msgPlayer2 = new StudentToIslandMessage(secondPlayer.getNickname(), secondStudentsToMove, 5);
             gameController.onMessageReceived(msgPlayer2);
             assertEquals(gameController.getPlayerActive().getNickname(), secondPlayer.getNickname());
@@ -203,7 +212,8 @@ class GameControllerTest {
             assertTrue(gameInstance.getIslandsModel().get(5).getStudents().containsAll(secondStudentsToMove));
 
             assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
-            ColorPawns color2 = secondPlayer.getStudentInEntrance().get(0);
+            color2 = secondPlayer.getStudentInEntrance().get(0);
+
             assertEquals(secondPlayer, gameController.getPlayerActive());
             StudentToHallMessage toHallMessage2 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color2));
             gameController.onMessageReceived(toHallMessage2);
@@ -244,10 +254,16 @@ class GameControllerTest {
 
             assertEquals(PhaseGame.ADD_STUDENT_TO_HALL, gameController.getPhaseGame());
             ColorPawns color3 = thirdPlayer.getStudentInEntrance().get(0);
+            ColorPawns color4 = thirdPlayer.getStudentInEntrance().get(1);
             assertEquals(thirdPlayer, gameController.getPlayerActive());
-            StudentToHallMessage toHallMessage3 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color3));
+            StudentToHallMessage toHallMessage3 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color3,color4));
             gameController.onMessageReceived(toHallMessage3);
-            assertEquals(1, thirdPlayer.getStudentInHall().get(color3));
+            if(color3 != color4) {
+                assertEquals(1, thirdPlayer.getStudentInHall().get(color3));
+                assertEquals(1, thirdPlayer.getStudentInHall().get(color4));
+            }
+            else
+                assertEquals(2, thirdPlayer.getStudentInHall().get(color3));
 
             assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
 
@@ -277,10 +293,10 @@ class GameControllerTest {
         gameController.onMessageReceived(msgCardPl1);
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getPriority());
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getMotherNatureMovement());
-        assertEquals(4, gameInstance.getCemetery().size());
+        assertEquals(1, gameInstance.getCemetery().size());
 
-        assertEquals(priority1, gameInstance.getCemetery().get(3).getPriority());
-        assertEquals(movement1, gameInstance.getCemetery().get(3).getMotherNatureMovement());
+        assertEquals(priority1, gameInstance.getCemetery().get(0).getPriority());
+        assertEquals(movement1, gameInstance.getCemetery().get(0).getMotherNatureMovement());
 
         priority2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getPriority();
         movement2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getMotherNatureMovement();
@@ -291,13 +307,14 @@ class GameControllerTest {
             assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getMotherNatureMovement());
             assertEquals(2, gameInstance.getCemetery().size());
 
-            assertEquals(priority2, gameInstance.getCemetery().get(4).getPriority());
-            assertEquals(movement2, gameInstance.getCemetery().get(4).getMotherNatureMovement());
+            assertEquals(priority2, gameInstance.getCemetery().get(1).getPriority());
+            assertEquals(movement2, gameInstance.getCemetery().get(1).getMotherNatureMovement());
 
 
             int priority3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getPriority();
             int movement3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getMotherNatureMovement();
             PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8));
+            //qualcosa non va qui
             gameController.onMessageReceived(msgCardPl3);
             if (gameController.isBoolForTestPlayedCard()) {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getPriority());
@@ -313,17 +330,13 @@ class GameControllerTest {
                 System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*/
 
 
-                assertEquals(priority3, gameInstance.getCemetery().get(5).getPriority());
-                assertEquals(movement3, gameInstance.getCemetery().get(5).getMotherNatureMovement());
+                assertEquals(priority3, gameInstance.getCemetery().get(2).getPriority());
+                assertEquals(movement3, gameInstance.getCemetery().get(2).getMotherNatureMovement());
                 assertEquals(PhaseGame.ADD_STUDENT_TO_ISLAND, gameController.getPhaseGame());
 
-                int i = 0;
-                for (AssistantCardModel cardPlayed : gameInstance.getCemetery()) {
-                    assertEquals(gameInstance.getPlayersModel().get(i).getNickname(), cardPlayed.getOwner().getNickname());
-                    i++;
-                }
 
-/*                for(PlayerModel p: gameInstance.getPhaseOrder()){
+                /*
+                for(PlayerModel p: gameInstance.getPhaseOrder()){
                     System.out.println(p.getNickname());
                 }*/
             } else {
@@ -333,13 +346,13 @@ class GameControllerTest {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(1).getMotherNatureMovement());
                 assertEquals(3, gameInstance.getCemetery().size());
 
-                assertEquals(priority4, gameInstance.getCemetery().get(5).getPriority());
-                assertEquals(movement4, gameInstance.getCemetery().get(5).getMotherNatureMovement());
+                assertEquals(priority4, gameInstance.getCemetery().get(2).getPriority());
+                assertEquals(movement4, gameInstance.getCemetery().get(2).getMotherNatureMovement());
                 assertEquals(PhaseGame.ADD_STUDENT_TO_ISLAND, gameController.getPhaseGame());
 
                 int i = 0;
                 for (AssistantCardModel cardPlayed : gameInstance.getCemetery()) {
-                    assertEquals(gameInstance.getPlayersModel().get(i).getNickname(), cardPlayed.getOwner().getNickname());
+                    assertEquals(gameInstance.getPhaseOrder().get(i).getNickname(), cardPlayed.getOwner().getNickname());
                     i++;
                 }
             }

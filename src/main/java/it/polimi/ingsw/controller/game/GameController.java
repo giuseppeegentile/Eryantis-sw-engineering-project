@@ -88,10 +88,41 @@ public class GameController implements Observer, Serializable {
                 }
                 phase = PhaseGame.START;
                 break;
+            case PLAY_CARDS_ASSISTANT:
+                boolForTestPlayedCard = true;
+                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+                PlayCardAssistantState play = new PlayCardAssistantState(player, gameInstance);
+                AssistantCardModel card = ((PlayAssistantCardMessage)receivedMessage).getCard();
+                if(play.canPlayCard(card)){
+                    play.playCard(card);
+                    for (String gamer : virtualViewMap.keySet()) {
+                        virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
+                    }
 
-            case CHECK_WIN:
-                this.checkWin();
+                    if (gameInstance.getPhaseOrder().get(gameInstance.getPlayersNumber()-1).getNickname().equals(player.getNickname())) {//se è l'ultimo giocatore che ha giocato la carta
+                        new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
+                        playerActive = gameInstance.getPhaseOrder().get(0);
+
+                        if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
+                            gameInstance.setTrueHavePlayerFinishedCards();
+
+
+                        this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
+                    }else {
+                        this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+                        break;
+                    }
+                }else{
+                    boolForTestPlayedCard = false;
+                    //send message error can't play card
+                    for (String gamer : virtualViewMap.keySet()) {
+                        virtualViewMap.get(gamer).errorCard(gamer, card);
+                    }
+                    System.out.println(player.getNickname() + " can't play this card");
+                }
+
                 break;
+
             case ADD_STUDENT_TO_ISLAND:
                 int maxCanMove = 3; //versione a 2 o 4
                 if(gameInstance.getPlayersNumber() == 3) maxCanMove = 4;
@@ -100,7 +131,7 @@ public class GameController implements Observer, Serializable {
                 if(numberStudentsMovedToIsland == 0){//se decide di spostare tutti gli studenti nella hall
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
-                }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare tutti gli studenti nella isola
+                }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nella isola
                     new StudentToIslandState(receivedMessage, playerActive);
                     int indexIsland = ((StudentToIslandMessage) receivedMessage).getIndexIsland();
                     IslandModel islandModel = gameInstance.getIslandsModel().get(indexIsland);
@@ -108,7 +139,7 @@ public class GameController implements Observer, Serializable {
                     if(!virtualViewMap.isEmpty())
                         virtualViewMap.get(playerActive.getNickname()).showIslandMessage(playerActive.getNickname(), islandModel, indexIsland);
 
-                    if(numberStudentsMovedToIsland == 3) //vado direttamente nello spostamento di madre natura
+                    if(numberStudentsMovedToIsland == maxCanMove) //vado direttamente nello spostamento di madre natura
                         this.phase = PhaseGame.MOVE_MOTHER;
                     else
                         this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
@@ -118,7 +149,8 @@ public class GameController implements Observer, Serializable {
                 int canMove = 3; //versione a 2 o 4
                 if(gameInstance.getPlayersNumber() == 3) canMove = 4;
                 if(((StudentToHallMessage)receivedMessage).getStudents().size() != (canMove-numberStudentsMovedToIsland) ){
-                    virtualViewMap.get(playerActive.getNickname()).showInvalidNumberOfStudentMoved(playerActive.getNickname());
+                    if(!virtualViewMap.isEmpty())
+                        virtualViewMap.get(playerActive.getNickname()).showInvalidNumberOfStudentMoved(playerActive.getNickname());
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
                 }
@@ -162,17 +194,17 @@ public class GameController implements Observer, Serializable {
                         if(!virtualViewMap.isEmpty())
                             virtualViewMap.get(playerActive.getNickname()).showWinMessage(gameInstance.getPlayerByNickname(playerActive.getNickname()));
                     }
-                    for (String player : virtualViewMap.keySet()) {
-                        virtualViewMap.get(player).showIslandMessage(player,islandWithMother, indexOfMother);
+                    for (String p : virtualViewMap.keySet()) {
+                        virtualViewMap.get(p).showIslandMessage(p,islandWithMother, indexOfMother);
                     }
                     if(!virtualViewMap.isEmpty())
                         virtualViewMap.get(playerWithInfluence.getNickname()).showTowerMessage(playerWithInfluence.getNickname(), playerWithInfluence.getColorTower(), playerWithInfluence.getTowerNumber());
                 }
 
                 //messaggio di attrazione delle isole
-                for (String player : virtualViewMap.keySet()) {
-                    PlayerModel p = gameInstance.getPlayerByNickname(player);
-                    virtualViewMap.get(player).showMessageJoiningIsland(new TextMessage(p.getNickname(), "JOINING ISLANDS..."));
+                for (String pp : virtualViewMap.keySet()) {
+                    PlayerModel p = gameInstance.getPlayerByNickname(pp);
+                    virtualViewMap.get(pp).showMessageJoiningIsland(new TextMessage(p.getNickname(), "JOINING ISLANDS..."));
                 }
 
                 //controllo se posso unificare, se sì, le unisco
@@ -242,48 +274,21 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
                     phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
                 }else{
-                    System.out.println("Mandare messaggio di scegliere una nuvola non scelta da un altro player");
+                    //Mandare messaggio di scegliere una nuvola non scelta da un altro player
                     if(!virtualViewMap.isEmpty())
                         virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
                     phase = PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE;
                 }
                 break;
-            case PLAY_CARDS_ASSISTANT:
-                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
-                PlayCardAssistantState play = new PlayCardAssistantState(player, gameInstance);
-                AssistantCardModel card = ((PlayAssistantCardMessage)receivedMessage).getCard();
-                if(play.canPlayCard(card)){
-                    play.playCard(card);
-                    for (String gamer : virtualViewMap.keySet()) {
-                        virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
-                    }
-                    if (gameInstance.getPlayersModel().contains(player) && gameInstance.getIndexOfPlayer(player) == gameInstance.getPlayersNumber() - 1) {//se è l'ultimo giocatore che ha giocato la carta
-                        new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
-                        playerActive = gameInstance.getPhaseOrder().get(0);
-                        
-                        if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
-                            gameInstance.setTrueHavePlayerFinishedCards();
-
-
-                        this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
-                    }else {
-                        this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
-                        break;
-                    }
-                }else{
-                    boolForTestPlayedCard = false;
-                    //send message error can't play card
-                    for (String gamer : virtualViewMap.keySet()) {
-                        virtualViewMap.get(gamer).errorCard(gamer, card);
-                    }
-                }
-
+            case CHECK_WIN:
+                this.checkWin();
                 break;
+
         }
     }
 
-    public void handleLogin(String nickame, VirtualView vv){
-        this.virtualViewMap.put(nickame, vv);
+    public void handleLogin(String nickname, VirtualView vv){
+        this.virtualViewMap.put(nickname, vv);
 
         gameInstance.addObserver(vv);
 //        game.getBoard().addObserver(virtualView);
