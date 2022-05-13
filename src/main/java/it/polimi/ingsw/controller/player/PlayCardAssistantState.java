@@ -51,7 +51,7 @@ public class PlayCardAssistantState implements PlayerState {
     public boolean canPlayCard(AssistantCardModel assistantCardModel){
         if(assistantCardModel.getMotherNatureMovement() == 0 || assistantCardModel.getPriority() == 0 ) return false;
         if(!this.playerModel.getDeckAssistantCardModel().contains(assistantCardModel)) return false; //se non ha la carta nel suo deck non può giocarla
-        if(this.gameModel.getCemetery().size() > 1 && this.gameModel.getCemetery().contains(assistantCardModel)) {
+        if(this.gameModel.getCemetery().size() > 0 && this.gameModel.getCemetery().contains(assistantCardModel)) {
             //int indexSameCard =  this.gameModel.getCemetery().indexOf(assistantCardModel);
             //solo nel caso in cui tutte le carte del cimitero siano uguali a quelle del giocatore posso rigiocare
             List<AssistantCardModel> tempDeck = this.playerModel.getDeckAssistantCardModel();

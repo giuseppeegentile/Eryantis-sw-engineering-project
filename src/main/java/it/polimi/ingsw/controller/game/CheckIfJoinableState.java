@@ -14,6 +14,7 @@ import java.util.List;
 //7
 public class CheckIfJoinableState extends GameController implements GameState {
 
+    private static final long serialVersionUID = -4065719069108763021L;
     private final List<IslandModel> islandModels;
     private final GameModel gameModel;
     private final IslandModel islandModelToCheck;

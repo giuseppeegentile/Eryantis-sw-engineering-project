@@ -16,11 +16,6 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
         this.playerModel.setState(StatePlayer.CHOOSE_CLOUD_PICK_STUDENT);
     }
 
-    public AddStudentFromCloudToWaitingState(Message receivedMessage,PlayerModel playerModel){
-        this.playerModel = playerModel;
-        this.playerModel.setState(StatePlayer.CHOOSE_CLOUD_PICK_STUDENT);
-    }
-
     @Override
     public void addCoins() {
 

@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 //l'unico metodo che serve dall'esterno è setInitialGameConfiguration. Tutti gli altri sono dei metodi utility ma non servono al di fuori della classe
 public class StartGameState extends GameController implements GameState {
+    private static final long serialVersionUID = -3932753788446288080L;
     private final GameModel gameModel;
 
 

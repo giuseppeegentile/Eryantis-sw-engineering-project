@@ -362,6 +362,12 @@ public class GameModel extends Observable implements Serializable {
         return this.islandModels.stream().filter(IslandModel::getMotherNature).findAny().orElse(null);
     }
 
+    public int getMotherNatureIndex(){
+        int index = 0;
+        for(; !this.islandModels.get(index).getMotherNature(); index++);
+        return index;
+    }
+
     public void setColorTowers(List<ColorTower> colorTowers){
         this.colorTowers = colorTowers;
     }

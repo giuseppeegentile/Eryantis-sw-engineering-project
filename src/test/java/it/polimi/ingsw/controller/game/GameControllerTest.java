@@ -64,6 +64,8 @@ class GameControllerTest {
         assertEquals(gameInstance.getPlayersModel(), gameInstance.getPhaseOrder());
         assertEquals(10, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().size());
 
+
+        //giocano carte
         int priority1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getPriority();
         int movement1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
         PlayAssistantCardMessage msgCardPl1 = new PlayAssistantCardMessage(player1, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5));
@@ -171,19 +173,13 @@ class GameControllerTest {
             assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
 
 
-            int indexOldMother = 0;
-            for (; !gameInstance.getIslandsModel().get(indexOldMother).getMotherNature() && indexOldMother < gameInstance.getIslandsModel().size(); indexOldMother++)
-                ;
+            int indexOldMother = gameInstance.getMotherNatureIndex();
 
             MoveMotherNatureMessage motherNatureMessage = new MoveMotherNatureMessage(firstPlayer.getNickname(), (byte) 1);
             gameController.onMessageReceived(motherNatureMessage);
-            int indexNewMother = 0;
-            if (indexOldMother != 11) {
-                for (; !gameInstance.getIslandsModel().get(indexNewMother).getMotherNature() && indexNewMother < gameInstance.getIslandsModel().size(); indexNewMother++)
-                    ;
-                assertEquals(indexNewMother, (indexOldMother + 1) % 11);
-            }else
-                assertEquals(indexNewMother, 0);
+
+            assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother + 1) % 11);
+
 
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
@@ -221,14 +217,11 @@ class GameControllerTest {
 
             assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
 
-            indexOldMother = indexNewMother;
+            indexOldMother = gameInstance.getMotherNatureIndex();
             MoveMotherNatureMessage motherNatureMessage2 = new MoveMotherNatureMessage(secondPlayer.getNickname(), (byte) 1);
             gameController.onMessageReceived(motherNatureMessage2);
-            indexNewMother = (indexOldMother + 1) % 11;
-            int newIndex = 0;
-            for (; !gameInstance.getIslandsModel().get(newIndex).getMotherNature() && newIndex < gameInstance.getIslandsModel().size(); newIndex++)
-                ;
-            assertEquals(indexNewMother, newIndex);
+
+            assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
             AddStudentFromCloudToWaitingMessage msgCloudToWaiting2 = new AddStudentFromCloudToWaitingMessage(secondPlayer.getNickname(), 0);
@@ -237,14 +230,15 @@ class GameControllerTest {
 
             //turno terzo giocatore
             PlayerModel thirdPlayer = gameInstance.getPhaseOrder().get(2);
-/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
-            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
-            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
             ColorPawns thirdStudent1ToMove = thirdPlayer.getStudentInEntrance().get(0); //to island
             ColorPawns thirdStudent2ToMove = thirdPlayer.getStudentInEntrance().get(1);
             List<ColorPawns> thirdStudentsToMove = new ArrayList<>();
             thirdStudentsToMove.add(thirdStudent1ToMove);
             thirdStudentsToMove.add(thirdStudent2ToMove);
+
+
+
+
             StudentToIslandMessage msgPlayer3 = new StudentToIslandMessage(thirdPlayer.getNickname(), thirdStudentsToMove, 8);
             gameController.onMessageReceived(msgPlayer3);
             assertEquals(gameController.getPlayerActive().getNickname(), thirdPlayer.getNickname());
@@ -267,14 +261,10 @@ class GameControllerTest {
 
             assertEquals(PhaseGame.MOVE_MOTHER, gameController.getPhaseGame());
 
-            indexOldMother = indexNewMother;
+            indexOldMother = gameInstance.getMotherNatureIndex();
             MoveMotherNatureMessage motherNatureMessage3 = new MoveMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
             gameController.onMessageReceived(motherNatureMessage3);
-            indexNewMother = (indexOldMother + 1) % 11;
-            int newIndex2 = 0;
-            for (; !gameInstance.getIslandsModel().get(newIndex2).getMotherNature() && newIndex2 < gameInstance.getIslandsModel().size(); newIndex2++)
-                ;
-            assertEquals(indexNewMother, newIndex2);
+            assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
             AddStudentFromCloudToWaitingMessage msgCloudToWaiting3 = new AddStudentFromCloudToWaitingMessage(thirdPlayer.getNickname(), 2);

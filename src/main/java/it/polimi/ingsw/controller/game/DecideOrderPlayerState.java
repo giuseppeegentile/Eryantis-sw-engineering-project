@@ -17,6 +17,7 @@ import java.util.List;
 
 //SINGLETON
 public class DecideOrderPlayerState extends GameController implements GameState {
+    private static final long serialVersionUID = -1570438922861887484L;
     private final GameModel gameModel;
 
     /**

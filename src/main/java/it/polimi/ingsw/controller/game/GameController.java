@@ -16,9 +16,7 @@ import it.polimi.ingsw.view.VirtualView;
 import it.polimi.ingsw.observer.Observer;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
@@ -29,6 +27,7 @@ public class GameController implements Observer, Serializable {
     private PlayerModel playerActive;
     private int numberStudentsMovedToIsland=0;
     private boolean boolForTestPlayedCard = true;
+    private List<PlayerModel> playersThatHavePlayedCard;
 
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
@@ -83,43 +82,51 @@ public class GameController implements Observer, Serializable {
                     for (String player : virtualViewMap.keySet()) {
                         virtualViewMap.get(player).askPlayCards(player, gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel());
                     }
+                    playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
                     setPhaseGame(PhaseGame.PLAY_CARDS_ASSISTANT);
                     break;
                 }
                 phase = PhaseGame.START;
                 break;
             case PLAY_CARDS_ASSISTANT:
+
                 boolForTestPlayedCard = true;
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 PlayCardAssistantState play = new PlayCardAssistantState(player, gameInstance);
                 AssistantCardModel card = ((PlayAssistantCardMessage)receivedMessage).getCard();
-                if(play.canPlayCard(card)){
-                    play.playCard(card);
-                    for (String gamer : virtualViewMap.keySet()) {
-                        virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
-                    }
 
-                    if (gameInstance.getPhaseOrder().get(gameInstance.getPlayersNumber()-1).getNickname().equals(player.getNickname())) {//se è l'ultimo giocatore che ha giocato la carta
-                        new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
-                        playerActive = gameInstance.getPhaseOrder().get(0);
-
-                        if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
-                            gameInstance.setTrueHavePlayerFinishedCards();
-
-
-                        this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
-                    }else {
-                        this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
-                        break;
-                    }
-                }else{
+                if(!play.canPlayCard(card)){
                     boolForTestPlayedCard = false;
                     //send message error can't play card
                     for (String gamer : virtualViewMap.keySet()) {
                         virtualViewMap.get(gamer).errorCard(gamer, card);
                     }
                     System.out.println(player.getNickname() + " can't play this card");
+                    this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+                    break;
                 }
+
+                play.playCard(card);
+                playersThatHavePlayedCard.add(player);
+                for (String gamer : virtualViewMap.keySet()) {
+                    virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
+                }
+
+                if (playersThatHavePlayedCard.containsAll(gameInstance.getPlayersModel())) {//se è l'ultimo giocatore che ha giocato la carta
+                    playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
+                    new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
+                    playerActive = gameInstance.getPhaseOrder().get(0);
+
+                    if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
+                        gameInstance.setTrueHavePlayerFinishedCards();
+
+
+                    this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
+                }else {
+                    this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+                    break;
+                }
+
 
                 break;
 
@@ -160,6 +167,8 @@ public class GameController implements Observer, Serializable {
                 this.phase = PhaseGame.MOVE_MOTHER;
                 break;
             case MOVE_MOTHER:
+                System.out.println("Giocatore " +playerActive.getNickname());
+                System.out.println("Fase " + getPhaseGame());
                 int indexOfPlayerActive = gameInstance.getPlayersModel().indexOf(playerActive);
                 byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
                 byte movementAllowed =gameInstance.getCemetery().get(indexOfPlayerActive).getMotherNatureMovement();
@@ -252,35 +261,50 @@ public class GameController implements Observer, Serializable {
                 }
                 this.phase = PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE;
                 break;
+
             case PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToWaitingMessage)receivedMessage).getCloudIndex();
                 CloudModel chosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
-                if(chosenCloudByPlayer.getStudents().size() != 0) {
-                    new AddStudentFromCloudToWaitingState(receivedMessage, playerActive).moveStudentFromCloudToWaiting(receivedMessage);
-                    //picking new player for the next turn
-                    String nickCurrent = playerActive.getNickname();
-                    int indexCurrent = gameInstance.getPhaseOrder().indexOf(playerActive);
-                    if(!virtualViewMap.isEmpty())
-                        virtualViewMap.get(nickCurrent).showEndTurn(nickCurrent);
-                    String nextPlayerNick = "";
-                    if (indexCurrent != gameInstance.getPlayersNumber() - 1) {
-                        nextPlayerNick = gameInstance.getPhaseOrder().get(indexCurrent + 1).getNickname();
-                    } else {
-                        fromBagToCloud();
-                        break;
-                    }
+
+                if(chosenCloudByPlayer.getStudents().size() == 0) {
+                    //Mandare messaggio di scegliere una nuvola non scelta da un altro player
+                    if (!virtualViewMap.isEmpty())
+                        virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
+                    phase = PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE;
+                    break;
+                }
+                //se la nuvola scelta è valida continua
+                new AddStudentFromCloudToWaitingState(playerActive).moveStudentFromCloudToWaiting(receivedMessage);
+
+                //picking new player for the next turn
+                String nickCurrent = playerActive.getNickname();
+                int indexCurrent = gameInstance.getPhaseOrder().indexOf(playerActive);
+
+                if(!virtualViewMap.isEmpty())
+                    virtualViewMap.get(nickCurrent).showEndTurn(nickCurrent);
+
+                String nextPlayerNick = "";
+                if (indexCurrent != gameInstance.getPlayersNumber() - 1) {
+                    nextPlayerNick = gameInstance.getPhaseOrder().get(indexCurrent + 1).getNickname();
+                } else {
+                    fromBagToCloud();
+                    break;
+                }
+                int lastIndex = gameInstance.getPlayersNumber()-1;
+                if(playerActive.equals(gameInstance.getPhaseOrder().get(lastIndex))) { //se è l'ultimo giocatore ad aver giocato
+                    phase = PhaseGame.PLAY_CARDS_ASSISTANT;                             //fai giocare le carte a tutti i giocatori
+                }else{
                     playerActive = gameInstance.getPlayerByNickname(nextPlayerNick);
                     if(!virtualViewMap.isEmpty())
                         virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
                     phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
-                }else{
-                    //Mandare messaggio di scegliere una nuvola non scelta da un altro player
-                    if(!virtualViewMap.isEmpty())
-                        virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
-                    phase = PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE;
                 }
                 break;
+
+
             case CHECK_WIN:
+                System.out.println("Giocatore " +playerActive.getNickname());
+                System.out.println("Fase " + getPhaseGame());
                 this.checkWin();
                 break;
 

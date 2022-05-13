@@ -8,6 +8,7 @@ import it.polimi.ingsw.view.VirtualView;
 
 //2
 public class AddStudentFromBagToCloudState extends GameController implements GameState {
+    private static final long serialVersionUID = 2562163114025500822L;
     private final GameModel gameModel;
 
     /**
