@@ -15,27 +15,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-//SINGLETON
 public class DecideOrderPlayerState extends GameController implements GameState {
     private static final long serialVersionUID = -1570438922861887484L;
     private final GameModel gameModel;
 
     /**
      * Constructor for DecideFirstPlayerState
-     * @param gameModel The current gameModel
      */
-    public DecideOrderPlayerState(GameModel gameModel){
-        this.gameModel = gameModel;
+    public DecideOrderPlayerState(){
+        this.gameModel = GameModel.getInstance();
         this.gameModel.setGameState(PhaseGame.DECIDE_ORDER_PHASE);
     }
-    /**
-     *
-     * @return The current gameModel
-     */
-    @Override
-    public GameModel getGameModel() {
-        return this.gameModel;
-    }
+
 
     @Override
     public PhaseGame getState() {

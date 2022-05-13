@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface GameState {
 
-    GameModel getGameModel();
     PhaseGame getState();
 }

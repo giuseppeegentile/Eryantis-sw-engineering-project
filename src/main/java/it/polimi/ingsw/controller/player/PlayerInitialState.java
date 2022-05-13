@@ -46,29 +46,6 @@ public class PlayerInitialState implements PlayerState {
         this.playerModel.setTowers(colorTower, towerNumber);
     }
 
-    //dato un'array di studenti crea la mappa della hall, per la prima volta imposta la mappa
-    /**
-     * Creates the map with the students for the player's hall. In expert mode adds coins tho the player if there is a multiple of 3 number of students of the same color
-     * @param studentToAddToHall The list of students to add to the player's hall
-     * @param gameMode The current game mode
-     */
-    private void setInitialStudentsHall(List<ColorPawns> studentToAddToHall, GameMode gameMode) {
-        //conta le occorrenze per ogni studente di un colore.
-        studentToAddToHall.forEach(s -> {
-            if (hall.get(s) + 1 % 3 == 0 && gameMode == GameMode.ESPERTO) {//se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
-                addCoins();
-            }
-            hall.put(s, hall.get(s) + 1);
-        });
-
-        //avrò una cosa del genere:
-        //                GREEN, 5,
-        //                RED, 3,
-        //                YELLOW, 0,
-        //                PINK, 1,
-        //                BLUE, 2
-        this.playerModel.setStudentHall(hall);
-    }
     /**
      * Adds a coin to the player
      */

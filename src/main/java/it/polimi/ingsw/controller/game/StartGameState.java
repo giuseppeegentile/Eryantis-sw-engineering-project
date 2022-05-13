@@ -25,15 +25,12 @@ public class StartGameState extends GameController implements GameState {
     private final GameModel gameModel;
 
 
-    public StartGameState(GameModel gameModel){
-        this.gameModel = gameModel;
+    public StartGameState(){
+        this.gameModel = GameModel.getInstance();
         this.gameModel.setGameState(PhaseGame.START);
     }
 
-    @Override
-    public GameModel getGameModel() {
-        return this.gameModel;
-    }
+
 
     @Override
     public PhaseGame getState() {

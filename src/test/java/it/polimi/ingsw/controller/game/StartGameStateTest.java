@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StartGameStateTest {
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg= new StartGameState(testGame);
+    StartGameState ssg= new StartGameState();
 
     void init(){
         List<PlayerModel> playersModels = new ArrayList<>();

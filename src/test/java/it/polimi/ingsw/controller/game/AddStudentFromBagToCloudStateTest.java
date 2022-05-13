@@ -16,7 +16,7 @@ class AddStudentFromBagToCloudStateTest extends StartGameStateTest{
 
         //ssg.assignBag();
 
-        AddStudentFromBagToCloudState addStudentTest = new AddStudentFromBagToCloudState(testGame);
+        AddStudentFromBagToCloudState addStudentTest = new AddStudentFromBagToCloudState();
 
         List<ColorPawns> studentFromBag = testGame.getBag().subList(88, 92);
         List<ColorPawns> studentFromBag2 = testGame.getBag().subList(85, 89);
@@ -25,12 +25,7 @@ class AddStudentFromBagToCloudStateTest extends StartGameStateTest{
         List<ColorPawns> studentOfFirstCloud = testGame.getCloudsModel().get(0).getStudents();
 
         List<ColorPawns> studentOfSecondCloud = testGame.getCloudsModel().get(1).getStudents();
-        int numCloud= 0;
-        for (CloudModel c: this.testGame.getCloudsModel()) {
-            //System.out.println("Cloud_" + numCloud + " has: " + c.getStudents());
-            numCloud++;
-        }
-        //System.out.println("Dalla bag " + studentFromBag);
+
         assertEquals(studentFromBag, studentOfFirstCloud);
         assertEquals(studentFromBag2,studentOfSecondCloud );
     }

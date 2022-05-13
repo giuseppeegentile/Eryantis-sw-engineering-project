@@ -43,9 +43,9 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
     //****************da testare
     public boolean moveStudentFromCloudToWaiting(Message receivedMessage){
         int cloudIndex = ((AddStudentFromCloudToWaitingMessage)receivedMessage).getCloudIndex();
-        CloudModel choosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
-        if(choosenCloudByPlayer.getStudents().size()!=0) {
-            moveStudentFromCloudToWaiting(choosenCloudByPlayer);
+        CloudModel chosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
+        if(chosenCloudByPlayer.getStudents().size()!=0) {
+            moveStudentFromCloudToWaiting(chosenCloudByPlayer);
             return true;
         }else
             return false;

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.StudentToIslandMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ class StudentToIslandStateTest {
 
 
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState(testGame);
+    StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
     void init(){
         List<PlayerModel> playersModels = new ArrayList<>();
@@ -41,13 +42,13 @@ class StudentToIslandStateTest {
     void moveStudentToIslandTest(){
         init();
         List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.RED,ColorPawns.BLUE, ColorPawns.GREEN));
-        IslandModel islandModel = new IslandModel(false, studentOnIsland);
+        testGame.getIslandsModel().get(0).addStudent(studentOnIsland);
+        StudentToIslandMessage msg = new StudentToIslandMessage(player1.getNickname(), List.of(ColorPawns.PINK), 0);
 
-        StudentToIslandState studentToIsland = new StudentToIslandState(player1);
+        new StudentToIslandState(player1).moveStudentToIsland(msg.getStudents(), msg.getIslandModel());
 
-        studentToIsland.moveStudentToIsland(ColorPawns.PINK, islandModel);
 
-        assertEquals(6, islandModel.getStudents().size());
-        assertEquals(Arrays.asList(ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.RED,ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK), islandModel.getStudents());
+        assertEquals(7, testGame.getIslandsModel().get(0).getStudents().size());
+        assertTrue(testGame.getIslandsModel().get(0).getStudents().containsAll(Arrays.asList(ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.RED,ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK)));
     }
 }

@@ -49,7 +49,7 @@ public class GameController implements Observer, Serializable {
                     phase = PhaseGame.START;
                     break;
                 }
-                boolean insertSuccess =new StartGameState(gameInstance).receiveAndSetTowerAndPlayer(receivedMessage);
+                boolean insertSuccess =new StartGameState().receiveAndSetTowerAndPlayer(receivedMessage);
 
                 if(!insertSuccess) {
                     //scegli un'altra torre
@@ -60,9 +60,9 @@ public class GameController implements Observer, Serializable {
                 }
 
                 if(gameInstance.getPlayersNumber()==gameInstance.getPlayersModel().size()){
-                    new StartGameState(gameInstance).setInitialGameConfiguration();
+                    new StartGameState().setInitialGameConfiguration();
                     gameStarted = true;
-                    new AddStudentFromBagToCloudState(gameInstance).moveStudentFromBagToClouds();
+                    new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
                     for (String player : virtualViewMap.keySet()) {
                         PlayerModel p = gameInstance.getPlayerByNickname(player);
                         virtualViewMap.get(player).showTowerMessage(player, p.getColorTower(), p.getTowerNumber());
@@ -114,7 +114,7 @@ public class GameController implements Observer, Serializable {
 
                 if (playersThatHavePlayedCard.containsAll(gameInstance.getPlayersModel())) {//se è l'ultimo giocatore che ha giocato la carta
                     playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
-                    new DecideOrderPlayerState(gameInstance).setPlayersOrderForActionPhase(gameInstance.getCemetery());
+                    new DecideOrderPlayerState().setPlayersOrderForActionPhase(gameInstance.getCemetery());
                     playerActive = gameInstance.getPhaseOrder().get(0);
 
                     if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
@@ -139,7 +139,7 @@ public class GameController implements Observer, Serializable {
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
                 }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nella isola
-                    new StudentToIslandState(receivedMessage, playerActive);
+                    new StudentToIslandState(playerActive).moveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());;
                     int indexIsland = ((StudentToIslandMessage) receivedMessage).getIndexIsland();
                     IslandModel islandModel = gameInstance.getIslandsModel().get(indexIsland);
 
@@ -161,7 +161,7 @@ public class GameController implements Observer, Serializable {
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
                 }
-                new StudentToHallState(receivedMessage, playerActive);
+                new StudentToHallState(playerActive).moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
                 if(!virtualViewMap.isEmpty())
                     virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
                 this.phase = PhaseGame.MOVE_MOTHER;
@@ -184,7 +184,7 @@ public class GameController implements Observer, Serializable {
                     }
                 }
 
-                new MoveMotherNatureState(receivedMessage, playerActive);
+                new MoveMotherNatureState(playerActive).moveMotherNature(movement);
 
                 IslandModel islandWithMother = gameInstance.getIslandWithMother();
                 int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
@@ -226,24 +226,24 @@ public class GameController implements Observer, Serializable {
 
                 if(direction == ColorDirectionAdjacentIsland.RIGHT){
                     if(indexOfMother == gameInstance.getIslandsModel().size()-1)
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
                     else
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
                 }
                 if(direction == ColorDirectionAdjacentIsland.LEFT){
                     if(indexOfMother == 0)
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size()-1), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size()-1), indexOfMother);
                     else
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
                 }
                 if(direction == ColorDirectionAdjacentIsland.BOTH){
                     if(indexOfMother == 0) {
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(1), 0);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(1), 0);
                     }
                     if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
-                        new CheckIfJoinableState(gameInstance, islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+                        new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
                     }
                 }
                 for(PlayerModel p: gameInstance.getPlayersModel()) { //DA CREARE IL MESSAGGIO PER QUESTO: MOSTRARE TUTTE LE ISOLE DEL GAME
@@ -375,7 +375,7 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.havePlayersFinishedCards() || gameInstance.getBag().size()==0) {
             this.checkWin();
         }else{
-            new AddStudentFromBagToCloudState(gameInstance).moveStudentFromBagToClouds();
+            new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
             gameInstance.setPlayers(gameInstance.getPhaseOrder());
 
             for (String player : virtualViewMap.keySet()) {

@@ -15,26 +15,16 @@ import java.util.List;
 //5
 public class MoveMotherNatureState implements PlayerState {
     private final PlayerModel playerModel;
-    private final GameModel gameModel;
 
     /**
      * Constructor for MoveMotherNatureState: sets the player state to MOVE_MOTHER_NATURE
      * @param playerModel The player who can move mother nature
      */
-    public MoveMotherNatureState(PlayerModel playerModel, GameModel gameModel){
+    public MoveMotherNatureState(PlayerModel playerModel){
         this.playerModel = playerModel;
-        this.gameModel = gameModel;
         this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
     }
 
-
-    public MoveMotherNatureState(Message receivedMessage, PlayerModel activePlayer){
-        this.playerModel = activePlayer;
-        this.gameModel = GameModel.getInstance();
-        byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
-        this.playerModel.setState(StatePlayer.MOVE_MOTHER_NATURE);
-        moveMotherNature(movement);
-    }
 
     @Override
     public StatePlayer getState() {
@@ -59,7 +49,7 @@ public class MoveMotherNatureState implements PlayerState {
      */
     public void moveMotherNature(byte movementMotherNature){
         int indexOldMotherNature = 0;
-        List<IslandModel> islandsModels = this.gameModel.getIslandsModel();
+        List<IslandModel> islandsModels = GameModel.getInstance().getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
 
         int newIndex = (indexOldMotherNature + movementMotherNature) % 11;
@@ -68,7 +58,7 @@ public class MoveMotherNatureState implements PlayerState {
 
         islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
         islandsModels.set(newIndex, newIslandWithMotherNature);
-        this.gameModel.setIslands(islandsModels);
+        GameModel.getInstance().setIslands(islandsModels);
     }
 
 }

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoveMotherNatureStateTest {
 
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState(testGame);
+    StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
 
     void init(){
@@ -39,7 +39,7 @@ class MoveMotherNatureStateTest {
     @Test
     void testMoveMotherNature(){
         init();
-        MoveMotherNatureState moveMother = new MoveMotherNatureState(player1, testGame);
+        MoveMotherNatureState moveMother = new MoveMotherNatureState(player1);
         int indexOldMother;
         for(indexOldMother = 0; !this.testGame.getIslandsModel().get(indexOldMother).getMotherNature(); indexOldMother++);
 

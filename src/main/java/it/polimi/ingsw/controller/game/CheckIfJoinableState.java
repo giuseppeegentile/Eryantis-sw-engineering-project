@@ -21,24 +21,16 @@ public class CheckIfJoinableState extends GameController implements GameState {
 
     /**
      * Constructor for CheckIfJoinableState: initializes the island to check and the list of all the islands
-     * @param gameModel The current gameModel
      * @param islandModel The island that has to be checked
      */
-    public CheckIfJoinableState(GameModel gameModel, IslandModel islandModel) {
-        this.gameModel = gameModel;
+    public CheckIfJoinableState(IslandModel islandModel) {
+        this.gameModel = GameModel.getInstance();
         this.islandModelToCheck = islandModel;
-        this.islandModels = this.getGameModel().getIslandsModel();
+        this.islandModels = GameModel.getInstance().getIslandsModel();
         this.gameModel.setGameState(PhaseGame.CHECK_JOIN);
     }
 
-    /**
-     *
-     * @return The current gameModel
-     */
-    @Override
-    public GameModel getGameModel() {
-        return this.gameModel;
-    }
+
 
 
     @Override
@@ -68,7 +60,7 @@ public class CheckIfJoinableState extends GameController implements GameState {
         //islandController.addStudent(joinedStudents);
         joined.setJoined(); //setta a true il valore isJoined
         int indexToRemove = this.islandModels.indexOf(islandToJoin);
-        return compressIsland(this.getGameModel().getIslandsModel(), joined, indexFirstIsland, indexToRemove);
+        return compressIsland(gameModel.getIslandsModel(), joined, indexFirstIsland, indexToRemove);
     }
 
     /**

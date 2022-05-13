@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PlayCardAssistantStateTest {
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState(testGame);
+    StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
     PlayerModel player2 = new PlayerModel("christian");
     PlayerModel player3 = new PlayerModel("giuseppe");
@@ -109,7 +109,7 @@ class PlayCardAssistantStateTest {
     @Order(2)
     void setPlayersOrderForActionPhaseTest(){
         testPlayCard();
-        DecideOrderPlayerState playCardAssistantState = new DecideOrderPlayerState(testGame);
+        DecideOrderPlayerState playCardAssistantState = new DecideOrderPlayerState();
 
         playCardAssistantState.setPlayersOrderForActionPhase(this.testGame.getCemetery());
 

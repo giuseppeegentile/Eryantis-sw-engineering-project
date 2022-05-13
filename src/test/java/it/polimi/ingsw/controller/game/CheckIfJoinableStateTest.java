@@ -14,8 +14,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CheckIfJoinableStateTest {
-
-
     @Test
     void testJoinIsland(){
 
@@ -34,7 +32,7 @@ class CheckIfJoinableStateTest {
         islandList.add(island3);
         islandList.add(island4);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(testGame, island2);
+        CheckIfJoinableState tester = new CheckIfJoinableState(island2);
 
         tester.joinIsland(island3, 1);
 

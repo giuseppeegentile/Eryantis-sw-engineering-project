@@ -9,29 +9,18 @@ import it.polimi.ingsw.view.VirtualView;
 //2
 public class AddStudentFromBagToCloudState extends GameController implements GameState {
     private static final long serialVersionUID = 2562163114025500822L;
-    private final GameModel gameModel;
 
     /**
      * Change the state of the game with the one that add students from bag to clouds
-     * @param gameModel The current gameModel
      */
-    public AddStudentFromBagToCloudState(GameModel gameModel) {
-        this.gameModel = gameModel;
-        this.gameModel.setGameState(PhaseGame.ADD_STUDENT_CLOUD);
+    public AddStudentFromBagToCloudState() {
+        GameModel.getInstance().setGameState(PhaseGame.ADD_STUDENT_CLOUD);
     }
 
-    /**
-     *
-     * @return The current gameModel
-     */
-    @Override
-    public GameModel getGameModel() {
-        return this.gameModel;
-    }
 
     @Override
     public PhaseGame getState() {
-        return this.gameModel.getGameState();
+        return GameModel.getInstance().getGameState();
     }
 
 
@@ -40,21 +29,22 @@ public class AddStudentFromBagToCloudState extends GameController implements Gam
      */
     //da testare di nuovo
     public void moveStudentFromBagToClouds(){
+        GameModel gameInstance = GameModel.getInstance();
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
-        if(this.gameModel.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
+        if(gameInstance.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
             numStudentToMove = 4;
 
-        int bagSize = this.gameModel.getBag().size();
+        int bagSize = gameInstance.getBag().size();
         int i = 0;
-        for (CloudModel c :this.gameModel.getCloudsModel()) {
+        for (CloudModel c :gameInstance.getCloudsModel()) {
 
-            c.setStudents(this.gameModel.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));// prendo dalla bag gli ultimi 3 studenti
+            c.setStudents(gameInstance.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));// prendo dalla bag gli ultimi 3 studenti
             //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
 
             i++;
         }
         //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
-        this.gameModel.setBag(this.gameModel.getBag().subList(0, this.gameModel.getBag().size() - this.gameModel.getPlayersNumber()*numStudentToMove));
+        gameInstance.setBag(gameInstance.getBag().subList(0, gameInstance.getBag().size() - gameInstance.getPlayersNumber()*numStudentToMove));
     }
 }
 

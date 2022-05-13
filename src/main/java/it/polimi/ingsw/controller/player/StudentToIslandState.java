@@ -15,23 +15,21 @@ public class StudentToIslandState implements PlayerState {
     private final PlayerModel playerModel;
     /**
      * Constructor for StudentToIslandState: sets the player state to MOVE_STUDENT
-     * @param playerModel The player who is moving the student
+     * @param activePlayer The player who is moving the student
      */
-    public StudentToIslandState(PlayerModel playerModel){
-        this.playerModel = playerModel;
-        this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
-    }
-
-    public StudentToIslandState(Message receivedMessage, PlayerModel activePlayer){
+    public StudentToIslandState(PlayerModel activePlayer){
         this.playerModel = activePlayer;
-        newMoveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());
         this.playerModel.setState(StatePlayer.MOVE_STUDENT_TO_ISLAND);
 
     }
-    //da testare
-    private void newMoveStudentToIsland(List<ColorPawns> student, IslandModel islandModel){
-        islandModel.addStudent(student);
-        this.playerModel.removeStudentFromEntrance(student);
+    /**
+     * Moves the students from the entrance to the island
+     * @param students The students to place on the island
+     * @param islandModel The island where the students have to be placed
+     */
+    public void moveStudentToIsland(List<ColorPawns> students, IslandModel islandModel){
+        islandModel.addStudent(students);
+        this.playerModel.removeStudentFromEntrance(students);
     }
 
     @Override
@@ -49,15 +47,6 @@ public class StudentToIslandState implements PlayerState {
         return this.playerModel;
     }
 
-    /**
-     * Moves the selected student from the entrance to the island
-     * @param student The student to place on the island
-     * @param islandModel The island where the student has to be placed
-     */
-    public void moveStudentToIsland(ColorPawns student, IslandModel islandModel){
-        islandModel.addStudent(student);
-        this.playerModel.removeStudentFromEntrance(student);
-    }
 
 
 }
