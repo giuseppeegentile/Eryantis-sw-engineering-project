@@ -28,7 +28,7 @@ class GameControllerTest {
 
     @Test
     @Order(1)
-    void onMessageReceivedStart() {
+    void testingGameTurn() {
         gameController.setPhaseGame(PhaseGame.START);
         PlayerNicknameMessage message = new PlayerNicknameMessage(this.player1, 3, tower1, GameMode.PRINCIPIANTE);
 

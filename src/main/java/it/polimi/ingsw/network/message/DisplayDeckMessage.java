@@ -13,11 +13,14 @@ public class DisplayDeckMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     public DisplayDeckMessage(String nickname, List<AssistantCardModel> deck) {
-        super(nickname, MessageType.DISPLAY);
+        super(nickname);
         this.objectDisplay = ObjectDisplay.DECK;
         this.deck = deck;
     }
 
+    public List<AssistantCardModel> getDeck() {
+        return deck;
+    }
 
     @Override
     public String toString() {

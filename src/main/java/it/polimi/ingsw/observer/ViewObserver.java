@@ -29,7 +29,9 @@ public interface ViewObserver {
      * @param colorTower the color of tower chosen by the player to be sent.
      * @param gameMode the mode of the game to be sent.
      */
-    void onUpdateInitialConfiguration(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode);
+    void setGameBoard(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode);
+
+    void onChosenCloud(String nickname, int cloudIndex);
 
     void onUpdateStudentToIsland(String nickname, List<ColorPawns> students, int indexIsland);
 

@@ -4,19 +4,20 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 
 import java.util.List;
 
-public class DisplayEntranceMessage extends DisplayMessage{
-    private static final long serialVersionUID = 6447215261344959952L;
-    private final  List<ColorPawns> entrance;
+public class DisplayProfMessage extends DisplayMessage{
+    private static final long serialVersionUID = 898861397842651060L;
+
+    private final List<ColorPawns> profs;
     private final ObjectDisplay objectDisplay;
 
-    public DisplayEntranceMessage(String nickname, List<ColorPawns> entrance) {
+    public DisplayProfMessage(String nickname, List<ColorPawns> profs) {
         super(nickname);
-        this.entrance = entrance;
+        this.profs = profs;
         this.objectDisplay = ObjectDisplay.ENTRANCE;
     }
 
-    public List<ColorPawns> getEntrance() {
-        return entrance;
+    public List<ColorPawns> getProfs() {
+        return this.profs;
     }
 
     public ObjectDisplay getObjectDisplay() {
@@ -27,7 +28,7 @@ public class DisplayEntranceMessage extends DisplayMessage{
     public String toString() {
         return "DisplayEntranceMessage{" +
                 "player=" + getNickname() +
-                "entrance=" + entrance +
+                "profs=" + getProfs() +
                 ", objectDisplay=" + objectDisplay +
                 '}';
     }

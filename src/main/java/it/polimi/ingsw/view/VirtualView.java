@@ -149,20 +149,25 @@ public class VirtualView implements View, Observer {
 
     }*/
     @Override
-    public void updateTowerOnIsland(IslandModel islandModel){
-
+    public void updateTowerOnIsland(String nickname, IslandModel islandModel){
+        int indexIsland = 0;
+        for(; !GameModel.getInstance().getIslandsModel().get(indexIsland).equals(islandModel); indexIsland++);
+        clientHandler.sendMessage(new DisplayIslandMessage(nickname, islandModel, indexIsland));
     }
+
+
 
     @Override
-    public void updateTowerOnBoard(String nickname, int towerNumber){
-
+    public void updateIslands(String nickname){
+        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, GameModel.getInstance().getIslandsModel()));
     }
-
     //da mettere nel gameController
     @Override
-    public void updateIslands(String nickname, List<IslandModel> islandModel){
-        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, islandModel));
+    public void showOrderPhase(String nickname, List<PlayerModel> order){
+        clientHandler.sendMessage(new OrderMessage(nickname, order));
     }
+
+    //--
 
     @Override
     public void showEndTurn(String nick){
@@ -215,7 +220,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showProfs(String player, List<ColorPawns> profs){
+    public void showProfsMessage(String player, List<ColorPawns> profs){
         clientHandler.sendMessage(new AssignProfResponseMessage(player, profs));
     }
 

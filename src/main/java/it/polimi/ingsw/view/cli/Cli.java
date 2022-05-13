@@ -93,7 +93,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void updateIslands(String nickname, List<IslandModel> islandModel) {
+    public void updateIslands(String nickname) {
 
     }
 
@@ -118,7 +118,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showProfs(String player, List<ColorPawns> profs) {
+    public void showProfsMessage(String player, List<ColorPawns> profs) {
 
     }
 
@@ -142,17 +142,11 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-
-
     @Override
-    public void updateTowerOnIsland(IslandModel islandModel) {
+    public void updateTowerOnIsland(String nickname, IslandModel islandModel) {
 
     }
 
-    @Override
-    public void updateTowerOnBoard(String nickname, int towerNumber) {
-
-    }
 
     @Override
     public void showEndTurn(String nick) {
@@ -206,6 +200,11 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck) {
+
+    }
+
+    @Override
+    public void showOrderPhase(String nickname, List<PlayerModel> order) {
 
     }
 

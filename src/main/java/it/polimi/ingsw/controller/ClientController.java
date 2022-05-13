@@ -31,7 +31,7 @@ public class ClientController implements ViewObserver, Observer {
 
 
     /**
-     * Takes action based on the message type received from the server.
+     * Takes action based on the message type received from the server. Destination: client, who's going to change the view.
      *
      * @param message the message from the server.
      */
@@ -53,6 +53,10 @@ public class ClientController implements ViewObserver, Observer {
                 TextMessage textMessage = (TextMessage)message;
                 queueTasks.execute(() -> view.showTextMessage(textMessage.getNickname(), textMessage.getText()));
                 break;
+            case ORDER:
+                OrderMessage orderMessage = (OrderMessage)message;
+                queueTasks.execute(() -> view.showOrderPhase(orderMessage.getNickname(), orderMessage.getOrder()));
+                break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
@@ -64,13 +68,17 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayIslandMessage displayIsland = (DisplayIslandMessage)message;
                         queueTasks.execute(() -> view.showIslandMessage(displayIsland.getNickname(), displayIsland.getIslandModel(), displayIsland.getIslandIndex()));
                         break;
+                    case PROF:
+                        DisplayProfMessage displayProfMessage = (DisplayProfMessage)message;
+                        queueTasks.execute(() -> view.showProfsMessage(displayProfMessage.getNickname(), displayProfMessage.getProfs()));
+                        break;
                     case CLOUDS:
                         DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
                     case DECK:
-                        /*DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
-                        queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));*/
+                        DisplayDeckMessage displayDeckMessage = (DisplayDeckMessage)message;
+                        queueTasks.execute(() -> view.showDeckMessage(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
                         break;
                     case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;
@@ -115,10 +123,17 @@ public class ClientController implements ViewObserver, Observer {
         }
     }
 
+    //client sends messages to the server when a player wants to perform some actions
+
     @Override
-    public void onUpdateInitialConfiguration(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode) {
+    public void setGameBoard(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode) {
         this.nickname = nickname;
         client.sendMessage(new PlayerNicknameMessage(this.nickname, numPlayers, colorTower, gameMode));
+    }
+
+    @Override
+    public void onChosenCloud(String nickname, int cloudIndex){
+        client.sendMessage(new AddStudentFromCloudToWaitingMessage(nickname, cloudIndex));
     }
 
     @Override

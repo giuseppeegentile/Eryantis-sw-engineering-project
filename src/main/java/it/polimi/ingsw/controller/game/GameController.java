@@ -2,7 +2,6 @@ package it.polimi.ingsw.controller.game;
 
 import it.polimi.ingsw.controller.player.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
@@ -73,7 +72,7 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
 
                         virtualViewMap.get(player).showClouds();
-                        virtualViewMap.get(player).updateIslands(player, gameInstance.getIslandsModel());
+                        virtualViewMap.get(player).updateIslands(player);
                     }
                     playerActive = gameInstance.getPlayersModel().get(0);
                     gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
@@ -115,6 +114,11 @@ public class GameController implements Observer, Serializable {
                 if (playersThatHavePlayedCard.containsAll(gameInstance.getPlayersModel())) {//se è l'ultimo giocatore che ha giocato la carta
                     playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
                     new DecideOrderPlayerState().setPlayersOrderForActionPhase(gameInstance.getCemetery());
+
+                    for(String gamer : virtualViewMap.keySet()){
+                        virtualViewMap.get(gamer).showOrderPhase( gamer, gameInstance.getPhaseOrder());
+                    }
+
                     playerActive = gameInstance.getPhaseOrder().get(0);
 
                     if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
@@ -167,8 +171,6 @@ public class GameController implements Observer, Serializable {
                 this.phase = PhaseGame.MOVE_MOTHER;
                 break;
             case MOVE_MOTHER:
-                System.out.println("Giocatore " +playerActive.getNickname());
-                System.out.println("Fase " + getPhaseGame());
                 int indexOfPlayerActive = gameInstance.getPlayersModel().indexOf(playerActive);
                 byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
                 byte movementAllowed =gameInstance.getCemetery().get(indexOfPlayerActive).getMotherNatureMovement();
@@ -246,14 +248,12 @@ public class GameController implements Observer, Serializable {
                         new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
                     }
                 }
-                for(PlayerModel p: gameInstance.getPlayersModel()) { //DA CREARE IL MESSAGGIO PER QUESTO: MOSTRARE TUTTE LE ISOLE DEL GAME
-                    //•	DisplayIslandMessage
-                    //virtualViewMap.get(p.getNickname()).updateIslands(gameInstance.getIslandsModel());
+                for(PlayerModel p: gameInstance.getPlayersModel()) {
                     String n = p.getNickname();
                     if(!virtualViewMap.isEmpty()) {
-                        virtualViewMap.get(n).updateIslands(n, gameInstance.getIslandsModel());
+                        virtualViewMap.get(n).updateIslands(n);
                         if(!p.getProfs().isEmpty())
-                            virtualViewMap.get(n).showProfs(n, p.getProfs());
+                            virtualViewMap.get(n).showProfsMessage(n, p.getProfs());
                     }
                 }
                 if(gameInstance.getIslandsModel().size()==3){
@@ -303,8 +303,6 @@ public class GameController implements Observer, Serializable {
 
 
             case CHECK_WIN:
-                System.out.println("Giocatore " +playerActive.getNickname());
-                System.out.println("Fase " + getPhaseGame());
                 this.checkWin();
                 break;
 
@@ -351,10 +349,6 @@ public class GameController implements Observer, Serializable {
 
     public PlayerModel getPlayerActive() {
         return playerActive;
-    }
-
-    public void setPlayerActive(PlayerModel playerModel) {
-        this.playerActive = playerModel;
     }
 
     public boolean checkLoginNickname(String nickname, View view) {

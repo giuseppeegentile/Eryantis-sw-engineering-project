@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.StatePlayer;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
 public class PlayerInitialState implements PlayerState {
     private final PlayerModel playerModel;
-    private HashMap<ColorPawns, Integer> hall = new HashMap<>();
+    private HashMap<ColorPawns, Integer> hall;
 
     /**
      * Constructor for PlayerInitialState

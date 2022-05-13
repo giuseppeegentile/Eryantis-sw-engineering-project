@@ -46,7 +46,7 @@ public interface View {
 
     void showClouds();
 
-    void updateIslands(String nickname, List<IslandModel> islandModel);
+    void updateIslands(String nickname);
 
     void showPlayerBoard(PlayerModel playerModel);
 
@@ -56,7 +56,7 @@ public interface View {
 
     void askGetFromBag();
 
-    void showProfs(String player, List<ColorPawns> profs);
+    void showProfsMessage(String player, List<ColorPawns> profs);
 
     void showInvalidTower(String player);
 
@@ -66,11 +66,7 @@ public interface View {
 
     void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
-    //void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall);
-
-    void updateTowerOnIsland(IslandModel islandModel);
-
-    void updateTowerOnBoard(String nickname, int towerNumber);
+    void updateTowerOnIsland(String nickname, IslandModel islandModel);
 
     void showEndTurn(String nick);
 
@@ -93,4 +89,6 @@ public interface View {
     void showError(String error);
 
     void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
+
+    void showOrderPhase(String nickname, List<PlayerModel> order);
 }
