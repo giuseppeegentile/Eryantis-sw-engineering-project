@@ -55,26 +55,20 @@ public class Cli extends ViewObservable implements View {
     }
 
     public void showBoard(){
-        clearCli();
-
 
     }
 
     public void init() {
         out.println("" +
-                " .d8888b.                    888                    d8b          d8b \n" +
-                "d88P  Y88b                   888                    Y8P          Y8P \n" +
-                "Y88b.                        888                                     \n" +
-                " \"Y888b.    8888b.  88888b.  888888 .d88b.  888d888 888 88888b.  888 \n" +
-                "    \"Y88b.     \"88b 888 \"88b 888   d88\"\"88b 888P\"   888 888 \"88b 888 \n" +
-                "      \"888 .d888888 888  888 888   888  888 888     888 888  888 888 \n" +
-                "Y88b  d88P 888  888 888  888 Y88b. Y88..88P 888     888 888  888 888 \n" +
-                " \"Y8888P\"  \"Y888888 888  888  \"Y888 \"Y88P\"  888     888 888  888 888 \n");
+                        "888888 8888Yb 88    db    88b 88 888888 Yb  dP .dPY8 \n" +
+                        "88__   88__dP 88   dPYb   88Yb88   88    YbdP  `Ybo. \n" +
+                        "88     88 Yb  88  dP__Yb  88 Y88   88     8P   o.`Y8b \n" +
+                        "888888 88  Yb 88 dP    Yb 88  Y8   88    dP    8bodP' \n");
 
         out.println("Welcome to Eriantys Board Game!");
 
         try {
-            askServerInfo();
+            askServerInfo();   //il test si blocca, non capisco perché
         } catch (ExecutionException e) {
             out.println(STR_INPUT_CANCELED);
         }

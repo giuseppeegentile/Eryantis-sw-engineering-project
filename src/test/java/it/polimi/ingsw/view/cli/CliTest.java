@@ -64,4 +64,10 @@ class CliTest {
         player.setDeckAssistantCardModel(cards);
         cli.showCards(player);
     }
+
+    @Test
+    void printEryantis(){
+        Cli cli = new Cli();
+        cli.init();
+    }
 }
