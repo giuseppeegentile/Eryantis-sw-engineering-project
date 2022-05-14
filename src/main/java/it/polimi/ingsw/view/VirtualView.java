@@ -55,7 +55,7 @@ public class VirtualView implements View, Observer {
     @Override
     public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel) {
         int index = GameModel.getInstance().getIslandsModel().indexOf(islandModel);
-        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns,index));
+        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns, index));
     }
 
     @Override
@@ -108,12 +108,6 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
 
-
-    @Override
-    public void showClouds() {
-        clientHandler.sendMessage(new DisplayCloudsMessage("", GameModel.getInstance().getCloudsModel()));
-    }
-
     @Override
     public void showPlayerBoard(PlayerModel playerModel) {
 
@@ -121,11 +115,11 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showCards(PlayerModel playerModel) {
-
+        clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
     }
 
     @Override
-    public void askGetFromBag() {
+    public void askGetFromBag() {  //serve?
 
     }
 
@@ -167,6 +161,11 @@ public class VirtualView implements View, Observer {
     @Override
     public void showEndTurn(String nick){
         clientHandler.sendMessage(new EndTurnMessage(nick));
+    }
+
+    @Override
+    public void showInvalidNickname(String nickname){
+        clientHandler.sendMessage(new InvalidNicknameMessage(nickname));
     }
 
     @Override

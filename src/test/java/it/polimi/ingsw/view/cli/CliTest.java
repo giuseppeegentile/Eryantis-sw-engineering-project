@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
@@ -69,5 +71,28 @@ class CliTest {
     void printEryantis(){
         Cli cli = new Cli();
         cli.init();
+    }
+
+    @Test
+    void showStudentsOnClouds(){
+        Cli cli = new Cli();
+        List<CloudModel> clouds = new ArrayList<>();
+        CloudModel cloud1 = new CloudModel(4);
+        CloudModel cloud2 = new CloudModel(4);
+        List<ColorPawns> lista = new ArrayList<>();
+        lista.add(ColorPawns.GREEN);
+        lista.add(ColorPawns.RED);
+        lista.add(ColorPawns.BLUE);
+        lista.add(ColorPawns.GREEN);
+        cloud1.setStudents(lista);
+        lista.removeAll(lista);
+        lista.add(ColorPawns.GREEN);
+        lista.add(ColorPawns.RED);
+        lista.add(ColorPawns.BLUE);
+        lista.add(ColorPawns.GREEN);
+        cloud2.setStudents(lista);
+        clouds.add(cloud1);
+        clouds.add(cloud2);
+        cli.showCloudsMessage("Strange", clouds);
     }
 }

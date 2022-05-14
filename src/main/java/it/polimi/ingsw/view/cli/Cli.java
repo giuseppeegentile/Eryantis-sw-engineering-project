@@ -12,6 +12,7 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,7 +177,30 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCloudsMessage(String nickname, List<CloudModel> clouds) {
-
+        StringBuilder strBoardBld = new StringBuilder();
+        strBoardBld.append("_____________               _____________\n");
+        int occurrencesRed1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.RED);
+        int occurrencesBlue1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.BLUE);
+        int occurrencesGreen1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.GREEN);
+        int occurrencesPink1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.PINK);
+        int occurrencesYellow1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.YELLOW);
+        int occurrencesRed2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.RED);
+        int occurrencesBlue2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.BLUE);
+        int occurrencesGreen2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.GREEN);
+        int occurrencesPink2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.PINK);
+        int occurrencesYellow2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.YELLOW);
+        strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append(" |               ");
+        strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed2 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue2 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen2 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.PINK).append(occurrencesPink2 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow2 + " ").append(ColorCli.RESET).append(" |\n");
+        strBoardBld.append("_____________               _____________\n");
+        out.println(strBoardBld.toString());
     }
 
     @Override
@@ -186,11 +210,6 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
-
-    }
-
-    @Override
-    public void showClouds() {
 
     }
 
@@ -267,6 +286,11 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showEndTurn(String nick) {
+
+    }
+
+    @Override
+    public void showInvalidNickname(String nickname) {
 
     }
 

@@ -28,6 +28,8 @@ public interface View {
 
     void showEntranceMessage(String player, List<ColorPawns> entrance);
 
+    public void showCards(PlayerModel playerModel);
+
     void showCemeteryMessage(String player, List<AssistantCardModel> cemetery);
 
     void showTextMessage(String player, String text);
@@ -42,13 +44,9 @@ public interface View {
 
     void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
 
-    void showClouds();
-
     void updateIslands(String nickname);
 
     void showPlayerBoard(PlayerModel playerModel);
-
-    void showCards(PlayerModel playerModel);
 
     void askGetFromBag();
 
@@ -65,6 +63,8 @@ public interface View {
     void updateTowerOnIsland(String nickname, IslandModel islandModel);
 
     void showEndTurn(String nick);
+
+    void showInvalidNickname(String nickname);
 
     void showStartTurn(String nick);
 

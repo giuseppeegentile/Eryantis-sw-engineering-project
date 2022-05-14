@@ -44,7 +44,8 @@ public class GameController implements Observer, Serializable {
             case START:
                 String nickMessage = receivedMessage.getNickname();
                 if(!virtualViewMap.isEmpty() && !checkLoginNickname(nickMessage, virtualViewMap.get(nickMessage))){ //controllo di non avere player con stesso nick
-                    //send message invalid nickname
+                    String nick = receivedMessage.getNickname();
+                    virtualViewMap.get(nick).showInvalidNickname(nick);
                     phase = PhaseGame.START;
                     break;
                 }
@@ -71,7 +72,7 @@ public class GameController implements Observer, Serializable {
 
                         virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
 
-                        virtualViewMap.get(player).showClouds();
+                        virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
                         virtualViewMap.get(player).updateIslands(player);
                     }
                     playerActive = gameInstance.getPlayersModel().get(0);
@@ -373,7 +374,7 @@ public class GameController implements Observer, Serializable {
             gameInstance.setPlayers(gameInstance.getPhaseOrder());
 
             for (String player : virtualViewMap.keySet()) {
-                virtualViewMap.get(player).showClouds();
+                virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
             }
             phase = PhaseGame.PLAY_CARDS_ASSISTANT;
         }
