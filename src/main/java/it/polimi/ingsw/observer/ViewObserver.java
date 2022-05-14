@@ -47,4 +47,6 @@ public interface ViewObserver {
      * Handles a disconnection desired by the user.
      */
     void onDisconnection();
+
+    void onUpdateNickname(String nickname);
 }

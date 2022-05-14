@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
@@ -10,18 +11,127 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
+import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
-import static java.lang.System.out;
 
 //sout per fare printout
 
 public class Cli extends ViewObservable implements View {
 
+    private final PrintStream out;
+    private Thread inputThread;
+
+    private static final String STR_ROW = "Row: ";
+    private static final String STR_COLUMN = "Column: ";
+    private static final String STR_POSITION = "Position ";
+    private static final String STR_INPUT_CANCELED = "User input canceled.";
+
+    /**
+     * Default constructor.
+     */
+    public Cli() {
+        out = System.out;
+    }
+
+    public String readLine() throws ExecutionException {
+        FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
+        inputThread = new Thread(futureTask);
+        inputThread.start();
+
+        String input = null;
+
+        try {
+            input = futureTask.get();
+        } catch (InterruptedException e) {
+            futureTask.cancel(true);
+            Thread.currentThread().interrupt();
+        }
+        return input;
+    }
+
+    public void showBoard(){
+        clearCli();
+
+
+    }
+
+    public void init() {
+        out.println("" +
+                " .d8888b.                    888                    d8b          d8b \n" +
+                "d88P  Y88b                   888                    Y8P          Y8P \n" +
+                "Y88b.                        888                                     \n" +
+                " \"Y888b.    8888b.  88888b.  888888 .d88b.  888d888 888 88888b.  888 \n" +
+                "    \"Y88b.     \"88b 888 \"88b 888   d88\"\"88b 888P\"   888 888 \"88b 888 \n" +
+                "      \"888 .d888888 888  888 888   888  888 888     888 888  888 888 \n" +
+                "Y88b  d88P 888  888 888  888 Y88b. Y88..88P 888     888 888  888 888 \n" +
+                " \"Y8888P\"  \"Y888888 888  888  \"Y888 \"Y88P\"  888     888 888  888 888 \n");
+
+        out.println("Welcome to Eriantys Board Game!");
+
+        try {
+            askServerInfo();
+        } catch (ExecutionException e) {
+            out.println(STR_INPUT_CANCELED);
+        }
+    }
+
+    public void askServerInfo() throws ExecutionException {
+        Map<String, String> serverInfo = new HashMap<>();
+        String defaultAddress = "localhost";
+        String defaultPort = "16847";
+        boolean validInput;
+
+        out.println("Please specify the following settings. The default value is shown between brackets.");
+
+        do {
+            out.print("Enter the server address [" + defaultAddress + "]: ");
+
+            String address = readLine();
+
+            if (address.equals("")) {
+                serverInfo.put("address", defaultAddress);
+                validInput = true;
+            } else if (ClientController.isValidIpAddress(address)) {
+                serverInfo.put("address", address);
+                validInput = true;
+            } else {
+                out.println("Invalid address!");
+                clearCli();
+                validInput = false;
+            }
+        } while (!validInput);
+
+        do {
+            out.print("Enter the server port [" + defaultPort + "]: ");
+            String port = readLine();
+
+            if (port.equals("")) {
+                serverInfo.put("port", defaultPort);
+                validInput = true;
+            } else {
+                if (ClientController.isValidPort(port)) {
+                    serverInfo.put("port", port);
+                    validInput = true;
+                } else {
+                    out.println("Invalid port!");
+                    validInput = false;
+                }
+            }
+        } while (!validInput);
+
+        notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
+    }
+
+
     @Override
     public void showWinMessage(PlayerModel winner) {
-
+        out.println("Game finished: " + winner.getNickname() + " WINS!");
+        System.exit(0);
     }
 
 
@@ -85,8 +195,6 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-
-
     @Override
     public void showClouds() {
 
@@ -104,12 +212,14 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCards(PlayerModel playerModel) {
-
-    }
-
-    @Override
-    public void showOrderPhase() {
-
+        int j = 0;
+        int i = 0;
+        out.println("These are your available assistant cards " + playerModel.getNickname() + "!\n");
+        for (i = 0; i<playerModel.getDeckAssistantCardModel().size(); i++)
+            if (!(playerModel.getDeckAssistantCardModel().get(i).getPriority() == 0 && playerModel.getDeckAssistantCardModel().get(i).getMotherNatureMovement() == 0)){
+                out.println(j + " -> Priority = " + playerModel.getDeckAssistantCardModel().get(i).getPriority() + ", Mothernature Movements = " + playerModel.getDeckAssistantCardModel().get(i).getMotherNatureMovement() + "\n");
+                j++;
+        }
     }
 
     @Override
@@ -129,7 +239,20 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+        clearCli();
 
+        if (nicknameAccepted && connectionSuccessful) {
+            out.println("Hi, " + nickname + "! You connected to the server.");
+        } else if (connectionSuccessful) {
+            askNickname();
+        } else if (nicknameAccepted) {
+            out.println("Max players reached. Connection refused.");
+            out.println("EXIT.");
+
+            System.exit(1);
+        } else {
+            showErrorAndExit("Could not contact server.");
+        }
     }
 
     @Override
@@ -190,12 +313,23 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askNickname() {
-
+        out.print("Enter your nickname: ");
+        try {
+            String nickname = readLine();
+            notifyObserver(obs -> obs.onUpdateNickname(nickname));
+        } catch (ExecutionException e) {
+            out.println(STR_INPUT_CANCELED);
+        }
     }
 
     @Override
-    public void showError(String error) {
+    public void showErrorAndExit(String error) {
+        inputThread.interrupt();
 
+        out.println("\nERROR: " + error);
+        out.println("EXIT.");
+
+        System.exit(1);
     }
 
     @Override
@@ -205,8 +339,14 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showOrderPhase(String nickname, List<PlayerModel> order) {
-
+        if(order.size() == 4)
+            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + ", " + order.get(2).getNickname() + ", " + order.get(3).getNickname() + "\n");
+        else if(order.size() == 3)
+            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + ", " + order.get(2).getNickname() + "\n");
+        else if(order.size() == 2)
+            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + "\n");
     }
+
 
     /**
      * Shows the lobby screen on the terminal.

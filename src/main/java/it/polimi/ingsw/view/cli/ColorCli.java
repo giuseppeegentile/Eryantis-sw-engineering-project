@@ -7,13 +7,14 @@ public enum ColorCli {
 
     // Regular Colors. Normal color, no bold, background color etc.
     RED("\033[0;31m"),      // RED
-    GREEN("\033[38;5;28m"),    // GREEN  "\u001B[32m"
+    GREEN("\033[38;5;28m"),    // GREEN
     BLUE("\033[0;34m"),     // BLUE
-
-    // Bold
-    YELLOW_BOLD("\033[1;33m"), // YELLOW
-    CYAN_BOLD("\033[1;36m");    // CYAN
-
+    YELLOW("\033[0;33m"),
+    PINK("\033[0;35m"),
+    WHITE("\033[0;97m"),
+    BLACK("\033[0;30m"),
+    MAGENTA("\033[0;95"),   //motherNature
+    GRAY("\033[0;90m");
     private final String code;
 
     ColorCli(String code) {

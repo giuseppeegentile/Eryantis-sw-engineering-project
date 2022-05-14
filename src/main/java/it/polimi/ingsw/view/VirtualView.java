@@ -125,11 +125,6 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showOrderPhase() {
-
-    }
-
-    @Override
     public void askGetFromBag() {
 
     }
@@ -210,7 +205,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showError(String error) {
+    public void showErrorAndExit(String error) {
         clientHandler.sendMessage(new ErrorMessage("Server_Nickname", error));
     }
 

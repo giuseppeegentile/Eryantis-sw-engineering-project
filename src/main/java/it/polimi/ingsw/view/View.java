@@ -7,9 +7,7 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.MessageType;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +50,6 @@ public interface View {
 
     void showCards(PlayerModel playerModel);
 
-    void showOrderPhase();
-
     void askGetFromBag();
 
     void showProfsMessage(String player, List<ColorPawns> profs);
@@ -86,7 +82,7 @@ public interface View {
 
     void askNickname();
 
-    void showError(String error);
+    void showErrorAndExit(String error);
 
     void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
 

@@ -78,7 +78,4 @@ public class PlayCardAssistantState implements PlayerState {
         this.playerModel.removeCard(index);
     }
 
-
-
-
 }

@@ -47,7 +47,7 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showDisconnectionMessage(message.getNickname(), ((DisconnectionMessage) message).getMessageStr()));
                 break;
             case ERROR:
-                queueTasks.execute(() -> view.showError(((ErrorMessage)message).getError()));
+                queueTasks.execute(() -> view.showErrorAndExit(((ErrorMessage)message).getError()));
                 break;
             case TEXT:
                 TextMessage textMessage = (TextMessage)message;
@@ -159,6 +159,11 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onCardPlayed(String nickname, AssistantCardModel assistantCardModel){
         client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
+    }
+
+    @Override
+    public void onUpdateNickname(String nickname) {
+        client.sendMessage(new LoginRequest(nickname));
     }
 
     @Override
