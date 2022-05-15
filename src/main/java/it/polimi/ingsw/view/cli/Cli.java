@@ -12,10 +12,7 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -54,6 +51,7 @@ public class Cli extends ViewObservable implements View {
         }
         return input;
     }
+
 
     public void showBoard(){
 
@@ -179,28 +177,23 @@ public class Cli extends ViewObservable implements View {
     public void showCloudsMessage(String nickname, List<CloudModel> clouds) {
         StringBuilder strBoardBld = new StringBuilder();
         strBoardBld.append("_____________               _____________\n");
-        int occurrencesRed1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.RED);
-        int occurrencesBlue1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.BLUE);
-        int occurrencesGreen1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.GREEN);
-        int occurrencesPink1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.PINK);
-        int occurrencesYellow1 = Collections.frequency(clouds.get(0).getStudents(), ColorPawns.YELLOW);
-        int occurrencesRed2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.RED);
-        int occurrencesBlue2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.BLUE);
-        int occurrencesGreen2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.GREEN);
-        int occurrencesPink2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.PINK);
-        int occurrencesYellow2 = Collections.frequency(clouds.get(1).getStudents(), ColorPawns.YELLOW);
-        strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append(" |               ");
-        strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed2 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue2 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen2 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.PINK).append(occurrencesPink2 + " ").append(ColorCli.RESET);
-        strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow2 + " ").append(ColorCli.RESET).append(" |\n");
+        for (CloudModel cloud : clouds) {
+            int occurrencesRed1 = Collections.frequency(cloud.getStudents(), ColorPawns.RED);
+            int occurrencesBlue1 = Collections.frequency(cloud.getStudents(), ColorPawns.BLUE);
+            int occurrencesGreen1 = Collections.frequency(cloud.getStudents(), ColorPawns.GREEN);
+            int occurrencesPink1 = Collections.frequency(cloud.getStudents(), ColorPawns.PINK);
+            int occurrencesYellow1 = Collections.frequency(cloud.getStudents(), ColorPawns.YELLOW);
+
+            strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append(" |              ");
+        }
+        strBoardBld.append("\n");
         strBoardBld.append("_____________               _____________\n");
-        out.println(strBoardBld.toString());
+        out.println(strBoardBld);
+
     }
 
     @Override
@@ -357,12 +350,12 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showOrderPhase(String nickname, List<PlayerModel> order) {
-        if(order.size() == 4)
-            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + ", " + order.get(2).getNickname() + ", " + order.get(3).getNickname() + "\n");
-        else if(order.size() == 3)
-            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + ", " + order.get(2).getNickname() + "\n");
-        else if(order.size() == 2)
-            out.println("                           " + order.get(0).getNickname() + ", " + order.get(1).getNickname() + "\n");
+        StringBuilder stringBuilder = new StringBuilder("                           ");
+        for(int i = 0; i < order.size()-1; i++){
+            stringBuilder.append(order.get(0).getNickname()).append(", ");
+        }
+        stringBuilder.append(order.get(order.size()-1).getNickname()).append("\n");
+        out.println(stringBuilder);
     }
 
 
