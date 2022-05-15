@@ -68,7 +68,7 @@ class CliTest {
     }
 
     @Test
-    void printEryantis(){
+    void printEriantys(){
         Cli cli = new Cli();
         cli.init();
     }

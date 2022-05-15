@@ -176,7 +176,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showCloudsMessage(String nickname, List<CloudModel> clouds) {
         StringBuilder strBoardBld = new StringBuilder();
-        strBoardBld.append("_____________               _____________\n");
+        strBoardBld.append(" -----------                -----------\n");
         for (CloudModel cloud : clouds) {
             int occurrencesRed1 = Collections.frequency(cloud.getStudents(), ColorPawns.RED);
             int occurrencesBlue1 = Collections.frequency(cloud.getStudents(), ColorPawns.BLUE);
@@ -188,10 +188,10 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
             strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
             strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append(" |              ");
+            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|              ");
         }
         strBoardBld.append("\n");
-        strBoardBld.append("_____________               _____________\n");
+        strBoardBld.append(" -----------                -----------\n");
         out.println(strBoardBld);
 
     }
@@ -218,6 +218,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCards(PlayerModel playerModel) {
+        clearCli();
         int j = 0;
         int i = 0;
         out.println("These are your available assistant cards " + playerModel.getNickname() + "!\n");
