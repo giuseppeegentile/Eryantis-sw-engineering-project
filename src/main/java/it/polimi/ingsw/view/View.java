@@ -28,7 +28,7 @@ public interface View {
 
     void showEntranceMessage(String player, List<ColorPawns> entrance);
 
-    public void showCards(PlayerModel playerModel);
+    //void showCards(PlayerModel playerModel);
 
     void showCemeteryMessage(String player, List<AssistantCardModel> cemetery);
 
@@ -52,7 +52,7 @@ public interface View {
 
     void showProfsMessage(String player, List<ColorPawns> profs);
 
-    void showInvalidTower(String player);
+    void showInvalidTower(String player, ColorTower colorTower);
 
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 

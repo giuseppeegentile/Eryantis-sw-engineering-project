@@ -1,12 +1,19 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.model.colors.ColorTower;
+
 public class InvalidTowerMessage extends Message{
     private static final long serialVersionUID = 4245063092764274017L;
+    private final ColorTower colorTower;
 
-    public InvalidTowerMessage(String nickname) {
+    public InvalidTowerMessage(String nickname, ColorTower colorTower) {
         super(nickname, MessageType.ERROR);
+        this.colorTower = colorTower;
     }
 
+    public ColorTower getColorTower(){
+        return this.colorTower;
+    }
 
     @Override
     public String toString() {

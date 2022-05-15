@@ -53,7 +53,6 @@ class CliTest {
     @Test
     void showCards(){
         Cli cli = new Cli();
-        PlayerModel player = new PlayerModel("John Snow");
         AssistantCardModel cardOne = new AssistantCardModel(5, (byte)4);
         AssistantCardModel cardTwo = new AssistantCardModel(3, (byte)2);
         AssistantCardModel cardThree = new AssistantCardModel(0, (byte)0);
@@ -63,14 +62,32 @@ class CliTest {
         cards.add(cardTwo);
         cards.add(cardThree);
         cards.add(cardFour);
-        player.setDeckAssistantCardModel(cards);
-        cli.showCards(player);
+        cli.showDeckMessage("John Snow", cards);
     }
 
     @Test
     void printEriantys(){
         Cli cli = new Cli();
         cli.init();
+    }
+
+    @Test
+    void showEndOfTurn(){
+        Cli cli = new Cli();
+        cli.showEndTurn("Harry Potter");
+    }
+
+    @Test
+    void showInvalidNickname(){
+        Cli cli = new Cli();
+        cli.showInvalidNickname("Percy Jackson");
+    }
+
+    @Test
+    void showAssistantCardPlayed(){
+        Cli cli = new Cli();
+        AssistantCardModel card = new AssistantCardModel(5, (byte)2);
+        cli.showPlayAssistantCardMessage("Jovanotti", card);
     }
 
     @Test

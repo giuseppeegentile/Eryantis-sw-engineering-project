@@ -203,7 +203,10 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
-
+        out.println(player  +
+                " has played an assistant card\n" +
+                "Priority = " + assistantCard.getPriority() + "\n" +
+                "Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
     }
 
     @Override
@@ -216,18 +219,10 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-    @Override
+    /*@Override                                         c'è già showDeckMessage
     public void showCards(PlayerModel playerModel) {
-        clearCli();
-        int j = 0;
-        int i = 0;
-        out.println("These are your available assistant cards " + playerModel.getNickname() + "!\n");
-        for (i = 0; i<playerModel.getDeckAssistantCardModel().size(); i++)
-            if (!(playerModel.getDeckAssistantCardModel().get(i).getPriority() == 0 && playerModel.getDeckAssistantCardModel().get(i).getMotherNatureMovement() == 0)){
-                out.println(j + " -> Priority = " + playerModel.getDeckAssistantCardModel().get(i).getPriority() + ", Mothernature Movements = " + playerModel.getDeckAssistantCardModel().get(i).getMotherNatureMovement() + "\n");
-                j++;
-        }
-    }
+
+    }*/
 
     @Override
     public void askGetFromBag() {
@@ -240,14 +235,15 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showInvalidTower(String player) {
-
+    public void showInvalidTower(String player, ColorTower colorTower) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Oh no! The tower color ").append(ColorCli.colorTower).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
+        out.println(stringBuilder);
     }
 
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
         clearCli();
-
         if (nicknameAccepted && connectionSuccessful) {
             out.println("Hi, " + nickname + "! You connected to the server.");
         } else if (connectionSuccessful) {
@@ -269,7 +265,15 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
-
+        clearCli();
+        int j = 0;
+        int i = 0;
+        out.println("These are your available assistant cards " + player + "!\n");
+        for (i = 0; i<playerDeck.size(); i++)
+            if (!(playerDeck.get(i).getPriority() == 0 && playerDeck.get(i).getMotherNatureMovement() == 0)){
+                out.println(j + " -> Priority = " + playerDeck.get(i).getPriority() + ", Mothernature movements = " + playerDeck.get(i).getMotherNatureMovement() + "\n");
+                j++;
+            }
     }
 
     @Override
@@ -280,12 +284,15 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showEndTurn(String nick) {
-
+        clearCli();
+        out.println(nick + " your turn is finished!\n");
     }
 
     @Override
     public void showInvalidNickname(String nickname) {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Oh no! The nickname ").append(ColorCli.RED).append(nickname).append(ColorCli.RESET).append(" is already taken\n");
+        out.println(stringBuilder);
     }
 
     @Override

@@ -54,7 +54,8 @@ public class GameController implements Observer, Serializable {
                 if(!insertSuccess) {
                     //scegli un'altra torre
                     String nick = receivedMessage.getNickname();
-                    virtualViewMap.get(nick).showInvalidTower(nick);
+                    ColorTower color = ((TowerMessage)receivedMessage).getColorTower();
+                    virtualViewMap.get(nick).showInvalidTower(nick, color); //inviare anche il colore della torre
                     phase = PhaseGame.START;
                     break;
                 }

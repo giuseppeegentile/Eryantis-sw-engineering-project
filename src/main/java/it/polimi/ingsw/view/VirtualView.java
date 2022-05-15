@@ -113,10 +113,10 @@ public class VirtualView implements View, Observer {
 
     }
 
-    @Override
+    /*@Override
     public void showCards(PlayerModel playerModel) {
         clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
-    }
+    }*/
 
     @Override
     public void askGetFromBag() {  //serve?
@@ -179,8 +179,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showInvalidTower(String player){
-        clientHandler.sendMessage(new InvalidTowerMessage(player));
+    public void showInvalidTower(String player, ColorTower colorTower){
+        clientHandler.sendMessage(new InvalidTowerMessage(player, colorTower));
     }
 
     @Override
