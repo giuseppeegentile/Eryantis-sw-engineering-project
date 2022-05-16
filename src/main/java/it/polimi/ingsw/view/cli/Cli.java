@@ -161,12 +161,15 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
-
+        out.println(player + ", this is the cemetery of the current round.\n");
+        for(AssistantCardModel assistantCard : cemetery){
+            out.println(assistantCard.getOwner().getNickname() + " -> Priority = " + assistantCard.getPriority() + ", Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
+        }
     }
 
     @Override
     public void showTextMessage(String player, String text) {
-
+        out.println(player + " -> " + text);
     }
 
     @Override
@@ -212,7 +215,6 @@ public class Cli extends ViewObservable implements View {
         strBoardBld.append("\n");
         strBoardBld.append(" -----------                -----------\n");
         out.println(strBoardBld);
-
     }
 
     @Override
@@ -224,7 +226,7 @@ public class Cli extends ViewObservable implements View {
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
         out.println(player  +
                 " has played an assistant card\n" +
-                "Priority = " + assistantCard.getPriority() + "\n" +
+                "Priority = " + assistantCard.getPriority() + ", " +
                 "Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
     }
 

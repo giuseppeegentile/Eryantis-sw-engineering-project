@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
@@ -85,6 +86,35 @@ class CliTest {
         cli.showInvalidNickname("Percy Jackson");
     }
 
+    @Test
+    void showCemetery(){
+        Cli cli = new Cli();
+        GameModel game = new GameModel();
+        PlayerModel player1 = new PlayerModel("J Jonah Jameson Junior");
+        PlayerModel player2 = new PlayerModel("Peter Parker");
+        PlayerModel player3 = new PlayerModel("Gwen Stacy");
+        PlayerModel player4 = new PlayerModel("Mary Jane Watson");
+        List<PlayerModel> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+        game.setPlayers(players);
+        AssistantCardModel cardOne = new AssistantCardModel(5, (byte)4);
+        AssistantCardModel cardTwo = new AssistantCardModel(3, (byte)2);
+        AssistantCardModel cardThree = new AssistantCardModel(0, (byte)0);
+        AssistantCardModel cardFour = new AssistantCardModel(6, (byte)1);
+        cardOne.setOwner(player4);
+        cardTwo.setOwner(player1);
+        cardThree.setOwner(player3);
+        cardFour.setOwner(player2);
+        List<AssistantCardModel> cards = new ArrayList<>();
+        cards.add(cardOne);
+        cards.add(cardTwo);
+        cards.add(cardThree);
+        cards.add(cardFour);
+        cli.showCemeteryMessage("J Jonah Jameson Junior", cards);
+    }
     @Test
     void showAssistantCardPlayed(){
         Cli cli = new Cli();
