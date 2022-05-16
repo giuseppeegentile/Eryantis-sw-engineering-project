@@ -44,7 +44,7 @@ public interface View {
 
     void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
 
-    void updateIslands(String nickname);
+    void showIslands(String nickname, List<IslandModel> islands);
 
     void showPlayerBoard(PlayerModel playerModel);
 

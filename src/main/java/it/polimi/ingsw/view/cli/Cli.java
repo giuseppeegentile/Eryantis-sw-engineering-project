@@ -229,8 +229,25 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void updateIslands(String nickname) {
+    public void showIslands(String nickname, List<IslandModel> islands) {
+        StringBuilder strBoardBld = new StringBuilder();
+        strBoardBld.append(" -----------                -----------                -----------                -----------                -----------                -----------\n");
+        for (IslandModel island : islands) {
+            int occurrencesRed1 = Collections.frequency(island.getStudents(), ColorPawns.RED);
+            int occurrencesBlue1 = Collections.frequency(island.getStudents(), ColorPawns.BLUE);
+            int occurrencesGreen1 = Collections.frequency(island.getStudents(), ColorPawns.GREEN);
+            int occurrencesPink1 = Collections.frequency(island.getStudents(), ColorPawns.PINK);
+            int occurrencesYellow1 = Collections.frequency(island.getStudents(), ColorPawns.YELLOW);
 
+            strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|              ");
+        }
+        strBoardBld.append("\n");
+        strBoardBld.append(" -----------                -----------\n");
+        out.println(strBoardBld);
     }
 
     @Override

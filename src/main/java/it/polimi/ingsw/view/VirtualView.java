@@ -147,8 +147,8 @@ public class VirtualView implements View, Observer {
 
 
     @Override
-    public void updateIslands(String nickname){
-        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, GameModel.getInstance().getIslandsModel()));
+    public void showIslands(String nickname, List<IslandModel> islands){
+        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, islands));
     }
     //da mettere nel gameController
     @Override

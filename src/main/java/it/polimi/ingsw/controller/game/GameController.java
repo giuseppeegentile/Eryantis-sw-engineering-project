@@ -74,7 +74,7 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
 
                         virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
-                        virtualViewMap.get(player).updateIslands(player);
+                        virtualViewMap.get(player).showIslands(player, gameInstance.getIslandsModel());
                     }
                     playerActive = gameInstance.getPlayersModel().get(0);
                     gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
@@ -253,7 +253,7 @@ public class GameController implements Observer, Serializable {
                 for(PlayerModel p: gameInstance.getPlayersModel()) {
                     String n = p.getNickname();
                     if(!virtualViewMap.isEmpty()) {
-                        virtualViewMap.get(n).updateIslands(n);
+                        virtualViewMap.get(n).showIslands(n, gameInstance.getIslandsModel());
                         if(!p.getProfs().isEmpty())
                             virtualViewMap.get(n).showProfsMessage(n, p.getProfs());
                     }

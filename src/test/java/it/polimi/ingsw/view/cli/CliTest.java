@@ -150,4 +150,9 @@ class CliTest {
         Cli cli = new Cli();
         cli.showIslandMessage("Geralt di Rivia",islandModel, 5);
     }
+
+    @Test
+    void showIslands(){
+
+    }
 }
