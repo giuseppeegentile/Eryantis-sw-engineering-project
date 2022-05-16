@@ -10,7 +10,9 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class CliTest {
 
@@ -232,5 +234,35 @@ class CliTest {
         islands.add(islandModel12);
         Cli cli = new Cli();
         cli.showIslands("Batman", islands);
+    }
+
+    @Test
+    void showPlayerBoard(){
+        Cli cli = new Cli();
+        PlayerModel player = new PlayerModel("Paolo Bitta");
+        player.setTowers(ColorTower.WHITE, 5);
+        player.addProf(ColorPawns.RED);
+        player.addProf(ColorPawns.PINK);
+        player.addProf(ColorPawns.GREEN);
+        List<ColorPawns> studentsEntrance = new ArrayList<>();
+        for(int i=0; i<4; i++)
+            studentsEntrance.add(ColorPawns.YELLOW);
+        for(int i=0; i<5; i++)
+            studentsEntrance.add(ColorPawns.RED);
+        for(int i=0; i<4; i++)
+            studentsEntrance.add(ColorPawns.GREEN);
+        for(int i=0; i<7; i++)
+            studentsEntrance.add(ColorPawns.BLUE);
+        for(int i=0; i<2; i++)
+            studentsEntrance.add(ColorPawns.PINK);
+        player.setStudentInEntrance(studentsEntrance);
+        Map<ColorPawns, Integer> studentsHall = new HashMap<>();
+        studentsHall.put(ColorPawns.GREEN, 10);
+        studentsHall.put(ColorPawns.RED, 7);
+        studentsHall.put(ColorPawns.BLUE, 0);
+        studentsHall.put(ColorPawns.YELLOW, 3);
+        studentsHall.put(ColorPawns.PINK, 1);
+        player.setStudentHall(studentsHall);
+        cli.showPlayerBoardMessage(player.getNickname(), player);
     }
 }

@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-
-import java.awt.*;
 
 public enum ColorCli {
     //Color end string, color reset
@@ -25,7 +24,11 @@ public enum ColorCli {
         this.code = code;
     }
 
-    static ColorCli getEquivalentColorCli(ColorTower color){
+    static ColorCli getEquivalentColorCliTower(ColorTower color){
+        return ColorCli.valueOf(color.name());
+    }
+
+    static ColorCli getEquivalentColoCliStudent(ColorPawns color){
         return ColorCli.valueOf(color.name());
     }
 
