@@ -46,7 +46,7 @@ public interface View {
 
     void showIslands(String nickname, List<IslandModel> islands);
 
-    void showPlayerBoard(PlayerModel playerModel);
+    void showPlayerBoardMessage(String nickname, PlayerModel playerModel);
 
     void askGetFromBag();
 

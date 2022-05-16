@@ -286,8 +286,9 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoard(PlayerModel playerModel) {
-
+    public void showPlayerBoardMessage(String nickname, PlayerModel playerModel) {
+        StringBuilder strBoardBld = new StringBuilder();
+        strBoardBld.append(
     }
 
     /*@Override       non serve, c'è già showDeckMessage

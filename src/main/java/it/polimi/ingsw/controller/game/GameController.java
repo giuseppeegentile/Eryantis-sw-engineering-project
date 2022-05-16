@@ -69,10 +69,9 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(player).showTowerMessage(player, p.getColorTower(), p.getTowerNumber());
                         virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
 
-                        virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
-
-                        virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
-
+                        //virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
+                        //virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());
+                        virtualViewMap.get(player).showPlayerBoardMessage(player, p);
                         virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
                         virtualViewMap.get(player).showIslands(player, gameInstance.getIslandsModel());
                     }
@@ -169,7 +168,8 @@ public class GameController implements Observer, Serializable {
                 }
                 new StudentToHallState(playerActive).moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
                 if(!virtualViewMap.isEmpty())
-                    virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
+                    //virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
+                    virtualViewMap.get(playerActive.getNickname()).showPlayerBoardMessage(playerActive.getNickname(), playerActive);
                 this.phase = PhaseGame.MOVE_MOTHER;
                 break;
             case MOVE_MOTHER:

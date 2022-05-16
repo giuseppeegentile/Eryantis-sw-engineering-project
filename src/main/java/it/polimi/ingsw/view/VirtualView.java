@@ -109,8 +109,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showPlayerBoard(PlayerModel playerModel) {
-
+    public void showPlayerBoardMessage(String nickname, PlayerModel playerModel) {
+        clientHandler.sendMessage(new DisplayPlayerBoardMessage(nickname, playerModel));
     }
 
     /*@Override
