@@ -153,6 +153,54 @@ class CliTest {
 
     @Test
     void showIslands(){
-
+        List<ColorPawns> students = new ArrayList<>();
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.YELLOW);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        IslandModel islandModel = new IslandModel(Boolean.FALSE, students);
+        islandModel.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel2 = new IslandModel(Boolean.FALSE, students);
+        islandModel2.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel3 = new IslandModel(Boolean.FALSE, students);
+        islandModel3.setTowerColor(ColorTower.GREY);
+        IslandModel islandModel4 = new IslandModel(Boolean.FALSE, students);
+        islandModel4.setTowerColor(ColorTower.WHITE);
+        IslandModel islandModel5 = new IslandModel(Boolean.FALSE, students);
+        islandModel5.setTowerColor(ColorTower.WHITE);
+        IslandModel islandModel6 = new IslandModel(Boolean.FALSE, students);
+        islandModel6.setTowerColor(ColorTower.GREY);
+        IslandModel islandModel7 = new IslandModel(Boolean.TRUE, students);
+        islandModel7.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel8 = new IslandModel(Boolean.FALSE, students);
+        islandModel8.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel9 = new IslandModel(Boolean.FALSE, students);
+        islandModel9.setTowerColor(ColorTower.GREY);
+        IslandModel islandModel10 = new IslandModel(Boolean.FALSE, students);
+        islandModel10.setTowerColor(ColorTower.WHITE);
+        IslandModel islandModel11 = new IslandModel(Boolean.FALSE, students);
+        islandModel11.setTowerColor(ColorTower.WHITE);
+        IslandModel islandModel12 = new IslandModel(Boolean.FALSE, students);
+        islandModel12.setTowerColor(ColorTower.GREY);
+        List<IslandModel> islands = new ArrayList<>();
+        islands.add(islandModel);
+        islands.add(islandModel2);
+        islands.add(islandModel3);
+        islands.add(islandModel4);
+        islands.add(islandModel5);
+        islands.add(islandModel6);
+        islands.add(islandModel7);
+        islands.add(islandModel8);
+        islands.add(islandModel9);
+        islands.add(islandModel10);
+        islands.add(islandModel11);
+        islands.add(islandModel12);
+        Cli cli = new Cli();
+        cli.showIslands("Batman", islands);
     }
 }

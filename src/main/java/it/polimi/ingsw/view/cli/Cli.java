@@ -231,23 +231,56 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showIslands(String nickname, List<IslandModel> islands) {
         StringBuilder strBoardBld = new StringBuilder();
-        strBoardBld.append(" -----------                -----------                -----------                -----------                -----------                -----------\n");
-        for (IslandModel island : islands) {
-            int occurrencesRed1 = Collections.frequency(island.getStudents(), ColorPawns.RED);
-            int occurrencesBlue1 = Collections.frequency(island.getStudents(), ColorPawns.BLUE);
-            int occurrencesGreen1 = Collections.frequency(island.getStudents(), ColorPawns.GREEN);
-            int occurrencesPink1 = Collections.frequency(island.getStudents(), ColorPawns.PINK);
-            int occurrencesYellow1 = Collections.frequency(island.getStudents(), ColorPawns.YELLOW);
+        strBoardBld.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
+        for (int i=0; i<6; i++) {
+            int occurrencesRed1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.RED);
+            int occurrencesBlue1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.BLUE);
+            int occurrencesGreen1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.GREEN);
+            int occurrencesPink1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.PINK);
+            int occurrencesYellow1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.YELLOW);
 
             strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
             strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
             strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
             strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|              ");
+            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|      ");
         }
         strBoardBld.append("\n");
-        strBoardBld.append(" -----------                -----------\n");
+        for (int i=0; i<6; i++) {
+            if(islands.get(i).getMotherNature())
+                strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCli(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+            else
+                strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCli(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+        }
+        strBoardBld.append("\n");
+        strBoardBld.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
         out.println(strBoardBld);
+
+        StringBuilder strBoardBld2 = new StringBuilder();
+        strBoardBld2.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
+        for (int i=11; i>5; i--) {
+            int occurrencesRed1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.RED);
+            int occurrencesBlue1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.BLUE);
+            int occurrencesGreen1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.GREEN);
+            int occurrencesPink1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.PINK);
+            int occurrencesYellow1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.YELLOW);
+
+            strBoardBld2.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
+            strBoardBld2.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
+            strBoardBld2.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
+            strBoardBld2.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
+            strBoardBld2.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|      ");
+        }
+        strBoardBld2.append("\n");
+        for (int i=11; i>5; i--) {
+            if(islands.get(i).getMotherNature())
+                strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCli(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+            else
+                strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorCli(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+        }
+        strBoardBld2.append("\n");
+        strBoardBld2.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
+        out.println(strBoardBld2);
     }
 
     @Override
