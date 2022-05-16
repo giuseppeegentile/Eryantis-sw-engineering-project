@@ -87,4 +87,8 @@ public interface View {
     void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
+
+    void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers);
+
+    void askInitialConfig(String nickMessage, List<ColorTower> availableTowers);
 }

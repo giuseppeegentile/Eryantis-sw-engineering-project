@@ -36,6 +36,15 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new LoginReply(false, true));
     }*/
 
+    @Override
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
+        clientHandler.sendMessage(new TextMessage(nickMessage, "Insert the color of the tower you want: "));
+    }
+
+    @Override
+    public void askInitialConfig(String nickMessage, List<ColorTower> availableTowers) {
+
+    }
 
     @Override
     public void showMessageJoiningIsland(Message message) {

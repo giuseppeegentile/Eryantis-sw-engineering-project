@@ -15,5 +15,5 @@ public enum MessageType {
     PING,
     MOVE,
     ORDER,
-    LOBBY, END_TURN, START_TURN;
+    LOBBY, END_TURN, START_TURN, INIT;
 }

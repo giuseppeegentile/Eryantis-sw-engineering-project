@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -237,7 +238,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Oh no! The tower color ").append(ColorCli.colorTower).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
+        stringBuilder.append("Oh no! The tower color ").append(ColorCli.getEquivalentColor(colorTower)).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
         out.println(stringBuilder);
     }
 
@@ -364,6 +365,47 @@ public class Cli extends ViewObservable implements View {
         }
         stringBuilder.append(order.get(order.size()-1).getNickname()).append("\n");
         out.println(stringBuilder);
+    }
+
+    @Override
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers) {
+        out.println("Enter the color of the tower you want: ");
+
+        try {
+            String towerColor = readLine();
+            //notifyObserver(obs -> obs.onUpdateTower(towerColor));
+        } catch (ExecutionException e) {
+            out.println(STR_INPUT_CANCELED);
+        }
+
+    }
+
+    private String read(){
+        String read = "";
+        try {
+            read = readLine();
+            return read;
+        } catch (ExecutionException e) {
+            out.println(STR_INPUT_CANCELED);
+            return "";
+        }
+    }
+
+    @Override
+    public void askInitialConfig(String nickMessage, List<ColorTower> availableTowers) {
+        out.println("Enter the number of players: ");
+        int numberPlayers = Integer.parseInt(read());
+        out.println("Enter the color of tower you want from the following:");
+        availableTowers.forEach(t->{
+            System.out.println(t.name());
+        });
+        String colorTowerStr = read();
+        ColorTower colorTower = ColorTower.valueOf(colorTowerStr);
+
+        out.println("Enter the game mode: ");
+        GameMode mode = GameMode.valueOf(read());
+
+        notifyObserver(obs -> obs.onUpdateInitialConfig(nickMessage, numberPlayers, colorTower, mode));
     }
 
 

@@ -163,7 +163,13 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateNickname(String nickname) {
+        this.nickname = nickname;
         client.sendMessage(new LoginRequest(nickname));
+    }
+
+    @Override
+    public void onUpdateInitialConfig(String nickname, int numberPlayers, ColorTower colorTowerStr, GameMode gameMode) {
+        client.sendMessage(new InitialReqMessage(nickname, numberPlayers, colorTowerStr,gameMode));
     }
 
     @Override

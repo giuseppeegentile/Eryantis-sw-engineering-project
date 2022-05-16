@@ -49,4 +49,6 @@ public interface ViewObserver {
     void onDisconnection();
 
     void onUpdateNickname(String nickname);
+
+    void onUpdateInitialConfig(String nickname, int numberPlayers, ColorTower chosenTower, GameMode mode);
 }

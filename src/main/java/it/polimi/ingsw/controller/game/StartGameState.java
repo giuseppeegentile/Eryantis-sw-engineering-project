@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.InitialReqMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.PlayerNicknameMessage;
 
@@ -73,9 +74,9 @@ public class StartGameState extends GameController implements GameState {
     //ritorna true se andato a buon fine, false se ce stato errore
     public boolean receiveAndSetTowerAndPlayer(Message receivedMessage){
         String playerNick = receivedMessage.getNickname();
-        int numPlayers = ((PlayerNicknameMessage)receivedMessage).getNumPlayers();
+        int numPlayers = ((InitialReqMessage)receivedMessage).getNumberPlayers();
 
-        ColorTower colorTower = ((PlayerNicknameMessage)receivedMessage).getColorTower();
+        ColorTower colorTower = ((InitialReqMessage)receivedMessage).getColorTower();
 
         gameModel.setPlayerNumber(numPlayers);
         PlayerModel playerModel = new PlayerModel(playerNick, colorTower);
@@ -98,14 +99,14 @@ public class StartGameState extends GameController implements GameState {
                 playerModel.setTowers(colorTower, 0);
         }
 
-        gameModel.addPlayer(playerModel);
+        if(!gameModel.getPlayersModel().contains(playerModel))
+            gameModel.addPlayer(playerModel);
 
 
         gameModel.setGameMode(((PlayerNicknameMessage)receivedMessage).getGameMode());
         return true;
     }
 
-    //DA TESTARE
     public void setInitialGameConfiguration(){
         List<PlayerModel> players = this.gameModel.getPlayersModel();
 
@@ -113,8 +114,8 @@ public class StartGameState extends GameController implements GameState {
 
         GameMode mode = this.gameModel.getGameMode();
 
-
         setIslandController(); //initialize the 12 islands
+
         assignBag();            //generate the bag randomly with 120 students
 
         generateDeck();         //generate the deck

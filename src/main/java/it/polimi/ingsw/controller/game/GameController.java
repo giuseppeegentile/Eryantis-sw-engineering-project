@@ -31,6 +31,7 @@ public class GameController implements Observer, Serializable {
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.gameInstance =  GameModel.getInstance();
+        this.phase = PhaseGame.START;
     }
 
     public PhaseGame getPhaseGame(){return this.phase;}
@@ -39,29 +40,47 @@ public class GameController implements Observer, Serializable {
         this.phase = phase;
     }
 
+
+    /**
+     * Switch on Game State.
+     *
+     * @param receivedMessage Message from players to server.
+     */
     public void onMessageReceived(Message receivedMessage){
         switch (this.phase) {
             case START:
                 String nickMessage = receivedMessage.getNickname();
                 if(!virtualViewMap.isEmpty() && !checkLoginNickname(nickMessage, virtualViewMap.get(nickMessage))){ //controllo di non avere player con stesso nick
-                    String nick = receivedMessage.getNickname();
-                    virtualViewMap.get(nick).showInvalidNickname(nick);
+                    virtualViewMap.get(nickMessage).showInvalidNickname(nickMessage);
                     phase = PhaseGame.START;
                     break;
                 }
-                boolean insertSuccess =new StartGameState().receiveAndSetTowerAndPlayer(receivedMessage);
+                handleLogin(nickMessage, virtualViewMap.get(nickMessage));
+                List<ColorTower> availableTowers = new ArrayList<>();
+                //da ricavare la lista di torri disponibili (quelle non scelte da altri players)
+                virtualViewMap.get(nickMessage).askInitialConfig(nickMessage, availableTowers);
+
+
+/*                GameModel.getInstance().getColorTowers()
+                virtualViewMap.get(nickMessage).askTowerColor(nickMessage);*/
+                phase = PhaseGame.INIT;
+                break;
+
+            case INIT:
+                StartGameState startState = new StartGameState();
+                boolean insertSuccess = startState.receiveAndSetTowerAndPlayer(receivedMessage);
 
                 if(!insertSuccess) {
                     //scegli un'altra torre
                     String nick = receivedMessage.getNickname();
                     ColorTower color = ((TowerMessage)receivedMessage).getColorTower();
                     virtualViewMap.get(nick).showInvalidTower(nick, color); //inviare anche il colore della torre
-                    phase = PhaseGame.START;
+                    phase = PhaseGame.INIT;
                     break;
                 }
 
                 if(gameInstance.getPlayersNumber()==gameInstance.getPlayersModel().size()){
-                    new StartGameState().setInitialGameConfiguration();
+                    startState.setInitialGameConfiguration();
                     gameStarted = true;
                     new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
                     for (String player : virtualViewMap.keySet()) {
@@ -145,7 +164,7 @@ public class GameController implements Observer, Serializable {
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
                 }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nella isola
-                    new StudentToIslandState(playerActive).moveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());;
+                    new StudentToIslandState(playerActive).moveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());
                     int indexIsland = ((StudentToIslandMessage) receivedMessage).getIndexIsland();
                     IslandModel islandModel = gameInstance.getIslandsModel().get(indexIsland);
 
@@ -316,7 +335,7 @@ public class GameController implements Observer, Serializable {
 
         gameInstance.addObserver(vv);
 //        game.getBoard().addObserver(virtualView);
-        vv.showLoginResult(true, true, "SERVER_NICKNAME");
+        vv.showLoginResult(true, true, GameModel.SERVER_NICKNAME);
 
     }
 

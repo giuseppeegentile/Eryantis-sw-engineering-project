@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.colors.ColorTower;
+
 public enum ColorCli {
     //Color end string, color reset
     RESET("\033[0m"),
@@ -24,6 +26,10 @@ public enum ColorCli {
     @Override
     public String toString() {
         return code;
+    }
+
+    public static ColorCli getEquivalentColor(ColorTower colorTower){
+        return ColorCli.valueOf(colorTower.name());
     }
 }
 

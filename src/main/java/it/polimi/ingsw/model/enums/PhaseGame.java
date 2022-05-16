@@ -13,5 +13,5 @@ public enum PhaseGame {
     MOVE_MOTHER,
     PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE,
     MOVE_FROM_BAG_TO_CLOUD,
-    LOGIN
+    INIT, LOGIN
 }
