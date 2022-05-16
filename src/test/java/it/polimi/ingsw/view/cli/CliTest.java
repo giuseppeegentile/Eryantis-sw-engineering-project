@@ -2,7 +2,9 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
@@ -111,5 +113,41 @@ class CliTest {
         clouds.add(cloud1);
         clouds.add(cloud2);
         cli.showCloudsMessage("Strange", clouds);
+    }
+
+    @Test
+    void showUpdatedIslandWithoutMother(){
+        List<ColorPawns> students = new ArrayList<>();
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.YELLOW);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        IslandModel islandModel = new IslandModel(Boolean.FALSE, students);
+        islandModel.setTowerColor(ColorTower.BLACK);
+        Cli cli = new Cli();
+        cli.showIslandMessage("Geralt di Rivia",islandModel, 5);
+    }
+
+    @Test
+    void showUpdatedIslandWithMother(){
+        List<ColorPawns> students = new ArrayList<>();
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.YELLOW);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        IslandModel islandModel = new IslandModel(Boolean.TRUE, students);
+        islandModel.setTowerColor(ColorTower.BLACK);
+        Cli cli = new Cli();
+        cli.showIslandMessage("Geralt di Rivia",islandModel, 5);
     }
 }

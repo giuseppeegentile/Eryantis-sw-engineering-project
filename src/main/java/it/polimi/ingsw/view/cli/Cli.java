@@ -13,6 +13,7 @@ import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -170,7 +171,25 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
-
+        StringBuilder strBoardBld = new StringBuilder();
+        out.println(nickname + ", this is the updated island N " + islandIndex + "\n");
+        strBoardBld.append(" -----------\n");
+        int occurrencesRed1 = Collections.frequency(islandModel.getStudents(), ColorPawns.RED);
+        int occurrencesBlue1 = Collections.frequency(islandModel.getStudents(), ColorPawns.BLUE);
+        int occurrencesGreen1 = Collections.frequency(islandModel.getStudents(), ColorPawns.GREEN);
+        int occurrencesPink1 = Collections.frequency(islandModel.getStudents(), ColorPawns.PINK);
+        int occurrencesYellow1 = Collections.frequency(islandModel.getStudents(), ColorPawns.YELLOW);
+        strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
+        strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|\n");
+        if(islandModel.getMotherNature())
+            strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCli(islandModel.getTowerColor())).append(" T").append(ColorCli.RESET).append("    |\n");
+        else
+            strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCli(islandModel.getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |\n");
+        strBoardBld.append(" -----------\n");
+        out.println(strBoardBld);
     }
 
     @Override
@@ -219,7 +238,7 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-    /*@Override                                         c'è già showDeckMessage
+    /*@Override       non serve, c'è già showDeckMessage
     public void showCards(PlayerModel playerModel) {
 
     }*/
@@ -229,7 +248,7 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-    @Override
+    @Override       //non serve, c'è già showPlayerBoard
     public void showProfsMessage(String player, List<ColorPawns> profs) {
 
     }
@@ -237,7 +256,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Oh no! The tower color ").append(ColorCli.colorTower).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
+        stringBuilder.append("Oh no! The tower color ").append(ColorCli.getEquivalentColorCli(colorTower)).append(colorTower).append(ColorCli.RESET).append(" is already taken.\nPlease choose another one.\n");
         out.println(stringBuilder);
     }
 

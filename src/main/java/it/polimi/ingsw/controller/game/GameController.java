@@ -144,7 +144,7 @@ public class GameController implements Observer, Serializable {
                 if(numberStudentsMovedToIsland == 0){//se decide di spostare tutti gli studenti nella hall
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
-                }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nella isola
+                }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nell'isola
                     new StudentToIslandState(playerActive).moveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());;
                     int indexIsland = ((StudentToIslandMessage) receivedMessage).getIndexIsland();
                     IslandModel islandModel = gameInstance.getIslandsModel().get(indexIsland);
