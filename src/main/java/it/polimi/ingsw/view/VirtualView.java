@@ -48,7 +48,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askMoveCloudToEntrance(List<ColorPawns> students) {
+    public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
 
     }
 

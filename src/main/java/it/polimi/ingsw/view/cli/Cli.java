@@ -135,13 +135,54 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askMoveCloudToEntrance(List<ColorPawns> students) {
-
+    public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
+        out.println(nickname + "From which cloud do you want to take the students?\nPlease select the index of the cloud:\n");
+        StringBuilder str = new StringBuilder();
+        int i = 0;
+        for(CloudModel cloud : clouds){
+            str.append(i + " -> ");
+            for(ColorPawns color : cloud.getStudents()){
+                str.append(ColorCli.getEquivalentColorPawn(color)).append(color + "  ").append(ColorCli.RESET);
+            }
+            str.append("\n");
+        }
+        out.println(str);
+        int chosenIndex = 0;
+        while(chosenIndex >clouds.size() || chosenIndex <= 0 ){
+            out.println(str);
+            chosenIndex = Integer.parseInt(read());
+            if(chosenIndex > clouds.size() || chosenIndex <= 0)
+                out.println("You've entered an invalid number, please select a card from the list shown\n");
+        }
+        int finalChosenIndex = chosenIndex-1;
+        notifyObserver(obs -> obs.onChosenCloud(nickname, finalChosenIndex));
     }
 
     @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns) {
-        
+        StringBuilder str = new StringBuilder();
+        List<ColorPawns> colors = new ArrayList<>();
+        out.println("How many students do you want to move to your hall?\n");
+        int numberStudents = 0;
+        numberStudents = Integer.parseInt(read());
+        str.append("Type the index of the students you want from the following list: \n");
+        int i = 0;
+        for(ColorPawns color : colorPawns){
+            i+=1;
+            str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
+        }
+        out.println(str);
+        int finalChosenIndex = 0;
+        int chosenIndex = 0;
+        for(int j=0; j<numberStudents; j++)
+            while(chosenIndex > colorPawns.size() || chosenIndex <= 0 ){
+                chosenIndex = Integer.parseInt(read());
+                finalChosenIndex = chosenIndex-1;
+                colors.add(colorPawns.get(finalChosenIndex));
+                if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
+                    out.println("You've entered an invalid number, please select a card from the list shown\n");
+            }
+        notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
     }
 
     @Override
@@ -238,7 +279,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Oh no! The tower color ").append(ColorCli.getEquivalentColor(colorTower)).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
+        stringBuilder.append("Oh no! The tower color ").append(ColorCli.getEquivalentColorTower(colorTower)).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
         out.println(stringBuilder);
     }
 
@@ -407,17 +448,19 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers) {
         StringBuilder str = new StringBuilder();
-        str.append("Insert the index of the color of the tower you want from the following: \n");
+        str.append("Type the index of the color of the tower you want from the following list: \n");
         int i = 0;
         for(ColorTower t: availableColorTowers){
             i+=1;
-            str.append(i).append(" - ").append(t.name()).append("\n");
+            str.append(i).append(" -> ").append(t.name()).append("\n");
         }
         int chosenIndex = 0;
 
         while(chosenIndex >availableColorTowers.size() || chosenIndex <= 0 ){
             out.println(str);
             chosenIndex = Integer.parseInt(read());
+            if(chosenIndex > availableColorTowers.size() || chosenIndex <= 0)
+                out.println("You've entered an invalid number, please select a card from the list shown\n");
         }
 
         int finalChosenIndex = chosenIndex-1;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 
 public enum ColorCli {
@@ -28,8 +29,12 @@ public enum ColorCli {
         return code;
     }
 
-    public static ColorCli getEquivalentColor(ColorTower colorTower){
+    public static ColorCli getEquivalentColorTower(ColorTower colorTower){
         return ColorCli.valueOf(colorTower.name());
+    }
+
+    public static ColorCli getEquivalentColorPawn(ColorPawns colorPawn){
+        return ColorCli.valueOf(colorPawn.name());
     }
 }
 

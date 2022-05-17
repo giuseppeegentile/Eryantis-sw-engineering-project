@@ -14,4 +14,6 @@ public enum ColorPawns {
     public static ColorPawns getRandomColor(){
         return ColorPawns.values()[new Random().nextInt(ColorPawns.values().length - 1)];
     }
+
+
 }

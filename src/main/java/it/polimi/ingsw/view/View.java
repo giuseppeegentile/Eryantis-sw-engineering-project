@@ -18,7 +18,7 @@ public interface View {
 
     void showMessageJoiningIsland(Message message);
 
-    void askMoveCloudToEntrance(List<ColorPawns> students);
+    void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds);
 
     void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns);
 
