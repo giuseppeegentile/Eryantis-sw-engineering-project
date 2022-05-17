@@ -141,7 +141,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns) {
-
+        
     }
 
     @Override
@@ -327,7 +327,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showInvalidCloud(String nick) {
-
+        out.println(nick + ", the cloud you've chosen is empty.\nPlease select another one.\n");
     }
 
     @Override
@@ -342,12 +342,12 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
-        sou
+
     }
 
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted) {
-        out.println(nick + ", you're trying to move Mothernature " + movementInserted + " positions but you're allowed to move her " + movementAllowed ".\nPlease try again.\n");
+        out.println(nick + ", you're trying to move Mothernature " + movementInserted + " positions but you're allowed to move her " + movementAllowed + ".\nPlease try again.\n");
     }
 
     @Override
