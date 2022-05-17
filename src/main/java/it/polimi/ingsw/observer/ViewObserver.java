@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public interface ViewObserver {
 
     void onUpdateWaiting(String nickname, int cloudIndex);
 
-    void onCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
+    void onUpdateCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
 
     void onUpdatePlayersNumber(int playersNumber);
     /**
@@ -56,4 +55,5 @@ public interface ViewObserver {
     void onUpdateTower(ColorTower towerColor);
 
     void onUpdateGameMode(GameMode finalMode);
+
 }

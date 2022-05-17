@@ -16,7 +16,6 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 //sout per fare printout
@@ -343,17 +342,17 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
-
+        sou
     }
 
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted) {
-
+        out.println(nick + ", you're trying to move Mothernature " + movementInserted + " positions but you're allowed to move her " + movementAllowed ".\nPlease try again.\n");
     }
 
     @Override
     public void showInvalidNumberOfStudentMoved(String nickname) {
-
+        out.println(nickname + ", you haven't moved 3 students in this round.\n");
     }
 
     @Override
@@ -379,7 +378,20 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck) {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 1;
+        out.println(nickname + ", select your assistant card for this round.\nThis is your deck:\n");
+        for (AssistantCardModel card : playerDeck)
+            stringBuilder.append(i + " -> Priority = " + card.getPriority() + ", Mothernature movements = " + card.getMotherNatureMovement() + "\n");
+        int chosenIndex = 0;
+        while(chosenIndex > playerDeck.size() || chosenIndex <= 0){
+            out.println(stringBuilder);
+            chosenIndex = Integer.parseInt(read());
+            if(chosenIndex > playerDeck.size() || chosenIndex <= 0)
+                out.println("You've entered an invalid number, please select a card from the list shown\n");
+        }
+        int finalChosenIndex = chosenIndex-1;
+        notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, playerDeck.get(finalChosenIndex)));
     }
 
     @Override
