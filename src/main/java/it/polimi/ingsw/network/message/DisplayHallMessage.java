@@ -28,7 +28,7 @@ public class DisplayHallMessage extends DisplayMessage{
     public String toString() {
         return "DisplayHallMessage{" +
                 "player=" + getNickname() +
-                "hall=" + hall +
+                ", hall=" + hall +
                 ", objectDisplay=" + objectDisplay +
                 '}';
     }

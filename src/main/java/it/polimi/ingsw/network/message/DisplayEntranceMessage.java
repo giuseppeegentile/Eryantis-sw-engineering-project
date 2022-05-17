@@ -27,7 +27,7 @@ public class DisplayEntranceMessage extends DisplayMessage{
     public String toString() {
         return "DisplayEntranceMessage{" +
                 "player=" + getNickname() +
-                "entrance=" + entrance +
+                ", entrance=" + entrance +
                 ", objectDisplay=" + objectDisplay +
                 '}';
     }

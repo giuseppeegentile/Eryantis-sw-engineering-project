@@ -31,7 +31,7 @@ public class InitialReqMessage extends Message{
     public String toString() {
         return "InitialReqMessage{" +
                 "player=" + getNickname() +
-                "numberPlayers=" + numberPlayers +
+                ", numberPlayers=" + numberPlayers +
                 ", colorTower=" + colorTower +
                 '}';
     }

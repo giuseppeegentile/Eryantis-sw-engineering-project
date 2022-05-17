@@ -31,19 +31,15 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new WinMessage(winner));
     }
 
-    /*@Override
-    public void askNickname() {
-        clientHandler.sendMessage(new LoginReply(false, true));
-    }*/
-
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
-        clientHandler.sendMessage(new TextMessage(nickMessage, "Insert the color of the tower you want: "));
+    public void askTowerColor(String nickMessage, List<ColorTower> availableTowers){
+        clientHandler.sendMessage(new InitialResMessage(nickMessage, availableTowers));
+
     }
 
     @Override
-    public void askInitialConfig(String nickMessage, List<ColorTower> availableTowers) {
-
+    public void askGameMode(){
+        clientHandler.sendMessage(new GameModeReq());
     }
 
     @Override
@@ -239,5 +235,10 @@ public class VirtualView implements View, Observer {
     public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){
         clientHandler.sendMessage(new TextMessage(nickname, "Choose a card"));
         clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(nickname, playerDeck));
+    }
+
+    @Override
+    public void askPlayersNumber() {
+        clientHandler.sendMessage(new PlayerNumberRequest());
     }
 }

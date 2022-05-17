@@ -103,7 +103,7 @@ public class StartGameState extends GameController implements GameState {
             gameModel.addPlayer(playerModel);
 
 
-        gameModel.setGameMode(((PlayerNicknameMessage)receivedMessage).getGameMode());
+        gameModel.setGameMode(((InitialReqMessage)receivedMessage).getGameMode());
         return true;
     }
 
@@ -186,10 +186,10 @@ public class StartGameState extends GameController implements GameState {
      */
     private void assignBag(){
         int bagSize = 120;
-        List<ColorPawns> bag = new ArrayList<>(bagSize);
+        List<ColorPawns> bag;
         int equalNumber = 24;
 
-        bag = fillListWithColors( bag, bagSize, equalNumber);
+        bag = fillListWithColors(equalNumber);
         this.gameModel.setBag(bag);
     }
 
@@ -199,11 +199,10 @@ public class StartGameState extends GameController implements GameState {
     //equalNumber: quantità uguali per ogni colore (bag: 24(=120/5)  isole: 2)
     /**
      * Takes a generic list of ColorPawns and fills it randomly. Mainly used for the bag and initial islands.
-     * @param list List of ColorPawns to fill randomly.
      * @param equalNumber Number of same colors that will be in the List.
      * @return A list of ColorPawns filled with random values in the same quantity for every value.
      */
-    List<ColorPawns> fillListWithColors(List<ColorPawns> list, int size, int equalNumber){
+    List<ColorPawns> fillListWithColors(int equalNumber){
         List<ColorPawns> listGreen = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.GREEN));
         List<ColorPawns> listRed = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.RED));
         List<ColorPawns> listYellow = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.YELLOW));
@@ -300,7 +299,7 @@ public class StartGameState extends GameController implements GameState {
         int sizeIslandWithStudents = 10;
         int equalNumber = 2;
         List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
-        colors = fillListWithColors(colors, sizeIslandWithStudents, equalNumber);
+        colors = fillListWithColors(equalNumber);
         //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
 
         int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;

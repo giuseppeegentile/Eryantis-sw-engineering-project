@@ -25,7 +25,7 @@ public class InvalidMovementMessage extends Message{
     public String toString() {
         return "InvalidMovementMessage{" +
                 "player" + getNickname() +
-                "movementAllowed=" + movementAllowed +
+                ", movementAllowed=" + movementAllowed +
                 ", movementInserted=" + movementInserted +
                 '}';
     }

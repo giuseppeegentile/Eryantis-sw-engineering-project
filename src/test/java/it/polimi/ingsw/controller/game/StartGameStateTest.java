@@ -81,7 +81,7 @@ class StartGameStateTest {
 
         int sizeIslandWithStudents = 10;
         List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
-        colors = ssg.fillListWithColors(colors, 10, 2);
+        colors = ssg.fillListWithColors(2);
         /*colors.forEach(c->{
             System.out.println(c.toString());
         });*/

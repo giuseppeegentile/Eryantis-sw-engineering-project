@@ -33,7 +33,7 @@ public class PlayerNicknameMessage extends Message{
     public String toString() {
         return "NumberOfPlayerMessage{" +
                 "player=" + getNickname() +
-                "colorTowerOfPlayer=" + this.getNumPlayers() +
+                ", colorTowerOfPlayer=" + this.getNumPlayers() +
                 '}';
     }
 

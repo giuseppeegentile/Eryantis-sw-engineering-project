@@ -25,8 +25,8 @@ public class DisplayCloudsMessage extends DisplayMessage {
     public String toString() {
         return "CloudsMessage{" +
                 "player=" + getNickname() +
-                "objectDisplay=" + getObjectDisplay() +
-                "clouds=" + clouds +
+                ", objectDisplay=" + getObjectDisplay() +
+                ", clouds=" + clouds +
                 '}';
     }
 

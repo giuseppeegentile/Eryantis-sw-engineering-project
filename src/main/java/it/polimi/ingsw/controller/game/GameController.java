@@ -47,37 +47,42 @@ public class GameController implements Observer, Serializable {
      * @param receivedMessage Message from players to server.
      */
     public void onMessageReceived(Message receivedMessage){
+
+        if (receivedMessage.getMessageType() == MessageType.LOGIN_REPLY && phase != PhaseGame.START ) {
+            String nickMessage = receivedMessage.getNickname();
+            handleLogin(nickMessage, virtualViewMap.get(nickMessage));
+            virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+
+        }
+
+        if (receivedMessage.getMessageType() == MessageType.CHOSEN_TOWER && phase != PhaseGame.START) {
+            ColorTower chosenTower = ((ChosenTowerMessage)receivedMessage).getColorTowers();
+
+            int numPlayers = gameInstance.getPlayersNumber();
+            setTowers(receivedMessage, chosenTower, numPlayers);
+
+            if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname()) ){
+                virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
+                return;
+            }
+            phase = PhaseGame.START_GAME;
+            return;
+
+        }
+
+
         switch (this.phase) {
             case START:
                 String nickMessage = receivedMessage.getNickname();
-                if(!virtualViewMap.isEmpty() && !checkLoginNickname(nickMessage, virtualViewMap.get(nickMessage))){ //controllo di non avere player con stesso nick
-                    virtualViewMap.get(nickMessage).showInvalidNickname(nickMessage);
-                    phase = PhaseGame.START;
-                    break;
-                }
                 handleLogin(nickMessage, virtualViewMap.get(nickMessage));
-                List<ColorTower> availableTowers = new ArrayList<>();
-                //da ricavare la lista di torri disponibili (quelle non scelte da altri players)
-                virtualViewMap.get(nickMessage).askInitialConfig(nickMessage, availableTowers);
 
+                gameInstance.setPlayerNumber(((PlayerNumberReply)receivedMessage).getPlayerNumber());
+                virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
 
-/*                GameModel.getInstance().getColorTowers()
-                virtualViewMap.get(nickMessage).askTowerColor(nickMessage);*/
-                phase = PhaseGame.INIT;
+                phase = PhaseGame.INIT_TOWER;
                 break;
-
-            case INIT:
+            case START_GAME:
                 StartGameState startState = new StartGameState();
-                boolean insertSuccess = startState.receiveAndSetTowerAndPlayer(receivedMessage);
-
-                if(!insertSuccess) {
-                    //scegli un'altra torre
-                    String nick = receivedMessage.getNickname();
-                    ColorTower color = ((TowerMessage)receivedMessage).getColorTower();
-                    virtualViewMap.get(nick).showInvalidTower(nick, color); //inviare anche il colore della torre
-                    phase = PhaseGame.INIT;
-                    break;
-                }
 
                 if(gameInstance.getPlayersNumber()==gameInstance.getPlayersModel().size()){
                     startState.setInitialGameConfiguration();
@@ -304,7 +309,7 @@ public class GameController implements Observer, Serializable {
                 if(!virtualViewMap.isEmpty())
                     virtualViewMap.get(nickCurrent).showEndTurn(nickCurrent);
 
-                String nextPlayerNick = "";
+                String nextPlayerNick;
                 if (indexCurrent != gameInstance.getPlayersNumber() - 1) {
                     nextPlayerNick = gameInstance.getPhaseOrder().get(indexCurrent + 1).getNickname();
                 } else {
@@ -330,13 +335,64 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    private boolean finished() {
+        return gameInstance.getPlayersModel().size() == gameInstance.getPlayersNumber();
+    }
+
+    private void setTowers(Message receivedMessage, ColorTower chosenTower, int numPlayers) {
+        if(numPlayers != 4) {
+            if (numPlayers == 3)
+                gameInstance.getPlayerByNickname(receivedMessage.getNickname()).setTowers(chosenTower, 6);
+            else
+                gameInstance.getPlayerByNickname(receivedMessage.getNickname()).setTowers(chosenTower, 8);
+        }
+        else{
+            //se invece sono a 4 giocatori, avrò il team mate
+            if(getAvailableTowers().containsAll(List.of(chosenTower, chosenTower)))
+                gameInstance.getPlayerByNickname(receivedMessage.getNickname()).setTowers(chosenTower, 8);
+            else
+                gameInstance.getPlayerByNickname(receivedMessage.getNickname()).setTowers(chosenTower, 0);
+        }
+    }
+
     public void handleLogin(String nickname, VirtualView vv){
-        this.virtualViewMap.put(nickname, vv);
+        if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
+            this.virtualViewMap.put(nickname, vv);
+            gameInstance.addObserver(vv);
+            vv.showLoginResult(true, true, "SERVER_NICKNAME");
+            gameInstance.addPlayer(new PlayerModel(nickname));
+            vv.askPlayersNumber();
+            //vv.askTowerColor(nickname, getAvailableTowers());
+        }else if(virtualViewMap.size() < gameInstance.getPlayersNumber()){
+            if(checkLoginNickname(nickname, vv)) {
+                this.virtualViewMap.put(nickname, vv);
+                gameInstance.addObserver(vv);
+                gameInstance.addPlayer(new PlayerModel(nickname));
+                vv.showLoginResult(true, true, "SERVER_NICKNAME");
+            }
+        }
+    }
 
-        gameInstance.addObserver(vv);
-//        game.getBoard().addObserver(virtualView);
-        vv.showLoginResult(true, true, GameModel.SERVER_NICKNAME);
-
+    private List<ColorTower> getAvailableTowers(){
+        List<ColorTower> alreadyChosen = new ArrayList<>();
+        for (PlayerModel p : gameInstance.getPlayersModel()) {
+            alreadyChosen.add(p.getColorTower());
+        }
+        if(gameInstance.getPlayersNumber()==2){
+            List<ColorTower> result = new ArrayList<>(List.of(ColorTower.BLACK, ColorTower.WHITE));
+            result.removeAll(alreadyChosen);
+            return result;
+        }
+        else if(gameInstance.getPlayersNumber()==3){
+            List<ColorTower> result = new ArrayList<>(List.of(ColorTower.BLACK, ColorTower.WHITE, ColorTower.GREY));
+            result.removeAll(alreadyChosen);
+            return result;
+        }
+        else{
+            List<ColorTower> result = new ArrayList<>(List.of(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
+            result.removeAll(alreadyChosen);
+            return result;
+        }
     }
 
 

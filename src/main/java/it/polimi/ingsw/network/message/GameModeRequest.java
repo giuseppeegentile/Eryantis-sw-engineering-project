@@ -11,7 +11,7 @@ public class GameModeRequest extends Message {
     @Override
     public String toString() {
         return "GameModeRequest{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 '}';
     }
 }

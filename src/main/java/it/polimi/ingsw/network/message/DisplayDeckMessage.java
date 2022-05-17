@@ -26,8 +26,8 @@ public class DisplayDeckMessage extends DisplayMessage{
     public String toString() {
         return "ShowCemeteryMessage{" +
                 "player=" + getNickname() +
-                "objectDisplay=" + getObjectDisplay() +
-                "deck=" + deck +
+                ", objectDisplay=" + getObjectDisplay() +
+                ", deck=" + deck +
                 '}';
     }
 

@@ -90,5 +90,8 @@ public interface View {
 
     void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers);
 
-    void askInitialConfig(String nickMessage, List<ColorTower> availableTowers);
+
+    void askPlayersNumber();
+
+    void askGameMode();
 }

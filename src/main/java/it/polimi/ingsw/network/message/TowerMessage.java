@@ -28,7 +28,7 @@ public class TowerMessage extends Message {
     public String toString() {
         return "TowerMessage{" +
                 "player=" + getNickname() +
-                "colorTower=" + colorTower +
+                ", colorTower=" + colorTower +
                 ", towerNumber=" + towerNumber +
                 '}';
     }

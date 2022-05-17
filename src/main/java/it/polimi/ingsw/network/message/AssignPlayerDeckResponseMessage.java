@@ -23,7 +23,7 @@ public class AssignPlayerDeckResponseMessage extends Message {
     public String toString() {
         return "AssignPlayerDeckMessage{" +
                 "nickname=" + getNickname() +
-                "playerModel=" + playerModel +
+                ", playerModel=" + playerModel +
                 '}';
     }
 

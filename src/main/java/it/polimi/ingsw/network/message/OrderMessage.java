@@ -23,7 +23,7 @@ public class OrderMessage extends Message{
     public String toString() {
         return "OrderMessage{" +
                 "player=" + getNickname() +
-                "order=" + order +
+                ", order=" + order +
                 '}';
     }
 }

@@ -32,7 +32,7 @@ public class StudentToIslandMessage extends Message{
     public String toString() {
         return "StudentToIslandMessage{" +
                 "player=" + getNickname() +
-                "students=" + students +
+                ", students=" + students +
                 ", islandModel=" + islandModel +
                 '}';
     }

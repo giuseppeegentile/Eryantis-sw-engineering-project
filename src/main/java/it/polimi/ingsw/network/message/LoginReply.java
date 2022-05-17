@@ -12,7 +12,7 @@ public class LoginReply extends Message {
     private final boolean connectionSuccessful;
 
     public LoginReply(boolean nicknameAccepted, boolean connectionSuccessful) {
-        super(GameModel.SERVER_NICKNAME, MessageType.LOGIN_REPLY);
+        super("SERVER_NICKNAME", MessageType.LOGIN_REPLY);
         this.nicknameAccepted = nicknameAccepted;
         this.connectionSuccessful = connectionSuccessful;
     }

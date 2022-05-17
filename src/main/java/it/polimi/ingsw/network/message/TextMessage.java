@@ -18,7 +18,7 @@ public class TextMessage extends Message{
     public String toString() {
         return "TextMessage{" +
                 "player=" + getNickname() +
-                "text='" + text + '\'' +
+                ", text='" + text + '\'' +
                 '}';
     }
 }

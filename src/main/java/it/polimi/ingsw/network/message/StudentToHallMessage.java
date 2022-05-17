@@ -22,7 +22,7 @@ public class StudentToHallMessage extends  Message{
     public String toString() {
         return "StudentToHallMessage{" +
                 "player=" + getNickname() +
-                "students=" + students +
+                ", students=" + students +
                 '}';
     }
 }

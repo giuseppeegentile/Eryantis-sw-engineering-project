@@ -26,8 +26,8 @@ public class DisplayCemeteryMessage extends DisplayMessage{
     public String toString() {
         return "ShowCemeteryMessage{" +
                 "player=" + getNickname() +
-                "objectDisplay=" + getObjectDisplay() +
-                "cemetery=" + cemetery +
+                ", objectDisplay=" + getObjectDisplay() +
+                ", cemetery=" + cemetery +
                 '}';
     }
 

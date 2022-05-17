@@ -43,6 +43,7 @@ public interface ViewObserver {
 
     void onCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
 
+    void onUpdatePlayersNumber(int playersNumber);
     /**
      * Handles a disconnection desired by the user.
      */
@@ -51,4 +52,8 @@ public interface ViewObserver {
     void onUpdateNickname(String nickname);
 
     void onUpdateInitialConfig(String nickname, int numberPlayers, ColorTower chosenTower, GameMode mode);
+
+    void onUpdateTower(ColorTower towerColor);
+
+    void onUpdateGameMode(GameMode finalMode);
 }

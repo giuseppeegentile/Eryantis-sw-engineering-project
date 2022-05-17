@@ -42,6 +42,15 @@ public class ClientController implements ViewObserver, Observer {
                 WinMessage winMessage = (WinMessage)message;
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
+            case INIT:
+                queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));
+                break;
+            case GAMEMODE_REQUEST:
+                queueTasks.execute(view::askGameMode);
+                break;
+            case PLAYERNUMBER_REQUEST:
+                queueTasks.execute(view::askPlayersNumber);
+                break;
             case DISCONNECTION:
                 client.disconnect();
                 queueTasks.execute(() -> view.showDisconnectionMessage(message.getNickname(), ((DisconnectionMessage) message).getMessageStr()));
@@ -111,6 +120,16 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onUpdatePlayersNumber(int playersNumber) {
+        client.sendMessage(new PlayerNumberReply(this.nickname, playersNumber));
+    }
+
+    @Override
+    public void onUpdateGameMode(GameMode gameMode) {
+        client.sendMessage(new GameModeRes(this.nickname, gameMode));
+    }
+
+    @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
         try {
             client = new SocketClient(serverInfo.get("address"), Integer.parseInt(serverInfo.get("port")));
@@ -170,6 +189,11 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateInitialConfig(String nickname, int numberPlayers, ColorTower colorTowerStr, GameMode gameMode) {
         client.sendMessage(new InitialReqMessage(nickname, numberPlayers, colorTowerStr,gameMode));
+    }
+
+    @Override
+    public void onUpdateTower(ColorTower towerColor) {
+        client.sendMessage(new ChosenTowerMessage(this.nickname, towerColor));
     }
 
     @Override

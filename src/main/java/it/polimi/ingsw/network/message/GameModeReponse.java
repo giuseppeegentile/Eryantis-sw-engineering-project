@@ -20,7 +20,7 @@ class GameModeResponse extends Message{
     @Override
     public String toString() {
         return "GameModeResponse{" +
-                "nickname=" + getNickname() +
+                "player=" + getNickname() +
                 ", gameMode=" + getMode() +
                 '}';
     }

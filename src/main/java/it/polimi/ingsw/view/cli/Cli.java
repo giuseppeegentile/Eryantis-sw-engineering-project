@@ -16,6 +16,7 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 //sout per fare printout
@@ -250,8 +251,7 @@ public class Cli extends ViewObservable implements View {
         } else if (connectionSuccessful) {
             askNickname();
         } else if (nicknameAccepted) {
-            out.println("Max players reached. Connection refused.");
-            out.println("EXIT.");
+            out.println("Lobby is full, disconnection...");
 
             System.exit(1);
         } else {
@@ -263,6 +263,31 @@ public class Cli extends ViewObservable implements View {
     public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
 
     }
+
+    @Override
+    public void askPlayersNumber() {
+        int playerNumber;
+        out.println("How many players you want to play with? (2 to 4) ");
+        playerNumber = Integer.parseInt(read());
+
+        notifyObserver(obs -> obs.onUpdatePlayersNumber(playerNumber));
+    }
+
+    @Override
+    public void askGameMode() {
+        int mode = 0;
+        while (mode < 1 || mode > 2){
+            out.println("Enter the Game Modality: ");
+            out.println("1 - PRINCIPIANTE: ");
+            out.println("2 - ESPERTO: ");
+
+            mode = Integer.parseInt(read());
+        }
+        GameMode finalMode = List.of(GameMode.PRINCIPIANTE, GameMode.ESPERTO).get(mode-1);
+
+        notifyObserver(obs -> obs.onUpdateGameMode(finalMode));
+    }
+
 
     @Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
@@ -369,16 +394,24 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers) {
-        out.println("Enter the color of the tower you want: ");
+        StringBuilder str = new StringBuilder();
+        str.append("Insert the index of the color of the tower you want from the following: \n");
+        int i = 0;
+        for(ColorTower t: availableColorTowers){
+            i+=1;
+            str.append(i).append(" - ").append(t.name()).append("\n");
+        }
+        int chosenIndex = 0;
 
-        try {
-            String towerColor = readLine();
-            //notifyObserver(obs -> obs.onUpdateTower(towerColor));
-        } catch (ExecutionException e) {
-            out.println(STR_INPUT_CANCELED);
+        while(chosenIndex >availableColorTowers.size() || chosenIndex <= 0 ){
+            out.println(str);
+            chosenIndex = Integer.parseInt(read());
         }
 
+        int finalChosenIndex = chosenIndex-1;
+        notifyObserver(obs -> obs.onUpdateTower(availableColorTowers.get(finalChosenIndex)));
     }
+
 
     private String read(){
         String read = "";
@@ -391,22 +424,6 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-    @Override
-    public void askInitialConfig(String nickMessage, List<ColorTower> availableTowers) {
-        out.println("Enter the number of players: ");
-        int numberPlayers = Integer.parseInt(read());
-        out.println("Enter the color of tower you want from the following:");
-        availableTowers.forEach(t->{
-            System.out.println(t.name());
-        });
-        String colorTowerStr = read();
-        ColorTower colorTower = ColorTower.valueOf(colorTowerStr);
-
-        out.println("Enter the game mode: ");
-        GameMode mode = GameMode.valueOf(read());
-
-        notifyObserver(obs -> obs.onUpdateInitialConfig(nickMessage, numberPlayers, colorTower, mode));
-    }
 
 
     /**

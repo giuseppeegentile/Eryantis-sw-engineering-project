@@ -19,7 +19,7 @@ public class ErrorCardMessageResponse extends Message{
     public String toString() {
         return "ErrorCardMessageResponse{" +
                 "player=" + getNickname() +
-                "card=" + card +
+                ", card=" + card +
                 '}';
     }
 }

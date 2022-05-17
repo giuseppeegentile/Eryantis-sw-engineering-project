@@ -28,7 +28,7 @@ public class DisplayProfMessage extends DisplayMessage{
     public String toString() {
         return "DisplayEntranceMessage{" +
                 "player=" + getNickname() +
-                "profs=" + getProfs() +
+                ", profs=" + getProfs() +
                 ", objectDisplay=" + objectDisplay +
                 '}';
     }

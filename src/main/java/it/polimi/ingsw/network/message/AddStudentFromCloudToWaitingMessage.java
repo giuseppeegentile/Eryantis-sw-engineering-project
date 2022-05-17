@@ -18,7 +18,7 @@ public class AddStudentFromCloudToWaitingMessage extends Message {
     public String toString() {
         return "AddStudentFromCloudToWaitingMessage{" +
                 "nickname=" + getNickname() +
-                "cloudIndex=" + cloudIndex +
+                ", cloudIndex=" + cloudIndex +
                 '}';
     }
 }

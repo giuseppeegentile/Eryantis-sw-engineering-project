@@ -18,7 +18,7 @@ public class AssignProfResponseMessage extends  Message{
     public String toString() {
         return "AssignProfResponseMessage{" +
                 "player="+getNickname()+
-                "profs=" + profs +
+                ", profs=" + profs +
                 '}';
     }
 }
