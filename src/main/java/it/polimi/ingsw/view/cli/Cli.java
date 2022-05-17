@@ -81,10 +81,10 @@ public class Cli extends ViewObservable implements View {
         String defaultPort = "16847";
         boolean validInput;
 
-        out.println("Please specify the following settings. The default value is shown between brackets.");
+        out.println("Please specify the following settings. Press enter to use the default value Localhost.");
 
         do {
-            out.print("Enter the server address [" + defaultAddress + "]: ");
+            out.print("Enter the server address: ");
 
             String address = readLine();
 
