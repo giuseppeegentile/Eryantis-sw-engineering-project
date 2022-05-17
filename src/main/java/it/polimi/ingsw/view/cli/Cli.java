@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.TextMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -124,14 +125,14 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showWinMessage(PlayerModel winner) {
-        out.println("Game finished: " + winner.getNickname() + " WINS!");
+        out.println("Game finished: " + winner.getNickname() + " WINS!\n");
         System.exit(0);
     }
 
 
     @Override
-    public void showMessageJoiningIsland(Message message) {
-
+    public void showMessageJoiningIsland(TextMessage message) {
+        out.println(message.getText() + "\n");
     }
 
     @Override
@@ -149,15 +150,15 @@ public class Cli extends ViewObservable implements View {
 
     }
 
-    @Override
+    /*@Override
     public void showHallMessage(String player, Map<ColorPawns, Integer> hall) {
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void showEntranceMessage(String player, List<ColorPawns> entrance) {
 
-    }
+    }*/
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
@@ -169,7 +170,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showTextMessage(String player, String text) {
-        out.println(player + " -> " + text);
+        out.println(text + "\n");
     }
 
     @Override
@@ -233,8 +234,10 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showIslands(String nickname, List<IslandModel> islands) {
         StringBuilder strBoardBld = new StringBuilder();
-        strBoardBld.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
-        for (int i=0; i<6; i++) {
+        for (int i=0; i<islands.size()/2; i++)
+            strBoardBld.append(" -----------       ");
+        strBoardBld.append("\n");
+        for (int i=0; i<islands.size()/2; i++) {
             int occurrencesRed1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.RED);
             int occurrencesBlue1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.BLUE);
             int occurrencesGreen1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.GREEN);
@@ -248,19 +251,23 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|      ");
         }
         strBoardBld.append("\n");
-        for (int i=0; i<6; i++) {
+        for (int i=0; i<islands.size()/2; i++) {
             if(islands.get(i).getMotherNature())
                 strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
             else
                 strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
         }
         strBoardBld.append("\n");
-        strBoardBld.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
+        for (int i=0; i<islands.size()/2; i++)
+            strBoardBld.append(" -----------       ");
         out.println(strBoardBld);
+        strBoardBld.append("\n");
 
         StringBuilder strBoardBld2 = new StringBuilder();
-        strBoardBld2.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
-        for (int i=11; i>5; i--) {
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--)
+            strBoardBld2.append(" -----------       ");
+        strBoardBld2.append("\n");
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--) {
             int occurrencesRed1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.RED);
             int occurrencesBlue1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.BLUE);
             int occurrencesGreen1 = Collections.frequency(islands.get(i).getStudents(), ColorPawns.GREEN);
@@ -274,14 +281,16 @@ public class Cli extends ViewObservable implements View {
             strBoardBld2.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|      ");
         }
         strBoardBld2.append("\n");
-        for (int i=11; i>5; i--) {
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--) {
             if(islands.get(i).getMotherNature())
                 strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
             else
                 strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
         }
         strBoardBld2.append("\n");
-        strBoardBld2.append(" -----------        -----------        -----------        -----------        -----------        -----------\n");
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--)
+            strBoardBld2.append(" -----------       ");
+        strBoardBld2.append("\n");
         out.println(strBoardBld2);
     }
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.colors;
 
+import it.polimi.ingsw.view.cli.ColorCli;
+
+import java.awt.*;
 import java.util.Random;
 
 public enum ColorPawns {
@@ -13,5 +16,9 @@ public enum ColorPawns {
 
     public static ColorPawns getRandomColor(){
         return ColorPawns.values()[new Random().nextInt(ColorPawns.values().length - 1)];
+    }
+
+    public static ColorPawns getEquivalentColorPawns(String color){
+        return ColorPawns.valueOf(color);
     }
 }

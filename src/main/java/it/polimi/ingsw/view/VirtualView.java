@@ -38,7 +38,7 @@ public class VirtualView implements View, Observer {
 
 
     @Override
-    public void showMessageJoiningIsland(Message message) {
+    public void showMessageJoiningIsland(TextMessage message) {
         clientHandler.sendMessage(new TextMessage(message.getNickname(),((TextMessage)message).getText()));
     }
 
@@ -58,15 +58,15 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns, index));
     }
 
-    @Override
+    /*@Override
     public void showHallMessage(String player, Map<ColorPawns, Integer> hall){
         clientHandler.sendMessage(new DisplayHallMessage(player, hall));
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void showEntranceMessage(String player, List<ColorPawns> entrance){
         clientHandler.sendMessage(new DisplayEntranceMessage(player, entrance));
-    }
+    }*/
 
     @Override
     public void showDisconnectionMessage(String nickname, String message) {

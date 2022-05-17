@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.TextMessage;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface View {
 
     //void askNickname();
 
-    void showMessageJoiningIsland(Message message);
+    void showMessageJoiningIsland(TextMessage message);
 
     void askMoveCloudToEntrance(List<ColorPawns> students);
 
@@ -24,9 +25,9 @@ public interface View {
 
     void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel);
 
-    void showHallMessage(String player, Map<ColorPawns, Integer> hall);
+    //void showHallMessage(String player, Map<ColorPawns, Integer> hall);
 
-    void showEntranceMessage(String player, List<ColorPawns> entrance);
+    //void showEntranceMessage(String player, List<ColorPawns> entrance);
 
     //void showCards(PlayerModel playerModel);
 

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.TextMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -184,7 +185,7 @@ class CliTest {
     }
 
     @Test
-    void showIslands(){
+    void show12Islands(){
         List<ColorPawns> students = new ArrayList<>();
         students.add(ColorPawns.GREEN);
         students.add(ColorPawns.GREEN);
@@ -237,6 +238,38 @@ class CliTest {
     }
 
     @Test
+    void show5Islands(){
+        List<ColorPawns> students = new ArrayList<>();
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.YELLOW);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.RED);
+        students.add(ColorPawns.GREEN);
+        students.add(ColorPawns.BLUE);
+        IslandModel islandModel = new IslandModel(Boolean.FALSE, students);
+        islandModel.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel2 = new IslandModel(Boolean.TRUE, students);
+        islandModel2.setTowerColor(ColorTower.BLACK);
+        IslandModel islandModel3 = new IslandModel(Boolean.FALSE, students);
+        islandModel3.setTowerColor(ColorTower.GREY);
+        IslandModel islandModel4 = new IslandModel(Boolean.FALSE, students);
+        islandModel4.setTowerColor(ColorTower.WHITE);
+        IslandModel islandModel5 = new IslandModel(Boolean.FALSE, students);
+        islandModel5.setTowerColor(ColorTower.WHITE);
+        List<IslandModel> islands = new ArrayList<>();
+        islands.add(islandModel);
+        islands.add(islandModel2);
+        islands.add(islandModel3);
+        islands.add(islandModel4);
+        islands.add(islandModel5);
+        Cli cli = new Cli();
+        cli.showIslands("Batman", islands);
+    }
+
+    @Test
     void showPlayerBoard(){
         Cli cli = new Cli();
         PlayerModel player = new PlayerModel("Paolo Bitta");
@@ -264,5 +297,12 @@ class CliTest {
         studentsHall.put(ColorPawns.PINK, 1);
         player.setStudentHall(studentsHall);
         cli.showPlayerBoardMessage(player.getNickname(), player);
+    }
+
+    @Test
+    void showJoiningIslandMessage(){
+        Cli cli = new Cli();
+        TextMessage message = new TextMessage("Massimo Ruggero", "JOINING ISLANDS...");
+        cli.showMessageJoiningIsland(message);
     }
 }
