@@ -15,5 +15,7 @@ public enum ColorPawns {
         return ColorPawns.values()[new Random().nextInt(ColorPawns.values().length - 1)];
     }
 
-
+    public static ColorPawns getEquivalentColorPawns(String color){
+        return ColorPawns.valueOf(color);
+    }
 }

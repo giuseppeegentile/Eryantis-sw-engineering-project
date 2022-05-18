@@ -24,6 +24,14 @@ public enum ColorCli {
         this.code = code;
     }
 
+    public static ColorCli getEquivalentColoCliStudent(ColorPawns color){
+        return ColorCli.valueOf(color.name());
+    }
+
+    public static ColorCli getEquivalentColorCliTower(ColorTower colorTower) {
+         return ColorCli.valueOf(colorTower.name());
+    }
+
     @Override
     public String toString() {
         return code;

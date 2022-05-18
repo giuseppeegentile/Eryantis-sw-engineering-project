@@ -53,6 +53,16 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showIslands(String nickname, List<IslandModel> islands){
+        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, islands));
+    }
+
+    @Override
+    public void showPlayerBoardMessage(String nickname) {
+        clientHandler.sendMessage(new DisplayPlayerBoardMessage(nickname));
+    }
+
+    @Override
     public void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns) {
         clientHandler.sendMessage(new StudentToHallMessage(player, colorPawns));
     }
@@ -113,10 +123,6 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
     }
 
-    @Override
-    public void showPlayerBoard(PlayerModel playerModel) {
-
-    }
 
     /*@Override
     public void showCards(PlayerModel playerModel) {

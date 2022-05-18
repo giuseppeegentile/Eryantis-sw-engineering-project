@@ -46,9 +46,9 @@ public interface View {
 
     void updateIslands(String nickname);
 
-    void showPlayerBoard(PlayerModel playerModel);
-
     void askGetFromBag();
+
+    void showIslands(String nickname, List<IslandModel> islands);
 
     void showProfsMessage(String player, List<ColorPawns> profs);
 
@@ -94,4 +94,6 @@ public interface View {
     void askPlayersNumber();
 
     void askGameMode();
+
+    void showPlayerBoardMessage(String nickname);
 }

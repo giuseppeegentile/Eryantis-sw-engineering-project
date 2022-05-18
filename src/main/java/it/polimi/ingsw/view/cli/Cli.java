@@ -6,9 +6,11 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.TextMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -16,6 +18,7 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 //sout per fare printout
@@ -24,7 +27,7 @@ public class Cli extends ViewObservable implements View {
 
     private final PrintStream out;
     private Thread inputThread;
-
+    private final List<ColorCli> listColor = List.of(ColorCli.RED, ColorCli.BLUE, ColorCli.GREEN, ColorCli.PINK, ColorCli.YELLOW);
     private static final String STR_ROW = "Row: ";
     private static final String STR_COLUMN = "Column: ";
     private static final String STR_POSITION = "Position ";
@@ -131,7 +134,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showMessageJoiningIsland(Message message) {
-
+        out.println(((TextMessage)message).getText() + "\n");
     }
 
     @Override
@@ -172,7 +175,7 @@ public class Cli extends ViewObservable implements View {
             str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
         }
         out.println(str);
-        int finalChosenIndex = 0;
+        int finalChosenIndex;
         int chosenIndex = 0;
         for(int j=0; j<numberStudents; j++)
             while(chosenIndex > colorPawns.size() || chosenIndex <= 0 ){
@@ -202,17 +205,32 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
-
+        out.println(player + ", this is the cemetery of the current round.\n");
+        for(AssistantCardModel assistantCard : cemetery){
+            out.println(assistantCard.getOwner().getNickname() + " -> Priority = " + assistantCard.getPriority() + ", Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
+        }
     }
 
     @Override
     public void showTextMessage(String player, String text) {
-
+        out.println(text + "\n");
     }
 
     @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
+        StringBuilder strBoardBld = new StringBuilder();
+        out.println(nickname + ", this is the updated island N " + islandIndex + "\n");
+        strBoardBld.append(" -----------\n");
 
+        buildIsland(islandModel, strBoardBld);
+        strBoardBld.append(ColorCli.RESET).append("|\n");
+
+        if(islandModel.getMotherNature())
+            strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islandModel.getTowerColor())).append(" T").append(ColorCli.RESET).append("    |\n");
+        else
+            strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCliTower(islandModel.getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |\n");
+        strBoardBld.append(" -----------\n");
+        out.println(strBoardBld);
     }
 
     @Override
@@ -220,22 +238,12 @@ public class Cli extends ViewObservable implements View {
         StringBuilder strBoardBld = new StringBuilder();
         strBoardBld.append(" -----------                -----------\n");
         for (CloudModel cloud : clouds) {
-            int occurrencesRed1 = Collections.frequency(cloud.getStudents(), ColorPawns.RED);
-            int occurrencesBlue1 = Collections.frequency(cloud.getStudents(), ColorPawns.BLUE);
-            int occurrencesGreen1 = Collections.frequency(cloud.getStudents(), ColorPawns.GREEN);
-            int occurrencesPink1 = Collections.frequency(cloud.getStudents(), ColorPawns.PINK);
-            int occurrencesYellow1 = Collections.frequency(cloud.getStudents(), ColorPawns.YELLOW);
-
-            strBoardBld.append("| ").append(ColorCli.RED).append(occurrencesRed1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.BLUE).append(occurrencesBlue1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.GREEN).append(occurrencesGreen1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.PINK).append(occurrencesPink1 + " ").append(ColorCli.RESET);
-            strBoardBld.append(ColorCli.YELLOW).append(occurrencesYellow1 + " ").append(ColorCli.RESET).append("|              ");
+            buildCloud(cloud, strBoardBld);
+            strBoardBld.append(ColorCli.RESET).append("|              ");
         }
         strBoardBld.append("\n");
         strBoardBld.append(" -----------                -----------\n");
         out.println(strBoardBld);
-
     }
 
     @Override
@@ -247,17 +255,12 @@ public class Cli extends ViewObservable implements View {
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
         out.println(player  +
                 " has played an assistant card\n" +
-                "Priority = " + assistantCard.getPriority() + "\n" +
+                "Priority = " + assistantCard.getPriority() + ", " +
                 "Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
     }
 
     @Override
     public void updateIslands(String nickname) {
-
-    }
-
-    @Override
-    public void showPlayerBoard(PlayerModel playerModel) {
 
     }
 
@@ -278,9 +281,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Oh no! The tower color ").append(ColorCli.getEquivalentColorTower(colorTower)).append(colorTower).append(ColorCli.RESET).append(" is already taken\n");
-        out.println(stringBuilder);
+        out.println("Oh no! The tower color " + ColorCli.getEquivalentColorTower(colorTower) + colorTower + ColorCli.RESET + " is already taken\n");
     }
 
     @Override
@@ -328,12 +329,51 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateGameMode(finalMode));
     }
 
+    @Override
+    public void showPlayerBoardMessage(String nickname) {
+        PlayerModel playerModel = GameModel.getInstance().getPlayerByNickname(nickname);
+        StringBuilder strBoardBld = new StringBuilder();
+        List<ColorPawns> colors = new ArrayList<>();
+        colors.add(ColorPawns.GREEN);
+        colors.add(ColorPawns.RED);
+        colors.add(ColorPawns.YELLOW);
+        colors.add(ColorPawns.PINK);
+        colors.add(ColorPawns.BLUE);
+        strBoardBld.append("-----------------------------------\n");
+        strBoardBld.append("  Entry          Hall         Profs\n");
+        for(ColorPawns color : colors){
+            strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(playerModel.getStudentInEntrance(), color)).append(ColorCli.RESET).append("   | ");
+            int numberStudents = playerModel.getStudentInHall().get(color);
+            for (int i=0; i<10; i++){
+                if (numberStudents>0){
+                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
+                    numberStudents--;
+                } else {
+                    strBoardBld.append(ColorCli.RESET).append("  ");
+                }
+            }
+            strBoardBld.append(ColorCli.RESET).append("| ");
+            if (playerModel.hasProf(color)){
+                strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
+            } else {
+                strBoardBld.append("  |\n");
+            }
+        }
+        strBoardBld.append("-----------------------------------\n");
+        strBoardBld.append("  Towers ");
+        for (int i=0; i<playerModel.getTowerNumber(); i++){
+            strBoardBld.append(ColorCli.getEquivalentColorCliTower(playerModel.getColorTower())).append("0 ");
+        }
+        strBoardBld.append(ColorCli.RESET).append("\n");
+        out.println(strBoardBld);
+    }
+
 
     @Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
         clearCli();
         int j = 0;
-        int i = 0;
+        int i;
         out.println("These are your available assistant cards " + player + "!\n");
         for (i = 0; i<playerDeck.size(); i++)
             if (!(playerDeck.get(i).getPriority() == 0 && playerDeck.get(i).getMotherNatureMovement() == 0)){
@@ -356,9 +396,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showInvalidNickname(String nickname) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Oh no! The nickname ").append(ColorCli.RED).append(nickname).append(ColorCli.RESET).append(" is already taken\n");
-        out.println(stringBuilder);
+        out.println("Oh no! The nickname " + ColorCli.RED + nickname + ColorCli.RESET + " is already taken\n");
     }
 
     @Override
@@ -417,21 +455,28 @@ public class Cli extends ViewObservable implements View {
         System.exit(1);
     }
 
+    private int askUntilValid(int size, String invalidMessage, StringBuilder stringBuilder){
+        int chosenIndex = 0;
+        while(chosenIndex > size || chosenIndex <= 0){
+            out.println(stringBuilder);
+            chosenIndex = Integer.parseInt(read());
+            if(chosenIndex > size || chosenIndex <= 0)
+                out.println(invalidMessage);
+        }
+        return chosenIndex;
+    }
+
     @Override
     public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
         out.println(nickname + ", select your assistant card for this round.\nThis is your deck:\n");
         for (AssistantCardModel card : playerDeck)
-            stringBuilder.append(i + " -> Priority = " + card.getPriority() + ", Mothernature movements = " + card.getMotherNatureMovement() + "\n");
-        int chosenIndex = 0;
-        while(chosenIndex > playerDeck.size() || chosenIndex <= 0){
-            out.println(stringBuilder);
-            chosenIndex = Integer.parseInt(read());
-            if(chosenIndex > playerDeck.size() || chosenIndex <= 0)
-                out.println("You've entered an invalid number, please select a card from the list shown\n");
-        }
-        int finalChosenIndex = chosenIndex-1;
+            stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+
+        String message = "You've entered an invalid number, please select a card from the list shown\n";
+        int finalChosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder)-1;
+
         notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, playerDeck.get(finalChosenIndex)));
     }
 
@@ -454,16 +499,9 @@ public class Cli extends ViewObservable implements View {
             i+=1;
             str.append(i).append(" -> ").append(t.name()).append("\n");
         }
-        int chosenIndex = 0;
+        String message = "You've entered an invalid number, please select a card from the list shown\n";
+        int finalChosenIndex = askUntilValid(availableColorTowers.size(), message,str)-1;
 
-        while(chosenIndex >availableColorTowers.size() || chosenIndex <= 0 ){
-            out.println(str);
-            chosenIndex = Integer.parseInt(read());
-            if(chosenIndex > availableColorTowers.size() || chosenIndex <= 0)
-                out.println("You've entered an invalid number, please select a card from the list shown\n");
-        }
-
-        int finalChosenIndex = chosenIndex-1;
         notifyObserver(obs -> obs.onUpdateTower(availableColorTowers.get(finalChosenIndex)));
     }
 
@@ -501,5 +539,68 @@ public class Cli extends ViewObservable implements View {
     public void clearCli() {
         out.print(ColorCli.CLEAR);
         out.flush();
+    }
+
+
+    @Override
+    public void showIslands(String nickname, List<IslandModel> islands) {
+        StringBuilder strBoardBld = new StringBuilder();
+        strBoardBld.append(" -----------       ".repeat(islands.size() / 2));
+        strBoardBld.append("\n");
+        for (int i=0; i<islands.size()/2; i++) {
+            buildIsland(islands.get(i), strBoardBld);
+            strBoardBld.append(ColorCli.RESET).append("|      ");
+        }
+        strBoardBld.append("\n");
+        for (int i=0; i<islands.size()/2; i++) {
+            if(islands.get(i).getMotherNature())
+                strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+            else
+                strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+        }
+        strBoardBld.append("\n");
+        strBoardBld.append(" -----------       ".repeat(islands.size() / 2));
+
+        out.println(strBoardBld);
+        strBoardBld.append("\n");
+
+        StringBuilder strBoardBld2 = new StringBuilder();
+
+        strBoardBld2.append(" -----------       ".repeat(Math.max(0, islands.size() - 1 - (islands.size() / 2 - 1))));
+
+        strBoardBld2.append("\n");
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--) {
+            buildIsland(islands.get(i), strBoardBld2);
+            strBoardBld.append(ColorCli.RESET).append("|      ");
+        }
+        strBoardBld2.append("\n");
+        for (int i=islands.size()-1; i>islands.size()/2-1; i--) {
+            if(islands.get(i).getMotherNature())
+                strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+            else
+                strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+        }
+        strBoardBld2.append("\n");
+
+        strBoardBld2.append(" -----------       ".repeat(Math.max(0, islands.size() - 1 - (islands.size() / 2 - 1))));
+
+        strBoardBld2.append("\n");
+        out.println(strBoardBld2);
+    }
+
+    private void buildIsland(IslandModel island, StringBuilder strBoardBld) {
+        strBoardBld.append("| ");
+        listColor.forEach(c->{
+            int occurrence = Collections.frequency(island.getStudents(), ColorPawns.getEquivalentColorPawns(c.name()));
+            strBoardBld.append(ColorCli.RED).append(occurrence).append(" ").append(ColorCli.RESET);
+        });
+    }
+
+    private void buildCloud(CloudModel cloudModel, StringBuilder strBoardBld) {
+        strBoardBld.append("| ");
+        listColor.forEach(c->{
+            int occurrence = Collections.frequency(cloudModel.getStudents(), ColorPawns.getEquivalentColorPawns(c.name()));
+            strBoardBld.append(ColorCli.RED).append(occurrence).append(" ").append(ColorCli.RESET);
+        });
     }
 }
