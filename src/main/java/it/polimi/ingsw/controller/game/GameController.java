@@ -93,7 +93,7 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(player).showTowerMessage(player, p.getColorTower(), p.getTowerNumber());
                         virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
 
-/*                        virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
+                      /*virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
 
                         virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());*/
 
@@ -294,7 +294,7 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE:
-                int cloudIndex = ((AddStudentFromCloudToWaitingMessage)receivedMessage).getCloudIndex();
+                int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();
                 CloudModel chosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
 
                 if(chosenCloudByPlayer.getStudents().size() == 0) {

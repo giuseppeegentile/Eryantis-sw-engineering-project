@@ -56,11 +56,6 @@ public class Cli extends ViewObservable implements View {
         return input;
     }
 
-
-    public void showBoard(){
-
-    }
-
     public void init() {
         out.println("" +
                         "888888 8888Yb 88    db    88b 88 888888 Yb  dP .dPY8 \n" +
@@ -162,13 +157,27 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
+    public void askMotherNatureMovements(String player, byte movement) {
+        out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int)movement + ".\n");
+        int movementChosen = 0;
+        while(movementChosen <=0 || movementChosen > movement){
+            movementChosen = Integer.parseInt(read());
+            if(movementChosen <=0 || movementChosen > movement){
+                out.println("You've entered an invalid number, it can be between 0 and " + (int)movement + "\n");
+            }
+        }
+        byte finalMovementChosen = (byte)movementChosen;
+        notifyObserver(obs -> obs.onUpdateMotherNature(player, finalMovementChosen));
+    }
+
+    @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns) {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         out.println("How many students do you want to move to your hall?\n");
         int numberStudents = 0;
         numberStudents = Integer.parseInt(read());
-        str.append("Type the index of the students you want from the following list: \n");
+        str.append("Type the index of the students you want to move from the following list: \n");
         int i = 0;
         for(ColorPawns color : colorPawns){
             i+=1;
@@ -183,17 +192,39 @@ public class Cli extends ViewObservable implements View {
                 finalChosenIndex = chosenIndex-1;
                 colors.add(colorPawns.get(finalChosenIndex));
                 if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
-                    out.println("You've entered an invalid number, please select a card from the list shown\n");
+                    out.println("You've entered an invalid number, please select a student from the list shown\n");
             }
         notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, IslandModel islandModel) {
-
+    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, IslandModel island) {
+        StringBuilder str = new StringBuilder();
+        List<ColorPawns> colors = new ArrayList<>();
+        out.println("How many students do you want to move to the island?\n");
+        int numberStudents = 0;
+        numberStudents = Integer.parseInt(read());
+        str.append("Type the index of the students you want to move from the following list: \n");
+        int i = 0;
+        for(ColorPawns color : colorPawns){
+            i+=1;
+            str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
+        }
+        out.println(str);
+        int finalChosenIndex;
+        int chosenIndex = 0;
+        for(int j=0; j<numberStudents; j++)
+            while(chosenIndex > colorPawns.size() || chosenIndex <= 0 ){
+                chosenIndex = Integer.parseInt(read());
+                finalChosenIndex = chosenIndex-1;
+                colors.add(colorPawns.get(finalChosenIndex));
+                if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
+                    out.println("You've entered an invalid number, please select a student from the list shown\n");
+            }
+        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, GameModel.getInstance().getIslandsModel().indexOf(island)));
     }
 
-    @Override
+    /*@Override
     public void showHallMessage(String player, Map<ColorPawns, Integer> hall) {
 
     }
@@ -201,7 +232,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showEntranceMessage(String player, List<ColorPawns> entrance) {
 
-    }
+    }*/
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
@@ -248,7 +279,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showMoveMotherNatureMessage(String player, byte movement) {
-
+        out.println(player + " has moved Mothernature " + (int)movement + " positions.\n");
     }
 
     @Override
@@ -259,15 +290,15 @@ public class Cli extends ViewObservable implements View {
                 "Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
     }
 
-    @Override
+    /*@Override
     public void updateIslands(String nickname) {
 
     }
 
-    /*@Override                                         c'è già showDeckMessage
+    @Override                                         c'è già showDeckMessage
     public void showCards(PlayerModel playerModel) {
 
-    }*/
+    }
 
     @Override
     public void askGetFromBag() {
@@ -277,7 +308,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showProfsMessage(String player, List<ColorPawns> profs) {
 
-    }
+    }*/
 
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
@@ -300,10 +331,10 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-    @Override
+    /*@Override
     public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
 
-    }
+    }*/
 
     @Override
     public void askPlayersNumber() {
@@ -382,10 +413,10 @@ public class Cli extends ViewObservable implements View {
             }
     }
 
-    @Override
+    /*@Override
     public void updateTowerOnIsland(String nickname, IslandModel islandModel) {
 
-    }
+    }*/
 
 
     @Override
@@ -401,7 +432,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showStartTurn(String nick) {
-
+        out.println(nick + " it's your turn!\n");
     }
 
     @Override
@@ -411,17 +442,17 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void errorCard(String player, AssistantCardModel card) {
-
+        out.println(player + "has played a wrong card.\n");
     }
 
     @Override
     public void showDisconnectionMessage(String nickname, String message) {
-
+        out.println(nickname + " " + message + "\n");
     }
 
     @Override
     public void showGenericMessage(String message) {
-
+        out.println(message + "\n");
     }
 
     @Override

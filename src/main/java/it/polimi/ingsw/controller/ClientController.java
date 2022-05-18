@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.*;
@@ -78,10 +77,10 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayIslandMessage displayIsland = (DisplayIslandMessage)message;
                         queueTasks.execute(() -> view.showIslandMessage(displayIsland.getNickname(), displayIsland.getIslandModel(), displayIsland.getIslandIndex()));
                         break;
-                    case PROF:
+                    /*case PROF:
                         DisplayProfMessage displayProfMessage = (DisplayProfMessage)message;
                         queueTasks.execute(() -> view.showProfsMessage(displayProfMessage.getNickname(), displayProfMessage.getProfs()));
-                        break;
+                        break;*/
                     case CLOUDS:
                         DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
@@ -157,7 +156,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onChosenCloud(String nickname, int cloudIndex){
-        client.sendMessage(new AddStudentFromCloudToWaitingMessage(nickname, cloudIndex));
+        client.sendMessage(new AddStudentFromCloudToEntranceMessage(nickname, cloudIndex));
     }
 
     @Override
@@ -177,7 +176,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateWaiting(String nickname, int cloudIndex){
-        client.sendMessage(new AddStudentFromCloudToWaitingMessage(nickname, cloudIndex));
+        client.sendMessage(new AddStudentFromCloudToEntranceMessage(nickname, cloudIndex));
     }
 
     @Override

@@ -5,14 +5,12 @@ import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -183,7 +181,7 @@ class GameControllerTest {
 
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
-            AddStudentFromCloudToWaitingMessage msgCloudToWaiting = new AddStudentFromCloudToWaitingMessage(firstPlayer.getNickname(), 1);
+            AddStudentFromCloudToEntranceMessage msgCloudToWaiting = new AddStudentFromCloudToEntranceMessage(firstPlayer.getNickname(), 1);
             gameController.onMessageReceived(msgCloudToWaiting);
             //System.out.println(gameInstance.getCloudsModel().get(1).getStudents());
             assertEquals(0, gameInstance.getCloudsModel().get(1).getStudents().size());
@@ -224,7 +222,7 @@ class GameControllerTest {
             assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
-            AddStudentFromCloudToWaitingMessage msgCloudToWaiting2 = new AddStudentFromCloudToWaitingMessage(secondPlayer.getNickname(), 0);
+            AddStudentFromCloudToEntranceMessage msgCloudToWaiting2 = new AddStudentFromCloudToEntranceMessage(secondPlayer.getNickname(), 0);
             gameController.onMessageReceived(msgCloudToWaiting2);
             assertEquals(0, gameInstance.getCloudsModel().get(0).getStudents().size());
 
@@ -267,7 +265,7 @@ class GameControllerTest {
             assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
             assertEquals(PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE, gameController.getPhaseGame());
 
-            AddStudentFromCloudToWaitingMessage msgCloudToWaiting3 = new AddStudentFromCloudToWaitingMessage(thirdPlayer.getNickname(), 2);
+            AddStudentFromCloudToEntranceMessage msgCloudToWaiting3 = new AddStudentFromCloudToEntranceMessage(thirdPlayer.getNickname(), 2);
             gameController.onMessageReceived(msgCloudToWaiting3);
             //System.out.println(gameInstance.getCloudsModel().get(0).getStudents());
             //System.out.println(gameInstance.getCloudsModel().get(1).getStudents());

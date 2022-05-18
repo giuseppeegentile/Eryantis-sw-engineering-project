@@ -22,11 +22,13 @@ public interface View {
 
     void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns);
 
+    void askMotherNatureMovements(String player, byte movement);
+
     void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel);
 
-    void showHallMessage(String player, Map<ColorPawns, Integer> hall);
+    //void showHallMessage(String player, Map<ColorPawns, Integer> hall);
 
-    void showEntranceMessage(String player, List<ColorPawns> entrance);
+    //void showEntranceMessage(String player, List<ColorPawns> entrance);
 
     //void showCards(PlayerModel playerModel);
 
@@ -44,23 +46,23 @@ public interface View {
 
     void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
 
-    void updateIslands(String nickname);
+    //void updateIslands(String nickname);
 
-    void askGetFromBag();
+    //void askGetFromBag();
 
     void showIslands(String nickname, List<IslandModel> islands);
 
-    void showProfsMessage(String player, List<ColorPawns> profs);
+    //void showProfsMessage(String player, List<ColorPawns> profs);
 
     void showInvalidTower(String player, ColorTower colorTower);
 
     void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname);
 
-    void showTowerMessage(String player, ColorTower colorTower, int towerNumber);
+    //void showTowerMessage(String player, ColorTower colorTower, int towerNumber);
 
     void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
-    void updateTowerOnIsland(String nickname, IslandModel islandModel);
+    //void updateTowerOnIsland(String nickname, IslandModel islandModel);
 
     void showEndTurn(String nick);
 

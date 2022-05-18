@@ -11,6 +11,7 @@ import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
-
+        clientHandler.sendMessage(new AskStudentFromCloudToEntranceMessage(nickname, clouds));
     }
 
     @Override
@@ -68,20 +69,24 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void askMotherNatureMovements(String player, byte movement) {
+        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
+    }
+
+    @Override
     public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel) {
         int index = GameModel.getInstance().getIslandsModel().indexOf(islandModel);
         clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns, index));
     }
 
-    @Override
-    public void showHallMessage(String player, Map<ColorPawns, Integer> hall){
-        clientHandler.sendMessage(new DisplayHallMessage(player, hall));
-    }
-
-    @Override
+    /*@Override
     public void showEntranceMessage(String player, List<ColorPawns> entrance){
         clientHandler.sendMessage(new DisplayEntranceMessage(player, entrance));
-    }
+    }*/
+
+    /*public void showHallMessage(String player, Map<ColorPawns, Integer> hall){
+        clientHandler.sendMessage(new DisplayHallMessage(player, hall));
+    }*/
 
     @Override
     public void showDisconnectionMessage(String nickname, String message) {
@@ -129,26 +134,26 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
     }*/
 
-    @Override
+    /*@Override
     public void askGetFromBag() {  //serve?
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
         clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
-    }
+    }*/
 
     @Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
         clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(player,playerDeck));
     }
 
-/*    @Override
+    /*@Override
     public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
 
     }*/
-    @Override
+    /*@Override
     public void updateTowerOnIsland(String nickname, IslandModel islandModel){
         int indexIsland = 0;
         for(; !GameModel.getInstance().getIslandsModel().get(indexIsland).equals(islandModel); indexIsland++);
@@ -160,7 +165,8 @@ public class VirtualView implements View, Observer {
     @Override
     public void updateIslands(String nickname){
         clientHandler.sendMessage(new DisplayIslandsMessage(nickname, GameModel.getInstance().getIslandsModel()));
-    }
+    }*/
+
     //da mettere nel gameController
     @Override
     public void showOrderPhase(String nickname, List<PlayerModel> order){
@@ -224,10 +230,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new TextMessage(nick, "Choose a valid cloud"));
     }
 
-    @Override
+    /*@Override
     public void showProfsMessage(String player, List<ColorPawns> profs){
         clientHandler.sendMessage(new AssignProfResponseMessage(player, profs));
-    }
+    }*/
 
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){

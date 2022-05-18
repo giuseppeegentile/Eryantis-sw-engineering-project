@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
-import it.polimi.ingsw.network.message.AddStudentFromCloudToWaitingMessage;
+import it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage;
 import it.polimi.ingsw.network.message.Message;
 
 //last state
@@ -42,7 +42,7 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
 
     //****************da testare
     public boolean moveStudentFromCloudToWaiting(Message receivedMessage){
-        int cloudIndex = ((AddStudentFromCloudToWaitingMessage)receivedMessage).getCloudIndex();
+        int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();
         CloudModel chosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
         if(chosenCloudByPlayer.getStudents().size()!=0) {
             moveStudentFromCloudToWaiting(chosenCloudByPlayer);
