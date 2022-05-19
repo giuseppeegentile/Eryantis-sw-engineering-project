@@ -3,11 +3,13 @@ package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CloudModel {
+public class CloudModel implements Serializable {
+    private static final long serialVersionUID = -8954335784271144048L;
     private List<ColorPawns> students;
     private final int size; //number of student in the cloud
 

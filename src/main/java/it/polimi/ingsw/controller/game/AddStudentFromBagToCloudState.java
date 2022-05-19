@@ -6,8 +6,10 @@ import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 
+import java.io.Serializable;
+
 //2
-public class AddStudentFromBagToCloudState extends GameController implements GameState {
+public class AddStudentFromBagToCloudState extends GameController implements GameState, Serializable {
     private static final long serialVersionUID = 2562163114025500822L;
 
     /**

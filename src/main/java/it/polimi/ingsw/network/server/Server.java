@@ -44,6 +44,12 @@ public class Server {
     public void addClient(String nickname, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
+        if (gameController.checkLoginNickname(nickname, vv)) {
+            clientHandlerMap.put(nickname, clientHandler);
+            gameController.handleLogin(nickname, vv);
+        }
+
+     /*
         if (!gameController.isGameStarted()) {
             if (gameController.checkLoginNickname(nickname, vv)) {
                 clientHandlerMap.put(nickname, clientHandler);
@@ -52,7 +58,7 @@ public class Server {
         } else {
             vv.showLoginResult(true, false, null);
             clientHandler.disconnect();
-        }
+        }*/
     }
     /**
      * Handles the disconnection of a client.

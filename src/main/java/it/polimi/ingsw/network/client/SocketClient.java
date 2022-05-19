@@ -69,6 +69,7 @@ public class SocketClient extends Client {
             outputStream.writeObject(message);
             outputStream.reset();
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             disconnect();
             notifyObserver(new ErrorMessage(null, "Could not send message."));
         }

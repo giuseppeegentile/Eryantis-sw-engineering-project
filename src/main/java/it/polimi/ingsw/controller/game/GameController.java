@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.player.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
@@ -90,11 +91,11 @@ public class GameController implements Observer, Serializable {
                     if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
                         virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
                         //prepareGame();
-                        return;
                     }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
+                        gameStarted = true;
                         setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                         assignCardsToPlayers();
-                        prepareGame();
+                        //prepareGame();
                         for(String nick: virtualViewMap.keySet()) {
                             virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
                             virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
@@ -110,7 +111,9 @@ public class GameController implements Observer, Serializable {
                 break;
             case GAMEMODE_RES:
                 gameInstance.setGameMode(((GameModeRes)receivedMessage).getGameMode());
-                String nicknameMessage = receivedMessage.getNickname();
+                if(((GameModeRes)receivedMessage).getGameMode() == GameMode.PRINCIPIANTE){
+
+                }
                 setIslands();
                 setClouds();
                 break;
@@ -364,7 +367,7 @@ public class GameController implements Observer, Serializable {
 
     public void handleLogin(String nickname, VirtualView vv){
         if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
-            this.virtualViewMap.put(nickname, vv);
+            virtualViewMap.put(nickname, vv);
             gameInstance.addObserver(vv);
             assignBag();
             generateDeck();
@@ -374,10 +377,12 @@ public class GameController implements Observer, Serializable {
             //vv.askTowerColor(nickname, getAvailableTowers());
         }else if(virtualViewMap.size() < gameInstance.getPlayersNumber()){
             if(checkLoginNickname(nickname, vv)) {
+                System.out.println("here");
                 this.virtualViewMap.put(nickname, vv);
                 gameInstance.addObserver(vv);
                 gameInstance.addPlayer(new PlayerModel(nickname));
                 vv.showLoginResult(true, true, "SERVER_NICKNAME");
+                vv.askTowerColor(nickname, getAvailableTowers());
             }
         }
     }
@@ -602,11 +607,13 @@ public class GameController implements Observer, Serializable {
         if (playerNumber == 3) numStudentEntrance = 9; //gioco a 3
 
         int bagSize = gameInstance.getBag().size();
-
-        List<ColorPawns> studentInEntrance = gameInstance.getBag().subList(bagSize - numStudentEntrance,bagSize);
+        List<ColorPawns> studentInEntrance = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentEntrance,bagSize));
+        //List<ColorPawns> studentInEntrance = gameInstance.getBag().subList(bagSize - numStudentEntrance,bagSize);
         playerToSet.setStudentInEntrance(studentInEntrance);
 
-        gameInstance.setBag(gameInstance.getBag().subList(0, bagSize - numStudentEntrance));
+
+        List<ColorPawns> updatedBag = new ArrayList<>(gameInstance.getBag().subList(0, bagSize - numStudentEntrance));
+        gameInstance.setBag(updatedBag);
 
     }
 
@@ -636,10 +643,14 @@ public class GameController implements Observer, Serializable {
                 c.setOwner(gameInstance.getPlayersModel().get(3));
             i.getAndIncrement();
         });
-        gameInstance.getPlayersModel().get(0).setDeckAssistantCardModel(deck.subList(0, 10));
-        gameInstance.getPlayersModel().get(1).setDeckAssistantCardModel(deck.subList(10, 20));
-        if(gameInstance.getPlayersNumber() != 2) gameInstance.getPlayersModel().get(2).setDeckAssistantCardModel(deck.subList(20, 30)); //se ho 3 o 4 giocatori
-        if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deck.subList(30, 40));
+        List<AssistantCardModel> deckPlayer1 = new ArrayList<>(deck.subList(0, 10));
+        List<AssistantCardModel> deckPlayer2 = new ArrayList<>(deck.subList(10, 20));
+        List<AssistantCardModel> deckPlayer3 = new ArrayList<>(deck.subList(20, 30));
+        List<AssistantCardModel> deckPlayer4 = new ArrayList<>(deck.subList(30, 40));
+        gameInstance.getPlayersModel().get(0).setDeckAssistantCardModel(deckPlayer1);
+        gameInstance.getPlayersModel().get(1).setDeckAssistantCardModel(deckPlayer2);
+        if(gameInstance.getPlayersNumber() != 2) gameInstance.getPlayersModel().get(2).setDeckAssistantCardModel(deckPlayer3); //se ho 3 o 4 giocatori
+        if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deckPlayer4);
 
     }
 }
