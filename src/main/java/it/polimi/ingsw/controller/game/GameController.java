@@ -40,6 +40,19 @@ public class GameController implements Observer, Serializable {
         this.phase = phase;
     }
 
+    private void showBoard(String nickname){
+        PlayerModel playerToDisplay = gameInstance.getPlayerByNickname(nickname);
+        List<ColorTower> towers = new ArrayList<>();
+        for(int i = 0; i < playerToDisplay.getTowerNumber(); i++){
+            towers.add(playerToDisplay.getColorTower());
+        }
+        virtualViewMap.get(nickname).showPlayerBoardMessage(nickname,
+                towers,
+                playerToDisplay.getStudentInHall(),
+                playerToDisplay.getStudentInEntrance(),
+                playerToDisplay.getProfs()
+        );
+    }
 
     /**
      * Switch on Game State.
@@ -48,74 +61,48 @@ public class GameController implements Observer, Serializable {
      */
     public void onMessageReceived(Message receivedMessage){
 
-        if (receivedMessage.getMessageType() == MessageType.LOGIN_REPLY && phase != PhaseGame.START ) {
-            String nickMessage = receivedMessage.getNickname();
-            handleLogin(nickMessage, virtualViewMap.get(nickMessage));
-            virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+        switch (receivedMessage.getMessageType()){
+            case LOGIN_REPLY:
+                String nickMessage = receivedMessage.getNickname();
+                handleLogin(nickMessage, virtualViewMap.get(nickMessage));
 
-        }
+                break;
+            case PLAYERNUMBER_REPLY:
+                gameInstance.setPlayerNumber(((PlayerNumberReply)receivedMessage).getPlayerNumber());
+                virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+                break;
+            case CHOSEN_TOWER:
+                System.out.println("here");
+                ColorTower chosenTower = ((ChosenTowerMessage)receivedMessage).getColorTowers();
+                if(!getAvailableTowers().contains(chosenTower)){//in case the user chose a tower already taken by a player
+                                                                //it can happen even if in the client side we show only the
+                                                                //available towers, because is async for other players
+                        //future feature?: add live update for client when available towers change
+                    virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+                }else {
+                    int numPlayers = gameInstance.getPlayersNumber();
+                    setTowers(receivedMessage, chosenTower, numPlayers);
+                    //at the first player I ask also the gameMode
+                    if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
+                        virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
+                        //prepareGame();
+                        return;
+                    }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
+                        prepareGame();
+                    }
+                }
+                break;
+            case GAMEMODE_RES:
+                gameInstance.setGameMode(((GameModeRes)receivedMessage).getGameMode());
+                String nicknameMessage = receivedMessage.getNickname();
 
-        if (receivedMessage.getMessageType() == MessageType.CHOSEN_TOWER && phase != PhaseGame.START) {
-            ColorTower chosenTower = ((ChosenTowerMessage)receivedMessage).getColorTowers();
 
-            int numPlayers = gameInstance.getPlayersNumber();
-            setTowers(receivedMessage, chosenTower, numPlayers);
-
-            if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname()) ){
-                virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
-                return;
-            }
-            phase = PhaseGame.START_GAME;
-            return;
-
+                showBoard(nicknameMessage);
+                break;
         }
 
 
         switch (this.phase) {
-            case START:
-                String nickMessage = receivedMessage.getNickname();
-                handleLogin(nickMessage, virtualViewMap.get(nickMessage));
-
-                gameInstance.setPlayerNumber(((PlayerNumberReply)receivedMessage).getPlayerNumber());
-                virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
-
-                phase = PhaseGame.INIT_TOWER;
-                break;
-            case START_GAME:
-                StartGameState startState = new StartGameState();
-
-                if(gameInstance.getPlayersNumber()==gameInstance.getPlayersModel().size()){
-                    startState.setInitialGameConfiguration();
-                    gameStarted = true;
-                    new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
-                    for (String player : virtualViewMap.keySet()) {
-                        PlayerModel p = gameInstance.getPlayerByNickname(player);
-                        virtualViewMap.get(player).showTowerMessage(player, p.getColorTower(), p.getTowerNumber());
-                        virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
-
-                      /*virtualViewMap.get(player).showHallMessage(player, p.getStudentInHall());
-
-                        virtualViewMap.get(player).showEntranceMessage(player, p.getStudentInEntrance());*/
-
-
-                        virtualViewMap.get(player).showPlayerBoardMessage(player);
-
-                        virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
-                        virtualViewMap.get(player).updateIslands(player);
-                    }
-                    playerActive = gameInstance.getPlayersModel().get(0);
-                    gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
-
-
-                    for (String player : virtualViewMap.keySet()) {
-                        virtualViewMap.get(player).askPlayCards(player, gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel());
-                    }
-                    playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
-                    setPhaseGame(PhaseGame.PLAY_CARDS_ASSISTANT);
-                    break;
-                }
-                phase = PhaseGame.START;
-                break;
             case PLAY_CARDS_ASSISTANT:
 
                 boolForTestPlayedCard = true;
@@ -197,7 +184,7 @@ public class GameController implements Observer, Serializable {
                 new StudentToHallState(playerActive).moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
                 if(!virtualViewMap.isEmpty()) {
                     //virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
-                    virtualViewMap.get(playerActive.getNickname()).showPlayerBoardMessage(playerActive.getNickname());
+                    showBoard(playerActive.getNickname());
                 }
                 this.phase = PhaseGame.MOVE_MOTHER;
                 break;
@@ -239,8 +226,8 @@ public class GameController implements Observer, Serializable {
                     for (String p : virtualViewMap.keySet()) {
                         virtualViewMap.get(p).showIslandMessage(p,islandWithMother, indexOfMother);
                     }
-                    if(!virtualViewMap.isEmpty())
-                        virtualViewMap.get(playerWithInfluence.getNickname()).showTowerMessage(playerWithInfluence.getNickname(), playerWithInfluence.getColorTower(), playerWithInfluence.getTowerNumber());
+                    if(!virtualViewMap.isEmpty())//shows the updated board (towers changed) to the player who has influence on this island
+                        showBoard(playerWithInfluence.getNickname());
                 }
 
                 //messaggio di attrazione delle isole
@@ -282,9 +269,9 @@ public class GameController implements Observer, Serializable {
                 for(PlayerModel p: gameInstance.getPlayersModel()) {
                     String n = p.getNickname();
                     if(!virtualViewMap.isEmpty()) {
-                        virtualViewMap.get(n).updateIslands(n);
+                        virtualViewMap.get(n).showIslands(n, gameInstance.getIslandsModel());
                         if(!p.getProfs().isEmpty())
-                            virtualViewMap.get(n).showProfsMessage(n, p.getProfs());
+                            showBoard(n);
                     }
                 }
                 if(gameInstance.getIslandsModel().size()==3){
@@ -445,6 +432,40 @@ public class GameController implements Observer, Serializable {
             return false;
         }
         return true;
+    }
+
+    private void prepareGame(){
+        StartGameState startState = new StartGameState();
+
+        if(gameInstance.getPlayersNumber()==gameInstance.getPlayersModel().size()){
+            startState.setInitialGameConfiguration();
+            gameStarted = true;
+            new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
+            for (String player : virtualViewMap.keySet()) {
+                PlayerModel p = gameInstance.getPlayerByNickname(player);
+                virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
+
+                showBoard(player);
+
+                virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
+                virtualViewMap.get(player).showIslands(player, gameInstance.getIslandsModel());
+            }
+            playerActive = gameInstance.getPlayersModel().get(0);
+            gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
+
+
+            for (String player : virtualViewMap.keySet()) {
+                List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
+                List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
+                playableCards.removeAll(gameInstance.getCemetery());
+                if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
+                    virtualViewMap.get(player).askPlayCards(player, playableCards);
+                else                         //if the cemetery is equals to all cards he owns, he can play whatever card he want
+                    virtualViewMap.get(player).askPlayCards(player, playerDeck);
+            }
+            playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
+            setPhaseGame(PhaseGame.PLAY_CARDS_ASSISTANT);
+        }
     }
 
     private void fromBagToCloud(){

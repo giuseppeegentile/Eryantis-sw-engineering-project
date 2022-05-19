@@ -103,7 +103,13 @@ public class ClientController implements ViewObserver, Observer {
                         break;
                     case BOARD:
                         DisplayPlayerBoardMessage displayPlayerBoardMessage = (DisplayPlayerBoardMessage)message;
-                        queueTasks.execute(() -> view.showPlayerBoardMessage(displayPlayerBoardMessage.getNickname()));
+
+                        queueTasks.execute(() -> view.showPlayerBoardMessage(message.getNickname(),
+                                displayPlayerBoardMessage.getTowers(),
+                                displayPlayerBoardMessage.getHall(),
+                                displayPlayerBoardMessage.getEntrance(),
+                                displayPlayerBoardMessage.getProfs()
+                        ));
                         break;
                 }
 

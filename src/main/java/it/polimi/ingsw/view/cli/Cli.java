@@ -18,7 +18,6 @@ import java.io.PrintStream;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 //sout per fare printout
@@ -175,25 +174,7 @@ public class Cli extends ViewObservable implements View {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         out.println("How many students do you want to move to your hall?\n");
-        int numberStudents = 0;
-        numberStudents = Integer.parseInt(read());
-        str.append("Type the index of the students you want to move from the following list: \n");
-        int i = 0;
-        for(ColorPawns color : colorPawns){
-            i+=1;
-            str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
-        }
-        out.println(str);
-        int finalChosenIndex;
-        int chosenIndex = 0;
-        for(int j=0; j<numberStudents; j++)
-            while(chosenIndex > colorPawns.size() || chosenIndex <= 0 ){
-                chosenIndex = Integer.parseInt(read());
-                finalChosenIndex = chosenIndex-1;
-                colors.add(colorPawns.get(finalChosenIndex));
-                if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
-                    out.println("You've entered an invalid number, please select a student from the list shown\n");
-            }
+        askingMoveStudents(colorPawns, str, colors);
         notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
     }
 
@@ -202,6 +183,11 @@ public class Cli extends ViewObservable implements View {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         out.println("How many students do you want to move to the island?\n");
+        askingMoveStudents(colorPawns, str, colors);
+        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, GameModel.getInstance().getIslandsModel().indexOf(island)));
+    }
+
+    private void askingMoveStudents(List<ColorPawns> colorPawns, StringBuilder str, List<ColorPawns> colors) {
         int numberStudents = 0;
         numberStudents = Integer.parseInt(read());
         str.append("Type the index of the students you want to move from the following list: \n");
@@ -221,7 +207,6 @@ public class Cli extends ViewObservable implements View {
                 if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
                     out.println("You've entered an invalid number, please select a student from the list shown\n");
             }
-        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, GameModel.getInstance().getIslandsModel().indexOf(island)));
     }
 
     /*@Override
@@ -361,8 +346,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(String nickname) {
-        PlayerModel playerModel = GameModel.getInstance().getPlayerByNickname(nickname);
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
         StringBuilder strBoardBld = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         colors.add(ColorPawns.GREEN);
@@ -373,8 +357,8 @@ public class Cli extends ViewObservable implements View {
         strBoardBld.append("-----------------------------------\n");
         strBoardBld.append("  Entry          Hall         Profs\n");
         for(ColorPawns color : colors){
-            strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(playerModel.getStudentInEntrance(), color)).append(ColorCli.RESET).append("   | ");
-            int numberStudents = playerModel.getStudentInHall().get(color);
+            strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
+            int numberStudents = hall.get(color);
             for (int i=0; i<10; i++){
                 if (numberStudents>0){
                     strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
@@ -384,7 +368,7 @@ public class Cli extends ViewObservable implements View {
                 }
             }
             strBoardBld.append(ColorCli.RESET).append("| ");
-            if (playerModel.hasProf(color)){
+            if (profs.contains(color)){
                 strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
             } else {
                 strBoardBld.append("  |\n");
@@ -392,8 +376,8 @@ public class Cli extends ViewObservable implements View {
         }
         strBoardBld.append("-----------------------------------\n");
         strBoardBld.append("  Towers ");
-        for (int i=0; i<playerModel.getTowerNumber(); i++){
-            strBoardBld.append(ColorCli.getEquivalentColorCliTower(playerModel.getColorTower())).append("0 ");
+        for (int i=0; i<towers.size(); i++){
+            strBoardBld.append(ColorCli.getEquivalentColorCliTower(towers.get(0))).append("0 ");
         }
         strBoardBld.append(ColorCli.RESET).append("\n");
         out.println(strBoardBld);
@@ -506,9 +490,9 @@ public class Cli extends ViewObservable implements View {
             stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
 
         String message = "You've entered an invalid number, please select a card from the list shown\n";
-        int finalChosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder)-1;
+        int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder)-1;
 
-        notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, playerDeck.get(finalChosenIndex)));
+        notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, playerDeck.get(chosenIndex)));
     }
 
     @Override

@@ -296,7 +296,7 @@ class CliTest {
         studentsHall.put(ColorPawns.YELLOW, 3);
         studentsHall.put(ColorPawns.PINK, 1);
         player.setStudentHall(studentsHall);
-        cli.showPlayerBoardMessage(player.getNickname());
+        //cli.showPlayerBoardMessage(player.getNickname());
     }
 
     @Test
