@@ -597,8 +597,10 @@ public class GameController implements Observer, Serializable {
         List<CloudModel> cloudModels = new ArrayList<>(cloudsNumber);
         for(int i = 0; i < cloudsNumber; i++){
             cloudModels.add(new CloudModel(sizeStudentsClouds));
+
         }
         gameInstance.setCloudsModel(cloudModels);
+        moveStudentFromBagToClouds();
     }
 
     private void setInitialStudentEntrance(PlayerModel playerToSet){
@@ -652,6 +654,27 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.getPlayersNumber() != 2) gameInstance.getPlayersModel().get(2).setDeckAssistantCardModel(deckPlayer3); //se ho 3 o 4 giocatori
         if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deckPlayer4);
 
+    }
+    private void moveStudentFromBagToClouds(){
+        GameModel gameInstance = GameModel.getInstance();
+        int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
+        if(gameInstance.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
+            numStudentToMove = 4;
+
+        int bagSize = gameInstance.getBag().size();
+        int i = 0;
+        for (CloudModel c :gameInstance.getCloudsModel()) {
+
+            List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));
+
+            c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
+            //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+
+            i++;
+        }
+        List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(0, gameInstance.getBag().size() - gameInstance.getPlayersNumber()*numStudentToMove));
+        //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
+        gameInstance.setBag(temp);
     }
 }
 
