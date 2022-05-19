@@ -35,7 +35,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
 
     @Override
     public String toString() {
-        return "DisplayEntranceMessage{" +
+        return "DisplayPlayerBoardMessage{" +
                 "player=" + getNickname() +
                 ", hall=" + getHall() +
                 ", entrance=" + getEntrance() +

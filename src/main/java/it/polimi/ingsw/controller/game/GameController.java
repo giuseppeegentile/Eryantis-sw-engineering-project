@@ -77,7 +77,6 @@ public class GameController implements Observer, Serializable {
                 virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
                 break;
             case CHOSEN_TOWER:
-                System.out.println("here");
                 ColorTower chosenTower = ((ChosenTowerMessage)receivedMessage).getColorTowers();
                 if(!getAvailableTowers().contains(chosenTower)){//in case the user chose a tower already taken by a player
                                                                 //it can happen even if in the client side we show only the
@@ -93,10 +92,19 @@ public class GameController implements Observer, Serializable {
                         //prepareGame();
                         return;
                     }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
-
                         setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                         assignCardsToPlayers();
                         prepareGame();
+                        for(String nick: virtualViewMap.keySet()) {
+                            virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
+                            virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
+
+                            showBoard(nick);
+                            virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
+
+                        }
+                        playerActive = gameInstance.getPlayersModel().get(0);
+                        gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
                     }
                 }
                 break;
@@ -105,7 +113,6 @@ public class GameController implements Observer, Serializable {
                 String nicknameMessage = receivedMessage.getNickname();
                 setIslands();
                 setClouds();
-                showBoard(nicknameMessage);
                 break;
         }
 
