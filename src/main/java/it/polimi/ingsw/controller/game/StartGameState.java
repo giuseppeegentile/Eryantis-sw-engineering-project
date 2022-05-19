@@ -10,10 +10,6 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.InitialReqMessage;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.PlayerNicknameMessage;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -72,7 +68,7 @@ public class StartGameState extends GameController implements GameState {
     }
     //testato solo per 3 giocatori
     //ritorna true se andato a buon fine, false se ce stato errore
-    public boolean receiveAndSetTowerAndPlayer(Message receivedMessage){
+    /*public boolean receiveAndSetTowerAndPlayer(Message receivedMessage){
         String playerNick = receivedMessage.getNickname();
         int numPlayers = ((InitialReqMessage)receivedMessage).getNumberPlayers();
 
@@ -105,7 +101,7 @@ public class StartGameState extends GameController implements GameState {
 
         gameModel.setGameMode(((InitialReqMessage)receivedMessage).getGameMode());
         return true;
-    }
+    }*/
 
     public void setInitialGameConfiguration(){
         List<PlayerModel> players = this.gameModel.getPlayersModel();
@@ -180,19 +176,18 @@ public class StartGameState extends GameController implements GameState {
         this.gameModel.setCloudsModel(cloudModels);
     }
 
+    //Spostato nel gameController
     /**
      * Utility method, called in setInitialGameConfiguration.
      * Create randomly a bag of students of size 120. With all colours.
      */
     private void assignBag(){
-        int bagSize = 120;
         List<ColorPawns> bag;
         int equalNumber = 24;
-
         bag = fillListWithColors(equalNumber);
         this.gameModel.setBag(bag);
     }
-
+    //Spostato nel gameController
     //prende una generica lista di studenti e la riempie casualmente
     //usata per riempire la bag e le isole iniziali
     //size: dimensione da riempire (bag: 120, isole: 10)
@@ -225,7 +220,7 @@ public class StartGameState extends GameController implements GameState {
      * @return The list of the tower-player correspondence updated (if errors occurred).
      */
     //SUPERFLUO, DA TOGLIERE
-    private List<ColorTower> checkAndFixTower(List<ColorTower> colorTowers){
+    /*private List<ColorTower> checkAndFixTower(List<ColorTower> colorTowers){
         List<ColorTower> fixed = new ArrayList<>(colorTowers.size());
 
         if(GameModel.getInstance().getPlayersNumber() == 3 && colorTowers.size() == 3) {
@@ -256,15 +251,14 @@ public class StartGameState extends GameController implements GameState {
         }
         //se andava bene come era all'inizio restituisco quella iniziale non modificata
         return colorTowers;
-    }
+    }*/
 
     /**
      * Set the tower color and number to the student correspondence.
-     * @param colorTowers Tower-player correspondence List.
+     * @param colorTower Tower-player correspondence List.
      */
     //SUPERFLUO, DA TOGLIERE
-    private void assignTowerColorToStudent(List<ColorTower> colorTowers){
-        List<ColorTower> fixedColorTowers = checkAndFixTower(colorTowers); //controllo che non ci siano errori nella lista delle torri
+    private void assignTowerColorToStudent(List<ColorTower> colorTower){
         List<PlayerModel> players = this.gameModel.getPlayersModel();
         AtomicInteger i = new AtomicInteger();
         int numTower = 0;
@@ -279,16 +273,16 @@ public class StartGameState extends GameController implements GameState {
             PlayerInitialState playerState = new PlayerInitialState(p);
             if(finalNumTower == 0) {//4
                 if(i.get() == 0 || i.get() == 1)//membri del team con tutte e 8 le torri
-                    playerState.setTower(fixedColorTowers.get(i.get()), 8);
+                    playerState.setTower(colorTower.get(i.get()), 8);
                 else
-                    playerState.setTower(fixedColorTowers.get(i.get()), finalNumTower);
+                    playerState.setTower(colorTower.get(i.get()), finalNumTower);
             }else //caso 2-3 giocatori
-                playerState.setTower(fixedColorTowers.get(i.get()), finalNumTower);
+                playerState.setTower(colorTower.get(i.get()), finalNumTower);
             i.incrementAndGet();
         });
     }
 
-    
+    //Spostato nel gameController
     /**
      * Set islands, with mother nature and initial students configuration.
      */
@@ -319,7 +313,7 @@ public class StartGameState extends GameController implements GameState {
         this.gameModel.setIslands(islands);
     }
 
-
+    //Spostato in gameController
     /**
      * Generate random cards and put them in deck of GameModel.
      */

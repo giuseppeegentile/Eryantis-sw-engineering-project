@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller.game;
 
 import it.polimi.ingsw.controller.player.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
@@ -16,6 +17,9 @@ import it.polimi.ingsw.observer.Observer;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
@@ -66,6 +70,7 @@ public class GameController implements Observer, Serializable {
                 String nickMessage = receivedMessage.getNickname();
                 handleLogin(nickMessage, virtualViewMap.get(nickMessage));
 
+
                 break;
             case PLAYERNUMBER_REPLY:
                 gameInstance.setPlayerNumber(((PlayerNumberReply)receivedMessage).getPlayerNumber());
@@ -88,6 +93,9 @@ public class GameController implements Observer, Serializable {
                         //prepareGame();
                         return;
                     }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
+
+                        setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
+                        assignCardsToPlayers();
                         prepareGame();
                     }
                 }
@@ -95,8 +103,8 @@ public class GameController implements Observer, Serializable {
             case GAMEMODE_RES:
                 gameInstance.setGameMode(((GameModeRes)receivedMessage).getGameMode());
                 String nicknameMessage = receivedMessage.getNickname();
-
-
+                setIslands();
+                setClouds();
                 showBoard(nicknameMessage);
                 break;
         }
@@ -351,6 +359,8 @@ public class GameController implements Observer, Serializable {
         if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
             this.virtualViewMap.put(nickname, vv);
             gameInstance.addObserver(vv);
+            assignBag();
+            generateDeck();
             vv.showLoginResult(true, true, "SERVER_NICKNAME");
             gameInstance.addPlayer(new PlayerModel(nickname));
             vv.askPlayersNumber();
@@ -503,4 +513,127 @@ public class GameController implements Observer, Serializable {
         VirtualView virtualView = virtualViewMap.get(playerActive.getNickname());
         //...
     }
+    //-------------------Metodi di startGameState per inizializzare il gioco
+    /**
+     * Set islands, with mother nature and initial students configuration.
+     */
+    private void setIslands(){
+        int motherNatureIndex = (int)(Math.random() * 12); //numero casuale fra 0 e 11
+        List<IslandModel> islands = new ArrayList<>(12);
+
+        int sizeIslandWithStudents = 10;
+        int equalNumber = 2;
+        List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
+        colors = fillListWithColors(equalNumber);
+        //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
+
+        int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;
+
+        //counterForColors mi scorre gli elementi dell'array colors, viene incrementato solo quando assegno a un'isola
+        for (int i = 0, counterForColors = 0; i < 12; i++) {
+            if(i != motherNatureIndex && i != indexMirrorMotherNature) {
+                islands.add(new IslandModel(false, colors.get(counterForColors)));
+                counterForColors++;
+            }
+            else if(i == indexMirrorMotherNature){//posizione specchio di madre natura dove non ci sono studenti
+                islands.add(new IslandModel(false));
+            }
+            else if(i == motherNatureIndex) //posizione di madre natura
+                islands.add(new IslandModel(true));
+        }
+        gameInstance.setIslands(islands);
+    }
+
+    //prende una generica lista di studenti e la riempie casualmente
+    //usata per riempire la bag e le isole iniziali
+    //size: dimensione da riempire (bag: 120, isole: 10)
+    //equalNumber: quantità uguali per ogni colore (bag: 24(=120/5)  isole: 2)
+    /**
+     * Takes a generic list of ColorPawns and fills it randomly. Mainly used for the bag and initial islands.
+     * @param equalNumber Number of same colors that will be in the List.
+     * @return A list of ColorPawns filled with random values in the same quantity for every value.
+     */
+    private List<ColorPawns> fillListWithColors(int equalNumber){
+        List<ColorPawns> listGreen = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.GREEN));
+        List<ColorPawns> listRed = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.RED));
+        List<ColorPawns> listYellow = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.YELLOW));
+        List<ColorPawns> listPink = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.PINK));
+        List<ColorPawns> listBlue = new ArrayList<>(Collections.nCopies(equalNumber, ColorPawns.BLUE));
+
+        List<ColorPawns> listToRet = Stream.of(listGreen, listRed, listYellow, listPink, listBlue)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        Collections.shuffle(listToRet);
+        return listToRet;
+    }
+
+    private void assignBag(){
+        List<ColorPawns> bag;
+        int equalNumber = 24;
+        bag = fillListWithColors(equalNumber);
+        gameInstance.setBag(bag);
+    }
+
+    private void setClouds(){
+        int playerSize = gameInstance.getPlayersNumber();
+        int cloudsNumber, sizeStudentsClouds;
+        if(playerSize % 2 == 0) sizeStudentsClouds = 3;
+        else sizeStudentsClouds = 4;
+
+        cloudsNumber = playerSize;
+        List<CloudModel> cloudModels = new ArrayList<>(cloudsNumber);
+        for(int i = 0; i < cloudsNumber; i++){
+            cloudModels.add(new CloudModel(sizeStudentsClouds));
+        }
+        gameInstance.setCloudsModel(cloudModels);
+    }
+
+    private void setInitialStudentEntrance(PlayerModel playerToSet){
+        int playerNumber = gameInstance.getPlayersNumber();
+        int numStudentEntrance = 7; //gioco a 4 o 2
+        if (playerNumber == 3) numStudentEntrance = 9; //gioco a 3
+
+        int bagSize = gameInstance.getBag().size();
+
+        List<ColorPawns> studentInEntrance = gameInstance.getBag().subList(bagSize - numStudentEntrance,bagSize);
+        playerToSet.setStudentInEntrance(studentInEntrance);
+
+        gameInstance.setBag(gameInstance.getBag().subList(0, bagSize - numStudentEntrance));
+
+    }
+
+    void generateDeck(){
+        for(int k = 0; k < 4; k++) {
+            byte j = 0;
+            for (int i = 0; i < 10; i++) {
+                if (i % 2 == 0) j++;
+                gameInstance.addCardToDeck(new AssistantCardModel(i + 1, j));
+            }
+        }
+    }
+
+    private void assignCardsToPlayers(){
+        List<AssistantCardModel> deck = gameInstance.getDeck();
+        Collections.shuffle(deck);
+        AtomicInteger i = new AtomicInteger();
+
+        deck.forEach(c->{
+            if(i.get() < 10)
+                c.setOwner(gameInstance.getPlayersModel().get(0));
+            if(i.get() < 20 && i.get() >=10)
+                c.setOwner(gameInstance.getPlayersModel().get(1));
+            if(i.get() < 30 && i.get() >=20 && gameInstance.getPlayersNumber() != 2)
+                c.setOwner(gameInstance.getPlayersModel().get(2));
+            if(i.get() < 40 && i.get() >=30 && gameInstance.getPlayersNumber() == 4)
+                c.setOwner(gameInstance.getPlayersModel().get(3));
+            i.getAndIncrement();
+        });
+        gameInstance.getPlayersModel().get(0).setDeckAssistantCardModel(deck.subList(0, 10));
+        gameInstance.getPlayersModel().get(1).setDeckAssistantCardModel(deck.subList(10, 20));
+        if(gameInstance.getPlayersNumber() != 2) gameInstance.getPlayersModel().get(2).setDeckAssistantCardModel(deck.subList(20, 30)); //se ho 3 o 4 giocatori
+        if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deck.subList(30, 40));
+
+    }
 }
+
