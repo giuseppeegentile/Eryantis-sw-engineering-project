@@ -2,8 +2,11 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.player.PlayerModel;
 
-public class AssistantCardModel {
+import java.io.Serializable;
 
+public class AssistantCardModel implements Serializable {
+
+    private static final long serialVersionUID = -7197818777051204570L;
     private byte motherNatureMovement;
     private int priority;
     private boolean isPlayed;

@@ -4,12 +4,14 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
-
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
-public class PlayerModel {
+public class PlayerModel implements Serializable {
+
+    private static final long serialVersionUID = 530440588007500009L;
     private String nickname;
     private List<ColorPawns> profs = null;
     private int numProfs;
@@ -35,6 +37,7 @@ public class PlayerModel {
         this.colorTower = colorTower;
         this.coins = 0;
         this.numProfs = 0;
+        this.studentInEntrance = new ArrayList<>();
         this.movementMotherNatureCurrentActionPhase = 0;
         this.studentInHall =new HashMap<>( Map.of(
                 GREEN, 0,
@@ -49,6 +52,7 @@ public class PlayerModel {
         this.nickname = nickname;
         this.coins = 0;
         this.numProfs = 0;
+        this.studentInEntrance = new ArrayList<>();
         this.movementMotherNatureCurrentActionPhase = 0;
         this.studentInHall = new HashMap<>(Map.of(
                 GREEN, 0,
