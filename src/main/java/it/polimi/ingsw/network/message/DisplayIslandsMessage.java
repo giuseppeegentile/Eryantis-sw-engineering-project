@@ -24,6 +24,7 @@ public class DisplayIslandsMessage extends DisplayMessage{
     public String toString() {
         return "DisplayIslandsMessage{" +
                 "player=" + getNickname() +
+                ", objectDisplay=" + objectDisplay +
                 ", islandModels=" + islandModels +
                 '}';
     }

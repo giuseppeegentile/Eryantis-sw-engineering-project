@@ -80,6 +80,7 @@ public class ClientController implements ViewObserver, Observer {
                     case ISLANDS:
                         DisplayIslandsMessage displayIslands = (DisplayIslandsMessage)message;
                         queueTasks.execute(() -> view.showIslands(displayIslands.getNickname(), displayIslands.getIslandModels()));
+                        break;
                     /*case PROF:
                         DisplayProfMessage displayProfMessage = (DisplayProfMessage)message;
                         queueTasks.execute(() -> view.showProfsMessage(displayProfMessage.getNickname(), displayProfMessage.getProfs()));
@@ -115,7 +116,7 @@ public class ClientController implements ViewObserver, Observer {
                         ));
                         break;
                 }
-
+                
                 break;
             case GENERIC_MESSAGE:
                 queueTasks.execute(() -> view.showGenericMessage(message.toString()));

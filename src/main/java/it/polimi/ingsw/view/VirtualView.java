@@ -146,7 +146,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
-        clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(player,playerDeck));
+        clientHandler.sendMessage(new DisplayDeckMessage(player,playerDeck));
     }
 
     /*@Override

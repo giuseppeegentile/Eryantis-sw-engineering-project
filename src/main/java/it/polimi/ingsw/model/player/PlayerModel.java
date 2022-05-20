@@ -37,6 +37,7 @@ public class PlayerModel implements Serializable {
         this.colorTower = colorTower;
         this.coins = 0;
         this.numProfs = 0;
+        this.profs = new ArrayList<>();
         this.studentInEntrance = new ArrayList<>();
         this.movementMotherNatureCurrentActionPhase = 0;
         this.studentInHall =new HashMap<>( Map.of(
@@ -52,6 +53,7 @@ public class PlayerModel implements Serializable {
         this.nickname = nickname;
         this.coins = 0;
         this.numProfs = 0;
+        this.profs = new ArrayList<>();
         this.studentInEntrance = new ArrayList<>();
         this.movementMotherNatureCurrentActionPhase = 0;
         this.studentInHall = new HashMap<>(Map.of(
