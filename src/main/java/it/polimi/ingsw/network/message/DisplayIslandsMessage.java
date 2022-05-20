@@ -28,4 +28,8 @@ public class DisplayIslandsMessage extends DisplayMessage{
                 ", islandModels=" + islandModels +
                 '}';
     }
+
+    public ObjectDisplay getObjectDisplay() {
+        return objectDisplay;
+    }
 }

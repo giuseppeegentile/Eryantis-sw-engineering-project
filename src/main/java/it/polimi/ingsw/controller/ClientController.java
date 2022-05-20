@@ -116,7 +116,7 @@ public class ClientController implements ViewObserver, Observer {
                         ));
                         break;
                 }
-                
+
                 break;
             case GENERIC_MESSAGE:
                 queueTasks.execute(() -> view.showGenericMessage(message.toString()));
