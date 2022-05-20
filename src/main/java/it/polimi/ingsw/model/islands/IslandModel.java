@@ -4,12 +4,13 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
-public class IslandModel {
+public class IslandModel implements Serializable {
+    private static final long serialVersionUID = 2173471499023058671L;
     private final boolean motherNature;
     private List<ColorPawns> students;
     private ColorTower colorTower;

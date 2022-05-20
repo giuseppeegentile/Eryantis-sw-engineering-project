@@ -106,6 +106,7 @@ public class SocketClientHandler implements ClientHandler, Runnable {
                 }
             } catch (IOException e) {
                 Server.LOGGER.severe(e.getMessage());
+                System.out.println(e.getMessage());
             }
             connected = false;
             Thread.currentThread().interrupt();
