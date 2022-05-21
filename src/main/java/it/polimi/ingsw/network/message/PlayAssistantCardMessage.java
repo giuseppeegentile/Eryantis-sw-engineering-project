@@ -14,7 +14,7 @@ public class PlayAssistantCardMessage extends Message{
     AssistantCardModel assistantCardModel;
 
     public PlayAssistantCardMessage(String playerModel, AssistantCardModel assistantCardModel){
-        super(playerModel, MessageType.PLAYERS_REQUEST);
+        super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(playerModel);
         this.assistantCardModel = assistantCardModel;
     }

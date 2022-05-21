@@ -68,7 +68,6 @@ public class PlayCardAssistantState implements PlayerState {
     /**
      * Check if a player can play or not a certain card, if yes puts it in the cemetery and removes it from the player's cards
      * @param assistantCardModel The card played by the player
-     * @return True or false true or false depending on whether the player can play the card or not
      */
     public void playCard(AssistantCardModel assistantCardModel){
         this.gameModel.addToCemetery(assistantCardModel);

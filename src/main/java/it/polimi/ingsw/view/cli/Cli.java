@@ -179,34 +179,43 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, IslandModel island) {
+    public void askMoveEntranceToIsland(String player, List<ColorPawns> entrance) {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
+
+        out.println("Choose an island from the following list: \n");
+        int sizeIslands= GameModel.getInstance().getIslandsModel().size();
+        showIslands(player, GameModel.getInstance().getIslandsModel());
+        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str);
+
+
         out.println("How many students do you want to move to the island?\n");
-        askingMoveStudents(colorPawns, str, colors);
-        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, GameModel.getInstance().getIslandsModel().indexOf(island)));
+        askingMoveStudents(entrance, str, colors);
+        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
-    private void askingMoveStudents(List<ColorPawns> colorPawns, StringBuilder str, List<ColorPawns> colors) {
+    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors) {
         int numberStudents = 0;
         numberStudents = Integer.parseInt(read());
+        if(GameModel.getInstance().getPlayersNumber()==3 && (numberStudents < 0 || numberStudents > 4)){
+            numberStudents = askUntilValid(4, "Must be a number between 0 and 4: \n", str);
+        }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
+            numberStudents = askUntilValid(3, "Must be a number between 0 and 3: \n", str);
+        }
+        str = new StringBuilder();
         str.append("Type the index of the students you want to move from the following list: \n");
         int i = 0;
-        for(ColorPawns color : colorPawns){
+        for(ColorPawns color : entrance){
             i+=1;
             str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
         }
-        out.println(str);
         int finalChosenIndex;
-        int chosenIndex = 0;
-        for(int j=0; j<numberStudents; j++)
-            while(chosenIndex > colorPawns.size() || chosenIndex <= 0 ){
-                chosenIndex = Integer.parseInt(read());
-                finalChosenIndex = chosenIndex-1;
-                colors.add(colorPawns.get(finalChosenIndex));
-                if(chosenIndex > colorPawns.size() || chosenIndex <= 0)
-                    out.println("You've entered an invalid number, please select a student from the list shown\n");
-            }
+        int chosenIndex;
+        for(int j=0; j<numberStudents; j++) {
+            chosenIndex = askUntilValid(entrance.size(), "Please select a valid index of the student from the list shown\n", str);
+            finalChosenIndex = chosenIndex - 1;
+            colors.add(entrance.get(finalChosenIndex));
+        }
     }
 
     /*@Override

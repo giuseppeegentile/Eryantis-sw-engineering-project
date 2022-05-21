@@ -43,9 +43,9 @@ class StudentToIslandStateTest {
         init();
         List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.RED,ColorPawns.BLUE, ColorPawns.GREEN));
         testGame.getIslandsModel().get(0).addStudent(studentOnIsland);
-        StudentToIslandMessage msg = new StudentToIslandMessage(player1.getNickname(), List.of(ColorPawns.PINK), 0);
+        //StudentToIslandMessage msg = new StudentToIslandMessage(player1.getNickname(), List.of(ColorPawns.PINK), 0);
 
-        new StudentToIslandState(player1).moveStudentToIsland(msg.getStudents(), msg.getIslandModel());
+       // new StudentToIslandState(player1).moveStudentToIsland(msg.getStudents(), msg.getIslandModel());
 
 
         assertEquals(7, testGame.getIslandsModel().get(0).getStudents().size());

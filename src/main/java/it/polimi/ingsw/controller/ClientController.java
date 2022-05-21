@@ -171,7 +171,8 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateStudentToIsland(String nickname, List<ColorPawns> students, int indexIsland){
-        client.sendMessage(new StudentToIslandMessage(nickname, students, indexIsland));
+        client.sendMessage(new MovedStudentOnIslandMessage(nickname, students, indexIsland));
+        //client.sendMessage(new StudentToIslandMessage(nickname, students, indexIsland));
     }
 
     @Override

@@ -33,10 +33,13 @@ public class GameController implements Observer, Serializable {
     private boolean boolForTestPlayedCard = true;
     private List<PlayerModel> playersThatHavePlayedCard;
 
+    private int numberPlayersPlayedCard;
+
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.gameInstance =  GameModel.getInstance();
         this.phase = PhaseGame.START;
+        this.numberPlayersPlayedCard = 0;
     }
 
     public PhaseGame getPhaseGame(){return this.phase;}
@@ -105,17 +108,47 @@ public class GameController implements Observer, Serializable {
 
                         }
                         playerActive = gameInstance.getPlayersModel().get(0);
+                        //virtualViewMap.get(playerActive.getNickname()).askPlayCards(playerActive.getNickname(), playerActive.getDeckAssistantCardModel());
+
                         gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
                     }
                 }
                 break;
             case GAMEMODE_RES:
                 gameInstance.setGameMode(((GameModeRes)receivedMessage).getGameMode());
-                if(((GameModeRes)receivedMessage).getGameMode() == GameMode.PRINCIPIANTE){
+                /*if(((GameModeRes)receivedMessage).getGameMode() == GameMode.PRINCIPIANTE){
 
-                }
+                }*/
                 setIslands();
                 setClouds();
+                askPlayCardsController(playerActive.getNickname());
+                break;
+
+            case PLAYED_ASSISTANT_CARD:
+                playersThatHavePlayedCard.add(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
+                numberPlayersPlayedCard++;
+                for (String gamer : virtualViewMap.keySet()) {
+                    virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
+                }
+
+                AssistantCardModel playedCard = ((PlayAssistantCardMessage)receivedMessage).getCard();
+                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+                playCard(player, playedCard);
+
+                if(numberPlayersPlayedCard != gameInstance.getPlayersNumber())
+                    askPlayCardsController(gameInstance.getPhaseOrder().get(numberPlayersPlayedCard).getNickname());
+                else {//è l'ultimo giocatore ad aver giocato la carta
+                    playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
+                    setPlayersOrderForActionPhase();
+                    playerActive = gameInstance.getPlayersModel().get(0);
+
+                    if(playerActive.getDeckAssistantCardModel().size()==0)//se ha finito tutte le carte
+                        gameInstance.setTrueHavePlayerFinishedCards();
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance());
+                }
+                break;
+            case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+
                 break;
         }
 
@@ -162,12 +195,13 @@ public class GameController implements Observer, Serializable {
                     this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
                 }else {
                     this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
+
                     break;
                 }
 
 
                 break;
-
+/*
             case ADD_STUDENT_TO_ISLAND:
                 int maxCanMove = 3; //versione a 2 o 4
                 if(gameInstance.getPlayersNumber() == 3) maxCanMove = 4;
@@ -189,7 +223,7 @@ public class GameController implements Observer, Serializable {
                     else
                         this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
-                }
+                }*/
             case ADD_STUDENT_TO_HALL:
                 int canMove = 3; //versione a 2 o 4
                 if(gameInstance.getPlayersNumber() == 3) canMove = 4;
@@ -456,6 +490,16 @@ public class GameController implements Observer, Serializable {
         return true;
     }
 
+    private void askPlayCardsController(String player){
+        List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
+        List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
+        playableCards.removeAll(gameInstance.getCemetery());
+        if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
+            virtualViewMap.get(player).askPlayCards(player, playableCards);
+        else                         //if the cemetery is equals to all cards he owns, he can play whatever card he wants
+            virtualViewMap.get(player).askPlayCards(player, playerDeck);
+    }
+
     private void prepareGame(){
         StartGameState startState = new StartGameState();
 
@@ -476,15 +520,9 @@ public class GameController implements Observer, Serializable {
             gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
 
 
-            for (String player : virtualViewMap.keySet()) {
-                List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
-                List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
-                playableCards.removeAll(gameInstance.getCemetery());
-                if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
-                    virtualViewMap.get(player).askPlayCards(player, playableCards);
-                else                         //if the cemetery is equals to all cards he owns, he can play whatever card he want
-                    virtualViewMap.get(player).askPlayCards(player, playerDeck);
-            }
+            String player = gameInstance.getPhaseOrder().get(0).getNickname();
+            askPlayCardsController(player);
+
             playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
             setPhaseGame(PhaseGame.PLAY_CARDS_ASSISTANT);
         }
@@ -668,13 +706,53 @@ public class GameController implements Observer, Serializable {
             List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));
 
             c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
-            //this.gameModel.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+            //gameInstance.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
 
             i++;
         }
         List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(0, gameInstance.getBag().size() - gameInstance.getPlayersNumber()*numStudentToMove));
         //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
         gameInstance.setBag(temp);
+    }
+
+
+    /**
+     * Check if a player can play or not a certain card, if yes puts it in the cemetery and removes it from the player's cards
+     * @param assistantCardModel The card played by the player
+     */
+    private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
+        gameInstance.addToCemetery(assistantCardModel);
+
+        int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
+
+        player.removeCard(index);
+    }
+
+    //chiamato quando tutti i giocatori hanno usato la loro carta
+    //prende in input: la lista delle carte giocate, nell ordine di gioco. Restituisce una lista modificata con l ordine per la prossima fase azione
+    /**
+     * Called when all the players have played their card. Sets the order phase list.
+     */
+    private void setPlayersOrderForActionPhase(){
+
+        List<PlayerModel> playersActionPhase = new ArrayList<>(gameInstance.getCemetery().size());
+
+        List<AssistantCardModel> copyOfCemetery = new ArrayList<>(gameInstance.getCemetery());
+
+        //ordina le carte in base alla priorità, a pari priorità si basa sull indice
+        copyOfCemetery.sort(Comparator.comparing(AssistantCardModel::getPriority)
+                .thenComparingInt(copyOfCemetery::indexOf));
+
+        int i = 0;
+        gameInstance.clearPhaseOrder();
+        for(AssistantCardModel c: copyOfCemetery){
+            //aggiunge il giocatore alla lista nell ordine della priorità
+            playersActionPhase.add(c.getOwner());
+            //imposta il movimento di madre natura per la fase azione (lo ricavo dalla carta assistente)
+            playersActionPhase.get(i).setMovementMotherNatureCurrentActionPhase(c.getMotherNatureMovement());
+            i += 1;
+        }
+        gameInstance.setPhaseOrder(playersActionPhase);
     }
 }
 

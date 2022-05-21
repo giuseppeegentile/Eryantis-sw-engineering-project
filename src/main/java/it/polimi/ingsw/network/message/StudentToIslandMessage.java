@@ -10,34 +10,23 @@ public class StudentToIslandMessage extends Message{
     private static final long serialVersionUID = 1729951793698626264L;
 
     private final List<ColorPawns> students;
-    private final IslandModel islandModel;
-    private final int indexIsland;
 
-    public StudentToIslandMessage(String nickname, List<ColorPawns> students, int indexIsland) {
+    public StudentToIslandMessage(String nickname, List<ColorPawns> students) {
         super(nickname, MessageType.MOVE);
         this.students = students;
-        this.islandModel = GameModel.getInstance().getIslandsModel().get(indexIsland);
-        this.indexIsland = indexIsland;
     }
 
     public List<ColorPawns> getStudents() {
         return students;
     }
 
-    public IslandModel getIslandModel() {
-        return islandModel;
-    }
 
     @Override
     public String toString() {
         return "StudentToIslandMessage{" +
                 "player=" + getNickname() +
                 ", students=" + students +
-                ", islandModel=" + islandModel +
                 '}';
     }
 
-    public int getIndexIsland() {
-        return indexIsland;
-    }
 }

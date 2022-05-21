@@ -24,7 +24,7 @@ public interface View {
 
     void askMotherNatureMovements(String player, byte movement);
 
-    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, IslandModel islandModel);
+    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns);
 
     //void showHallMessage(String player, Map<ColorPawns, Integer> hall);
 
