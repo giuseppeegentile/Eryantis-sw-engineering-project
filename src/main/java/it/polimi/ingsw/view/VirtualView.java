@@ -4,14 +4,12 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,13 +62,14 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns) {
-        clientHandler.sendMessage(new StudentToHallMessage(player, colorPawns));
+    public void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns, int numberStudentsToMove) {
+        clientHandler.sendMessage(new StudentToHallMessage(player, colorPawns, numberStudentsToMove));
     }
 
     @Override
-    public void askMotherNatureMovements(String player, byte movement) {
-        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
+    public void askMotherNatureMovements(String player, byte maxMovement) {
+        clientHandler.sendMessage(new ReqMoveMotherNatureMessage(player, maxMovement));
+        //clientHandler.sendMessage(new MoveMotherNatureMessage(player, maxMovementAllowed));
     }
 
     @Override

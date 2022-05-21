@@ -66,6 +66,9 @@ public class ClientController implements ViewObserver, Observer {
                 OrderMessage orderMessage = (OrderMessage)message;
                 queueTasks.execute(() -> view.showOrderPhase(orderMessage.getNickname(), orderMessage.getOrder()));
                 break;
+            case MOVE_MOTHER_REQ:
+                queueTasks.execute(() -> view.askMotherNatureMovements(message.getNickname(), ((ReqMoveMotherNatureMessage)message).getMaxMovementAllowed()));
+                break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
@@ -177,7 +180,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateStudentToHall(String nickname, List<ColorPawns> students){
-        client.sendMessage(new StudentToHallMessage(nickname, students));
+        client.sendMessage(new MovedStudentToHallMessage(nickname, students));
     }
 
     @Override

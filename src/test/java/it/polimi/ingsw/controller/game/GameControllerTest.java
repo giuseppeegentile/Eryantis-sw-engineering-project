@@ -159,7 +159,7 @@ class GameControllerTest {
             ColorPawns color = firstPlayer.getStudentInEntrance().get(0);
             ColorPawns color2 = firstPlayer.getStudentInEntrance().get(1);
             assertEquals(firstPlayer, gameController.getPlayerActive());
-            StudentToHallMessage toHallMessage = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color, color2));
+            MovedStudentToHallMessage toHallMessage = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color, color2));
             gameController.onMessageReceived(toHallMessage);
             if(color != color2) {
                 assertEquals(1, firstPlayer.getStudentInHall().get(color));
@@ -209,7 +209,7 @@ class GameControllerTest {
             color2 = secondPlayer.getStudentInEntrance().get(0);
 
             assertEquals(secondPlayer, gameController.getPlayerActive());
-            StudentToHallMessage toHallMessage2 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color2));
+            MovedStudentToHallMessage toHallMessage2 = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color2));
             gameController.onMessageReceived(toHallMessage2);
             assertEquals(1, secondPlayer.getStudentInHall().get(color2));
 
@@ -248,7 +248,7 @@ class GameControllerTest {
             ColorPawns color3 = thirdPlayer.getStudentInEntrance().get(0);
             ColorPawns color4 = thirdPlayer.getStudentInEntrance().get(1);
             assertEquals(thirdPlayer, gameController.getPlayerActive());
-            StudentToHallMessage toHallMessage3 = new StudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color3,color4));
+            MovedStudentToHallMessage toHallMessage3 = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color3,color4));
             gameController.onMessageReceived(toHallMessage3);
             if(color3 != color4) {
                 assertEquals(1, thirdPlayer.getStudentInHall().get(color3));

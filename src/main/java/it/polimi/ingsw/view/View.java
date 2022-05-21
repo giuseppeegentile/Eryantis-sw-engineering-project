@@ -20,9 +20,9 @@ public interface View {
 
     void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds);
 
-    void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns);
+    void askMoveEntranceToHall(String player,List<ColorPawns> students, int numberStudentsToMove);
 
-    void askMotherNatureMovements(String player, byte movement);
+    void askMotherNatureMovements(String player, byte maxMovement);
 
     void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns);
 

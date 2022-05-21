@@ -148,7 +148,32 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+                List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage)receivedMessage).getStudents();
+                IslandModel islandCurrent = gameInstance.getIslandsModel().get(((MovedStudentOnIslandMessage)receivedMessage).getIslandIndex());
+                moveStudentToIsland(playerActive, movedStudents, islandCurrent);
 
+
+                for(String gamer: virtualViewMap.keySet()) {
+                    virtualViewMap.get(gamer).showIslands(playerActive.getNickname(), gameInstance.getIslandsModel());
+                }
+
+                if(gameInstance.getPlayersNumber()%2 == 0) {
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3-movedStudents.size());
+                }else{
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4-movedStudents.size()));
+                }
+
+                break;
+            case PLAYER_MOVED_STUDENTS_ON_HALL:
+                if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
+                    moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
+                }
+                showBoard(playerActive.getNickname());
+                virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive.getNickname(), playerActive.getMovementMotherNatureCurrentActionPhase());
+                break;
+
+            case PLAYER_MOVED_MOTHER:
+                
                 break;
         }
 
@@ -227,13 +252,13 @@ public class GameController implements Observer, Serializable {
             case ADD_STUDENT_TO_HALL:
                 int canMove = 3; //versione a 2 o 4
                 if(gameInstance.getPlayersNumber() == 3) canMove = 4;
-                if(((StudentToHallMessage)receivedMessage).getStudents().size() != (canMove-numberStudentsMovedToIsland) ){
+                if(((MovedStudentToHallMessage)receivedMessage).getStudents().size() != (canMove-numberStudentsMovedToIsland) ){
                     if(!virtualViewMap.isEmpty())
                         virtualViewMap.get(playerActive.getNickname()).showInvalidNumberOfStudentMoved(playerActive.getNickname());
                     this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
                     break;
                 }
-                new StudentToHallState(playerActive).moveStudentToHall(((StudentToHallMessage)receivedMessage).getStudents());
+                new StudentToHallState(playerActive).moveStudentToHall(((MovedStudentToHallMessage)receivedMessage).getStudents());
                 if(!virtualViewMap.isEmpty()) {
                     //virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
                     showBoard(playerActive.getNickname());
@@ -754,5 +779,69 @@ public class GameController implements Observer, Serializable {
         }
         gameInstance.setPhaseOrder(playersActionPhase);
     }
+
+    /**
+     * Moves the students from the entrance to the island
+     * @param students The students to place on the island
+     * @param islandModel The island where the students have to be placed
+     */
+    public void moveStudentToIsland(PlayerModel player, List<ColorPawns> students, IslandModel islandModel){
+        islandModel.addStudent(students);
+        player.removeStudentFromEntrance(students);
+    }
+
+    /**
+     * Moves a student from the entrance to the hall of the player
+     */
+    public void moveStudentToHall(PlayerModel player, List<ColorPawns> students) {
+        for(ColorPawns student: students) {
+            //conta le occorrenze per ogni studente di un colore
+            if (player.getStudentInHall().get(student) + 1 % 3 == 0 && GameModel.getInstance().getGameMode() == GameMode.ESPERTO) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+                //addCoins();
+            }
+
+            player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
+
+            if(canProfBeAssignedToPlayer(player, student))
+                assignProfToPlayer(player, student);
+
+            player.removeStudentFromEntrance(student);
+        }
+    }
+
+    /** da TESTARE
+     * Assign a prof to the player. If another player has that prof, it removes the prof from him
+     * @param prof prof to be assigned to player
+     */
+    private void assignProfToPlayer(PlayerModel player, ColorPawns prof){
+        List<PlayerModel> playersModels = GameModel.getInstance().getPlayersModel();
+        boolean alreadyHave = false;
+        for (PlayerModel p : playersModels) {
+            //se un altro giocatore ha già il prof
+            if(p.getProfs() != null) {
+                if (!Objects.equals(player.getNickname(), p.getNickname()) && p.getProfs().contains(prof)) {
+                    //lo tolgo a chi lo aveva prima
+                    p.removeProf(prof);
+                    player.addProf(prof);
+                    alreadyHave = true;
+                }
+            }
+        }
+        if(!alreadyHave)
+            player.addProf(prof);
+    }
+
+    private boolean canProfBeAssignedToPlayer(PlayerModel player, ColorPawns prof){
+        for(PlayerModel p: GameModel.getInstance().getPlayersModel()){
+            if(!player.getNickname().equals(p.getNickname())){
+                if(p.getStudentInHall().get(prof) > player.getStudentInHall().get(prof)) return false; //se uno studente ha più pedine del colore del prof, non può essere assegnato
+            }
+        }
+        return true;
+    }
+
 }
+
+
+
 

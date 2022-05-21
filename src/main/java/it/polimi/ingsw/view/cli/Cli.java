@@ -156,26 +156,26 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askMotherNatureMovements(String player, byte movement) {
-        out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int)movement + ".\n");
-        int movementChosen = 0;
-        while(movementChosen <=0 || movementChosen > movement){
-            movementChosen = Integer.parseInt(read());
-            if(movementChosen <=0 || movementChosen > movement){
-                out.println("You've entered an invalid number, it can be between 0 and " + (int)movement + "\n");
-            }
-        }
-        byte finalMovementChosen = (byte)movementChosen;
-        notifyObserver(obs -> obs.onUpdateMotherNature(player, finalMovementChosen));
+    public void askMotherNatureMovements(String player, byte maxMovement) {
+        out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ".\n");
+
+        String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n";
+        byte movementChosen = (byte)askUntilValid(maxMovement, invalid, new StringBuilder());
+        notifyObserver(obs -> obs.onUpdateMotherNature(player, movementChosen));
     }
 
     @Override
-    public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns) {
+    public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns, int numberStudentsHaveToMove) {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
-        out.println("How many students do you want to move to your hall?\n");
-        askingMoveStudents(colorPawns, str, colors);
-        notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
+        out.println("You have to move " + numberStudentsHaveToMove + " to your hall");
+        if(numberStudentsHaveToMove != 0) {
+            askingMoveStudents(colorPawns, str, colors, numberStudentsHaveToMove);
+            notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
+        }else{
+            out.println("You moved all the students available for this turn to the island..Skipping to the mother nature movement.\n");
+            notifyObserver(obs -> obs.onUpdateStudentToHall(player, null));
+        }
     }
 
     @Override
@@ -190,11 +190,6 @@ public class Cli extends ViewObservable implements View {
 
 
         out.println("How many students do you want to move to the island?\n");
-        askingMoveStudents(entrance, str, colors);
-        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
-    }
-
-    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors) {
         int numberStudents = 0;
         numberStudents = Integer.parseInt(read());
         if(GameModel.getInstance().getPlayersNumber()==3 && (numberStudents < 0 || numberStudents > 4)){
@@ -202,8 +197,14 @@ public class Cli extends ViewObservable implements View {
         }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
             numberStudents = askUntilValid(3, "Must be a number between 0 and 3: \n", str);
         }
+        askingMoveStudents(entrance, str, colors, numberStudents);
+        notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
+    }
+
+    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors, int numberStudents) {
+
         str = new StringBuilder();
-        str.append("Type the index of the students you want to move from the following list: \n");
+        str.append("Type the index of the students you want to move from your hall: \n");
         int i = 0;
         for(ColorPawns color : entrance){
             i+=1;

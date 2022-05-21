@@ -4,14 +4,20 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 
 import java.util.List;
 
-public class StudentToHallMessage extends  Message{
-    private static final long serialVersionUID = 5223442775735413916L;
+public class StudentToHallMessage extends Message {
+    private static final long serialVersionUID = -2680595509070093221L;
     private final List<ColorPawns> students;
+    private final int numberStudentsToMove;
 
+    public StudentToHallMessage(String player, List<ColorPawns> students, int numberStudentsToMove) {
+        super(player, MessageType.MOVE);
+        this.students =students;
+        this.numberStudentsToMove = numberStudentsToMove;
 
-    public StudentToHallMessage(String nickname, List<ColorPawns> students) {
-        super(nickname, MessageType.MOVE);
-        this.students = students;
+    }
+
+    public int getNumberStudentsToMove() {
+        return numberStudentsToMove;
     }
 
     public List<ColorPawns> getStudents() {
@@ -23,6 +29,7 @@ public class StudentToHallMessage extends  Message{
         return "StudentToHallMessage{" +
                 "player=" + getNickname() +
                 ", students=" + students +
+                ", numberStudentsToMove=" + numberStudentsToMove +
                 '}';
     }
 }
