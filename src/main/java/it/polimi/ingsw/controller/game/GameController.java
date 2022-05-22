@@ -408,6 +408,12 @@ public class GameController implements Observer, Serializable {
         return gameInstance.getPlayersModel().size() == gameInstance.getPlayersNumber();
     }
 
+    /**
+     * Set the number of towers for each player according to the number of players
+     * @param chosenTower tower's color chosen by the player
+     * @param numPlayers number of players
+     */
+
     private void setTowers(Message receivedMessage, ColorTower chosenTower, int numPlayers) {
         if(numPlayers != 4) {
             if (numPlayers == 3)
@@ -423,6 +429,10 @@ public class GameController implements Observer, Serializable {
                 gameInstance.getPlayerByNickname(receivedMessage.getNickname()).setTowers(chosenTower, 0);
         }
     }
+
+    /**
+     * Handles the login procedure for each player
+     */
 
     public void handleLogin(String nickname, VirtualView vv){
         if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
@@ -446,6 +456,10 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Assigns the tower's color to the players according to the number of players
+     */
+
     private List<ColorTower> getAvailableTowers(){
         List<ColorTower> alreadyChosen = new ArrayList<>();
         for (PlayerModel p : gameInstance.getPlayersModel()) {
@@ -468,6 +482,11 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Shows a disconnection message when a player disconnects
+     * @param text message shown
+     */
+
 
     public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
         for (VirtualView vv : virtualViewMap.values()) {
@@ -485,6 +504,9 @@ public class GameController implements Observer, Serializable {
         return this.virtualViewMap;
     }
 
+    /**
+     * Checks if the winning conditions are observed
+     */
 
     private void checkWin(){
         ColorTower winner = gameInstance.checkWin();
@@ -501,6 +523,13 @@ public class GameController implements Observer, Serializable {
         return playerActive;
     }
 
+    /**
+     * Checks if the nickname chosen by a player is valid
+     * @param nickname nickname chosen by a player
+     * @param view view assigned to a player
+     * @return returns false if the nickname is incorrect or true if it's valid
+     */
+
     public boolean checkLoginNickname(String nickname, View view) {
         if (nickname.isEmpty()) {
             view.showGenericMessage("Forbidden name.");
@@ -514,6 +543,10 @@ public class GameController implements Observer, Serializable {
         }
         return true;
     }
+
+    /**
+     * Checks if a player has cards that can be played
+     */
 
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
@@ -553,6 +586,10 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Adds a student from the bag to a cloud
+     */
+
     private void fromBagToCloud(){
         if(gameInstance.havePlayersFinishedCards() || gameInstance.getBag().size()==0) {
             this.checkWin();
@@ -566,6 +603,10 @@ public class GameController implements Observer, Serializable {
             phase = PhaseGame.PLAY_CARDS_ASSISTANT;
         }
     }
+
+    /**
+     * Removes the virtual view of a player when a player's nickname is removed
+     */
 
     public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
@@ -643,12 +684,20 @@ public class GameController implements Observer, Serializable {
         return listToRet;
     }
 
+    /**
+     * Creates the student's bag at every game's beginning
+     */
+
     private void assignBag(){
         List<ColorPawns> bag;
         int equalNumber = 24;
         bag = fillListWithColors(equalNumber);
         gameInstance.setBag(bag);
     }
+
+    /**
+     * Sets the clouds at every game's beginning according to playerSize
+     */
 
     private void setClouds(){
         int playerSize = gameInstance.getPlayersNumber();
@@ -666,6 +715,12 @@ public class GameController implements Observer, Serializable {
         moveStudentFromBagToClouds();
     }
 
+    /**
+     * Sets the initial number of students at the entrance of the gaming board according to the number of players,
+     * 9 if there are 3 players, 7 if there are 2 or 4 players
+     * @param playerToSet is the current player to receive the initial number of students
+     */
+
     private void setInitialStudentEntrance(PlayerModel playerToSet){
         int playerNumber = gameInstance.getPlayersNumber();
         int numStudentEntrance = 7; //gioco a 4 o 2
@@ -682,6 +737,10 @@ public class GameController implements Observer, Serializable {
 
     }
 
+    /**
+     * Method that generates and assigns a deck of cards for each player
+     */
+
     void generateDeck(){
         for(int k = 0; k < 4; k++) {
             byte j = 0;
@@ -691,6 +750,10 @@ public class GameController implements Observer, Serializable {
             }
         }
     }
+
+    /**
+     * Method that assigns 10 cards to each player after the deck has been created
+     */
 
     private void assignCardsToPlayers(){
         List<AssistantCardModel> deck = gameInstance.getDeck();
@@ -718,6 +781,10 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deckPlayer4);
 
     }
+
+    /**
+     * Moves a student from the bag to the clouds. The number of students moved is different according to the number of players.
+     */
     private void moveStudentFromBagToClouds(){
         GameModel gameInstance = GameModel.getInstance();
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
@@ -830,6 +897,11 @@ public class GameController implements Observer, Serializable {
         if(!alreadyHave)
             player.addProf(prof);
     }
+
+    /**
+     * Checks if a prof can be assigned to a player, if he has the highest number of students of the same color in the hall
+     * @param prof prof to be assigned
+     */
 
     private boolean canProfBeAssignedToPlayer(PlayerModel player, ColorPawns prof){
         for(PlayerModel p: GameModel.getInstance().getPlayersModel()){
