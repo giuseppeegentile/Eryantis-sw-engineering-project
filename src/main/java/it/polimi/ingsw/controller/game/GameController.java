@@ -121,6 +121,7 @@ public class GameController implements Observer, Serializable {
                 }*/
                 setIslands();
                 setClouds();
+                playerActive = gameInstance.getPlayersModel().get(0);
                 askPlayCardsController(playerActive.getNickname());
                 break;
 
