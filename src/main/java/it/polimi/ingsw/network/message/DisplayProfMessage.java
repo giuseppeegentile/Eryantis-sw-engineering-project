@@ -10,6 +10,12 @@ public class DisplayProfMessage extends DisplayMessage{
     private final List<ColorPawns> profs;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display a player's profs
+     * @param nickname current player
+     * @param profs current player's profs
+     */
+
     public DisplayProfMessage(String nickname, List<ColorPawns> profs) {
         super(nickname);
         this.profs = profs;

@@ -6,6 +6,11 @@ public class LobbyInfoMessage extends Message {
     private static final long serialVersionUID = -5041101920182206083L;
     private final List<String> nicknameList;
 
+    /**
+     * Message shown to display the players' list
+     * @param nicknameList list of players
+     */
+
     public LobbyInfoMessage(List<String> nicknameList) {
         super("Server_nickname", MessageType.LOBBY);
         this.nicknameList = nicknameList;

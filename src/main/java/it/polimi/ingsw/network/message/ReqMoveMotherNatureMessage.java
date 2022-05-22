@@ -5,6 +5,12 @@ public class ReqMoveMotherNatureMessage extends Message {
 
     private final byte maxMovementAllowed;
 
+    /**
+     * Message shown as a request of mother nature's movement
+     * @param player current player
+     * @param maxMovementAllowed maximum mother nature's movement allowed
+     */
+
     public ReqMoveMotherNatureMessage(String player, byte maxMovementAllowed) {
         super(player, MessageType.MOVE_MOTHER_REQ);
         this.maxMovementAllowed = maxMovementAllowed;

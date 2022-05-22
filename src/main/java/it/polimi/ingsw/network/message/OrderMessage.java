@@ -9,6 +9,11 @@ public class OrderMessage extends Message{
     private static final long serialVersionUID = 9051276094255654184L;
     private final List<PlayerModel> order;
 
+    /**
+     * Message shown to display the players' order
+     * @param nickname current player
+     * @param order players' order
+     */
 
     public OrderMessage(String nickname, List<PlayerModel> order) {
         super(nickname, MessageType.ORDER);

@@ -8,6 +8,13 @@ public class DisplayIslandMessage extends DisplayMessage{
     private final int islandIndex;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display an island
+     * @param nickname player's who's making the move
+     * @param islandModel model of the island
+     * @param islandIndex index of the island
+     */
+
     public DisplayIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
         super(nickname);
         this.islandModel = islandModel;

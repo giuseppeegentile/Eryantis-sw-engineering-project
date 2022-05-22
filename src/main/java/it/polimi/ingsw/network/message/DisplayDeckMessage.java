@@ -12,6 +12,12 @@ public class DisplayDeckMessage extends DisplayMessage{
     private final List<AssistantCardModel> deck;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display a player's deck
+     * @param nickname player whom deck is shown
+     * @param deck deck of the player
+     */
+
     public DisplayDeckMessage(String nickname, List<AssistantCardModel> deck) {
         super(nickname);
         this.objectDisplay = ObjectDisplay.DECK;

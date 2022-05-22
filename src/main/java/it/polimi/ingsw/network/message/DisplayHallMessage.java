@@ -10,6 +10,11 @@ public class DisplayHallMessage extends DisplayMessage{
     private final Map<ColorPawns, Integer> hall;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display a player's game board's hall
+     * @param nickname player whom hall is shown
+     * @param hall hall shown
+     */
     public DisplayHallMessage(String nickname, Map<ColorPawns, Integer> hall) {
         super(nickname);
         this.hall = hall;

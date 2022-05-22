@@ -7,6 +7,13 @@ public class InvalidMovementMessage extends Message{
     private final byte movementAllowed;
     private final byte movementInserted;
 
+    /**
+     * Message shown when a player makes an invalid movement
+     * @param nickname current player
+     * @param movementAllowed movement that is allowed
+     * @param movementInserted movement made by the player
+     */
+
     public InvalidMovementMessage(String nickname, byte movementAllowed, byte movementInserted) {
         super(nickname, MessageType.ERROR);
         this.movementInserted = movementInserted;

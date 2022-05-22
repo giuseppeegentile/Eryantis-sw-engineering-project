@@ -12,6 +12,12 @@ public class DisplayCemeteryMessage extends DisplayMessage{
     private final List<AssistantCardModel> cemetery;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     *Message shown to display  player's cemetery
+     * @param nickname the nickname of the player whom cemetery is displayed
+     * @param cemetery the cemetery of the player
+     */
+
     public DisplayCemeteryMessage(String nickname, List<AssistantCardModel> cemetery) {
         super(nickname);
         this.cemetery = cemetery;

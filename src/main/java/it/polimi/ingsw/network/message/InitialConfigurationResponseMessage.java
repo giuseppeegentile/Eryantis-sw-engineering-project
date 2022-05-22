@@ -13,6 +13,14 @@ public class InitialConfigurationResponseMessage extends Message {
     private final List<AssistantCardModel> playerDeck;
     private final ColorTower colorTower;
 
+    /**
+     * Message shown as a response to the initial configuration
+     * @param player current player
+     * @param playerDeck current player's deck
+     * @param colorTower current player's tower's color
+     * @param towerNumber current player's tower's number
+     * @param messageType type of the message
+     */
 
     public InitialConfigurationResponseMessage(PlayerModel player, List<AssistantCardModel> playerDeck, ColorTower colorTower, int towerNumber, MessageType messageType){
         super(player.getNickname(), messageType);

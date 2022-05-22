@@ -3,6 +3,11 @@ package it.polimi.ingsw.network.message;
 public class InvalidNicknameMessage extends Message{
     private static final long serialVersionUID = -5602744464447019370L;
 
+    /**
+     * Message shown when a player chooses an invalid nickname
+     * @param nickname nickname chosen
+     */
+
     public InvalidNicknameMessage(String nickname) {
         super(nickname, MessageType.ERROR);
     }

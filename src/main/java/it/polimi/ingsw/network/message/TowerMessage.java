@@ -9,6 +9,13 @@ public class TowerMessage extends Message {
     private final ColorTower colorTower;
     private final int towerNumber;
 
+    /**
+     * Message shown to display the player's towers
+     * @param nickname current player
+     * @param colorTower towers' color
+     * @param towerNumber number of towers
+     */
+
     public TowerMessage(String nickname, ColorTower colorTower, int towerNumber) {
         super(nickname, MessageType.DISPLAY);
 

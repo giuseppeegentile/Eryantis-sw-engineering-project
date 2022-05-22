@@ -6,6 +6,10 @@ public class GameModeRes extends Message{
 
     private static final long serialVersionUID = 1622383409250771615L;
 
+    /**
+     * Message shown as a response to the game mode's request
+     */
+
     private final GameMode gameMode;
 
     public GameModeRes(String nickname, GameMode gameMode) {

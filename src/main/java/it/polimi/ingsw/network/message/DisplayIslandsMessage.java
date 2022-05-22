@@ -10,6 +10,12 @@ public class DisplayIslandsMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
     private final List<IslandModel> islandModels;
 
+    /**
+     * Message shown to display all the islands
+     * @param nickname player who's making the move
+     * @param islandsModel model of the island
+     */
+
     public DisplayIslandsMessage(String nickname, List<IslandModel> islandsModel) {
         super(nickname);
         this.islandModels = islandsModel;

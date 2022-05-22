@@ -5,10 +5,21 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
 
     private final int cloudIndex;
 
+    /**
+     * Message shown when a student is added from a cloud to a player's board's entrance
+     * @param nickname nickname of the player who makes the move
+     * @param cloudIndex index of the cloud chosen
+     */
+
     public AddStudentFromCloudToEntranceMessage(String nickname, int cloudIndex) {
         super(nickname, MessageType.MOVE);
         this.cloudIndex = cloudIndex;
     }
+
+    /**
+     * Gets the index of the cloud from which a student is taken
+     * @return the cloud's index
+     */
 
     public int getCloudIndex(){
         return cloudIndex;

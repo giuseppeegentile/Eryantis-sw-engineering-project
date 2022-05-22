@@ -9,6 +9,13 @@ public class StudentToHallMessage extends Message {
     private final List<ColorPawns> students;
     private final int numberStudentsToMove;
 
+    /**
+     * Message shown when a player moves a student to the hall
+     * @param player current player
+     * @param students student moved
+     * @param numberStudentsToMove number of students to move
+     */
+
     public StudentToHallMessage(String player, List<ColorPawns> students, int numberStudentsToMove) {
         super(player, MessageType.MOVE);
         this.students =students;

@@ -10,6 +10,14 @@ public class PlayerNicknameMessage extends Message{
     private final ColorTower colorTower;
     private final GameMode gameMode;
 
+    /**
+     * Message shown when a player is asked to choose a nickname
+     * @param nickname nickname chosen
+     * @param numPlayers number of players
+     * @param colorTower color chosen
+     * @param gameMode game mode chosen
+     */
+
     public PlayerNicknameMessage(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode) {
         super(nickname, MessageType.PLAYERS_REQUEST);
         this.colorTower = colorTower;

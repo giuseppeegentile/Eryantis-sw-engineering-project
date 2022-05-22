@@ -17,7 +17,14 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final List<ColorPawns> entrance;
     private final List<ColorPawns> profs;
 
-
+    /**
+     * Message shown to display  player's game board
+     * @param nickname player's whom game board is shown
+     * @param towers towers of the current player
+     * @param hall hall of the current player
+     * @param entrance entrance of the current player
+     * @param profs profs of the current player
+     */
 
     public DisplayPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
         super(nickname);
@@ -44,17 +51,37 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
                 '}';
     }
 
+    /**
+     * Gets the profs of the current player
+     * @return the profs
+     */
+
     public List<ColorPawns> getProfs() {
         return profs;
     }
+
+    /**
+     * Gets the current player's entrance
+     * @return the entrance
+     */
 
     public List<ColorPawns> getEntrance() {
         return entrance;
     }
 
+    /**
+     * Gets the current player's hall
+     * @return the hall
+     */
+
     public Map<ColorPawns, Integer> getHall() {
         return hall;
     }
+
+    /**
+     * Gets the current player's towers
+     * @return the towers
+     */
 
     public List<ColorTower> getTowers() {
         return towers;

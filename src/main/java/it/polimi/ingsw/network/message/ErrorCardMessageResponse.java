@@ -6,6 +6,12 @@ public class ErrorCardMessageResponse extends Message{
     private static final long serialVersionUID = 5424490518304822502L;
     private final AssistantCardModel card;
 
+    /**
+     * Message shown as a response of an error when playing a card
+     * @param nickname current player
+     * @param card card played
+     */
+
     public ErrorCardMessageResponse(String nickname, AssistantCardModel card) {
         super(nickname, MessageType.ERROR);
         this.card = card;

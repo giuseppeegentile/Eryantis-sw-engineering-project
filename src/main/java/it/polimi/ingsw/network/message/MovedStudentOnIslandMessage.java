@@ -10,6 +10,13 @@ public class MovedStudentOnIslandMessage extends Message {
     private final List<ColorPawns> students;
     private final int indexIsland;
 
+    /**
+     * Message shown when a player successfully moves a student to an island
+     * @param nickname current player
+     * @param students students moved
+     * @param indexIsland index of the island in which students are moved
+     */
+
     public MovedStudentOnIslandMessage(String nickname, List<ColorPawns> students, int indexIsland) {
         super(nickname, MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND);
         this.students = students;

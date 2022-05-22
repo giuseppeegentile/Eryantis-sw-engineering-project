@@ -11,6 +11,12 @@ public class DisplayCloudsMessage extends DisplayMessage {
     private final List<CloudModel> clouds;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display the clouds
+     * @param nickname nickname of the player's who is playing in that moment
+     * @param clouds clouds shown
+     */
+
     public DisplayCloudsMessage(String nickname, List<CloudModel> clouds) {
         super(nickname);
         this.clouds = clouds;

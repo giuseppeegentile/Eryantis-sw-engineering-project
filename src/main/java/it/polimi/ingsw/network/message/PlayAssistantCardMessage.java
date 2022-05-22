@@ -13,6 +13,12 @@ public class PlayAssistantCardMessage extends Message{
 
     AssistantCardModel assistantCardModel;
 
+    /**
+     * Message shown when a player is asked to play an assistant card
+     * @param playerModel model of the player
+     * @param assistantCardModel model of the assistant card
+     */
+
     public PlayAssistantCardMessage(String playerModel, AssistantCardModel assistantCardModel){
         super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(playerModel);

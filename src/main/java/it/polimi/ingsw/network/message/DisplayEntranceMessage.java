@@ -9,6 +9,12 @@ public class DisplayEntranceMessage extends DisplayMessage{
     private final  List<ColorPawns> entrance;
     private final ObjectDisplay objectDisplay;
 
+    /**
+     * Message shown to display a player's board's entrance
+     * @param nickname player whom entrance is shown
+     * @param entrance entrance shown
+     */
+
     public DisplayEntranceMessage(String nickname, List<ColorPawns> entrance) {
         super(nickname);
         this.entrance = entrance;

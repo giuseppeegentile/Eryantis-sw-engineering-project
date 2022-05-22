@@ -5,6 +5,12 @@ public class TextMessage extends Message{
 
     private final String text;
 
+    /**
+     * Text message shown
+     * @param nickname current player
+     * @param text text in the message
+     */
+
     public TextMessage(String nickname, String text) {
         super(nickname, MessageType.TEXT);
         this.text = text;

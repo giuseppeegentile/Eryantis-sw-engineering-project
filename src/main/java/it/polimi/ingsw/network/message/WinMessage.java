@@ -12,6 +12,11 @@ public class WinMessage  extends Message {
 
     private final PlayerModel winner;
 
+    /**
+     * Message shown when a player wins the game
+     * @param winnerNickname nickname of the winner
+     */
+
     public WinMessage(PlayerModel winnerNickname) {
         super(GameModel.SERVER_NICKNAME, MessageType.WIN);
         this.winner = winnerNickname;
