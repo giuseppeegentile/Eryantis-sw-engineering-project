@@ -74,7 +74,7 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
                 break;
             case DISPLAY:
-                ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
+                ObjectDisplay objectDisplay =((DisplayMessage)message).getObjectDisplay();
                 switch (objectDisplay){
                     case ISLAND:
                         DisplayIslandMessage displayIsland = (DisplayIslandMessage)message;
@@ -93,8 +93,8 @@ public class ClientController implements ViewObserver, Observer {
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
                     case DECK:
-                        DisplayDeckMessage displayDeckMessage = (DisplayDeckMessage)message;
-                        queueTasks.execute(() -> view.showDeckMessage(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
+                        DisplayDeckAndAskCardMessage displayDeckMessage = (DisplayDeckAndAskCardMessage)message;
+                        queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
                         break;
                    /* case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;

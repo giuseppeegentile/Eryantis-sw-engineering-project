@@ -394,7 +394,7 @@ public class Cli extends ViewObservable implements View {
     }
 
 
-    @Override
+    /*@Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
         clearCli();
         int j = 0;
@@ -405,7 +405,7 @@ public class Cli extends ViewObservable implements View {
                 out.println(j + " -> Priority = " + playerDeck.get(i).getPriority() + ", Mothernature movements = " + playerDeck.get(i).getMotherNatureMovement() + "\n");
                 j++;
             }
-    }
+    }*/
 
     /*@Override
     public void updateTowerOnIsland(String nickname, IslandModel islandModel) {
@@ -492,13 +492,14 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck) {
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
         out.println(nickname + ", select your assistant card for this round.\nThis is your deck:\n");
-        for (AssistantCardModel card : playerDeck)
+        for (AssistantCardModel card : playerDeck) {
             stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
-
+            i++;
+        }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder)-1;
 

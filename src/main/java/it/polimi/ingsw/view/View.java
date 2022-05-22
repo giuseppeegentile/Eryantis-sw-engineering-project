@@ -60,7 +60,7 @@ public interface View {
 
     //void showTowerMessage(String player, ColorTower colorTower, int towerNumber);
 
-    void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
+    //void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
     //void updateTowerOnIsland(String nickname, IslandModel islandModel);
 
@@ -86,7 +86,7 @@ public interface View {
 
     void showErrorAndExit(String error);
 
-    void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
+    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck);
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
 

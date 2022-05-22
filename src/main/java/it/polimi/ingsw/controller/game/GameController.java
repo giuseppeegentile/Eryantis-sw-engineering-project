@@ -73,8 +73,6 @@ public class GameController implements Observer, Serializable {
             case LOGIN_REPLY:
                 String nickMessage = receivedMessage.getNickname();
                 handleLogin(nickMessage, virtualViewMap.get(nickMessage));
-
-
                 break;
             case PLAYERNUMBER_REPLY:
                 gameInstance.setPlayerNumber(((PlayerNumberReply)receivedMessage).getPlayerNumber());
@@ -97,20 +95,20 @@ public class GameController implements Observer, Serializable {
                     }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
                         gameStarted = true;
                         setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
-                        assignCardsToPlayers();
                         //prepareGame();
                         for(String nick: virtualViewMap.keySet()) {
                             virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
                             virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
 
                             showBoard(nick);
-                            virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
+                            //virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
 
                         }
                         playerActive = gameInstance.getPlayersModel().get(0);
                         //virtualViewMap.get(playerActive.getNickname()).askPlayCards(playerActive.getNickname(), playerActive.getDeckAssistantCardModel());
 
                         gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
+                        askPlayCardsController(playerActive.getNickname());
                     }
                 }
                 break;
@@ -122,7 +120,6 @@ public class GameController implements Observer, Serializable {
                 setIslands();
                 setClouds();
                 playerActive = gameInstance.getPlayersModel().get(0);
-                askPlayCardsController(playerActive.getNickname());
                 break;
 
             case PLAYED_ASSISTANT_CARD:
@@ -443,6 +440,8 @@ public class GameController implements Observer, Serializable {
             generateDeck();
             vv.showLoginResult(true, true, "SERVER_NICKNAME");
             gameInstance.addPlayer(new PlayerModel(nickname));
+            SetOwnerDeck(nickname);
+            assignCardsToPlayer(nickname);
             vv.askPlayersNumber();
             //vv.askTowerColor(nickname, getAvailableTowers());
         }else if(virtualViewMap.size() < gameInstance.getPlayersNumber()){
@@ -451,12 +450,35 @@ public class GameController implements Observer, Serializable {
                 this.virtualViewMap.put(nickname, vv);
                 gameInstance.addObserver(vv);
                 gameInstance.addPlayer(new PlayerModel(nickname));
+                SetOwnerDeck(nickname);
+                assignCardsToPlayer(nickname);
                 vv.showLoginResult(true, true, "SERVER_NICKNAME");
                 vv.askTowerColor(nickname, getAvailableTowers());
             }
         }
     }
 
+    /**
+     * Method that assigns 10 cards to each player after the deck has been created
+     */
+
+    private void assignCardsToPlayer(String nickname){
+        List<AssistantCardModel> deckPlayer = new ArrayList<>(gameInstance.getDeck().subList((gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10, (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10));
+        gameInstance.getPlayerByNickname(nickname).setDeckAssistantCardModel(deckPlayer);
+
+    }
+
+    private void SetOwnerDeck(String nickname){
+        List<AssistantCardModel> deck = gameInstance.getDeck();
+
+        AtomicInteger i = new AtomicInteger();
+
+        deck.forEach(c->{
+            if(i.get() < gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)) && i.get() >=10)
+                c.setOwner(gameInstance.getPlayersModel().get(1));
+            i.getAndIncrement();
+        });
+    }
     /**
      * Assigns the tower's color to the players according to the number of players
      */
@@ -554,9 +576,9 @@ public class GameController implements Observer, Serializable {
         List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
         playableCards.removeAll(gameInstance.getCemetery());
         if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
-            virtualViewMap.get(player).askPlayCards(player, playableCards);
+            virtualViewMap.get(player).askPlayCard(player, playableCards);
         else                         //if the cemetery is equals to all cards he owns, he can play whatever card he wants
-            virtualViewMap.get(player).askPlayCards(player, playerDeck);
+            virtualViewMap.get(player).askPlayCard(player, playerDeck);
     }
 
     private void prepareGame(){
@@ -568,7 +590,7 @@ public class GameController implements Observer, Serializable {
             new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
             for (String player : virtualViewMap.keySet()) {
                 PlayerModel p = gameInstance.getPlayerByNickname(player);
-                virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
+                //virtualViewMap.get(player).showDeckMessage(player, p.getDeckAssistantCardModel());
 
                 showBoard(player);
 
@@ -752,36 +774,6 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-    /**
-     * Method that assigns 10 cards to each player after the deck has been created
-     */
-
-    private void assignCardsToPlayers(){
-        List<AssistantCardModel> deck = gameInstance.getDeck();
-        Collections.shuffle(deck);
-        AtomicInteger i = new AtomicInteger();
-
-        deck.forEach(c->{
-            if(i.get() < 10)
-                c.setOwner(gameInstance.getPlayersModel().get(0));
-            if(i.get() < 20 && i.get() >=10)
-                c.setOwner(gameInstance.getPlayersModel().get(1));
-            if(i.get() < 30 && i.get() >=20 && gameInstance.getPlayersNumber() != 2)
-                c.setOwner(gameInstance.getPlayersModel().get(2));
-            if(i.get() < 40 && i.get() >=30 && gameInstance.getPlayersNumber() == 4)
-                c.setOwner(gameInstance.getPlayersModel().get(3));
-            i.getAndIncrement();
-        });
-        List<AssistantCardModel> deckPlayer1 = new ArrayList<>(deck.subList(0, 10));
-        List<AssistantCardModel> deckPlayer2 = new ArrayList<>(deck.subList(10, 20));
-        List<AssistantCardModel> deckPlayer3 = new ArrayList<>(deck.subList(20, 30));
-        List<AssistantCardModel> deckPlayer4 = new ArrayList<>(deck.subList(30, 40));
-        gameInstance.getPlayersModel().get(0).setDeckAssistantCardModel(deckPlayer1);
-        gameInstance.getPlayersModel().get(1).setDeckAssistantCardModel(deckPlayer2);
-        if(gameInstance.getPlayersNumber() != 2) gameInstance.getPlayersModel().get(2).setDeckAssistantCardModel(deckPlayer3); //se ho 3 o 4 giocatori
-        if(gameInstance.getPlayersNumber() == 4) gameInstance.getPlayersModel().get(3).setDeckAssistantCardModel(deckPlayer4);
-
-    }
 
     /**
      * Moves a student from the bag to the clouds. The number of students moved is different according to the number of players.

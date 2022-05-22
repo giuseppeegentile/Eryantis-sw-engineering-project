@@ -142,10 +142,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
     }*/
 
-    @Override
+    /*@Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
-        clientHandler.sendMessage(new DisplayDeckMessage(player,playerDeck));
-    }
+        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(player,playerDeck));
+    }*/
 
     /*@Override
     public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
@@ -242,9 +242,9 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck){
         clientHandler.sendMessage(new TextMessage(nickname, "Choose a card"));
-        clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(nickname, playerDeck));
+        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(nickname, playerDeck));
     }
 
     @Override

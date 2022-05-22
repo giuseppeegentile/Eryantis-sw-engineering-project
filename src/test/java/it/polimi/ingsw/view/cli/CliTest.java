@@ -56,7 +56,7 @@ class CliTest {
         cli.showOrderPhase("Davide", playerOrder);
     }
 
-    @Test
+    /*@Test
     void showCards(){
         Cli cli = new Cli();
         AssistantCardModel cardOne = new AssistantCardModel(5, (byte)4);
@@ -69,7 +69,7 @@ class CliTest {
         cards.add(cardThree);
         cards.add(cardFour);
         cli.showDeckMessage("John Snow", cards);
-    }
+    }*/
 
     @Test
     void printEriantys(){
