@@ -11,6 +11,11 @@ import it.polimi.ingsw.network.message.Message;
 public class AddStudentFromCloudToWaitingState implements PlayerState {
     public PlayerModel playerModel;
 
+    /**
+     * Sets the player's state into choosing a cloud from which take a student
+     * @param playerModel the model of the current player
+     */
+
     public AddStudentFromCloudToWaitingState(PlayerModel playerModel){
         this.playerModel = playerModel;
         this.playerModel.setState(StatePlayer.CHOOSE_CLOUD_PICK_STUDENT);
@@ -40,6 +45,11 @@ public class AddStudentFromCloudToWaitingState implements PlayerState {
         choosenCloudByPlayer.cleanStudent();
     }
 
+    /**
+     * Checks if there are students left to move from a cloud to the player's board's entrance
+     * @param receivedMessage Message received
+     * @return false if there aren't any students left to move
+     */
     //****************da testare
     public boolean moveStudentFromCloudToWaiting(Message receivedMessage){
         int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();

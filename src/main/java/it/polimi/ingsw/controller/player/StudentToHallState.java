@@ -67,6 +67,12 @@ public class StudentToHallState implements PlayerState {
             playerModel.addProf(prof);
     }
 
+    /**
+     * Checks if a prof can be assigned to a player
+     * @param prof color of the prof that is checked
+     * @return false if the prof can't be assigned to the player
+     */
+
     private boolean canProfBeAssignedToPlayer(ColorPawns prof){
         for(PlayerModel player: GameModel.getInstance().getPlayersModel()){
             if(!playerModel.getNickname().equals(player.getNickname())){

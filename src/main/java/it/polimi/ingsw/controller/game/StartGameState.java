@@ -103,6 +103,10 @@ public class StartGameState extends GameController implements GameState {
         return true;
     }*/
 
+    /**
+     * Sets the game configuration at the start of each game
+     */
+
     public void setInitialGameConfiguration(){
         List<PlayerModel> players = this.gameModel.getPlayersModel();
 

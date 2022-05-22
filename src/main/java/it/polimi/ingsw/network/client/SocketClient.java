@@ -28,6 +28,13 @@ public class SocketClient extends Client {
 
     private static final int SOCKET_TIMEOUT = 10000;
 
+    /**
+     * Handles the connection from the client side
+     * @param address server's address
+     * @param port server's port
+     * @throws IOException
+     */
+
     public SocketClient(String address, int port) throws IOException {
         this.socket = new Socket();
         this.socket.connect(new InetSocketAddress(address, port), SOCKET_TIMEOUT);
