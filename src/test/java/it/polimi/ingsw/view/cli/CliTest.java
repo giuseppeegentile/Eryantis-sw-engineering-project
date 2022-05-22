@@ -199,7 +199,7 @@ class CliTest {
         IslandModel islandModel = new IslandModel(Boolean.FALSE, students);
         islandModel.setTowerColor(ColorTower.BLACK);
         IslandModel islandModel2 = new IslandModel(Boolean.FALSE, students);
-        islandModel2.setTowerColor(ColorTower.BLACK);
+        islandModel2.setTowerColor(ColorTower.NULL);
         IslandModel islandModel3 = new IslandModel(Boolean.FALSE, students);
         islandModel3.setTowerColor(ColorTower.GREY);
         IslandModel islandModel4 = new IslandModel(Boolean.FALSE, students);
@@ -211,13 +211,13 @@ class CliTest {
         IslandModel islandModel7 = new IslandModel(Boolean.TRUE, students);
         islandModel7.setTowerColor(ColorTower.BLACK);
         IslandModel islandModel8 = new IslandModel(Boolean.FALSE, students);
-        islandModel8.setTowerColor(ColorTower.BLACK);
+        islandModel8.setTowerColor(ColorTower.NULL);
         IslandModel islandModel9 = new IslandModel(Boolean.FALSE, students);
         islandModel9.setTowerColor(ColorTower.GREY);
         IslandModel islandModel10 = new IslandModel(Boolean.FALSE, students);
         islandModel10.setTowerColor(ColorTower.WHITE);
         IslandModel islandModel11 = new IslandModel(Boolean.FALSE, students);
-        islandModel11.setTowerColor(ColorTower.WHITE);
+        islandModel11.setTowerColor(ColorTower.NULL);
         IslandModel islandModel12 = new IslandModel(Boolean.FALSE, students);
         islandModel12.setTowerColor(ColorTower.GREY);
         List<IslandModel> islands = new ArrayList<>();

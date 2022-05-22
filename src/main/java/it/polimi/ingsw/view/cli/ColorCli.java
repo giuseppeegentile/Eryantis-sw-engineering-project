@@ -16,8 +16,9 @@ public enum ColorCli {
     PINK("\033[0;35m"),
     WHITE("\033[0;97m"),
     BLACK("\033[0;30m"),
+    NULL("\033[0;95"),
     MAGENTA("\033[0;95"),   //motherNature
-    GRAY("\033[0;90m");
+    GREY("\033[0;90m");
     private final String code;
 
     ColorCli(String code) {
