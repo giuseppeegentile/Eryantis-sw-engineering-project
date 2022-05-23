@@ -132,7 +132,7 @@ public class GameController implements Observer, Serializable {
 
                 AssistantCardModel playedCard = ((PlayAssistantCardMessage)receivedMessage).getCard();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
-                System.out.println(playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner());
+                System.out.println(player.getNickname() + " " + playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner().getNickname());
                 playCard(player, playedCard);
 
                 if(numberPlayersPlayedCard != gameInstance.getPlayersNumber())
@@ -400,16 +400,34 @@ public class GameController implements Observer, Serializable {
     }
 
     private void SetOwnerDeck(String nickname){
+        //List<AssistantCardModel> deck = gameInstance.getDeck();
+
+        int i = 0;
+        PlayerModel playerCorrespond = gameInstance.getPlayerByNickname(nickname);
+        int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10-10;
+
+        for(int idx = startingIndex; idx < startingIndex+10; idx++){
+            gameInstance.getDeck().get(idx).setOwner(playerCorrespond);
+        }
+
+/*        for(AssistantCardModel c : deck){
+            if(i < (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10 && i > (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10-10)
+                c.setOwner(playerCorrespond);
+            i++;
+        }*/
+    }
+
+    /*private void SetOwnerDeck(String nickname){
         List<AssistantCardModel> deck = gameInstance.getDeck();
 
         AtomicInteger i = new AtomicInteger();
 
         deck.forEach(c->{
-            if(i.get() < (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10 && i.get() > (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10)
+            if(i.get() < (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)))*10 && i.get() > (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)))*10-10)
                 c.setOwner(gameInstance.getPlayersModel().get(gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))));
             i.getAndIncrement();
         });
-    }
+    }*/
     /**
      * Assigns the tower's color to the players according to the number of players
      */
@@ -737,8 +755,8 @@ public class GameController implements Observer, Serializable {
      * @param assistantCardModel The card played by the player
      */
     private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
-
         int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
+        System.out.println(index + " " + player.getDeckAssistantCardModel().get(3).getMotherNatureMovement() + " " + player.getDeckAssistantCardModel().get(3).getPriority() + " " +player.getDeckAssistantCardModel().get(3).getOwner().getNickname() + " " + assistantCardModel + " " + player.getDeckAssistantCardModel().get(3));
         gameInstance.addToCemetery(assistantCardModel);
         player.removeCard(index);
     }
