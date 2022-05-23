@@ -132,6 +132,7 @@ public class GameController implements Observer, Serializable {
 
                 AssistantCardModel playedCard = ((PlayAssistantCardMessage)receivedMessage).getCard();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+                System.out.println(playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner());
                 playCard(player, playedCard);
 
                 if(numberPlayersPlayedCard != gameInstance.getPlayersNumber())
@@ -404,8 +405,8 @@ public class GameController implements Observer, Serializable {
         AtomicInteger i = new AtomicInteger();
 
         deck.forEach(c->{
-            if(i.get() < gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)) && i.get() >=10)
-                c.setOwner(gameInstance.getPlayersModel().get(1));
+            if(i.get() < (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10 && i.get() > (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10)
+                c.setOwner(gameInstance.getPlayersModel().get(gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))));
             i.getAndIncrement();
         });
     }
