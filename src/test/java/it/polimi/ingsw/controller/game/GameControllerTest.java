@@ -66,7 +66,7 @@ class GameControllerTest {
         //giocano carte
         int priority1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getPriority();
         int movement1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
-        PlayAssistantCardMessage msgCardPl1 = new PlayAssistantCardMessage(player1, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5));
+        PlayAssistantCardMessage msgCardPl1 = new PlayAssistantCardMessage(player1, 5);
         gameController.onMessageReceived(msgCardPl1);
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getPriority());
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getMotherNatureMovement());
@@ -77,7 +77,7 @@ class GameControllerTest {
 
         int priority2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getPriority();
         int movement2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
-        PlayAssistantCardMessage msgCardPl2 = new PlayAssistantCardMessage(player2, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5));
+        PlayAssistantCardMessage msgCardPl2 = new PlayAssistantCardMessage(player2, 5);
         gameController.onMessageReceived(msgCardPl2);
         if (gameController.isBoolForTestPlayedCard()) {
             assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getPriority());
@@ -90,7 +90,7 @@ class GameControllerTest {
 
             int priority3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority();
             int movement3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getMotherNatureMovement();
-            PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3));
+            PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, 3);
             gameController.onMessageReceived(msgCardPl3);
             if (gameController.isBoolForTestPlayedCard()) {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority());
@@ -277,7 +277,7 @@ class GameControllerTest {
 
         priority1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getPriority();
         movement1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getMotherNatureMovement();
-        msgCardPl1 = new PlayAssistantCardMessage(player1, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2));
+        msgCardPl1 = new PlayAssistantCardMessage(player1, 2);
         gameController.onMessageReceived(msgCardPl1);
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getPriority());
         assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(2).getMotherNatureMovement());
@@ -288,7 +288,7 @@ class GameControllerTest {
 
         priority2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getPriority();
         movement2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getMotherNatureMovement();
-        msgCardPl2 = new PlayAssistantCardMessage(player2, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7));
+        msgCardPl2 = new PlayAssistantCardMessage(player2, 7);
         gameController.onMessageReceived(msgCardPl2);
         if (gameController.isBoolForTestPlayedCard()) {
             assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(7).getPriority());
@@ -301,7 +301,7 @@ class GameControllerTest {
 
             int priority3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getPriority();
             int movement3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getMotherNatureMovement();
-            PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8));
+            PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, 8);
             //qualcosa non va qui
             gameController.onMessageReceived(msgCardPl3);
             if (gameController.isBoolForTestPlayedCard()) {

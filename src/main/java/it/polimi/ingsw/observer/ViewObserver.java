@@ -41,7 +41,7 @@ public interface ViewObserver {
 
     void onUpdateWaiting(String nickname, int cloudIndex);
 
-    void onUpdateCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
+    void onUpdateCardPlayed(String playerModel, int indexAssistantCardModel);
 
     void onUpdatePlayersNumber(int playersNumber);
     /**

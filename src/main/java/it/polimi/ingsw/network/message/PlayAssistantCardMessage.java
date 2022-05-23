@@ -10,24 +10,23 @@ public class PlayAssistantCardMessage extends Message{
     
     private static final long serialVersionUID = -7852587909172148582L;
     private final String playerModel;
-    AssistantCardModel assistantCardModel;
+    private final int indexAssistantCardModel;
 
-    public PlayAssistantCardMessage(String playerModel, AssistantCardModel assistantCardModel){
+    public PlayAssistantCardMessage(String playerModel, int indexAssistantCardModel){
         super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
         this.playerModel = playerModel;
-        this.assistantCardModel = assistantCardModel;
+        this.indexAssistantCardModel = indexAssistantCardModel;
     }
 
-    public AssistantCardModel getCard(){
-        return assistantCardModel;
+    public int getIndexCard(){
+        return indexAssistantCardModel;
     }
 
     @Override
     public String toString() {
         return "PlayAssistantCardMessage{" +
                 "player=" + playerModel +
-                ", priority=" + assistantCardModel.getPriority() +
-                ", movement=" + assistantCardModel.getMotherNatureMovement() +
+                ", indexAssistantCardModel=" + indexAssistantCardModel +
                 '}';
     }
 }

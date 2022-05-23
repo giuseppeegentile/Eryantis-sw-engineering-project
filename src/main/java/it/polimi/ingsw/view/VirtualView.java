@@ -121,11 +121,6 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new DisplayCloudsMessage(nickname, clouds));
     }
 
-    @Override
-    public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){
-        clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
-    }
-
 
     /*@Override
     public void showCards(PlayerModel playerModel) {

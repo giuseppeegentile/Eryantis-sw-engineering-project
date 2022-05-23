@@ -18,7 +18,6 @@ import it.polimi.ingsw.observer.Observer;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -124,15 +123,19 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYED_ASSISTANT_CARD:
-                playersThatHavePlayedCard.add(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
+                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+                playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
                 for (String gamer : virtualViewMap.keySet()) {
                     virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
                 }
 
-                AssistantCardModel playedCard = ((PlayAssistantCardMessage)receivedMessage).getCard();
-                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+                int indexPlayedCard = ((PlayAssistantCardMessage)receivedMessage).getIndexCard();
+
+                AssistantCardModel playedCard = player.getDeckAssistantCardModel().get(indexPlayedCard);
+
                 System.out.println(player.getNickname() + " " + playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner().getNickname());
+
                 playCard(player, playedCard);
 
                 if(numberPlayersPlayedCard != gameInstance.getPlayersNumber())

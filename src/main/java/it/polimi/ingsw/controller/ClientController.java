@@ -197,8 +197,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCardPlayed(String nickname, AssistantCardModel assistantCardModel){
-        client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
+    public void onUpdateCardPlayed(String nickname, int indexAssistantCardModel){
+        client.sendMessage(new PlayAssistantCardMessage(nickname, indexAssistantCardModel));
     }
 
     @Override

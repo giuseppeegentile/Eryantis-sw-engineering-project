@@ -44,8 +44,6 @@ public interface View {
 
     void showMoveMotherNatureMessage(String player, byte movement);
 
-    void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
-
     //void updateIslands(String nickname);
 
     //void askGetFromBag();
