@@ -9,13 +9,12 @@ import it.polimi.ingsw.model.player.PlayerModel;
 public class PlayAssistantCardMessage extends Message{
     
     private static final long serialVersionUID = -7852587909172148582L;
-    PlayerModel playerModel;
-
+    private final String playerModel;
     AssistantCardModel assistantCardModel;
 
     public PlayAssistantCardMessage(String playerModel, AssistantCardModel assistantCardModel){
         super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(playerModel);
+        this.playerModel = playerModel;
         this.assistantCardModel = assistantCardModel;
     }
 
@@ -26,7 +25,7 @@ public class PlayAssistantCardMessage extends Message{
     @Override
     public String toString() {
         return "PlayAssistantCardMessage{" +
-                "player=" + playerModel.getNickname() +
+                "player=" + playerModel +
                 ", priority=" + assistantCardModel.getPriority() +
                 ", movement=" + assistantCardModel.getMotherNatureMovement() +
                 '}';
