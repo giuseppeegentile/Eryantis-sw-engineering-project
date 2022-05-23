@@ -118,12 +118,12 @@ class CliTest {
         cards.add(cardFour);
         cli.showCemeteryMessage("J Jonah Jameson Junior", cards);
     }
-    @Test
+    /*@Test
     void showAssistantCardPlayed(){
         Cli cli = new Cli();
         AssistantCardModel card = new AssistantCardModel(5, (byte)2);
         cli.showPlayAssistantCardMessage("Jovanotti", card);
-    }
+    }*/
 
     @Test
     void showStudentsOnClouds(){
