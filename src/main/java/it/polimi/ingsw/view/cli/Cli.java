@@ -144,15 +144,8 @@ public class Cli extends ViewObservable implements View {
             str.append("\n");
         }
         out.println(str);
-        int chosenIndex = 0;
-        while(chosenIndex >clouds.size() || chosenIndex <= 0 ){
-            out.println(str);
-            chosenIndex = Integer.parseInt(read());
-            if(chosenIndex > clouds.size() || chosenIndex <= 0)
-                out.println("You've entered an invalid number, please select a card from the list shown\n");
-        }
-        int finalChosenIndex = chosenIndex-1;
-        notifyObserver(obs -> obs.onChosenCloud(nickname, finalChosenIndex));
+        int chosenIndex = askUntilValid(clouds.size(), "You've entered an invalid number, please select a cloud from the list shown\n", str) - 1;
+        notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex));
     }
 
     @Override

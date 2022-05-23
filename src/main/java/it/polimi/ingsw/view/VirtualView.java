@@ -48,7 +48,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
-        clientHandler.sendMessage(new AskStudentFromCloudToEntranceMessage(nickname, clouds));
+        clientHandler.sendMessage(new ReqMoveCloudToEntranceMessage(nickname, clouds));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void showMoveMotherNatureMessage(String player, byte movement) {
-        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
+        clientHandler.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 
     @Override

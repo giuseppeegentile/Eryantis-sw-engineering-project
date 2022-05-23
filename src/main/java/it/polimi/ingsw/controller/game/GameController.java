@@ -40,6 +40,7 @@ public class GameController implements Observer, Serializable {
         this.gameInstance =  GameModel.getInstance();
         this.phase = PhaseGame.START;
         this.numberPlayersPlayedCard = 0;
+        this.playersThatHavePlayedCard = new ArrayList<>();
     }
 
     public PhaseGame getPhaseGame(){return this.phase;}
@@ -88,13 +89,13 @@ public class GameController implements Observer, Serializable {
                 }else {
                     int numPlayers = gameInstance.getPlayersNumber();
                     setTowers(receivedMessage, chosenTower, numPlayers);
+                    setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                     //at the first player I ask also the gameMode
                     if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
                         virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
                         //prepareGame();
                     }else if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber()-1).getNickname())){
                         gameStarted = true;
-                        setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                         //prepareGame();
                         for(String nick: virtualViewMap.keySet()) {
                             virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
@@ -137,6 +138,7 @@ public class GameController implements Observer, Serializable {
                     askPlayCardsController(gameInstance.getPhaseOrder().get(numberPlayersPlayedCard).getNickname());
                 else {//è l'ultimo giocatore ad aver giocato la carta
                     playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
+                    numberPlayersPlayedCard = 0;
                     setPlayersOrderForActionPhase();
                     playerActive = gameInstance.getPlayersModel().get(0);
 
@@ -171,101 +173,29 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVED_MOTHER:
+                byte movement = ((MovedMotherNatureMessage)receivedMessage).getMovement();
+                byte movementAllowed = playerActive.getMovementMotherNatureCurrentActionPhase();
+
+                if(movement > movementAllowed){
+                    virtualViewMap.get(playerActive.getNickname()).showInvalidMovementMessage(playerActive.getNickname(), movementAllowed, movement);
+                    virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive.getNickname(), movementAllowed);
+                    break;
+                }
+
+                moveMotherNature(movement);
+                computeIslandsChanges();
+                virtualViewMap.get(playerActive.getNickname()).askMoveCloudToEntrance(playerActive.getNickname(), getAvailableClouds());
+                break;
+            case MOVED_CLOUD_TO_ENTRANCE:
                 
                 break;
         }
 
 
         switch (this.phase) {
-            case PLAY_CARDS_ASSISTANT:
-
-                boolForTestPlayedCard = true;
-                PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
-                PlayCardAssistantState play = new PlayCardAssistantState(player, gameInstance);
-                AssistantCardModel card = ((PlayAssistantCardMessage)receivedMessage).getCard();
-
-                if(!play.canPlayCard(card)){
-                    boolForTestPlayedCard = false;
-                    //send message error can't play card
-                    for (String gamer : virtualViewMap.keySet()) {
-                        virtualViewMap.get(gamer).errorCard(gamer, card);
-                    }
-                    System.out.println(player.getNickname() + " can't play this card");
-                    this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
-                    break;
-                }
-
-                play.playCard(card);
-                playersThatHavePlayedCard.add(player);
-                for (String gamer : virtualViewMap.keySet()) {
-                    virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
-                }
-
-                if (playersThatHavePlayedCard.containsAll(gameInstance.getPlayersModel())) {//se è l'ultimo giocatore che ha giocato la carta
-                    playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
-                    new DecideOrderPlayerState().setPlayersOrderForActionPhase(gameInstance.getCemetery());
-
-                    for(String gamer : virtualViewMap.keySet()){
-                        virtualViewMap.get(gamer).showOrderPhase( gamer, gameInstance.getPhaseOrder());
-                    }
-
-                    playerActive = gameInstance.getPhaseOrder().get(0);
-
-                    if(gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().size()==0)
-                        gameInstance.setTrueHavePlayerFinishedCards();
-
-
-                    this.phase = PhaseGame.ADD_STUDENT_TO_ISLAND;
-                }else {
-                    this.phase = PhaseGame.PLAY_CARDS_ASSISTANT;
-
-                    break;
-                }
-
-
-                break;
-/*
-            case ADD_STUDENT_TO_ISLAND:
-                int maxCanMove = 3; //versione a 2 o 4
-                if(gameInstance.getPlayersNumber() == 3) maxCanMove = 4;
-
-                numberStudentsMovedToIsland = ((StudentToIslandMessage)receivedMessage).getStudents().size();
-                if(numberStudentsMovedToIsland == 0){//se decide di spostare tutti gli studenti nella hall
-                    this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
-                    break;
-                }else if(numberStudentsMovedToIsland <= maxCanMove) {//se decide di spostare degli studenti nella isola
-                    new StudentToIslandState(playerActive).moveStudentToIsland(((StudentToIslandMessage)receivedMessage).getStudents(), ((StudentToIslandMessage)receivedMessage).getIslandModel());
-                    int indexIsland = ((StudentToIslandMessage) receivedMessage).getIndexIsland();
-                    IslandModel islandModel = gameInstance.getIslandsModel().get(indexIsland);
-
-                    if(!virtualViewMap.isEmpty())
-                        virtualViewMap.get(playerActive.getNickname()).showIslandMessage(playerActive.getNickname(), islandModel, indexIsland);
-
-                    if(numberStudentsMovedToIsland == maxCanMove) //vado direttamente nello spostamento di madre natura
-                        this.phase = PhaseGame.MOVE_MOTHER;
-                    else
-                        this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
-                    break;
-                }*/
-            case ADD_STUDENT_TO_HALL:
-                int canMove = 3; //versione a 2 o 4
-                if(gameInstance.getPlayersNumber() == 3) canMove = 4;
-                if(((MovedStudentToHallMessage)receivedMessage).getStudents().size() != (canMove-numberStudentsMovedToIsland) ){
-                    if(!virtualViewMap.isEmpty())
-                        virtualViewMap.get(playerActive.getNickname()).showInvalidNumberOfStudentMoved(playerActive.getNickname());
-                    this.phase = PhaseGame.ADD_STUDENT_TO_HALL;
-                    break;
-                }
-                new StudentToHallState(playerActive).moveStudentToHall(((MovedStudentToHallMessage)receivedMessage).getStudents());
-                if(!virtualViewMap.isEmpty()) {
-                    //virtualViewMap.get(playerActive.getNickname()).showHallMessage(playerActive.getNickname(), playerActive.getStudentInHall());
-                    showBoard(playerActive.getNickname());
-                }
-                this.phase = PhaseGame.MOVE_MOTHER;
-                break;
             case MOVE_MOTHER:
                 int indexOfPlayerActive = gameInstance.getPlayersModel().indexOf(playerActive);
-                byte movement = ((MoveMotherNatureMessage)receivedMessage).getMovement();
+                byte movement = ((MovedMotherNatureMessage)receivedMessage).getMovement();
                 byte movementAllowed =gameInstance.getCemetery().get(indexOfPlayerActive).getMotherNatureMovement();
                 if(movement > playerActive.getMovementMotherNatureCurrentActionPhase()){
                     if(!virtualViewMap.isEmpty())
@@ -905,6 +835,117 @@ public class GameController implements Observer, Serializable {
         return true;
     }
 
+
+
+    //modifica la lista di Isole con madre natura aggiornata
+    /**
+     * Updates the list of island with the new position of mother nature
+     * @param movementMotherNature The number of movements mother nature is allowed to do
+     */
+    private void moveMotherNature(byte movementMotherNature){
+        int indexOldMotherNature = 0;
+        List<IslandModel> islandsModels = gameInstance.getIslandsModel();
+        while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
+
+        int newIndex = (indexOldMotherNature + movementMotherNature) % 11;
+        IslandModel oldIslandWithMotherNature = new IslandModel(false, islandsModels.get(indexOldMotherNature).getStudents());
+        IslandModel newIslandWithMotherNature = new IslandModel(true,  islandsModels.get(newIndex).getStudents());
+
+        islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
+        islandsModels.set(newIndex, newIslandWithMotherNature);
+        gameInstance.setIslands(islandsModels);
+    }
+
+    private void computeIslandsChanges(){
+        IslandModel islandWithMother = gameInstance.getIslandWithMother();
+        int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
+        PlayerModel playerWithInfluence = islandWithMother.getInfluence(gameInstance);
+        if(playerWithInfluence.getColorTower()!=ColorTower.NULL) {
+            if (!islandWithMother.hasTower()) {
+                islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
+            } else {
+                PlayerModel playerWithTower = gameInstance.getPlayerByColorTower(islandWithMother.getTowerColor());
+                islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
+                playerWithTower.addTowerToBoard();
+                showBoard(playerWithTower.getNickname()); //shows the updated board (towers changed) to the player who has lost influence on this island
+            }
+
+            playerWithInfluence.removeTowerFromBoard();
+            if(playerWithInfluence.getTowerNumber()==0) {
+                virtualViewMap.get(playerActive.getNickname()).showWinMessage(gameInstance.getPlayerByNickname(playerActive.getNickname()));
+                //virtualViewMap.get(playerActive.getNickname()).showEndGame(); //foreach player. the showEndGame should also exit the game
+                return;
+            }
+            for (String p : virtualViewMap.keySet()) {
+                virtualViewMap.get(p).showIslandMessage(p,islandWithMother, indexOfMother);
+            }
+
+            showBoard(playerWithInfluence.getNickname());//shows the updated board (towers changed) to the player who has influence on this island
+        }
+
+        //messaggio di attrazione delle isole
+        for (String pp : virtualViewMap.keySet()) {
+            PlayerModel p = gameInstance.getPlayerByNickname(pp);
+            virtualViewMap.get(pp).showMessageJoiningIsland(new TextMessage(p.getNickname(), "JOINING ISLANDS..."));
+        }
+
+        //controllo se posso unificare, se sì, le unisco
+        ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
+
+        if(direction == ColorDirectionAdjacentIsland.NONE){
+            this.phase = PhaseGame.PLAYER_MOVE_FROM_CLOUD_TO_ENTRANCE;
+            String activeNick = playerActive.getNickname();
+
+            virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
+            return;
+        }
+
+        if(direction == ColorDirectionAdjacentIsland.RIGHT){
+            if(indexOfMother == gameInstance.getIslandsModel().size()-1)
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+            else
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+        }
+        if(direction == ColorDirectionAdjacentIsland.LEFT){
+            if(indexOfMother == 0)
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size()-1), indexOfMother);
+            else
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
+        }
+        if(direction == ColorDirectionAdjacentIsland.BOTH){
+            if(indexOfMother == 0) {
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(1), 0);
+            }
+            if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+            }
+        }
+        for(PlayerModel p: gameInstance.getPlayersModel()) {
+            String n = p.getNickname();
+            virtualViewMap.get(n).showIslands(n, gameInstance.getIslandsModel());
+            virtualViewMap.get(n).showTextMessage(n, "Updated profs:\n");
+            if(!p.getProfs().isEmpty())
+                showBoard(n);
+
+        }
+        if(gameInstance.getIslandsModel().size()==3){
+            checkWin();
+        }
+        String activeNick = playerActive.getNickname();
+
+        virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
+    }
+
+    private List<CloudModel> getAvailableClouds(){
+        List<CloudModel> availableClouds = new ArrayList<>();
+
+        for(CloudModel c: gameInstance.getCloudsModel()){
+            if(c.getStudents().size() != 0) availableClouds.add(c);
+        }
+        return availableClouds;
+    }
 }
 
 

@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 
-public class MoveMotherNatureMessage extends Message{
+public class MovedMotherNatureMessage extends Message{
 
     private static final long serialVersionUID = 1566360713494368537L;
 
@@ -12,7 +12,7 @@ public class MoveMotherNatureMessage extends Message{
 
     private final byte movement;
 
-    public MoveMotherNatureMessage(String player, byte movement){
+    public MovedMotherNatureMessage(String player, byte movement){
         super(player, MessageType.PLAYER_MOVED_MOTHER);
         this.playerModel = GameModel.getInstance().getPlayerByNickname(player);
         this.movement = movement;

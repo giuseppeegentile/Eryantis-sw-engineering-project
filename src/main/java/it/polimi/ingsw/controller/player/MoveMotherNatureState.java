@@ -1,14 +1,9 @@
 package it.polimi.ingsw.controller.player;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.model.enums.StatePlayer;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.MoveMotherNatureMessage;
 
 import java.util.List;
 

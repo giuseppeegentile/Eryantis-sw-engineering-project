@@ -6,7 +6,7 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
     private final int cloudIndex;
 
     public AddStudentFromCloudToEntranceMessage(String nickname, int cloudIndex) {
-        super(nickname, MessageType.MOVE);
+        super(nickname, MessageType.MOVED_CLOUD_TO_ENTRANCE);
         this.cloudIndex = cloudIndex;
     }
 

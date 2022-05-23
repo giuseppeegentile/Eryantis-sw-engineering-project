@@ -69,6 +69,9 @@ public class ClientController implements ViewObserver, Observer {
             case MOVE_MOTHER_REQ:
                 queueTasks.execute(() -> view.askMotherNatureMovements(message.getNickname(), ((ReqMoveMotherNatureMessage)message).getMaxMovementAllowed()));
                 break;
+            case MOVE_CLOUD_TO_ENTRANCE:
+                queueTasks.execute(() -> view.askMoveCloudToEntrance(message.getNickname(), ((ReqMoveCloudToEntranceMessage)message).getClouds()));
+                break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
@@ -185,7 +188,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateMotherNature(String player, byte movement){
-        client.sendMessage(new MoveMotherNatureMessage(nickname, movement));
+        client.sendMessage(new MovedMotherNatureMessage(nickname, movement));
     }
 
     @Override
