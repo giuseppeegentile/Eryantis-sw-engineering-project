@@ -1,23 +1,21 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
 
 import java.util.List;
 
 public class StudentToIslandMessage extends Message{
     private static final long serialVersionUID = 1729951793698626264L;
 
-    private final List<ColorPawns> students;
+    private final List<ColorPawns> entrance;
 
-    public StudentToIslandMessage(String nickname, List<ColorPawns> students) {
-        super(nickname, MessageType.MOVE);
-        this.students = students;
+    public StudentToIslandMessage(String nickname, List<ColorPawns> entrance) {
+        super(nickname, MessageType.REQ_ENTRANCE_TO_HALL);
+        this.entrance = entrance;
     }
 
-    public List<ColorPawns> getStudents() {
-        return students;
+    public List<ColorPawns> getEntrance() {
+        return entrance;
     }
 
 
@@ -25,7 +23,7 @@ public class StudentToIslandMessage extends Message{
     public String toString() {
         return "StudentToIslandMessage{" +
                 "player=" + getNickname() +
-                ", students=" + students +
+                ", students=" + entrance +
                 '}';
     }
 

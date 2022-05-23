@@ -191,7 +191,37 @@ public class GameController implements Observer, Serializable {
                 virtualViewMap.get(playerActive.getNickname()).askMoveCloudToEntrance(playerActive.getNickname(), getAvailableClouds());
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
-                
+                int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();
+                CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
+                if(chosenCloud.getStudents().size() == 0) {
+                    //Mandare messaggio di scegliere una nuvola non scelta da un altro player
+                    virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
+                    virtualViewMap.get(playerActive.getNickname()).askMoveCloudToEntrance(playerActive.getNickname(), getAvailableClouds());
+                    break;
+                }
+                //se la nuvola scelta è valida continua
+                moveStudentFromCloudToWaiting(receivedMessage);
+
+                //picking new player for the next turn
+                int indexCurrent = gameInstance.getPhaseOrder().indexOf(playerActive);
+                String nickCurrent = playerActive.getNickname();
+
+                virtualViewMap.get(nickCurrent).showEndTurn(nickCurrent);
+
+                String nextPlayerNick = gameInstance.getPhaseOrder().get(indexCurrent + 1).getNickname();
+                int lastIndex = gameInstance.getPlayersNumber()-1;
+
+                if(indexCurrent == lastIndex) { //se è l'ultimo giocatore ad aver giocato fai giocare le carte a tutti i giocatori
+                    fromBagToCloud();
+                    gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
+                    PlayerModel nextPlayer = gameInstance.getPlayersModel().get(0);
+                    virtualViewMap.get(nextPlayer.getNickname()).askPlayCard(nextPlayer.getNickname(), nextPlayer.getDeckAssistantCardModel());
+                }else{
+                    playerActive = gameInstance.getPlayerByNickname(nextPlayerNick);
+
+                    virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
+                    virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance());
+                }
                 break;
         }
 
@@ -569,7 +599,7 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.havePlayersFinishedCards() || gameInstance.getBag().size()==0) {
             this.checkWin();
         }else{
-            new AddStudentFromBagToCloudState().moveStudentFromBagToClouds();
+            moveStudentFromBagToClouds();
             gameInstance.setPlayers(gameInstance.getPhaseOrder());
 
             for (String player : virtualViewMap.keySet()) {
@@ -966,6 +996,24 @@ public class GameController implements Observer, Serializable {
             if(c.getStudents().size() != 0) availableClouds.add(c);
         }
         return availableClouds;
+    }
+
+    /**
+     * Checks if there are students left to move from a cloud to the player's board's entrance
+     * @param receivedMessage Message received
+     * @return false if there aren't any students left to move
+     */
+    //****************da testare
+    private boolean moveStudentFromCloudToWaiting(Message receivedMessage){
+        PlayerModel playerModel = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
+        int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();
+        CloudModel chosenCloudByPlayer = GameModel.getInstance().getCloudsModel().get(cloudIndex);
+        if(chosenCloudByPlayer.getStudents().size()!=0) {
+            playerModel.setStudentInEntrance(chosenCloudByPlayer.getStudents());
+            chosenCloudByPlayer.cleanStudent();
+            return true;
+        }else
+            return false;
     }
 }
 

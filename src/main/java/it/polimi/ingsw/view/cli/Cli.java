@@ -183,7 +183,7 @@ public class Cli extends ViewObservable implements View {
 
 
         out.println("How many students do you want to move to the island?\n");
-        int numberStudents = 0;
+        int numberStudents;
         numberStudents = Integer.parseInt(read());
         if(GameModel.getInstance().getPlayersNumber()==3 && (numberStudents < 0 || numberStudents > 4)){
             numberStudents = askUntilValid(4, "Must be a number between 0 and 4: \n", str);
@@ -270,13 +270,6 @@ public class Cli extends ViewObservable implements View {
         out.println(player + " has moved Mothernature " + (int)movement + " positions.\n");
     }
 
-    @Override
-    public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
-        out.println(player  +
-                " has played an assistant card\n" +
-                "Priority = " + assistantCard.getPriority() + ", " +
-                "Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
-    }
 
     /*@Override
     public void updateIslands(String nickname) {
