@@ -22,7 +22,7 @@ public interface View {
 
     void askMoveEntranceToHall(String player,List<ColorPawns> students, int numberStudentsToMove);
 
-    void askMotherNatureMovements(String player, byte maxMovement);
+    void askMotherNatureMovements(PlayerModel player, byte maxMovement);
 
     void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands);
 
@@ -42,7 +42,7 @@ public interface View {
 
     void showCloudsMessage(String nickname, List<CloudModel> clouds);
 
-    void showMoveMotherNatureMessage(String player, byte movement);
+    void showMoveMotherNatureMessage(PlayerModel player, byte movement);
 
     //void updateIslands(String nickname);
 

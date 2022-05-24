@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.*;
@@ -73,7 +74,8 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showOrderPhase(orderMessage.getNickname(), orderMessage.getOrder()));
                 break;
             case MOVE_MOTHER_REQ:
-                queueTasks.execute(() -> view.askMotherNatureMovements(message.getNickname(), ((ReqMoveMotherNatureMessage)message).getMaxMovementAllowed()));
+                ReqMoveMotherNatureMessage motherMassage = ((ReqMoveMotherNatureMessage)message);
+                queueTasks.execute(() -> view.askMotherNatureMovements(motherMassage.getPlayer(), motherMassage.getMaxMovementAllowed()));
                 break;
             case MOVE_CLOUD_TO_ENTRANCE:
                 queueTasks.execute(() -> view.askMoveCloudToEntrance(message.getNickname(), ((ReqMoveCloudToEntranceMessage)message).getClouds()));
@@ -193,8 +195,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateMotherNature(String player, byte movement){
-        client.sendMessage(new MovedMotherNatureMessage(nickname, movement));
+    public void onUpdateMotherNature(PlayerModel player, byte movement){
+        client.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 
     @Override

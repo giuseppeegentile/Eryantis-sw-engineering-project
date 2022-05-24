@@ -174,7 +174,7 @@ public class GameController implements Observer, Serializable {
                     moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
                 }
                 showBoard(playerActive.getNickname());
-                virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive.getNickname(), playerActive.getMovementMotherNatureCurrentActionPhase());
+                virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
                 break;
 
             case PLAYER_MOVED_MOTHER:
@@ -183,7 +183,7 @@ public class GameController implements Observer, Serializable {
 
                 if(movement > movementAllowed){
                     virtualViewMap.get(playerActive.getNickname()).showInvalidMovementMessage(playerActive.getNickname(), movementAllowed, movement);
-                    virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive.getNickname(), movementAllowed);
+                    virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, movementAllowed);
                     break;
                 }
 
@@ -240,7 +240,7 @@ public class GameController implements Observer, Serializable {
                 }
                 for(PlayerModel p: gameInstance.getPlayersModel()) {
                     if(!virtualViewMap.isEmpty()) {
-                        virtualViewMap.get(p.getNickname()).showMoveMotherNatureMessage(p.getNickname(), movement);
+                        virtualViewMap.get(p.getNickname()).showMoveMotherNatureMessage(p, movement);
                     }
                 }
 

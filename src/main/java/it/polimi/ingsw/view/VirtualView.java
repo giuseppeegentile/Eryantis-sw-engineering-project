@@ -67,7 +67,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askMotherNatureMovements(String player, byte maxMovement) {
+    public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         clientHandler.sendMessage(new ReqMoveMotherNatureMessage(player, maxMovement));
         //clientHandler.sendMessage(new MoveMotherNatureMessage(player, maxMovementAllowed));
     }
@@ -92,7 +92,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showMoveMotherNatureMessage(String player, byte movement) {
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
         clientHandler.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 

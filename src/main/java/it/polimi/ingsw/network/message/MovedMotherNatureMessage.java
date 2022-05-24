@@ -12,9 +12,9 @@ public class MovedMotherNatureMessage extends Message{
 
     private final byte movement;
 
-    public MovedMotherNatureMessage(String player, byte movement){
-        super(player, MessageType.PLAYER_MOVED_MOTHER);
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(player);
+    public MovedMotherNatureMessage(PlayerModel player, byte movement){
+        super(player.getNickname(), MessageType.PLAYER_MOVED_MOTHER);
+        this.playerModel = player;
         this.movement = movement;
     }
 

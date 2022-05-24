@@ -149,7 +149,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askMotherNatureMovements(String player, byte maxMovement) {
+    public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ".\n");
 
         String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n";
@@ -266,8 +266,8 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showMoveMotherNatureMessage(String player, byte movement) {
-        out.println(player + " has moved Mothernature " + (int)movement + " positions.\n");
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
+        out.println(player.getNickname() + " has moved Mothernature " + (int)movement + " positions.\n");
     }
 
 

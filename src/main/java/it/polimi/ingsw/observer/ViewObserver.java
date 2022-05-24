@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public interface ViewObserver {
 
     void onUpdateStudentToHall(String nickname, List<ColorPawns> students);
 
-    void onUpdateMotherNature(String player, byte movement);
+    void onUpdateMotherNature(PlayerModel player, byte movement);
 
     void onUpdateWaiting(String nickname, int cloudIndex);
 
