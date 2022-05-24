@@ -135,7 +135,7 @@ public class Cli extends ViewObservable implements View {
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
         out.println(nickname + ", from which cloud do you want to take the students?\nPlease select the index of the cloud:\n");
         StringBuilder str = new StringBuilder();
-        int i = 0;
+        int i = 1;
         for(CloudModel cloud : clouds){
             str.append(i + " -> ");
             for(ColorPawns color : cloud.getStudents()){
@@ -150,7 +150,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
-        out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ".\n");
+        out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ").\n");
 
         String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n";
         byte movementChosen = (byte)askUntilValid(maxMovement, invalid, new StringBuilder());
@@ -225,9 +225,9 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
-        out.println("This is the cemetery of the current round: \n");
+        out.println("This is the cemetery of the current round: ");
         for(AssistantCardModel assistantCard : cemetery){
-            out.println(assistantCard.getOwner().getNickname() + " -> Priority = " + assistantCard.getPriority() + ", Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
+            out.println(assistantCard.getOwner().getNickname() + " -> Priority = " + assistantCard.getPriority() + ", Mothernature movements = " + assistantCard.getMotherNatureMovement());
         }
     }
 

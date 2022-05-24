@@ -224,6 +224,7 @@ public class GameController implements Observer, Serializable {
                     virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance(), gameInstance.getIslandsModel());
                 }
                 break;
+
         }
 
 
