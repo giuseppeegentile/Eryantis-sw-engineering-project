@@ -172,13 +172,13 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player, List<ColorPawns> entrance) {
+    public void askMoveEntranceToIsland(String player, List<ColorPawns> entrance, List<IslandModel> islands) {
         StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
 
         out.println("Choose an island from the following list: \n");
-        int sizeIslands= GameModel.getInstance().getIslandsModel().size();
-        showIslands(player, GameModel.getInstance().getIslandsModel());
+        int sizeIslands= islands.size();
+        showIslands(player, islands);
         int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str);
 
 

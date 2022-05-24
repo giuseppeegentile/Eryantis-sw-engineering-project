@@ -126,9 +126,7 @@ public class GameController implements Observer, Serializable {
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
-                for (String gamer : virtualViewMap.keySet()) {
-                    virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
-                }
+
 
                 int indexPlayedCard = ((PlayAssistantCardMessage)receivedMessage).getIndexCard();
 
@@ -137,6 +135,9 @@ public class GameController implements Observer, Serializable {
                 System.out.println(player.getNickname() + " " + playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner().getNickname());
 
                 playCard(player, playedCard);
+                for (String gamer : virtualViewMap.keySet()) {
+                    virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
+                }
 
                 if(numberPlayersPlayedCard != gameInstance.getPlayersNumber())
                     askPlayCardsController(gameInstance.getPhaseOrder().get(numberPlayersPlayedCard).getNickname());
@@ -148,7 +149,7 @@ public class GameController implements Observer, Serializable {
 
                     if(playerActive.getDeckAssistantCardModel().size()==0)//se ha finito tutte le carte
                         gameInstance.setTrueHavePlayerFinishedCards();
-                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance());
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
@@ -220,7 +221,7 @@ public class GameController implements Observer, Serializable {
                     playerActive = gameInstance.getPlayerByNickname(nextPlayerNick);
 
                     virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
-                    virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance());
+                    virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance(), gameInstance.getIslandsModel());
                 }
                 break;
         }

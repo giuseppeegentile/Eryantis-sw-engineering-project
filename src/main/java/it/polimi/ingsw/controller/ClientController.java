@@ -43,7 +43,7 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
             case REQ_ENTRANCE_TO_HALL:
-                queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance()));
+                queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance(), ((StudentToIslandMessage)message).getIslands()));
                 break;
             case INIT:
                 queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));

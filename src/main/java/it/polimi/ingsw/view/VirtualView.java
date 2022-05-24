@@ -73,8 +73,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns) {
-        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns));
+    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands) {
+        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns, islands));
     }
 
     /*@Override
