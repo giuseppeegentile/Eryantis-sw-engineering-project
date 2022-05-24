@@ -127,6 +127,10 @@ public class Cli extends ViewObservable implements View {
         System.exit(0);
     }
 
+    @Override
+    public void showSkippingMotherMovement(String activeNick) {
+        out.println(activeNick + ", influence is not being calculated because there is a prohibition card activated on this island");
+    }
 
     @Override
     public void showMessageJoiningIsland(Message message) {

@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.game.GameController;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 //8
-public class AddInfluenceEffect extends Effect{
+public class AddInfluenceEffect implements Effect{
     private int costForEffect = 2;
     GameController gameController;
 
@@ -13,7 +13,7 @@ public class AddInfluenceEffect extends Effect{
     }
 
     @Override
-    void enable(PlayerModel playerModel) {
+    public void enable(PlayerModel playerModel) {
         gameController.setPlayerWithEffectAdditionalInfluence(playerModel);
         costForEffect++;
     }

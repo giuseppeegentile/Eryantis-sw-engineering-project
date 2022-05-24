@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.CharacterEffects;
 import it.polimi.ingsw.controller.game.GameController;
 import it.polimi.ingsw.model.player.PlayerModel;
 //6
-public class IgnoreTowerEffect extends Effect{
+public class IgnoreTowerEffect implements Effect{
     private int costForEffect = 3;
     private GameController controller;
 
@@ -11,7 +11,7 @@ public class IgnoreTowerEffect extends Effect{
         this.controller = controller;
     }
     @Override
-    void enable(PlayerModel playerModel) {
+    public void enable(PlayerModel playerModel) {
         controller.setConsiderTower(false);
 
         costForEffect++;

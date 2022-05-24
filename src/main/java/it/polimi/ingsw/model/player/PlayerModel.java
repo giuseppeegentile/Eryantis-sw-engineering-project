@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
@@ -23,6 +24,7 @@ public class PlayerModel implements Serializable {
     private StatePlayer state;
     private byte movementMotherNatureCurrentActionPhase;
     private int coins;
+    private List<CharacterCardModel> characterDeck = new ArrayList<>();
 
 
     /**
@@ -357,5 +359,13 @@ Iterator<ColorPawns> iteratorStudentsToRemove = studentsToRemove.iterator();
     @Override
     public int hashCode() {
         return Objects.hash(nickname);
+    }
+
+    public void assignCharacterDeck(List<CharacterCardModel> characterDeck) {
+        this.characterDeck = characterDeck;
+    }
+
+    public List<CharacterCardModel> getCharacterDeck() {
+        return characterDeck;
     }
 }

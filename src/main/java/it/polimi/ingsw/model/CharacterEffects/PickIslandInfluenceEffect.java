@@ -5,18 +5,21 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 //3
-public class PickIslandInfluenceEffect extends Effect{
+public class PickIslandInfluenceEffect implements Effect{
     int costForEffect = 3;
     private int indexIslandEffect;
     private final GameController gameController;
 
-    public PickIslandInfluenceEffect(int indexIslandEffect, GameController controller){
-        this.indexIslandEffect = indexIslandEffect;
+    public PickIslandInfluenceEffect(GameController controller){
         this.gameController = controller;
     }
 
+    public void choseIndexIsland(int indexIslandEffect){
+        this.indexIslandEffect = indexIslandEffect;
+    }
+
     @Override
-    void enable(PlayerModel playerModel) {
+    public void enable(PlayerModel playerModel) {
         IslandModel islandChosen = GameModel.getInstance().getIslandsModel().get(indexIslandEffect);
 
         gameController.computeIslandsChanges(playerModel, islandChosen);

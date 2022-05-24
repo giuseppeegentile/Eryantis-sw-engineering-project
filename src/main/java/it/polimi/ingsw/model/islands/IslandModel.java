@@ -16,6 +16,7 @@ public class IslandModel implements Serializable {
     private ColorTower colorTower;
     private boolean isJoined;
     private PlayerModel influence;
+    private boolean hasProhibition = false;
 
     /**
      * Constructor for island in the model: initializes isJoined tho the false value and motherNature
@@ -217,6 +218,14 @@ public class IslandModel implements Serializable {
 
     public boolean hasTower(){
         return ColorTower.NULL != colorTower;
+    }
+
+    public boolean hasProhibition() {
+        return hasProhibition;
+    }
+
+    public void setHasProhibition(boolean hasProhibition) {
+        this.hasProhibition = hasProhibition;
     }
 
 

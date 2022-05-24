@@ -3,6 +3,7 @@ import it.polimi.ingsw.model.CharacterEffects.Effect;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CharacterCardModel implements Serializable {
 
@@ -10,21 +11,23 @@ public class CharacterCardModel implements Serializable {
 
     private int moneyOnCard;
     private Effect effect;
-    private String characterId;
+    private int characterId;
 
     private PlayerModel owner;
 
-    public CharacterCardModel(int moneyOnCard, Effect effect, String characterId){
+
+
+    public CharacterCardModel(int moneyOnCard, Effect effect, int characterId){
         this.moneyOnCard = moneyOnCard;
         this.effect = effect;
         this.characterId = characterId;
     }
 
-    private void setCharacterId(String characterId){
+    private void setCharacterId(int characterId){
         this.characterId = characterId;
     }
 
-    public String getCharacterId() {
+    public int getCharacterId() {
         return characterId;
     }
 

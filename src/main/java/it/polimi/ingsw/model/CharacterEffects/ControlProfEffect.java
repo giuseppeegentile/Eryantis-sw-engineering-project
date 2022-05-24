@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //2
-public class ControlProfEffect extends Effect{
+public class ControlProfEffect implements Effect{
     private int costForEffect =2;
     private PlayerModel playerWithProfs;
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
@@ -16,7 +16,7 @@ public class ControlProfEffect extends Effect{
 
 
     @Override
-    void enable(PlayerModel playerModel) {
+    public void enable(PlayerModel playerModel) {
         playerWithProfs = playerModel;
         oldAssociationProfs = new HashMap<>();
         for(PlayerModel p : GameModel.getInstance().getPlayersModel()){

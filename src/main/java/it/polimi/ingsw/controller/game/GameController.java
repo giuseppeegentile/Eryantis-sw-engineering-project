@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.game;
 
+import it.polimi.ingsw.model.CharacterEffects.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -135,6 +137,7 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYED_ASSISTANT_CARD:
+                if(gameInstance.getGameMode()==GameMode.ESPERTO) setCharacterCards();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
@@ -198,11 +201,18 @@ public class GameController implements Observer, Serializable {
                     virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, movementAllowed);
                     break;
                 }
-
-                moveMotherNature(movement);
-                computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
                 String activeNick = playerActive.getNickname();
-                virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
+                moveMotherNature(movement);
+                if(!gameInstance.getIslandWithMother().hasProhibition()) {
+                    computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
+
+                    virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
+                }else{
+                    virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
+                    gameInstance.getIslandWithMother().setHasProhibition(false);
+                    virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
+
+                }
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
@@ -252,6 +262,8 @@ public class GameController implements Observer, Serializable {
 
         }
     }
+
+
 
     private void resetEffects() {
         considerTower = true;
@@ -326,35 +338,17 @@ public class GameController implements Observer, Serializable {
 
     }
 
-    private void setOwnerDeck(String nickname){
+    private void setOwnerDeck(String nickname) {
         //List<AssistantCardModel> deck = gameInstance.getDeck();
 
         int i = 0;
         PlayerModel playerCorrespond = gameInstance.getPlayerByNickname(nickname);
-        int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10-10;
+        int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond) + 1) * 10 - 10;
 
-        for(int idx = startingIndex; idx < startingIndex+10; idx++){
+        for (int idx = startingIndex; idx < startingIndex + 10; idx++) {
             gameInstance.getDeck().get(idx).setOwner(playerCorrespond);
         }
-
-/*        for(AssistantCardModel c : deck){
-            if(i < (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10 && i > (gameInstance.getPlayersModel().indexOf(playerCorrespond)+1)*10-10)
-                c.setOwner(playerCorrespond);
-            i++;
-        }*/
     }
-
-    /*private void SetOwnerDeck(String nickname){
-        List<AssistantCardModel> deck = gameInstance.getDeck();
-
-        AtomicInteger i = new AtomicInteger();
-
-        deck.forEach(c->{
-            if(i.get() < (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)))*10 && i.get() > (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname)))*10-10)
-                c.setOwner(gameInstance.getPlayersModel().get(gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))));
-            i.getAndIncrement();
-        });
-    }*/
     /**
      * Assigns the tower's color to the players according to the number of players
      */
@@ -918,6 +912,47 @@ public class GameController implements Observer, Serializable {
 
     public void setIgnoreColorEffect(ColorPawns ignoreColorEffect) {
         this.ignoreColorEffect = ignoreColorEffect;
+    }
+
+    private void setCharacterCards() {
+        List<Effect> effects = List.of(
+                new AddToIslandEffect(gameInstance.getBag().subList(0, 4)),
+                new ControlProfEffect(),
+                new PickIslandInfluenceEffect(this),
+                new ExtraMovementMotherEffect(),
+                new ProhibitionEffect(),
+                new IgnoreTowerEffect(this),
+                new ExchangeConfigEntranceEffect(gameInstance.getBag().subList(4, 10)),
+                new AddInfluenceEffect(this),
+                new ExcludeColorInfluenceEffect(this),
+                new ExchangeHallEntranceEffect(),
+                new AddToHallEffect(gameInstance.getBag().subList(10, 14))
+                );
+
+
+        List<CharacterCardModel> characterDeck = new ArrayList<>(12);
+        for(int i = 0; i < 12; i++){
+            characterDeck.add(new CharacterCardModel(0,effects.get(i), i));
+        }
+
+        Collections.shuffle(characterDeck);
+        List<CharacterCardModel> tempToAssign;
+        for(int j = 0; j<gameInstance.getPlayersNumber(); j++) {
+            tempToAssign = new ArrayList<>();
+            for (int i = j * 3; i < 3 * (j+1); i++) {
+                characterDeck.get(i).setOwner(gameInstance.getPlayersModel().get(j));
+                tempToAssign.add(characterDeck.get(i));
+                if(characterDeck.get(i).getCharacterId() == 0){
+                    gameInstance.getBag().subList(0,4).clear();
+                }else if(characterDeck.get(i).getCharacterId() == 10 ){
+                    gameInstance.getBag().subList(10, 14).clear();
+                }else if(characterDeck.get(i).getCharacterId() == 6 ){
+                    gameInstance.getBag().subList(4, 10).clear();
+                }
+            }
+            gameInstance.getPlayersModel().get(j).assignCharacterDeck(tempToAssign);
+        }
+
     }
 }
 

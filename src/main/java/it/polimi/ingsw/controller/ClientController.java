@@ -134,6 +134,9 @@ public class ClientController implements ViewObserver, Observer {
             case GENERIC_MESSAGE:
                 queueTasks.execute(() -> view.showGenericMessage(message.toString()));
                 break;
+            case SKIPPING_INFLUENCE:
+                queueTasks.execute(() -> view.showSkippingMotherMovement(message.getNickname()));
+                break;
             case LOGIN_REPLY:
                 queueTasks.execute(() -> view.showLoginResult(((LoginReply) message).isNicknameAccepted(), ((LoginReply) message).isConnectionSuccessful(), this.nickname));
                 break;

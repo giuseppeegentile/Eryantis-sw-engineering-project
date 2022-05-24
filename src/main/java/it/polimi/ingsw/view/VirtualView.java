@@ -166,6 +166,11 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new OrderMessage(nickname, order));
     }
 
+    @Override
+    public void showSkippingMotherMovement(String activeNick) {
+        clientHandler.sendMessage(new EffectSkippingInfluenceMessage(activeNick));
+    }
+
     //--
 
     @Override

@@ -3,12 +3,12 @@ package it.polimi.ingsw.model.CharacterEffects;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
-public abstract class Effect{
+public interface Effect{
 
-    abstract void enable(PlayerModel playerModel);
+    void enable(PlayerModel playerModel);
 
 
-    public abstract int getCoinsForEffect();
+    int getCoinsForEffect();
 
 
 }
