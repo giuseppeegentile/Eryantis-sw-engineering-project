@@ -430,6 +430,7 @@ public class GameController implements Observer, Serializable {
 
     private void assignCardsToPlayer(String nickname){
         List<AssistantCardModel> deckPlayer = new ArrayList<>(gameInstance.getDeck().subList((gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10, (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10));
+
         gameInstance.getPlayerByNickname(nickname).setDeckAssistantCardModel(deckPlayer);
 
     }
@@ -748,7 +749,7 @@ public class GameController implements Observer, Serializable {
      * Method that generates and assigns a deck of cards for each player
      */
 
-    void generateDeck(){
+    private void generateDeck(){
         for(int k = 0; k < 4; k++) {
             byte j = 0;
             for (int i = 0; i < 10; i++) {
@@ -756,6 +757,7 @@ public class GameController implements Observer, Serializable {
                 gameInstance.addCardToDeck(new AssistantCardModel(i + 1, j));
             }
         }
+        Collections.shuffle(gameInstance.getDeck());
     }
 
 

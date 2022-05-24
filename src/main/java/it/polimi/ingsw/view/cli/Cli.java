@@ -133,7 +133,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
-        out.println(nickname + "From which cloud do you want to take the students?\nPlease select the index of the cloud:\n");
+        out.println(nickname + ", from which cloud do you want to take the students?\nPlease select the index of the cloud:\n");
         StringBuilder str = new StringBuilder();
         int i = 0;
         for(CloudModel cloud : clouds){
@@ -142,8 +142,8 @@ public class Cli extends ViewObservable implements View {
                 str.append(ColorCli.getEquivalentColorPawn(color)).append(color + "  ").append(ColorCli.RESET);
             }
             str.append("\n");
+            i++;
         }
-        out.println(str);
         int chosenIndex = askUntilValid(clouds.size(), "You've entered an invalid number, please select a cloud from the list shown\n", str) - 1;
         notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex));
     }
@@ -179,7 +179,7 @@ public class Cli extends ViewObservable implements View {
         out.println("Choose an island from the following list: \n");
         int sizeIslands= islands.size();
         showIslands(player, islands);
-        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str);
+        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str) - 1;
 
 
         out.println("How many students do you want to move to the island?\n");
@@ -209,6 +209,7 @@ public class Cli extends ViewObservable implements View {
             chosenIndex = askUntilValid(entrance.size(), "Please select a valid index of the student from the list shown\n", str);
             finalChosenIndex = chosenIndex - 1;
             colors.add(entrance.get(finalChosenIndex));
+            entrance.remove(finalChosenIndex);
         }
     }
 
@@ -224,7 +225,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
-        out.println(player + ", this is the cemetery of the current round.\n");
+        out.println("This is the cemetery of the current round: \n");
         for(AssistantCardModel assistantCard : cemetery){
             out.println(assistantCard.getOwner().getNickname() + " -> Priority = " + assistantCard.getPriority() + ", Mothernature movements = " + assistantCard.getMotherNatureMovement() + "\n");
         }
