@@ -19,6 +19,8 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static java.lang.Integer.parseInt;
+
 
 //sout per fare printout
 
@@ -136,15 +138,23 @@ public class Cli extends ViewObservable implements View {
         out.println(nickname + ", from which cloud do you want to take the students?\nPlease select the index of the cloud:\n");
         StringBuilder str = new StringBuilder();
         int i = 1;
+        out.println(clouds.size());
         for(CloudModel cloud : clouds){
-            str.append(i + " -> ");
-            for(ColorPawns color : cloud.getStudents()){
-                str.append(ColorCli.getEquivalentColorPawn(color)).append(color + "  ").append(ColorCli.RESET);
+            if(cloud!=null) {
+                str.append(i + " -> ");
+                for (ColorPawns color : cloud.getStudents()) {
+                    if(color!=null) {
+                        str.append(ColorCli.getEquivalentColorPawn(color)).append(color + "  ").append(ColorCli.RESET);
+                    }
+                }
+                str.append("\n");
+                i++;
             }
-            str.append("\n");
-            i++;
         }
-        int chosenIndex = askUntilValid(clouds.size(), "You've entered an invalid number, please select a cloud from the list shown\n", str) - 1;
+        out.println(str);
+        int chosenIndex = parseInt(read())-1;
+        System.out.println(chosenIndex);
+        //int chosenIndex = askUntilValid(clouds.size(), "You've entered an invalid number, please select a cloud from the list shown\n", str) - 1;
         notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex));
     }
 
@@ -184,7 +194,7 @@ public class Cli extends ViewObservable implements View {
 
         out.println("How many students do you want to move to the island?\n");
         int numberStudents;
-        numberStudents = Integer.parseInt(read());
+        numberStudents = parseInt(read());
         if(GameModel.getInstance().getPlayersNumber()==3 && (numberStudents < 0 || numberStudents > 4)){
             numberStudents = askUntilValid(4, "Must be a number between 0 and 4: \n", str);
         }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
@@ -322,7 +332,7 @@ public class Cli extends ViewObservable implements View {
     public void askPlayersNumber() {
         int playerNumber;
         out.println("How many players you want to play with? (2 to 4) ");
-        playerNumber = Integer.parseInt(read());
+        playerNumber = parseInt(read());
 
         notifyObserver(obs -> obs.onUpdatePlayersNumber(playerNumber));
     }
@@ -335,7 +345,7 @@ public class Cli extends ViewObservable implements View {
             out.println("1 - PRINCIPIANTE: ");
             out.println("2 - ESPERTO: ");
 
-            mode = Integer.parseInt(read());
+            mode = parseInt(read());
         }
         GameMode finalMode = List.of(GameMode.PRINCIPIANTE, GameMode.ESPERTO).get(mode-1);
 
@@ -471,7 +481,7 @@ public class Cli extends ViewObservable implements View {
         int chosenIndex = 0;
         while(chosenIndex > size || chosenIndex <= 0){
             out.println(stringBuilder);
-            chosenIndex = Integer.parseInt(read());
+            chosenIndex = parseInt(read());//2
             if(chosenIndex > size || chosenIndex <= 0)
                 out.println(invalidMessage);
         }

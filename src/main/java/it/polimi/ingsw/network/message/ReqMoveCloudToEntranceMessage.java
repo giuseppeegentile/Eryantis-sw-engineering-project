@@ -19,8 +19,8 @@ public class ReqMoveCloudToEntranceMessage extends Message{
 
     @Override
     public String toString() {
-        return "AddStudentFromCloudToWaitingMessage{" +
-                "nickname=" + getNickname() +
+        return "ReqMoveCloudToEntranceMessage{" +
+                "player=" + getNickname() +
                 ", clouds=" + clouds +
                 '}';
     }
