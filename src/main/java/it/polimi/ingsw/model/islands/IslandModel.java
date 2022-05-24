@@ -48,6 +48,17 @@ public class IslandModel implements Serializable {
      * @param motherNature
      * @param students
      */
+
+    public ColorPawns getStudentWithInfluence(){
+        Map<ColorPawns, Integer> frequency = new HashMap<>();
+        frequency.put(ColorPawns.RED, Collections.frequency(students, RED));
+        frequency.put(ColorPawns.BLUE, Collections.frequency(students, BLUE));
+        frequency.put(ColorPawns.GREEN, Collections.frequency(students, GREEN));
+        frequency.put(ColorPawns.PINK, Collections.frequency(students, PINK));
+        frequency.put(ColorPawns.YELLOW, Collections.frequency(students, YELLOW));
+        return Collections.max(frequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
     public IslandModel(boolean motherNature, List<ColorPawns> students){
         this.students = new ArrayList<>();
         this.students.addAll(students);

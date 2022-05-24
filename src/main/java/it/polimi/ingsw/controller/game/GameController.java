@@ -249,7 +249,8 @@ public class GameController implements Observer, Serializable {
                 IslandModel islandWithMother = gameInstance.getIslandWithMother();
                 int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
                 PlayerModel playerWithInfluence = islandWithMother.getInfluence(gameInstance);
-                if(playerWithInfluence.getColorTower()!=ColorTower.NULL) {
+
+                if(playerWithInfluence.getColorTower()!=ColorTower.NULL && playerWithInfluence.getProfs().contains(islandWithMother.getStudentWithInfluence())) {
                     if (!islandWithMother.hasTower()) {
                         islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
                     } else {
