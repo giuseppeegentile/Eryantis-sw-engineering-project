@@ -9,6 +9,8 @@ public class EndTurnMessage extends Message{
 
     @Override
     public String toString() {
-        return super.toString();
+        return "EndTurnMessage{" +
+                "player=" + getNickname() +
+                '}';
     }
 }

@@ -153,7 +153,6 @@ public class Cli extends ViewObservable implements View {
         }
         out.println(str);
         int chosenIndex = parseInt(read())-1;
-        System.out.println(chosenIndex);
         //int chosenIndex = askUntilValid(clouds.size(), "You've entered an invalid number, please select a cloud from the list shown\n", str) - 1;
         notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex));
     }
@@ -412,7 +411,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showEndTurn(String nick) {
-        clearCli();
+        //clearCli();
         out.println(nick + " your turn is finished!\n");
     }
 

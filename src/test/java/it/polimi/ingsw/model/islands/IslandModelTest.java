@@ -37,6 +37,6 @@ class IslandModelTest {
         testGame.setPlayers(playersModels);
 
 
-        assertEquals(player2.getNickname(), islandModel.getInfluence(testGame).getNickname());
+        assertEquals(player2.getNickname(), islandModel.getInfluence(true, null, null).getNickname());
     }
 }

@@ -65,6 +65,26 @@ public class PlayerModel implements Serializable {
         ));
     }
 
+    public void addStudentsHall(List<ColorPawns> students){
+        for(ColorPawns s: students){
+            int oldValue = studentInHall.get(s);
+            studentInHall.put(s, oldValue+1);
+        }
+    }
+
+    public void addStudentsEntrance(List<ColorPawns> students){
+        studentInEntrance.addAll(students);
+
+    }
+
+    public void removeStudentFromHall(List<ColorPawns> students){
+        for(ColorPawns s: students){
+            int oldValue = studentInHall.get(s);
+            if(oldValue == 0)return;
+            studentInHall.put(s, oldValue-1);
+        }
+    }
+
     public PlayerModel(){
         this.colorTower = ColorTower.NULL;
     }
@@ -324,5 +344,18 @@ Iterator<ColorPawns> iteratorStudentsToRemove = studentsToRemove.iterator();
     public void removeTowerFromBoard(){
         if(this.towerNumber!= 0)
             this.towerNumber--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerModel that = (PlayerModel) o;
+        return nickname.equals(that.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickname);
     }
 }
