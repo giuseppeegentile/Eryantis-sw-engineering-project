@@ -670,10 +670,11 @@ public class GameController implements Observer, Serializable {
 
         int bagSize = gameInstance.getBag().size();
         int i = 0;
-        if(gameInstance.getCloudsModel()== null) {
-            for (int j = 0; j < gameInstance.getPlayersNumber(); j++) {
+        if(gameInstance.getCloudsModel().size()==0) {
+            int j = 0;
+            for (j = 0; j < gameInstance.getPlayersNumber(); j++) {
                 gameInstance.getCloudsModel().add(new CloudModel(numStudentToMove));
-                List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (i + 1), bagSize - numStudentToMove * i));
+                List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (j + 1), bagSize - numStudentToMove * j));
 
                 gameInstance.getCloudsModel().get(j).setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
             }
@@ -808,7 +809,7 @@ public class GameController implements Observer, Serializable {
         List<IslandModel> islandsModels = gameInstance.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
 
-        int newIndex = (indexOldMotherNature + movementMotherNature) % 11;
+        int newIndex = (indexOldMotherNature + movementMotherNature) % (gameInstance.getIslandsModel().size());
         IslandModel oldIslandWithMotherNature = new IslandModel(false, islandsModels.get(indexOldMotherNature).getStudents());
         IslandModel newIslandWithMotherNature = new IslandModel(true,  islandsModels.get(newIndex).getStudents());
 
@@ -819,7 +820,8 @@ public class GameController implements Observer, Serializable {
 
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
-        PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
+        //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
+        PlayerModel playerWithInfluence = islandWithMother.getInfluence();
         if(playerWithInfluence.getColorTower()!=ColorTower.NULL) {
             if (!islandWithMother.hasTower()) {
                 islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
@@ -848,7 +850,7 @@ public class GameController implements Observer, Serializable {
         //controllo se posso unificare, se sì, le unisco
         ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
 
-        if(direction == ColorDirectionAdjacentIsland.NONE){
+        if(direction == ColorDirectionAdjacentIsland.NONE && islandWithMother.getTowerColor() == ColorTower.NULL){
             return;
         }
 

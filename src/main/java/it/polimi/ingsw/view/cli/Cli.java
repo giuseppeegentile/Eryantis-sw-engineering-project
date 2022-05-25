@@ -516,11 +516,11 @@ public class Cli extends ViewObservable implements View {
             i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
-        int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder) -1;
+        int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
         while(!indexes.contains(chosenIndex)){
-            chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder) -1;
+            chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
         }
-        int finalChosenIndex = chosenIndex;
+        int finalChosenIndex = chosenIndex - 1;
         notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalChosenIndex));
     }
 

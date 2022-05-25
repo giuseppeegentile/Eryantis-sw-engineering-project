@@ -113,10 +113,10 @@ public class IslandModel implements Serializable {
         this.colorTower = colorTower;
     }
 
-    /**
+   /* *//**
      * Calculates the influence of the island and returns the player who conquered the island
      * @return The player who has the major influence on the island. It depends on how many students of the same color of the prof owned by player are on the island
-     */
+     *//*
     public PlayerModel getInfluence(boolean considerTower, PlayerModel playerWithEffectAdditionalInfluence, ColorPawns ignoreColorEffect) {
         GameModel gameModel = GameModel.getInstance();
         ColorTower towerOnIsland = this.getTowerColor();
@@ -137,7 +137,7 @@ public class IslandModel implements Serializable {
         if (ignoreColorEffect != null)
             colors.remove(ignoreColorEffect);
 
-        allColors = colors;
+        allColors = new ArrayList<>(colors);
 
         PlayerModel playerWithTower = playerToAssignAdditionalInfluence;
         for (ColorPawns s : allColors) {
@@ -208,7 +208,7 @@ public class IslandModel implements Serializable {
         }
         return new PlayerModel(); //default value, meaning no player has influence
     }
-
+*/
 
     /**********************************************************/
     //DA TESTARE
@@ -229,84 +229,70 @@ public class IslandModel implements Serializable {
     }
 
 
-
-/*
-    public PlayerModel getInfluence(GameModel gameModel){
-
-        ColorTower towerOnIsland = getTowerColor();
-        PlayerModel playerToAssignAdditionalInfluence = null;
-        if(towerOnIsland != ColorTower.NULL){
-            playerToAssignAdditionalInfluence = gameModel.getPlayerByColorTower(towerOnIsland);
+    public PlayerModel getInfluence(){
+        GameModel gameModel = GameModel.getInstance();
+        List<ColorPawns> profsOwned = new ArrayList<>();
+        List<ColorPawns> copyStudents = new ArrayList<>(this.getStudents());
+        //PlayerModel playerWithTower;
+        if(this.getTowerColor() != ColorTower.NULL) {
+            //playerWithTower = gameModel.getPlayerByColorTower(this.getTowerColor());
+            copyStudents.addAll(gameModel.getPlayerByColorTower(this.getTowerColor()).getProfs());
         }
 
-
-        Map<ColorPawns, Integer> studentInIslandNumber = new HashMap<>();
-        List<ColorPawns> allColors = new ArrayList<>(Arrays.asList(ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK, ColorPawns.RED, ColorPawns.YELLOW));
-        PlayerModel finalPlayerToAssignAdditionalInfluence = playerToAssignAdditionalInfluence;
-        allColors.forEach(s ->{
-            if(finalPlayerToAssignAdditionalInfluence != null && finalPlayerToAssignAdditionalInfluence.hasProf(s)) { //aggiungo 1 per ogni prof che ha se il giocatore ha già una torre
-                studentInIslandNumber.put(s,
-                        Collections.frequency(this.getStudents(), s)+1); //for each color of student count the frequency on the island and put in the map
-            }else {
-                studentInIslandNumber.put(s,
-                        Collections.frequency(this.getStudents(), s)); //for each color of student count the frequency on the island and put in the map
-            }
-        });
-
-
-        //studentInIslandNumber:
-          //  key     value
-          //  BLUE:   # of blue students in the island
-          //  GREEN:  # of green students in the island
-          //  PINK:   # of pink students in the island
-          //  RED:    # of red students in the island
-          //  YELLOW: # of yellow students in the island
-
-
-        List<PlayerModel> playersWithAtLeastAProf = new ArrayList<>();
-
-        //populate the list with only players with at least a prof
-        gameModel.getPlayersModel().forEach(playerModel -> {
-            if(playerModel.getNumProfs() != 0) playersWithAtLeastAProf.add(playerModel);
-        });
-
-
-        while (studentInIslandNumber.size() == 0){
-            List<ColorPawns> colorsWithSameMax = new ArrayList<>();
-            //per ogni riga della mappa, guardo se il valore è il massimo, se sì, lo aggiungo alla lista colorsWithSameMax
-            studentInIslandNumber.forEach((student, frequency)->{
-                if(frequency.equals(Collections.max(studentInIslandNumber.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue())){
-                    colorsWithSameMax.add(student);
-                }
-            });
-
-            if(colorsWithSameMax.size() > 1) { //in questo caso ho almeno due studenti con entrambi stesso numero massimo sull'isola
-                int i = 0;                     //devo controllare se due giocatori hanno dei prof dello stesso colore dei due massimi
-                for(ColorPawns s: colorsWithSameMax) {
-                    for(PlayerModel p :playersWithAtLeastAProf) {
-                        if (p.getProfs().contains(s)) {
-                            i++;
-                            if (i != 1) return new PlayerModel(); //ho due giocatori con entrambi stessa influenza
-                        }
-                    };
-                }
-
-            }
-
-            //get the student with max presence in island
-            ColorPawns maxStudentOnIsland = Collections.max(studentInIslandNumber.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
-
-
-            for(PlayerModel playerModel: playersWithAtLeastAProf){
-                if (playerModel.hasProf(maxStudentOnIsland)) { //se un giocatore ha il prof dello stesso colore del massimo numero degli studenti sull'isola
-                    return playerModel;
-                }
-            }
-            studentInIslandNumber.remove(maxStudentOnIsland); //remove max element, because no player has prof of that color
+        for(PlayerModel p: gameModel.getPlayersModel()) {
+            profsOwned.addAll(p.getProfs());
         }
-        return new PlayerModel(); //default value, meaning no player has influence
+        List<ColorPawns> mostFrequent = getMode(copyStudents);
+        if(mostFrequent.size() == 2){
+            return new PlayerModel();
+        }else {
+            if (profsOwned.contains(mostFrequent.get(0))) {
+                for (PlayerModel p : gameModel.getPlayersModel()) {
+                    if (p.hasProf(mostFrequent.get(0))) return p;
+                }
+            }
+        }
+        return new PlayerModel();
     }
 
- */
+
+    public List<ColorPawns> getMode(List<ColorPawns> arr){
+        int n = arr.size();
+        // Sort the list
+        Collections.sort(arr);
+
+        // find the max frequency using linear traversal
+        int max_count = 1;
+        ColorPawns res = arr.get(0);
+        int curr_count = 1;
+
+        for (int i = 1; i < n; i++) {
+            if (arr.get(i) == arr.get(i - 1))
+                curr_count++;
+            else
+                curr_count = 1;
+
+            if (curr_count > max_count) {
+                max_count = curr_count;
+                res = arr.get(i - 1);
+            }
+        }
+        int maxValue = -1;
+        ColorPawns oldColor = NULL;
+        for(ColorPawns c : List.of(RED, BLUE, YELLOW, GREEN, PINK)){
+            if(maxValue < Collections.frequency(arr, c)){
+                maxValue = Collections.frequency(arr, c);
+                oldColor = c;
+            }else if (maxValue == Collections.frequency(arr, c)){
+                return List.of(oldColor, c);
+            }
+
+        }
+
+        return List.of(res);
+
+    }
+
+
 
 }

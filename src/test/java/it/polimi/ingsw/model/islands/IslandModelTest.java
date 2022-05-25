@@ -17,13 +17,14 @@ class IslandModelTest {
     @Test
     void getInfluence() {
         GameModel testGame = GameModel.getInstance();
-        List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.BLUE,ColorPawns.BLUE));
-        IslandModel islandModel = new IslandModel(false, studentOnIsland);
+        List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.RED,ColorPawns.RED,ColorPawns.RED));
+        IslandModel islandModel = new IslandModel(true, studentOnIsland);
+        //islandModel.setTowerColor(ColorTower.NULL);
 
         List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 5);
-        player1.addProf(ColorPawns.GREEN);
+        //player1.addProf(ColorPawns.RED);
         playersModels.add(player1);
         PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
         player2.setTowers(ColorTower.BLACK, 5);
@@ -31,12 +32,14 @@ class IslandModelTest {
         player2.addProf(ColorPawns.PINK);
         playersModels.add(player2);
         PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.WHITE);
-        player3.setTowers(ColorTower.GREY, 5);
-        player3.addProf(ColorPawns.RED);
+        player3.setTowers(ColorTower.WHITE, 5);
         playersModels.add(player3);
         testGame.setPlayers(playersModels);
 
 
-        assertEquals(player2.getNickname(), islandModel.getInfluence(true, null, null).getNickname());
+        assertEquals(null, islandModel.newGetInfluence().getNickname());
     }
+
+
+
 }
