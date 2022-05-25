@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static java.lang.Byte.parseByte;
 import static java.lang.Integer.parseInt;
 
 
@@ -165,9 +166,16 @@ public class Cli extends ViewObservable implements View {
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ").\n");
 
-        String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n";
-        byte movementChosen = (byte)askUntilValid(maxMovement, invalid, new StringBuilder());
-        notifyObserver(obs -> obs.onUpdateMotherNature(player, movementChosen));
+        String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + ")\n";
+        byte movementChosen = parseByte(read());
+
+        while(movementChosen > maxMovement || movementChosen < 0){
+            movementChosen = parseByte(read());
+            if(movementChosen > maxMovement || movementChosen < 0)
+                out.println("You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n");
+        }
+        byte finalMovementChosen = movementChosen;
+        notifyObserver(obs -> obs.onUpdateMotherNature(player, finalMovementChosen));
     }
 
     @Override

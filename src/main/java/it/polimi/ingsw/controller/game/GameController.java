@@ -151,10 +151,6 @@ public class GameController implements Observer, Serializable {
                 for (String gamer : virtualViewMap.keySet()) {
                     virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
                 }
-                for(PlayerModel p: gameInstance.getPhaseOrder()){
-                    System.out.println(p.getNickname());
-                }
-
                 if (numberPlayersPlayedCard != gameInstance.getPlayersNumber())
                     askPlayCardsController(gameInstance.getPhaseOrder().get(numberPlayersPlayedCard).getNickname());
                 else {//è l'ultimo giocatore ad aver giocato la carta
@@ -169,7 +165,6 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage) receivedMessage).getStudents();
                 IslandModel islandCurrent = gameInstance.getIslandsModel().get(((MovedStudentOnIslandMessage) receivedMessage).getIslandIndex());
                 moveStudentToIsland(playerActive, movedStudents, islandCurrent);
@@ -187,7 +182,6 @@ public class GameController implements Observer, Serializable {
 
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
-                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
                     moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
                 }
@@ -196,7 +190,6 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVED_MOTHER:
-                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
                 byte movementAllowed = playerActive.getMovementMotherNatureCurrentActionPhase();
 
@@ -215,11 +208,9 @@ public class GameController implements Observer, Serializable {
                     virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
                     gameInstance.getIslandWithMother().setHasProhibition(false);
                     virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
-
                 }
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
-                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
                 if (chosenCloud.getStudents().size() == 0) {
@@ -245,14 +236,10 @@ public class GameController implements Observer, Serializable {
 
 
                 int lastIndex = gameInstance.getPlayersNumber() - 1;
-/*                System.out.println("index current " + indexCurrent);
-                System.out.println("nick curr " + nickCurrent);
-                System.out.println("players number " + gameInstance.getPlayersNumber());*/
 
                 resetEffects();
 
                 if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(lastIndex).getNickname())) { //se è l'ultimo giocatore ad aver giocato, fai giocare le carte a tutti i giocatori
-                    System.out.println("received");
                     fromBagToCloud();
                     gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
                     PlayerModel nextPlayer = gameInstance.getPlayersModel().get(0);
@@ -322,7 +309,6 @@ public class GameController implements Observer, Serializable {
             //vv.askTowerColor(nickname, getAvailableTowers());
         }else if(virtualViewMap.size() < gameInstance.getPlayersNumber()){
             if(checkLoginNickname(nickname, vv)) {
-                System.out.println("here");
                 this.virtualViewMap.put(nickname, vv);
                 gameInstance.addObserver(vv);
                 gameInstance.addPlayer(new PlayerModel(nickname));
@@ -435,7 +421,6 @@ public class GameController implements Observer, Serializable {
             view.showLoginResult(false, true, null);
             return false;
         } else if (gameInstance.isNicknameTaken(nickname)) {
-            System.out.println(nickname);
             view.showGenericMessage("Nickname already taken.");
             view.showLoginResult(false, true, null);
             return false;
@@ -449,20 +434,10 @@ public class GameController implements Observer, Serializable {
 
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
-        List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
-        System.out.println("Prima della remove all: ");
-        for(AssistantCardModel c : playableCards){
-            System.out.println("p " + c.getPriority() + " move " +c.getMotherNatureMovement() + " owner " + c.getOwner());
-        }
-        playableCards.removeAll(gameInstance.getCemetery());
-        System.out.println("Dopo la remove all: ");
-        for(AssistantCardModel c : playableCards){
-            System.out.println("p " + c.getPriority() + " move " +c.getMotherNatureMovement() + " owner " + c.getOwner());
-        }
-        if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
-            virtualViewMap.get(player).askPlayCard(player, playableCards);
-        else                         //if the cemetery is equals to all cards he owns, he can play whatever card he wants
-            virtualViewMap.get(player).askPlayCard(player, playerDeck);
+
+        playerDeck.removeAll(gameInstance.getCemetery());
+
+        virtualViewMap.get(player).askPlayCard(player, playerDeck);
     }
 
     private void prepareGame(){
@@ -808,10 +783,12 @@ public class GameController implements Observer, Serializable {
         int indexOldMotherNature = 0;
         List<IslandModel> islandsModels = gameInstance.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
-
+                        //10                    + 2
         int newIndex = (indexOldMotherNature + movementMotherNature) % (gameInstance.getIslandsModel().size());
         IslandModel oldIslandWithMotherNature = new IslandModel(false, islandsModels.get(indexOldMotherNature).getStudents());
+        oldIslandWithMotherNature.setTowerColor(islandsModels.get(indexOldMotherNature).getTowerColor());
         IslandModel newIslandWithMotherNature = new IslandModel(true,  islandsModels.get(newIndex).getStudents());
+        newIslandWithMotherNature.setTowerColor(islandsModels.get(newIndex).getTowerColor());
 
         islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
         islandsModels.set(newIndex, newIslandWithMotherNature);
@@ -850,7 +827,7 @@ public class GameController implements Observer, Serializable {
         //controllo se posso unificare, se sì, le unisco
         ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
 
-        if(direction == ColorDirectionAdjacentIsland.NONE && islandWithMother.getTowerColor() == ColorTower.NULL){
+        if(islandWithMother.getTowerColor() == ColorTower.NULL || direction == ColorDirectionAdjacentIsland.NONE){
             return;
         }
 
@@ -879,7 +856,7 @@ public class GameController implements Observer, Serializable {
             }
             if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
                 new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get((indexOfMother+1)%12), indexOfMother);
             }
         }
         for(PlayerModel p: gameInstance.getPlayersModel()) {

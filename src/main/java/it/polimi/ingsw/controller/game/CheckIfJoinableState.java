@@ -55,7 +55,8 @@ public class CheckIfJoinableState extends GameController implements GameState {
 
 
         IslandModel joined = new IslandModel(this.islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
-
+        joined.setTowerColor(islandToJoin.getTowerColor());
+        gameModel.getPlayerByColorTower(islandToJoin.getTowerColor()).addTowerToBoard();
         //posiziono gli studenti sulla nuova isola
         //islandController.addStudent(joinedStudents);
         joined.setJoined(); //setta a true il valore isJoined
