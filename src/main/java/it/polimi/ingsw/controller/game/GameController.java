@@ -147,11 +147,12 @@ public class GameController implements Observer, Serializable {
 
                 AssistantCardModel playedCard = player.getDeckAssistantCardModel().get(indexPlayedCard);
 
-                System.out.println(player.getNickname() + " " + playedCard.getMotherNatureMovement() + " " + playedCard.getPriority() + " " + playedCard.getOwner().getNickname());
-
                 playCard(player, playedCard);
                 for (String gamer : virtualViewMap.keySet()) {
                     virtualViewMap.get(gamer).showCemeteryMessage(playerActive.getNickname(), gameInstance.getCemetery());
+                }
+                for(PlayerModel p: gameInstance.getPhaseOrder()){
+                    System.out.println(p.getNickname());
                 }
 
                 if (numberPlayersPlayedCard != gameInstance.getPlayersNumber())
@@ -168,6 +169,7 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage) receivedMessage).getStudents();
                 IslandModel islandCurrent = gameInstance.getIslandsModel().get(((MovedStudentOnIslandMessage) receivedMessage).getIslandIndex());
                 moveStudentToIsland(playerActive, movedStudents, islandCurrent);
@@ -185,6 +187,7 @@ public class GameController implements Observer, Serializable {
 
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
+                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
                     moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
                 }
@@ -193,6 +196,7 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVED_MOTHER:
+                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
                 byte movementAllowed = playerActive.getMovementMotherNatureCurrentActionPhase();
 
@@ -215,6 +219,7 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
+                System.out.println("OWNER: " + playerActive.getDeckAssistantCardModel().get(0).getOwner());
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
                 if (chosenCloud.getStudents().size() == 0) {
@@ -246,13 +251,15 @@ public class GameController implements Observer, Serializable {
 
                 resetEffects();
 
-                if (indexCurrent == lastIndex) { //se è l'ultimo giocatore ad aver giocato, fai giocare le carte a tutti i giocatori
+                if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(lastIndex).getNickname())) { //se è l'ultimo giocatore ad aver giocato, fai giocare le carte a tutti i giocatori
+                    System.out.println("received");
                     fromBagToCloud();
                     gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
                     PlayerModel nextPlayer = gameInstance.getPlayersModel().get(0);
-                    virtualViewMap.get(nextPlayer.getNickname()).askPlayCard(nextPlayer.getNickname(), nextPlayer.getDeckAssistantCardModel());
+                    askPlayCardsController(nextPlayer.getNickname());
+                    //virtualViewMap.get(nextPlayer.getNickname()).askPlayCard(nextPlayer.getNickname(), nextPlayer.getDeckAssistantCardModel());
                 } else {
-                    String nextPlayerNick = gameInstance.getPhaseOrder().get(indexCurrent + 1).getNickname();
+                    String nextPlayerNick = gameInstance.getPlayersModel().get(indexCurrent + 1).getNickname();
                     playerActive = gameInstance.getPlayerByNickname(nextPlayerNick);
 
                     virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
@@ -443,7 +450,15 @@ public class GameController implements Observer, Serializable {
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel();
         List<AssistantCardModel> playableCards = new ArrayList<>(playerDeck);
+        System.out.println("Prima della remove all: ");
+        for(AssistantCardModel c : playableCards){
+            System.out.println("p " + c.getPriority() + " move " +c.getMotherNatureMovement() + " owner " + c.getOwner());
+        }
         playableCards.removeAll(gameInstance.getCemetery());
+        System.out.println("Dopo la remove all: ");
+        for(AssistantCardModel c : playableCards){
+            System.out.println("p " + c.getPriority() + " move " +c.getMotherNatureMovement() + " owner " + c.getOwner());
+        }
         if(!playableCards.isEmpty()) //if player has some cards not in the cemetery he can play that cards
             virtualViewMap.get(player).askPlayCard(player, playableCards);
         else                         //if the cemetery is equals to all cards he owns, he can play whatever card he wants
@@ -649,21 +664,29 @@ public class GameController implements Observer, Serializable {
      * Moves a student from the bag to the clouds. The number of students moved is different according to the number of players.
      */
     private void moveStudentFromBagToClouds(){
-        GameModel gameInstance = GameModel.getInstance();
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
         if(gameInstance.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
             numStudentToMove = 4;
 
         int bagSize = gameInstance.getBag().size();
         int i = 0;
-        for (CloudModel c :gameInstance.getCloudsModel()) {
+        if(gameInstance.getCloudsModel()== null) {
+            for (int j = 0; j < gameInstance.getPlayersNumber(); j++) {
+                gameInstance.getCloudsModel().add(new CloudModel(numStudentToMove));
+                List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (i + 1), bagSize - numStudentToMove * i));
 
-            List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove*(i+1), bagSize-numStudentToMove*i));
+                gameInstance.getCloudsModel().get(j).setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
+            }
+        }else {
+            for (CloudModel c : gameInstance.getCloudsModel()) {
 
-            c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
-            //gameInstance.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+                List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (i + 1), bagSize - numStudentToMove * i));
 
-            i++;
+                c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
+                //gameInstance.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
+
+                i++;
+            }
         }
         List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(0, gameInstance.getBag().size() - gameInstance.getPlayersNumber()*numStudentToMove));
         //RIMUOVERE QUI GLI ELEMENTI DALLA BAG, ALTRIMENTI CREA CASINI
@@ -677,7 +700,6 @@ public class GameController implements Observer, Serializable {
      */
     private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
         int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
-        System.out.println(index + " " + player.getDeckAssistantCardModel().get(3).getMotherNatureMovement() + " " + player.getDeckAssistantCardModel().get(3).getPriority() + " " +player.getDeckAssistantCardModel().get(3).getOwner().getNickname() + " " + assistantCardModel + " " + player.getDeckAssistantCardModel().get(3));
         gameInstance.addToCemetery(assistantCardModel);
         player.removeCard(index);
     }
@@ -743,7 +765,7 @@ public class GameController implements Observer, Serializable {
      * @param prof prof to be assigned to player
      */
     private void assignProfToPlayer(PlayerModel player, ColorPawns prof){
-        List<PlayerModel> playersModels = GameModel.getInstance().getPlayersModel();
+        List<PlayerModel> playersModels = gameInstance.getPlayersModel();
         boolean alreadyHave = false;
         for (PlayerModel p : playersModels) {
             //se un altro giocatore ha già il prof
@@ -766,7 +788,7 @@ public class GameController implements Observer, Serializable {
      */
 
     private boolean canProfBeAssignedToPlayer(PlayerModel player, ColorPawns prof){
-        for(PlayerModel p: GameModel.getInstance().getPlayersModel()){
+        for(PlayerModel p: gameInstance.getPlayersModel()){
             if(!player.getNickname().equals(p.getNickname())){
                 if(p.getStudentInHall().get(prof) > player.getStudentInHall().get(prof)) return false; //se uno studente ha più pedine del colore del prof, non può essere assegnato
             }

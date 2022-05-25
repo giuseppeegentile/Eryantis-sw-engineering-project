@@ -176,7 +176,7 @@ public class Cli extends ViewObservable implements View {
         List<ColorPawns> colors = new ArrayList<>();
         out.println("You have to move " + numberStudentsHaveToMove + " to your hall");
         if(numberStudentsHaveToMove != 0) {
-            askingMoveStudents(colorPawns, str, colors, numberStudentsHaveToMove);
+            askingMoveStudents(colorPawns, str, colors, numberStudentsHaveToMove, "hall");
             notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
         }else{
             out.println("You moved all the students available for this turn to the island..Skipping to the mother nature movement.\n");
@@ -203,22 +203,22 @@ public class Cli extends ViewObservable implements View {
         }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
             numberStudents = askUntilValid(3, "Must be a number between 0 and 3: \n", str);
         }
-        askingMoveStudents(entrance, str, colors, numberStudents);
+        askingMoveStudents(entrance, str, colors, numberStudents, "island");
         notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
-    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors, int numberStudents) {
-
-        str = new StringBuilder();
-        str.append("Type the index of the students you want to move from your hall: \n");
-        int i = 0;
-        for(ColorPawns color : entrance){
-            i+=1;
-            str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
-        }
+    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors, int numberStudents, String destination) {
         int finalChosenIndex;
         int chosenIndex;
+
         for(int j=0; j<numberStudents; j++) {
+            str = new StringBuilder();
+            str.append("Type the index of the students you want to move from your entrance to the "+destination + " :\n");
+            int i=0;
+            for(ColorPawns color : entrance){
+                i+=1;
+                str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
+            }
             chosenIndex = askUntilValid(entrance.size(), "Please select a valid index of the student from the list shown\n", str);
             finalChosenIndex = chosenIndex - 1;
             colors.add(entrance.get(finalChosenIndex));
@@ -269,13 +269,24 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showCloudsMessage(String nickname, List<CloudModel> clouds) {
         StringBuilder strBoardBld = new StringBuilder();
-        strBoardBld.append(" -----------                -----------\n");
-        for (CloudModel cloud : clouds) {
-            buildCloud(cloud, strBoardBld);
-            strBoardBld.append(ColorCli.RESET).append("|              ");
+        for(CloudModel cloud : clouds){
+            if (cloud != null){
+                strBoardBld.append(" -----------                ");
+            }
         }
         strBoardBld.append("\n");
-        strBoardBld.append(" -----------                -----------\n");
+        for (CloudModel cloud : clouds) {
+            if (cloud != null) {
+                buildCloud(cloud, strBoardBld);
+                strBoardBld.append(ColorCli.RESET).append("|              ");
+            }
+        }
+        strBoardBld.append("\n");
+        for(CloudModel cloud : clouds){
+            if (cloud != null){
+                strBoardBld.append(" -----------                ");
+            }
+        }
         out.println(strBoardBld);
     }
 
@@ -495,15 +506,22 @@ public class Cli extends ViewObservable implements View {
     public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
+        List<Integer> indexes = new ArrayList<>(); //indici che può selezionare
         out.println(nickname + ", select your assistant card for this round.\nThis is your deck:\n");
         for (AssistantCardModel card : playerDeck) {
-            stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+            if(card.getPriority()!= 0 && card.getMotherNatureMovement() != 0) {
+                stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+                indexes.add(i);
+            }
             i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder) -1;
-
-        notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, chosenIndex));
+        while(!indexes.contains(chosenIndex)){
+            chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder) -1;
+        }
+        int finalChosenIndex = chosenIndex;
+        notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalChosenIndex));
     }
 
     @Override

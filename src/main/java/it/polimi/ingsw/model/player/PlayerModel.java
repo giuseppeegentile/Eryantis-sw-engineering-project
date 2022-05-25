@@ -310,7 +310,7 @@ public class PlayerModel implements Serializable {
      * @param index The index of the player's deck played that has to be removed from the player's deck
      */
     public void removeCard(int index){
-        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
+        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, this, (byte) 0)); //remove the card..method remove is bugged for list
     }
 
     //**********************************

@@ -24,6 +24,13 @@ public class AssistantCardModel implements Serializable {
         this.owner = null;
     }
 
+    public AssistantCardModel(int priority, PlayerModel p, byte motherNatureMovement) {
+        this.priority = priority;
+        this.motherNatureMovement = motherNatureMovement;
+        this.isPlayed = false;
+        this.owner = p;
+    }
+
     /**
      *
      * @param owner The player to whom the card is assigned

@@ -14,9 +14,6 @@ public class CharacterCardModel implements Serializable {
     private int characterId;
 
     private PlayerModel owner;
-
-
-
     public CharacterCardModel(int moneyOnCard, Effect effect, int characterId){
         this.moneyOnCard = moneyOnCard;
         this.effect = effect;
