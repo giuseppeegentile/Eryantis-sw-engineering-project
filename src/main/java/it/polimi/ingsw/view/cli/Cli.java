@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -30,9 +31,6 @@ public class Cli extends ViewObservable implements View {
     private final PrintStream out;
     private Thread inputThread;
     private final List<ColorCli> listColor = List.of(ColorCli.RED, ColorCli.BLUE, ColorCli.GREEN, ColorCli.PINK, ColorCli.YELLOW);
-    private static final String STR_ROW = "Row: ";
-    private static final String STR_COLUMN = "Column: ";
-    private static final String STR_POSITION = "Position ";
     private static final String STR_INPUT_CANCELED = "User input canceled.";
 
     /**
@@ -166,7 +164,6 @@ public class Cli extends ViewObservable implements View {
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         out.println("Type the number of movements you want mothernature to make (it can be between 0 and " + (int) maxMovement + ").\n");
 
-        String invalid = "You've entered an invalid number, it can be between 0 and " + (int) maxMovement + ")\n";
         byte movementChosen = parseByte(read());
 
         while(movementChosen > maxMovement || movementChosen < 0){
@@ -180,17 +177,18 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns, int numberStudentsHaveToMove) {
-        StringBuilder str = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         out.println("You have to move " + numberStudentsHaveToMove + " to your hall");
         if(numberStudentsHaveToMove != 0) {
-            askingMoveStudents(colorPawns, str, colors, numberStudentsHaveToMove, "hall");
+            askingMoveStudents(colorPawns, colors, numberStudentsHaveToMove, "hall");
             notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
         }else{
             out.println("You moved all the students available for this turn to the island..Skipping to the mother nature movement.\n");
             notifyObserver(obs -> obs.onUpdateStudentToHall(player, null));
         }
     }
+
+
 
     @Override
     public void askMoveEntranceToIsland(String player, List<ColorPawns> entrance, List<IslandModel> islands) {
@@ -211,16 +209,16 @@ public class Cli extends ViewObservable implements View {
         }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
             numberStudents = askUntilValid(3, "Must be a number between 0 and 3: \n", str);
         }
-        askingMoveStudents(entrance, str, colors, numberStudents, "island");
+        askingMoveStudents(entrance, colors, numberStudents, "island");
         notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
-    private void askingMoveStudents(List<ColorPawns> entrance, StringBuilder str, List<ColorPawns> colors, int numberStudents, String destination) {
+    private void askingMoveStudents(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
         int finalChosenIndex;
         int chosenIndex;
 
         for(int j=0; j<numberStudents; j++) {
-            str = new StringBuilder();
+            StringBuilder str = new StringBuilder();
             str.append("Type the index of the students you want to move from your entrance to the "+destination + " :\n");
             int i=0;
             for(ColorPawns color : entrance){
@@ -465,7 +463,7 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
-        out.println(message + "\n");
+        out.println(message);
     }
 
     @Override
@@ -515,7 +513,7 @@ public class Cli extends ViewObservable implements View {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
         List<Integer> indexes = new ArrayList<>(); //indici che può selezionare
-        out.println(nickname + ", select your assistant card for this round.\nThis is your deck:\n");
+        out.println(nickname + ", select your assistant card for this round.\nThis is your deck:");
         for (AssistantCardModel card : playerDeck) {
             if(card.getPriority()!= 0 && card.getMotherNatureMovement() != 0) {
                 stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
@@ -559,7 +557,7 @@ public class Cli extends ViewObservable implements View {
 
 
     private String read(){
-        String read = "";
+        String read;
         try {
             read = readLine();
             return read;
@@ -570,6 +568,23 @@ public class Cli extends ViewObservable implements View {
     }
 
 
+    @Override
+    public void askPlayCharacterCard(String activePlayer, List<CharacterCardModel> characterDeck) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 1;
+        out.println(activePlayer + ", select your character card for this round.\nThis is your deck:");
+        for (CharacterCardModel card : characterDeck) {
+            if(card.enoughCoins()) {
+                stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getMoneyOnCard()).append(", Effect = ").append(card.getEffect().getDescription()).append("\n");
+            }
+            i++;
+        }
+        String message = "You've entered an invalid number, please select a card from the list shown\n";
+        int chosenIndex = askUntilValid(characterDeck.size(), message, stringBuilder);
+        int finalChosenIndex = chosenIndex - 1;
+        CharacterCardModel cardPlayed = characterDeck.get(finalChosenIndex);
+        notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, cardPlayed));
+    }
 
     /**
      * Shows the lobby screen on the terminal.

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -41,6 +42,9 @@ public class ClientController implements ViewObserver, Observer {
             case WIN:
                 WinMessage winMessage = (WinMessage)message;
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
+                break;
+            case REQ_PLAY_CHAR_CARD:
+                queueTasks.execute(() -> view.askPlayCharacterCard(message.getNickname(), ((ReqPlayCharacterCardMessage)message).getCharacterDeck()));
                 break;
             case REQ_ENTRANCE_TO_HALL:
                 queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance(), ((StudentToIslandMessage)message).getIslands()));
@@ -131,6 +135,7 @@ public class ClientController implements ViewObserver, Observer {
                 }
 
                 break;
+
             case GENERIC_MESSAGE:
                 queueTasks.execute(() -> view.showGenericMessage(message.toString()));
                 break;
@@ -157,6 +162,11 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateGameMode(GameMode gameMode) {
         client.sendMessage(new GameModeRes(this.nickname, gameMode));
+    }
+
+    @Override
+    public void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard) {
+        client.sendMessage(new PlayedCharacterCardMessage(activePlayer, chosenCard));
     }
 
     @Override

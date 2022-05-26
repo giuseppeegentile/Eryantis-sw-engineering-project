@@ -15,7 +15,6 @@ public class IslandModel implements Serializable {
     private List<ColorPawns> students;
     private ColorTower colorTower;
     private boolean isJoined;
-    private PlayerModel influence;
     private boolean hasProhibition = false;
 
     /**
@@ -229,21 +228,29 @@ public class IslandModel implements Serializable {
     }
 
 
-    public PlayerModel getInfluence(){
+    public PlayerModel getInfluence(PlayerModel playerWithEffectAdditionalInfluence,ColorPawns ignoreColorEffect, boolean considerTower){
         GameModel gameModel = GameModel.getInstance();
         List<ColorPawns> profsOwned = new ArrayList<>();
         List<ColorPawns> copyStudents = new ArrayList<>(this.getStudents());
-        //PlayerModel playerWithTower;
-        if(this.getTowerColor() != ColorTower.NULL) {
-            //playerWithTower = gameModel.getPlayerByColorTower(this.getTowerColor());
+        if(this.getTowerColor() != ColorTower.NULL && considerTower) { //add an occourency for every prof the player with tower owns
             copyStudents.addAll(gameModel.getPlayerByColorTower(this.getTowerColor()).getProfs());
+            if(playerWithEffectAdditionalInfluence != null && playerWithEffectAdditionalInfluence.getNickname().equals(gameModel.getPlayerByColorTower(this.getTowerColor()).getNickname())){
+                copyStudents.addAll(gameModel.getPlayerByColorTower(this.getTowerColor()).getProfs());
+            }
+        }
+
+        if(playerWithEffectAdditionalInfluence != null){
+            copyStudents.addAll(playerWithEffectAdditionalInfluence.getProfs());
+        }
+        if(ignoreColorEffect != null){
+            copyStudents.removeIf(c -> c.equals(ignoreColorEffect));
         }
 
         for(PlayerModel p: gameModel.getPlayersModel()) {
             profsOwned.addAll(p.getProfs());
         }
         List<ColorPawns> mostFrequent = getMode(copyStudents);
-        if(mostFrequent.size() == 2){
+        if(mostFrequent.size() == 2){//there are 2 players with same students on island
             return new PlayerModel();
         }else {
             if (profsOwned.contains(mostFrequent.get(0))) {

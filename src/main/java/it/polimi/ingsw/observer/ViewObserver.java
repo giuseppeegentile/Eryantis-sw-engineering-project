@@ -1,6 +1,7 @@
 package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -58,4 +59,5 @@ public interface ViewObserver {
 
     void onUpdateGameMode(GameMode finalMode);
 
+    void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
 }

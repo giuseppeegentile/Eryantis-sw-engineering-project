@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
@@ -121,6 +122,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new DisplayCloudsMessage(nickname, clouds));
     }
 
+    @Override
+    public void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck) {
+        clientHandler.sendMessage(new ReqPlayCharacterCardMessage(active, characterDeck));
+    }
 
     /*@Override
     public void showCards(PlayerModel playerModel) {

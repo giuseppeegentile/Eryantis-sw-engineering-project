@@ -138,7 +138,7 @@ public class PlayerModel implements Serializable {
     }
 
     public boolean hasProf(ColorPawns prof){
-        return this.getProfs().contains(prof);
+        return this.profs.contains(prof);
     }
 
     /**
@@ -173,7 +173,7 @@ public class PlayerModel implements Serializable {
 
     private static void playCard(){ }
 
-    private int getCoins(){
+    public int getCoins(){
         return this.coins;
     }
 

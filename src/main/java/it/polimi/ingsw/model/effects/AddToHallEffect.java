@@ -1,7 +1,6 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public class AddToHallEffect extends InitialConfigEffect{
     private ColorPawns studentChosen;
 
     public AddToHallEffect(List<ColorPawns> students) {
-        super(students, 2);
+        super(students, 2, 4);
     }
 
     public void choose(int indexStudent) {
@@ -30,5 +29,9 @@ public class AddToHallEffect extends InitialConfigEffect{
     @Override
     public int getCoinsForEffect() {
         return getCostForEffect();
+    }
+
+    public String getDescription(){
+        return super.getDescription() + " Take 1 student from this card and place it in your hall. Draw then a new student and place it on this card.";
     }
 }

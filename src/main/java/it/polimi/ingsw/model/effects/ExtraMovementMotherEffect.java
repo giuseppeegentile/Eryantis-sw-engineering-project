@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.player.PlayerModel;
 //4
@@ -16,5 +16,10 @@ public class ExtraMovementMotherEffect implements Effect {
     @Override
     public int getCoinsForEffect() {
         return this.costForEffect;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 }

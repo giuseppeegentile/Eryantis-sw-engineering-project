@@ -1,12 +1,14 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.PlayingMessage;
 
 import java.util.List;
 import java.util.Map;
@@ -98,4 +100,6 @@ public interface View {
     void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs);
 
     void showSkippingMotherMovement(String activeNick);
+
+    void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck);
 }

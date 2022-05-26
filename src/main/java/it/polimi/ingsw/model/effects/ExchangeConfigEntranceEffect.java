@@ -1,7 +1,6 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
@@ -18,8 +17,9 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect{
     }
 
     public ExchangeConfigEntranceEffect(List<ColorPawns> students) {
-        super(students, 1);
+        super(students, 1, 6);
     }
+
     @Override
     public void enable(PlayerModel playerModel) {
         playerModel.addStudentsHall(studentFromCard);
@@ -36,4 +36,9 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect{
     public int getCoinsForEffect() {
         return getCostForEffect();
     }
+
+    public String getDescription(){
+        return super.getDescription() + " You can take up to 3 students from this card and exchange them with students on your hall.";
+    }
+
 }

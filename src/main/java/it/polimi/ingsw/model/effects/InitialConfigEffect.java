@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
@@ -9,10 +9,12 @@ import java.util.List;
 public class InitialConfigEffect implements Effect{
     private int costForEffect;
     final List<ColorPawns> students;
+    private int numStudents;
 
-    public InitialConfigEffect(List<ColorPawns>  students, int costForEffect){
+    public InitialConfigEffect(List<ColorPawns>  students, int costForEffect, int numStudents){
         this.students = students;
         this.costForEffect = costForEffect;
+        this.numStudents = numStudents;
     }
     @Override
     public void enable(PlayerModel playerModel) {
@@ -20,7 +22,6 @@ public class InitialConfigEffect implements Effect{
     }
 
     void getFromBag(){
-
         students.add(GameModel.getInstance().getBag().get(0));
         GameModel.getInstance().getBag().remove(0);
     }
@@ -28,6 +29,12 @@ public class InitialConfigEffect implements Effect{
     @Override
     public int getCoinsForEffect() {
         return 0;
+    }
+
+    @Override
+    public String getDescription() {
+        return "At the start of the match, take " + numStudents + " students and place them on this card.\n" +
+                "EFFECT: ";
     }
 
     public List<ColorPawns> getStudents() {
@@ -41,4 +48,5 @@ public class InitialConfigEffect implements Effect{
     public void setCostForEffect(int costForEffect){
         this.costForEffect = costForEffect;
     }
+
 }

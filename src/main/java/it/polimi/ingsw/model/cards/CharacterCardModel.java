@@ -1,9 +1,8 @@
 package it.polimi.ingsw.model.cards;
-import it.polimi.ingsw.model.CharacterEffects.Effect;
+import it.polimi.ingsw.model.effects.Effect;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class CharacterCardModel implements Serializable {
 
@@ -50,7 +49,7 @@ public class CharacterCardModel implements Serializable {
     }
 
     public boolean enoughCoins(){
-        return effect.getCoinsForEffect() > moneyOnCard;
+        return effect.getCoinsForEffect() >= moneyOnCard;
     }
 
     public PlayerModel getOwner() {
@@ -60,4 +59,5 @@ public class CharacterCardModel implements Serializable {
     public void setOwner(PlayerModel owner) {
         this.owner = owner;
     }
+
 }

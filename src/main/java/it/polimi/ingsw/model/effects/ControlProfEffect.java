@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
@@ -33,6 +33,11 @@ public class ControlProfEffect implements Effect{
     @Override
     public int getCoinsForEffect() {
         return this.costForEffect;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     public Map<ColorPawns, PlayerModel> getOldAssociationProfs(){

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.CharacterEffects;
+package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.controller.game.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
@@ -26,5 +26,10 @@ public class ExcludeColorInfluenceEffect implements Effect{
     @Override
     public int getCoinsForEffect() {
         return costForEffect;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 }
