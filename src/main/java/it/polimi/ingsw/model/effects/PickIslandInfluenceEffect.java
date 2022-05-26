@@ -14,7 +14,7 @@ public class PickIslandInfluenceEffect implements Effect{
         this.gameController = controller;
     }
 
-    public void choseIndexIsland(int indexIslandEffect){
+    public void chose(int indexIslandEffect){
         this.indexIslandEffect = indexIslandEffect;
     }
 

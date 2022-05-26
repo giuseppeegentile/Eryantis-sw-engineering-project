@@ -13,7 +13,7 @@ public class ExcludeColorInfluenceEffect implements Effect{
         this.gameController = gameController;
     }
 
-    public void setColorToExclude(ColorPawns colorToExclude){
+    public void chose(ColorPawns colorToExclude){
         this.colorToExclude = colorToExclude;
     }
 
