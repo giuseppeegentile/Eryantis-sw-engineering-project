@@ -350,7 +350,7 @@ class GameControllerTest {
         }
     }
 
-    /*@Test
+    @Test
     void computeIslandChangesWithoutMovingMother(){
         PlayerModel player1 = new PlayerModel("Tony Stark", ColorTower.GREY);
         PlayerModel player2 = new PlayerModel("Pepper Pots", ColorTower.BLACK);
@@ -376,7 +376,7 @@ class GameControllerTest {
         gameController.setPlayerWithEffectAdditionalInfluence(null);
         gameController.computeIslandsChanges(player2, islandModel);
         assertEquals(ColorTower.BLACK, islandModel.getTowerColor());
-    }*/
+    }
 
     @Test
     void getAvailableClouds(){
