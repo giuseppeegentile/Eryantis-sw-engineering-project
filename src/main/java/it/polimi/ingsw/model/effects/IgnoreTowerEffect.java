@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.player.PlayerModel;
 //6
 public class IgnoreTowerEffect implements Effect{
     private int costForEffect = 3;
-    private GameController controller;
+    private final GameController controller;
 
     public IgnoreTowerEffect(GameController controller){
         this.controller = controller;

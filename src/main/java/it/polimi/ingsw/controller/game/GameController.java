@@ -776,7 +776,7 @@ public class GameController implements Observer, Serializable {
     private boolean canProfBeAssignedToPlayer(PlayerModel player, ColorPawns prof){
         for(PlayerModel p: gameInstance.getPlayersModel()){
             if(!player.getNickname().equals(p.getNickname())){
-                if(p.getStudentInHall().get(prof) > player.getStudentInHall().get(prof)) return false; //se uno studente ha più pedine del colore del prof, non può essere assegnato
+                if(p.getStudentInHall().get(prof) >= player.getStudentInHall().get(prof)) return false; //se uno studente ha più pedine del colore del prof, non può essere assegnato
             }
         }
         return true;
@@ -790,7 +790,7 @@ public class GameController implements Observer, Serializable {
      * @param movementMotherNature The number of movements mother nature is allowed to do
      */
     private void moveMotherNature(byte movementMotherNature){
-        int indexOldMotherNature = 0;
+/*        int indexOldMotherNature = 0;
         List<IslandModel> islandsModels = gameInstance.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
                         //10                    + 2
@@ -802,7 +802,14 @@ public class GameController implements Observer, Serializable {
 
         islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
         islandsModels.set(newIndex, newIslandWithMotherNature);
-        gameInstance.setIslands(islandsModels);
+        gameInstance.setIslands(islandsModels);*/
+        int indexOldMotherNature = 0;
+        List<IslandModel> islandsModels = gameInstance.getIslandsModel();
+        while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
+        //10                    + 2
+        int newIndex = (indexOldMotherNature + movementMotherNature) % (gameInstance.getIslandsModel().size());
+        gameInstance.getIslandsModel().get(indexOldMotherNature).setMotherNature(false);
+        gameInstance.getIslandsModel().get(newIndex).setMotherNature(true);
     }
 
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
@@ -810,7 +817,7 @@ public class GameController implements Observer, Serializable {
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
         PlayerModel playerWithInfluence = islandWithMother.getInfluence(playerWithEffectAdditionalInfluence, colorToExclude, considerTower);
         if(playerWithInfluence.getColorTower()!=ColorTower.NULL) {
-            if (!islandWithMother.hasTower()) {
+            if (!islandWithMother.hasTower() && playerWithInfluence.getColorTower() != ColorTower.NULL) {
                 islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
             } else {
                 PlayerModel playerWithTower = gameInstance.getPlayerByColorTower(islandWithMother.getTowerColor());
@@ -955,7 +962,7 @@ public class GameController implements Observer, Serializable {
 
     }
 
-    MessageType oldState;
+    private MessageType oldState;
 
     private void askCharacter(MessageType oldState){
         this.oldState = oldState;

@@ -11,11 +11,11 @@ import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
 public class IslandModel implements Serializable {
     private static final long serialVersionUID = 2173471499023058671L;
-    private final boolean motherNature;
+    private boolean motherNature;
     private List<ColorPawns> students;
     private ColorTower colorTower;
     private boolean isJoined;
-    private boolean hasProhibition = false;
+    private boolean prohibition = false;
 
     /**
      * Constructor for island in the model: initializes isJoined tho the false value and motherNature
@@ -86,6 +86,10 @@ public class IslandModel implements Serializable {
      */
     public boolean getMotherNature(){
         return motherNature;
+    }
+
+    public void setMotherNature(boolean newValue){
+        this.motherNature = newValue;
     }
 
     /**
@@ -220,11 +224,11 @@ public class IslandModel implements Serializable {
     }
 
     public boolean hasProhibition() {
-        return hasProhibition;
+        return prohibition;
     }
 
-    public void setHasProhibition(boolean hasProhibition) {
-        this.hasProhibition = hasProhibition;
+    public void setHasProhibition(boolean prohibition) {
+        this.prohibition = prohibition;
     }
 
 
