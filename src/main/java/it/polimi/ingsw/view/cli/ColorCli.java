@@ -33,6 +33,7 @@ public enum ColorCli {
          return ColorCli.valueOf(colorTower.name());
     }
 
+
     @Override
     public String toString() {
         return code;

@@ -284,7 +284,7 @@ public class Cli extends ViewObservable implements View {
         for (CloudModel cloud : clouds) {
             if (cloud != null) {
                 buildCloud(cloud, strBoardBld);
-                strBoardBld.append(ColorCli.RESET).append("|              ");
+                strBoardBld.append(ColorCli.RESET).append("|               ");
             }
         }
         strBoardBld.append("\n");
@@ -679,7 +679,7 @@ public class Cli extends ViewObservable implements View {
         strBoardBld.append("| ");
         listColor.forEach(c->{
             int occurrence = Collections.frequency(cloudModel.getStudents(), ColorPawns.getEquivalentColorPawns(c.name()));
-            strBoardBld.append(ColorCli.RED).append(occurrence).append(" ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.getEquivalentColorPawn(ColorPawns.getEquivalentColorPawns(c.name()))).append(occurrence).append(" ").append(ColorCli.RESET);
         });
     }
 }

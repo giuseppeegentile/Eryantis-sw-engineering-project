@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ class IslandModelTest {
         testGame.setPlayers(playersModels);
 
 
-        assertEquals(null, islandModel.getInfluence(null).getNickname());
+        assertEquals(null, islandModel.getInfluence(player3, ColorPawns.RED, false).getNickname());
     }
 
 
