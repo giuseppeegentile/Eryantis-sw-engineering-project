@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 
@@ -24,10 +26,126 @@ class GameModelTest {
         player2.setTowers(ColorTower.BLACK, 5);
         playersModels.add(player2);
         PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.WHITE);
-        player3.setTowers(ColorTower.GREY, 5);
+        player3.setTowers(ColorTower.WHITE, 5);
         playersModels.add(player3);
         testGame.setPlayers(playersModels);
         String toCheck = testGame.getPlayerByColorTower(ColorTower.BLACK).getNickname();
         assertEquals("christian", toCheck);
+    }
+
+    @Test
+    void playerWithMajorNumberOfTowerOnIslandIsGray() {
+        GameModel testGame = GameModel.getInstance();
+        List<PlayerModel> playersModels = new ArrayList<>();
+        PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
+        player1.setTowers(ColorTower.GREY, 2);
+        playersModels.add(player1);
+        PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
+        player2.setTowers(ColorTower.BLACK, 5);
+        playersModels.add(player2);
+        PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.GREY);
+        player3.setTowers(ColorTower.GREY, 0);
+        playersModels.add(player3);
+        PlayerModel player4 = new PlayerModel("quarto", ColorTower.BLACK);
+        player4.setTowers(ColorTower.BLACK, 0);
+        playersModels.add(player4);
+        testGame.setPlayers(playersModels);
+        assertEquals(ColorTower.GREY, testGame.checkWin());
+    }
+
+    @Test
+    void playerWithMajorNumberOfTowerOnIslandIsBlack() {
+        GameModel testGame = GameModel.getInstance();
+        List<PlayerModel> playersModels = new ArrayList<>();
+        PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
+        player1.setTowers(ColorTower.GREY, 5);
+        playersModels.add(player1);
+        PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
+        player2.setTowers(ColorTower.BLACK, 2);
+        playersModels.add(player2);
+        PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.GREY);
+        player3.setTowers(ColorTower.GREY, 0);
+        playersModels.add(player3);
+        PlayerModel player4 = new PlayerModel("quarto", ColorTower.BLACK);
+        player4.setTowers(ColorTower.BLACK, 0);
+        playersModels.add(player4);
+        testGame.setPlayers(playersModels);
+        assertEquals(ColorTower.BLACK, testGame.checkWin());
+    }
+
+    @Test
+    void playerWithMajorNumberOfProfsIsGrey() {
+        GameModel testGame = GameModel.getInstance();
+        List<PlayerModel> playersModels = new ArrayList<>();
+        PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
+        player1.setTowers(ColorTower.GREY, 5);
+        player1.addProf(ColorPawns.BLUE);
+        player1.addProf(ColorPawns.PINK);
+        playersModels.add(player1);
+        PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
+        player2.setTowers(ColorTower.BLACK, 5);
+        player2.addProf(ColorPawns.GREEN);
+        playersModels.add(player2);
+        PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.GREY);
+        player3.setTowers(ColorTower.GREY, 0);
+        player3.addProf(ColorPawns.RED);
+        playersModels.add(player3);
+        PlayerModel player4 = new PlayerModel("quarto", ColorTower.BLACK);
+        player4.setTowers(ColorTower.BLACK, 0);
+        playersModels.add(player4);
+        testGame.setPlayers(playersModels);
+        assertEquals(ColorTower.GREY, testGame.checkWin());
+    }
+
+    @Test
+    void playerWithMajorNumberOfProfsIsBlack() {
+        GameModel testGame = GameModel.getInstance();
+        List<PlayerModel> playersModels = new ArrayList<PlayerModel>();
+        PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
+        player1.setTowers(ColorTower.GREY, 5);
+        player1.addProf(ColorPawns.BLUE);
+        playersModels.add(player1);
+        PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
+        player2.setTowers(ColorTower.BLACK, 5);
+        player2.addProf(ColorPawns.GREEN);
+        player2.addProf(ColorPawns.PINK);
+        playersModels.add(player2);
+        PlayerModel player3 = new PlayerModel("giuseppe", ColorTower.GREY);
+        player3.setTowers(ColorTower.GREY, 0);
+        player3.addProf(ColorPawns.RED);
+        playersModels.add(player3);
+        PlayerModel player4 = new PlayerModel("quarto", ColorTower.BLACK);
+        player4.setTowers(ColorTower.BLACK, 0);
+        playersModels.add(player4);
+        testGame.setPlayers(playersModels);
+        assertEquals(ColorTower.BLACK, testGame.checkWin());
+    }
+
+    @Test
+    void motherNatureIndex(){
+        GameModel testGame = GameModel.getInstance();
+        IslandModel island = new IslandModel(true, ColorPawns.BLUE);
+        List<IslandModel> islandModels = new ArrayList<>();
+        islandModels.add(island);
+        for (int i=1; i<12; i++){
+            IslandModel island1 = new IslandModel(false, ColorPawns.PINK);
+            islandModels.add(island1);
+        }
+        testGame.setIslands(islandModels);
+        assertEquals(0, testGame.getMotherNatureIndex());
+    }
+
+    @Test
+    void getIslandWithMotherNature(){
+        GameModel testGame = GameModel.getInstance();
+        IslandModel island = new IslandModel(true, ColorPawns.BLUE);
+        List<IslandModel> islandModels = new ArrayList<>();
+        islandModels.add(island);
+        for (int i=1; i<12; i++){
+            IslandModel island1 = new IslandModel(false, ColorPawns.PINK);
+            islandModels.add(island1);
+        }
+        testGame.setIslands(islandModels);
+        assertEquals(island, testGame.getIslandWithMother());
     }
 }

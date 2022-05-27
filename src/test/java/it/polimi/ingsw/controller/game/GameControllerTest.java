@@ -4,13 +4,16 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.enums.PhaseGame;
+import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -345,5 +348,48 @@ class GameControllerTest {
                 }
             }
         }
+    }
+
+    /*@Test
+    void computeIslandChangesWithoutMovingMother(){
+        PlayerModel player1 = new PlayerModel("Tony Stark", ColorTower.GREY);
+        PlayerModel player2 = new PlayerModel("Pepper Pots", ColorTower.BLACK);
+        player1.addProf(ColorPawns.BLUE);
+        player2.addProf(ColorPawns.RED);
+        List<PlayerModel> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.RED,ColorPawns.RED,ColorPawns.RED));
+        IslandModel islandModel = new IslandModel(true, studentOnIsland);
+        List<IslandModel> islands = new ArrayList<>();
+        islandModel.setTowerColor(ColorTower.GREY);
+        islands.add(islandModel);
+        for(int i=0; i<11; i++){
+            IslandModel islandModel1 = new IslandModel(false, ColorPawns.BLUE);
+            islands.add(islandModel1);
+        }
+        GameController gameController = new GameController();
+        gameController.getGameInstance().setIslands(islands);
+        gameController.getGameInstance().setPlayers(players);
+        gameController.setIgnoreColorEffect(null);
+        gameController.setConsiderTower(true);
+        gameController.setPlayerWithEffectAdditionalInfluence(null);
+        gameController.computeIslandsChanges(player2, islandModel);
+        assertEquals(ColorTower.BLACK, islandModel.getTowerColor());
+    }*/
+
+    @Test
+    void getAvailableClouds(){
+        CloudModel cloud1 = new CloudModel(3);
+        CloudModel cloud2 = new CloudModel(3);
+        List<ColorPawns> studentOnIsland = new ArrayList<>(Arrays.asList(ColorPawns.BLUE,ColorPawns.RED,ColorPawns.RED,ColorPawns.RED));
+        List<ColorPawns> studentOnIsland1 = new ArrayList<>();
+        cloud1.setStudents(studentOnIsland);
+        cloud2.setStudents(studentOnIsland1);
+        List<CloudModel> clouds = new ArrayList<>();
+        clouds.add(cloud1);
+        clouds.add(cloud2);
+        gameController.getGameInstance().setCloudsModel(clouds);
+        assertEquals(cloud1, gameController.getAvailableClouds().get(0));
     }
 }

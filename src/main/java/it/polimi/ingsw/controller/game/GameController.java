@@ -52,6 +52,10 @@ public class GameController implements Observer, Serializable {
         playerWithEffectAdditionalInfluence = null;
     }
 
+    public GameModel getGameInstance(){
+        return this.gameInstance;
+    }
+
     public PhaseGame getPhaseGame(){return this.phase;}
 
     public void setPhaseGame(PhaseGame phase){
@@ -823,7 +827,7 @@ public class GameController implements Observer, Serializable {
                 PlayerModel playerWithTower = gameInstance.getPlayerByColorTower(islandWithMother.getTowerColor());
                 islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
                 playerWithTower.addTowerToBoard();
-                showBoard(playerWithTower.getNickname()); //shows the updated board (towers changed) to the player who has lost influence on this island
+                //showBoard(playerWithTower.getNickname()); //shows the updated board (towers changed) to the player who has lost influence on this island
             }
 
             playerWithInfluence.removeTowerFromBoard();
@@ -891,7 +895,7 @@ public class GameController implements Observer, Serializable {
 
     }
 
-    private List<CloudModel> getAvailableClouds(){
+    public List<CloudModel> getAvailableClouds(){
         List<CloudModel> availableClouds = new ArrayList<>();
 
         for(CloudModel c: gameInstance.getCloudsModel()){
