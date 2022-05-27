@@ -509,23 +509,35 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck) {
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck, List<AssistantCardModel> cemetery) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
         List<Integer> indexes = new ArrayList<>(); //indici che può selezionare
         out.println(nickname + ", select your assistant card for this round.\nThis is your deck:");
         for (AssistantCardModel card : playerDeck) {
-            if(card.getPriority()!= 0 && card.getMotherNatureMovement() != 0) {
-                stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
-                indexes.add(i);
-            }
-            i++;
+            if(card.getPriority() != 0 && card.getMotherNatureMovement() != 0)
+                if (cemetery.size()>0) {
+                    for (AssistantCardModel cemeteryCard : cemetery)
+                        if (!(cemeteryCard.getPriority() == card.getPriority() && cemeteryCard.getMotherNatureMovement() == card.getMotherNatureMovement())) {
+                            stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+                            indexes.add(i);
+                        }
+                    i++;
+                }else{
+                    stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+                    indexes.add(i);
+                    i++;
+                }
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
         while(!indexes.contains(chosenIndex)){
             chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
         }
+        /*for(AssistantCardModel card : cemetery) {
+            if (playerDeck.get(chosenIndex - 1).getPriority() == card.getPriority() && playerDeck.get(chosenIndex-1).getMotherNatureMovement() == card.getMotherNatureMovement())
+                System.out.println("You've chosen a card already played, please select a different card from the list shown");
+        }*/
         int finalChosenIndex = chosenIndex - 1;
         notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalChosenIndex));
     }

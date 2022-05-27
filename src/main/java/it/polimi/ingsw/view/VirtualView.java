@@ -247,8 +247,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck){
-        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(nickname, playerDeck));
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck, List<AssistantCardModel> cemetery){
+        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(nickname, playerDeck, cemetery));
     }
 
     @Override

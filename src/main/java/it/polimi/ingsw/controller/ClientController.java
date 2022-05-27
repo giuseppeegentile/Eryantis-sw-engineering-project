@@ -108,7 +108,7 @@ public class ClientController implements ViewObserver, Observer {
                         break;
                     case DECK:
                         DisplayDeckAndAskCardMessage displayDeckMessage = (DisplayDeckAndAskCardMessage)message;
-                        queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
+                        queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck(), displayDeckMessage.getCemetery()));
                         break;
                    /* case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;

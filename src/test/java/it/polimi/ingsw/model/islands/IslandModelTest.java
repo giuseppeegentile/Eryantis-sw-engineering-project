@@ -25,7 +25,7 @@ class IslandModelTest {
         List<PlayerModel> playersModels = new ArrayList<>();
         PlayerModel player1 = new PlayerModel("davide", ColorTower.GREY);
         player1.setTowers(ColorTower.GREY, 5);
-        //player1.addProf(ColorPawns.RED);
+        player1.addProf(ColorPawns.RED);
         playersModels.add(player1);
         PlayerModel player2 = new PlayerModel("christian", ColorTower.BLACK);
         player2.setTowers(ColorTower.BLACK, 5);
@@ -38,7 +38,7 @@ class IslandModelTest {
         testGame.setPlayers(playersModels);
 
 
-        assertEquals(null, islandModel.getInfluence(player3, ColorPawns.RED, false).getNickname());
+        assertEquals("davide", islandModel.getInfluence(null, null, true).getNickname());
     }
 
 

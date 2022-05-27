@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.PlayingMessage;
 
 import java.util.List;
 import java.util.Map;
@@ -86,7 +85,7 @@ public interface View {
 
     void showErrorAndExit(String error);
 
-    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck);
+    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck, List<AssistantCardModel> cemetery);
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
 
