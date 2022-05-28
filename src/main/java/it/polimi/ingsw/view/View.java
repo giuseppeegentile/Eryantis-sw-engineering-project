@@ -85,7 +85,7 @@ public interface View {
 
     void showErrorAndExit(String error);
 
-    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck, List<AssistantCardModel> cemetery);
+    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck);
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
 

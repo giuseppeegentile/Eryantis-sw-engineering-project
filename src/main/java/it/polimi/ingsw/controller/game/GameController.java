@@ -481,7 +481,7 @@ public class GameController implements Observer, Serializable {
         List<AssistantCardModel> cemetery = new ArrayList<>(gameInstance.getCemetery());
         playerDeck.removeAll(gameInstance.getCemetery());
 
-        virtualViewMap.get(player).askPlayCard(player, playerDeck, cemetery);
+        virtualViewMap.get(player).askPlayCard(player, playerDeck);
     }
 
     /**
