@@ -33,6 +33,6 @@ public class ScreenTitleSceneController extends ViewObservable implements Generi
      * @param event the mouse click event.
      */
     private void onNewGameButtonClick(Event event) {
-        SceneController.changeRootPane(observers, event, "connect_scene.fxml");
+        SceneController.changeRootPane(observers, event, "ConnectionScene.fxml");
     }
 }
