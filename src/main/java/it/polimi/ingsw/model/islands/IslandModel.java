@@ -116,103 +116,6 @@ public class IslandModel implements Serializable {
         this.colorTower = colorTower;
     }
 
-   /* *//**
-     * Calculates the influence of the island and returns the player who conquered the island
-     * @return The player who has the major influence on the island. It depends on how many students of the same color of the prof owned by player are on the island
-     *//*
-    public PlayerModel getInfluence(boolean considerTower, PlayerModel playerWithEffectAdditionalInfluence, ColorPawns ignoreColorEffect) {
-        GameModel gameModel = GameModel.getInstance();
-        ColorTower towerOnIsland = this.getTowerColor();
-        PlayerModel playerToAssignAdditionalInfluence = null;
-        if (towerOnIsland != ColorTower.NULL && considerTower) {
-            playerToAssignAdditionalInfluence = gameModel.getPlayerByColorTower(towerOnIsland);
-        }
-
-        HashMap<ColorPawns, Integer> studentInIsland = new HashMap<>(Map.of(
-                GREEN, 0,
-                RED, 0,
-                YELLOW, 0,
-                PINK, 0,
-                BLUE, 0
-        ));
-        List<ColorPawns> colors = new ArrayList<>(Arrays.asList(ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK, ColorPawns.RED, ColorPawns.YELLOW));
-        List<ColorPawns> allColors;
-        if (ignoreColorEffect != null)
-            colors.remove(ignoreColorEffect);
-
-        allColors = new ArrayList<>(colors);
-
-        PlayerModel playerWithTower = playerToAssignAdditionalInfluence;
-        for (ColorPawns s : allColors) {
-            if (playerWithTower != null && playerWithTower.hasProf(s)) { //aggiungo 1 per ogni prof che ha se il giocatore ha già una torre
-                studentInIsland.put(s,
-                        Collections.frequency(this.getStudents(), s) + 1); //for each  student count the frequency plus the tower on the island and put in the map
-            }
-            if (playerWithEffectAdditionalInfluence != null && playerWithEffectAdditionalInfluence.hasProf(s)) {
-                studentInIsland.put(s,
-                        Collections.frequency(this.getStudents(), s) + 2); //for each  student count the frequency plus the tower on the island and put in the map
-
-            } else {
-                studentInIsland.put(s,
-                        Collections.frequency(this.getStudents(), s)); //for each student count the frequency on the island and put in the map
-            }
-        }
-
-
-        //studentInIsland:
-        //  key     value
-        //  GREEN:  # of green students in the island
-        //  RED:    # of red students in the island
-        //  YELLOW: # of yellow students in the island
-        //  PINK:   # of pink students in the island
-        //  BLUE:   # of blue students in the island
-
-        List<PlayerModel> playersWithAtLeastAProf = new ArrayList<>();
-
-        //populate the list with only players with at least a prof
-        gameModel.getPlayersModel().forEach(playerModel -> {
-            if (playerModel.getNumProfs() != 0) playersWithAtLeastAProf.add(playerModel);
-        });
-
-
-        while (studentInIsland.size() != 0) {
-            List<ColorPawns> colorsWithSameMax = new ArrayList<>();
-            //per ogni riga della mappa, guardo se il valore è il massimo, se sì, lo aggiungo alla lista colorsWithSameMax
-            studentInIsland.forEach((student, frequency) -> {
-                if (frequency.equals(Collections.max(studentInIsland.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue())) {
-                    colorsWithSameMax.add(student);
-                }
-            });
-
-            if (colorsWithSameMax.size() > 1) { //in questo caso ho almeno due studenti con entrambi stesso numero massimo sull'isola
-                int i = 0;                     //devo controllare se due giocatori hanno dei prof dello stesso colore dei due massimi
-                for (ColorPawns s : colorsWithSameMax) {
-                    for (PlayerModel p : playersWithAtLeastAProf) {
-                        if (p.getProfs().contains(s)) {
-                            i++;
-                            if (i != 1) return new PlayerModel(); //ho due giocatori con entrambi stessa influenza
-                        }
-                    }
-                    ;
-                }
-
-            }
-
-            //get the student with max presence in island
-            ColorPawns maxStudentOnIsland = Collections.max(studentInIsland.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
-
-
-            for (PlayerModel playerModel : playersWithAtLeastAProf) {
-                if (playerModel.hasProf(maxStudentOnIsland)) { //se un giocatore ha il prof dello stesso colore del massimo numero degli studenti sull'isola
-                    return playerModel;
-                }
-            }
-            studentInIsland.remove(maxStudentOnIsland); //remove max element, because no player has prof of that color
-        }
-        return new PlayerModel(); //default value, meaning no player has influence
-    }
-*/
-
     /**********************************************************/
     //DA TESTARE
     public void addStudent(List<ColorPawns> studentsToAdd){
@@ -252,19 +155,15 @@ public class IslandModel implements Serializable {
 
         for(PlayerModel p: gameModel.getPlayersModel()) {
             profsOwned.addAll(p.getProfs());
-            System.out.println("profs del player " + p.getNickname() + " : " + p.getProfs());
         }
 
         List<ColorPawns> mostFrequent = getMode(copyStudents);
-        System.out.println("Most frequent: " + mostFrequent);
         if(mostFrequent.size() == 2){//there are 2 players with same students on island
             return new PlayerModel();
         }else {
             if (profsOwned.contains(mostFrequent.get(0))) {
-                System.out.println("entrato 1");
                 for (PlayerModel p : gameModel.getPlayersModel()) {
                     if (p.hasProf(mostFrequent.get(0))) {
-                        System.out.println("entrato 2");
                         return p;
                     }
                 }
@@ -273,8 +172,12 @@ public class IslandModel implements Serializable {
         return new PlayerModel();
     }
 
-
-    public List<ColorPawns> getMode(List<ColorPawns> arr){
+    /**
+     * Calculate the most frequent values in a list
+     * @param arr List to retrieve the mode from.
+     * @return A list of the most frequent values from another list
+     */
+    private List<ColorPawns> getMode(List<ColorPawns> arr){
         int n = arr.size();
         // Sort the list
         Collections.sort(arr);
@@ -310,7 +213,4 @@ public class IslandModel implements Serializable {
         return List.of(res);
 
     }
-
-
-
 }

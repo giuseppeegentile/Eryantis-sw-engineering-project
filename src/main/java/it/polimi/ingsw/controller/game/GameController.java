@@ -478,10 +478,22 @@ public class GameController implements Observer, Serializable {
 
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = new ArrayList<>(gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel());
-        List<AssistantCardModel> cemetery = new ArrayList<>(gameInstance.getCemetery());
-        playerDeck.removeAll(gameInstance.getCemetery());
+        List<AssistantCardModel> copy = new ArrayList<>(playerDeck);
+        //playerDeck.removeAll(gameInstance.getCemetery());
+/*        playerDeck.removeIf(c-> {
+            return gameInstance.getCemetery().stream().anyMatch(card ->
+                card.getPriority() == c.getPriority() && card.getMotherNatureMovement() == c.getMotherNatureMovement()
+            );
+        });*/
 
-        virtualViewMap.get(player).askPlayCard(player, playerDeck);
+        for(AssistantCardModel c: playerDeck){
+            for(AssistantCardModel cem: gameInstance.getCemetery()){
+                if(c.getPriority() == cem.getPriority() && (cem.getMotherNatureMovement() == c.getMotherNatureMovement())) {
+                    copy.remove(c);
+                }
+            }
+        }
+        virtualViewMap.get(player).askPlayCard(player, copy);
     }
 
     /**
