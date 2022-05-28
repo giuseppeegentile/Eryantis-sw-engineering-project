@@ -6,9 +6,11 @@ import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.network.message.GenericMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.gui.scene.LoginSceneController;
 import javafx.application.Platform;
 
 import java.util.List;
@@ -55,8 +57,22 @@ public class Gui extends ViewObservable implements View {
 
     public void showInvalidTower(String player, ColorTower colorTower) {}
 
-    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {}
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+        if (!nicknameAccepted || !connectionSuccessful) {
+            if (!nicknameAccepted && connectionSuccessful) {
+                Platform.runLater(() -> {
+                    SceneController.showAlert(STR_ERROR, "Nickname already taken.");
+                    SceneController.changeRootPane(observers, "login_scene.fxml");
+                });
+            } else {
+                Platform.runLater(() -> {
+                    SceneController.showAlert(STR_ERROR, "Could not contact server.");
+                    SceneController.changeRootPane(observers, MENU_SCENE_FXML);
+                });
+            }
 
+        }
+    }
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck){}
 
     public void showEndTurn(String nick){}
@@ -69,15 +85,23 @@ public class Gui extends ViewObservable implements View {
 
     public void errorCard(String player, AssistantCardModel card){}
 
-    public void showDisconnectionMessage(String nickname, String message){}
-
-    public void showGenericMessage(String message){}
+    public void showDisconnectionMessage(String nickname, String message){
+        Platform.runLater(() -> {
+            SceneController.showAlert("DISCONNECTION",   nickname + " " + message);
+            SceneController.changeRootPane(observers, MENU_SCENE_FXML);
+        });
+    }
+    public void showGenericMessage(String message){
+        Platform.runLater(() -> SceneController.showAlert("Info Message", message));
+    }
 
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){}
 
     public void showInvalidNumberOfStudentMoved(String nickname){}
 
-    public void askNickname(){}
+    public void askNickname(){
+        Platform.runLater(() -> SceneController.changeRootPane(observers, "login_scene.fxml"));
+    }
 
     public void showErrorAndExit(String error){}
 
