@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Main JavaFX class which starts the main stage and scene.
+ * Main JavaFX class which creates the main stage and scene.
  */
 public class JavaFXGui extends Application {
 
@@ -48,7 +48,7 @@ public class JavaFXGui extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        stage.setTitle("Santorini Board Game");
+        stage.setTitle("Eryantis");
         stage.show();
     }
 
