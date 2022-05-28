@@ -299,15 +299,15 @@ public class GameModel extends Observable implements Serializable {
     public ColorDirectionAdjacentIsland getAdjacentSameColor(IslandModel islandModelToCheck){
         //indice dell'isola nell'array delle isole
         int right, left;
-        int indexIslandToChekAdjacent = this.islandModels.indexOf(islandModelToCheck);
-        if (indexIslandToChekAdjacent != 11)
-            right = indexIslandToChekAdjacent + 1;
+        int indexIslandToCheckAdjacent = this.islandModels.indexOf(islandModelToCheck);
+        if (indexIslandToCheckAdjacent != this.islandModels.size())
+            right = indexIslandToCheckAdjacent + 1;
         else
             right = 0;
-        if (indexIslandToChekAdjacent != 0)
-            left = indexIslandToChekAdjacent - 1;
+        if (indexIslandToCheckAdjacent != 0)
+            left = indexIslandToCheckAdjacent - 1;
         else
-            left = 11;
+            left = this.islandModels.size();
         if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
             return ColorDirectionAdjacentIsland.BOTH;
         else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())

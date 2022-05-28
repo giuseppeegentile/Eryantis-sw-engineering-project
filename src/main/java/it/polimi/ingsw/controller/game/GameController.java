@@ -807,6 +807,7 @@ public class GameController implements Observer, Serializable {
         islandsModels.set(indexOldMotherNature, oldIslandWithMotherNature);
         islandsModels.set(newIndex, newIslandWithMotherNature);
         gameInstance.setIslands(islandsModels);*/
+        if(movementMotherNature==0)return;
         int indexOldMotherNature = 0;
         List<IslandModel> islandsModels = gameInstance.getIslandsModel();
         while(!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
