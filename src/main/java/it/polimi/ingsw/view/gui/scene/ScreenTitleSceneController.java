@@ -12,19 +12,19 @@ import javafx.scene.layout.AnchorPane;
 /**
  * This class implements the main menu scene.
  */
-public class MenuSceneController extends ViewObservable implements GenericSceneController {
+public class ScreenTitleSceneController extends ViewObservable implements GenericSceneController {
 
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private Button playBtn;
+    private Button newGameButton;
     @FXML
-    private Button quitBtn;
+    private Button quitGameButton;
 
     @FXML
     public void initialize() {
-        playBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onPlayBtnClick);
-        quitBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> System.exit(0));
+        newGameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNewGameButtonClick);
+        quitGameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> System.exit(0));
     }
 
     /**
@@ -32,7 +32,7 @@ public class MenuSceneController extends ViewObservable implements GenericSceneC
      *
      * @param event the mouse click event.
      */
-    private void onPlayBtnClick(Event event) {
+    private void onNewGameButtonClick(Event event) {
         SceneController.changeRootPane(observers, event, "connect_scene.fxml");
     }
 }

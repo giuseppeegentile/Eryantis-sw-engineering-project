@@ -3,7 +3,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.network.client.Client;
-import it.polimi.ingsw.view.gui.scene.MenuSceneController;
+import it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class JavaFXGui extends Application {
 
         // Load root layout from fxml file.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/menu_scene.fxml"));
+        loader.setLocation(getClass().getResource("/fxml/ScreenTitle.fxml"));
         Parent rootLayout = null;
         try {
             rootLayout = loader.load();
@@ -35,7 +35,7 @@ public class JavaFXGui extends Application {
             Client.LOGGER.severe(e.getMessage());
             System.exit(1);
         }
-        MenuSceneController controller = loader.getController();
+        ScreenTitleSceneController controller = loader.getController();
         controller.addObserver(clientController);
 
         // Show the scene containing the root layout.

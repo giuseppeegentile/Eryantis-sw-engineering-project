@@ -10,7 +10,8 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane fx:controller="it.polimi.ingsw.view.gui.GuiController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:controller="it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
@@ -37,7 +38,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button layoutX="467.0" layoutY="353.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" text="Torna al desktop">
+      <Button fx:id="quitGameButton" layoutX="467.0" layoutY="353.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" text="Torna al desktop">
          <font>
             <Font name="High Tower Text" size="14.0" />
          </font>
@@ -50,4 +51,4 @@
          </effect>
       </Button>
    </children>
-</Pane>
+</AnchorPane>
