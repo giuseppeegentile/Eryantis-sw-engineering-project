@@ -6,7 +6,7 @@
     <groupId>it.polimi.ingsw</groupId>
     <!-- Change the artifactId depending on your group number
              (example: group 99 will have artifactId PSP99 -->
-    <artifactId>PSP999</artifactId>
+    <artifactId>PSP62</artifactId>
 
     <version>1.0-SNAPSHOT</version>
     <name>Eryantis</name>
