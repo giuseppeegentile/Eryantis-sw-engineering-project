@@ -534,7 +534,7 @@ public class GameController implements Observer, Serializable {
 
         int sizeIslandWithStudents = 10;
         int equalNumber = 2;
-        List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
+        List<ColorPawns> colors;
         colors = fillListWithColors(equalNumber);
         //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
 
