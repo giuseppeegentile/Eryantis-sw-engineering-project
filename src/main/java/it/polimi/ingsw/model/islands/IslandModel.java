@@ -252,14 +252,21 @@ public class IslandModel implements Serializable {
 
         for(PlayerModel p: gameModel.getPlayersModel()) {
             profsOwned.addAll(p.getProfs());
+            System.out.println("profs del player " + p.getNickname() + " : " + p.getProfs());
         }
+
         List<ColorPawns> mostFrequent = getMode(copyStudents);
+        System.out.println("Most frequent: " + mostFrequent);
         if(mostFrequent.size() == 2){//there are 2 players with same students on island
             return new PlayerModel();
         }else {
             if (profsOwned.contains(mostFrequent.get(0))) {
+                System.out.println("entrato 1");
                 for (PlayerModel p : gameModel.getPlayersModel()) {
-                    if (p.hasProf(mostFrequent.get(0))) return p;
+                    if (p.hasProf(mostFrequent.get(0))) {
+                        System.out.println("entrato 2");
+                        return p;
+                    }
                 }
             }
         }
@@ -294,7 +301,7 @@ public class IslandModel implements Serializable {
             if(maxValue < Collections.frequency(arr, c)){
                 maxValue = Collections.frequency(arr, c);
                 oldColor = c;
-            }else if (maxValue == Collections.frequency(arr, c)){
+            }else if (maxValue == Collections.frequency(arr, c) && c.equals(res)){
                 return List.of(oldColor, c);
             }
 

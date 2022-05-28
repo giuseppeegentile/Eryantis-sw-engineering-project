@@ -300,14 +300,14 @@ public class GameModel extends Observable implements Serializable {
         //indice dell'isola nell'array delle isole
         int right, left;
         int indexIslandToCheckAdjacent = this.islandModels.indexOf(islandModelToCheck);
-        if (indexIslandToCheckAdjacent != this.islandModels.size())
+        if (indexIslandToCheckAdjacent != this.islandModels.size()-1)
             right = indexIslandToCheckAdjacent + 1;
         else
             right = 0;
         if (indexIslandToCheckAdjacent != 0)
             left = indexIslandToCheckAdjacent - 1;
         else
-            left = this.islandModels.size();
+            left = this.islandModels.size()-1;
         if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
             return ColorDirectionAdjacentIsland.BOTH;
         else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())

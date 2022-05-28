@@ -258,7 +258,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
         StringBuilder strBoardBld = new StringBuilder();
-        out.println(nickname + ", this is the updated island N " + islandIndex + "\n");
+        out.println(nickname + ", this is the updated island N " + islandIndex + 1 + "\n");
         strBoardBld.append(" -----------\n");
 
         buildIsland(islandModel, strBoardBld);
@@ -518,16 +518,16 @@ public class Cli extends ViewObservable implements View {
             if(card.getPriority() != 0 && card.getMotherNatureMovement() != 0)
                 if (cemetery.size()>0) {
                     for (AssistantCardModel cemeteryCard : cemetery)
+                        // (!(cemeteryCard.getPriority() == card.getPriority() && cemeteryCard.getMotherNatureMovement() == card.getMotherNatureMovement())
                         if (!(cemeteryCard.getPriority() == card.getPriority() && cemeteryCard.getMotherNatureMovement() == card.getMotherNatureMovement())) {
                             stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
                             indexes.add(i);
                         }
-                    i++;
                 }else{
                     stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
                     indexes.add(i);
-                    i++;
                 }
+            i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
