@@ -15,12 +15,12 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@Screen_title.png" />
+            <Image url="@../images_cranio/Screen_title.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="59.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@logo_cranio.png" />
+            <Image url="@../images_cranio/logo_cranio.png" />
          </image>
          <effect>
             <Blend />
