@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,6 +41,7 @@ public class JavaFXGui extends Application {
         ScreenTitleSceneController controller = loader.getController();
         controller.addObserver(clientController);
 
+
         // Show the scene containing the root layout.
         Scene scene = new Scene(rootLayout);
         stage.setScene(scene);
@@ -51,6 +54,7 @@ public class JavaFXGui extends Application {
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setTitle("Eryantis");
         stage.show();
+
     }
 
     @Override

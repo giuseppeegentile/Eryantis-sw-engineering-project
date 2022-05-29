@@ -6,11 +6,15 @@ import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.view.gui.scene.ErrorSceneController;
 import it.polimi.ingsw.view.gui.scene.GenericSceneController;
 import it.polimi.ingsw.view.gui.scene.WinSceneController;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +24,6 @@ import java.util.List;
  */
 public class SceneController extends ViewObservable {
 
-    public static final String GOD_IMAGE_PREFIX = "/images/gods/podium_";
 
     private static Scene activeScene;
     private static GenericSceneController activeController;
