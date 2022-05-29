@@ -3,7 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.observer.ViewObserver;
-import it.polimi.ingsw.view.gui.scene.AlertSceneController;
+import it.polimi.ingsw.view.gui.scene.ErrorSceneController;
 import it.polimi.ingsw.view.gui.scene.GenericSceneController;
 import it.polimi.ingsw.view.gui.scene.WinSceneController;
 import javafx.event.Event;
@@ -161,7 +161,7 @@ public class SceneController extends ViewObservable {
             Client.LOGGER.severe(e.getMessage());
             return;
         }
-        AlertSceneController alertSceneController = loader.getController();
+        ErrorSceneController alertSceneController = loader.getController();
         Scene alertScene = new Scene(parent);
         alertSceneController.setScene(alertScene);
         alertSceneController.setAlertTitle(title);

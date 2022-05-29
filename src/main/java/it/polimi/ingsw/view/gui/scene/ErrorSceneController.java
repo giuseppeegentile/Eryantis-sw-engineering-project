@@ -15,7 +15,7 @@ import javafx.stage.StageStyle;
 /**
  * This class implements the controller of a generic Alert Scene.
  */
-public class AlertSceneController implements GenericSceneController {
+public class ErrorSceneController implements GenericSceneController {
 
     private final Stage stage;
 
@@ -34,7 +34,7 @@ public class AlertSceneController implements GenericSceneController {
     /**
      * Default constructor.
      */
-    public AlertSceneController() {
+    public ErrorSceneController() {
         stage = new Stage();
         stage.initOwner(SceneController.getActiveScene().getWindow());
         stage.initModality(Modality.APPLICATION_MODAL);
