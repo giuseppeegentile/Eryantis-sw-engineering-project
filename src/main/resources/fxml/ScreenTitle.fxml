@@ -5,7 +5,6 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane fx:id="rootPane" fx:controller="it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
          <image>
             <Image url="@../images_cranio/Screen_title.png" />
          </image>
@@ -26,9 +25,9 @@
             <Blend />
          </effect>
       </ImageView>
-      <Button fx:id="newGameButton" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="14.0" layoutY="353.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" text="Nuova partita">
+      <Button fx:id="newGameButton" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="14.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Nuova partita">
          <font>
-            <Font name="High Tower Text" size="14.0" />
+            <Font name="High Tower Text" size="18.0" />
          </font>
          <effect>
             <DropShadow spread="0.14">
@@ -38,9 +37,9 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="quitGameButton" layoutX="467.0" layoutY="353.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" text="Torna al desktop">
+      <Button fx:id="quitGameButton" layoutX="1100.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Torna al desktop">
          <font>
-            <Font name="High Tower Text" size="14.0" />
+            <Font name="High Tower Text" size="16.0" />
          </font>
          <effect>
             <DropShadow>

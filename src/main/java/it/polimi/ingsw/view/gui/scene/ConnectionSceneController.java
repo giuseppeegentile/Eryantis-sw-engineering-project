@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  * This class implements the scene where users connect to the server.
  */
 
-public class ConnectSceneController extends ViewObservable implements GenericSceneController{
+public class ConnectionSceneController extends ViewObservable implements GenericSceneController{
 
     private final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
@@ -30,22 +31,35 @@ public class ConnectSceneController extends ViewObservable implements GenericSce
     private TextField serverPortField;
 
     @FXML
-    private Button connectBtn;
+    private Button connectButton;
     @FXML
-    private Button backBtn;
+    private Button backToTitleButton;
+
+    @FXML
+    private Label serverIPLabel;
+
+    @FXML
+    private Label serverPortLabel;
 
     @FXML
     public void initialize() {
-        connectBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConnectBtnClick);
-        backBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackBtnClick);
+        connectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConnectButtonClick);
+        backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToTitleButtonClick);
     }
+
 
     /**
      * Handle the click on the connect button.
      *
      * @param event the mouse click event.
      */
-    private void onConnectBtnClick(Event event) {
+    private void onConnectButtonClick(Event event) {
+        connectButton.setOpacity(0);
+        backToTitleButton.setOpacity(0);
+        serverIPLabel.setOpacity(1);
+        serverPortLabel.setOpacity(1);
+        serverAddressField.setOpacity(1);
+        serverPortField.setOpacity(1);
         String address = serverAddressField.getText();
         String port = serverPortField.getText();
 
@@ -56,8 +70,8 @@ public class ConnectSceneController extends ViewObservable implements GenericSce
         serverPortField.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValidPort);
 
         if (isValidIpAddress && isValidPort) {
-            backBtn.setDisable(true);
-            connectBtn.setDisable(true);
+            backToTitleButton.setDisable(true);
+            connectButton.setDisable(true);
 
             Map<String, String> serverInfo = Map.of("address", address, "port", port);
             new Thread(() -> notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo))).start();
@@ -69,11 +83,11 @@ public class ConnectSceneController extends ViewObservable implements GenericSce
      *
      * @param event the mouse click event.
      */
-    private void onBackBtnClick(Event event) {
-        backBtn.setDisable(true);
-        connectBtn.setDisable(true);
+    private void onBackToTitleButtonClick(Event event) {
+        backToTitleButton.setDisable(true);
+        connectButton.setDisable(true);
 
-        SceneController.changeRootPane(observers, event, "menu_scene.fxml");
+        SceneController.changeRootPane(observers, event, "ScreenTitle.fxml");
     }
 }
 
