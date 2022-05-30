@@ -3,7 +3,11 @@ package it.polimi.ingsw.view.gui.scene;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -11,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.util.Map;
 /**
@@ -22,7 +28,7 @@ public class ConnectionSceneController extends ViewObservable implements Generic
     private final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
     @FXML
-    private Parent rootPane;
+    private AnchorPane rootPane;
 
     @FXML
     private TextField serverAddressField;
@@ -54,12 +60,26 @@ public class ConnectionSceneController extends ViewObservable implements Generic
      * @param event the mouse click event.
      */
     private void onConnectButtonClick(Event event) {
-        connectButton.setOpacity(0);
-        backToTitleButton.setOpacity(0);
+
         serverIPLabel.setOpacity(1);
         serverPortLabel.setOpacity(1);
         serverAddressField.setOpacity(1);
         serverPortField.setOpacity(1);
+
+        Timeline timeConnectButton = new Timeline(
+                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateXProperty(), 220)),
+                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateYProperty(), 150))
+        );
+        timeConnectButton.setAutoReverse(false);
+        timeConnectButton.play();
+
+        Timeline timeBackToTitleButton = new Timeline(
+            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateXProperty(), 280)),
+            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateYProperty(), 290))
+        );
+        timeBackToTitleButton.setAutoReverse(false);
+        timeBackToTitleButton.play();
+
         String address = serverAddressField.getText();
         String port = serverPortField.getText();
 
@@ -75,6 +95,7 @@ public class ConnectionSceneController extends ViewObservable implements Generic
 
             Map<String, String> serverInfo = Map.of("address", address, "port", port);
             new Thread(() -> notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo))).start();
+            SceneController.changeRootPane(observers, "LoginScene.fxml");
         }
     }
 

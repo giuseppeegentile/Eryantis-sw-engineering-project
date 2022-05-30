@@ -25,7 +25,7 @@
             <Blend />
          </effect>
       </ImageView>
-      <Button fx:id="newGameButton" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="14.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Nuova partita">
+      <Button fx:id="newGameButton" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="14.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Nuova partita">
          <font>
             <Font name="High Tower Text" size="18.0" />
          </font>
@@ -37,9 +37,9 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="quitGameButton" layoutX="1100.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Torna al desktop">
+      <Button fx:id="quitGameButton" layoutX="1060.0" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Torna al desktop">
          <font>
-            <Font name="High Tower Text" size="16.0" />
+            <Font name="High Tower Text" size="18.0" />
          </font>
          <effect>
             <DropShadow>
