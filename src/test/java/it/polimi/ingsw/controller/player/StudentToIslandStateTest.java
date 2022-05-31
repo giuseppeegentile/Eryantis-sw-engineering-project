@@ -1,13 +1,10 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.controller.game.StartGameState;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.StudentToIslandMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,7 +17,6 @@ class StudentToIslandStateTest {
 
 
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
     void init(){
         List<PlayerModel> playersModels = new ArrayList<>();
@@ -36,7 +32,7 @@ class StudentToIslandStateTest {
         List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
         GameMode princ = GameMode.PRINCIPIANTE;
 
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+        //ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
     }
     @Test
     void moveStudentToIslandTest(){

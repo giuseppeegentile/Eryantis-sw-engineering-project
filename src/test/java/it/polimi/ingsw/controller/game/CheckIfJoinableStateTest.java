@@ -32,9 +32,9 @@ class CheckIfJoinableStateTest {
         islandList.add(island3);
         islandList.add(island4);
         testGame.setIslands(islandList);
-        CheckIfJoinableState tester = new CheckIfJoinableState(island2);
+        //CheckIfJoinableState tester = new CheckIfJoinableState(island2);
 
-        tester.joinIsland(island3, 1);
+        //tester.joinIsland(island3, 1);
 
         assertEquals(ColorPawns.GREEN, testGame.getIslandsModel().get(0).getStudents().get(0));
         assertEquals(Arrays.asList(ColorPawns.RED,ColorPawns.RED, ColorPawns.BLUE,ColorPawns.BLUE, ColorPawns.YELLOW, ColorPawns.GREEN),testGame.getIslandsModel().get(1).getStudents() );

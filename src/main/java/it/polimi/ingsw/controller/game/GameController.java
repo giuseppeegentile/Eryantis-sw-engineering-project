@@ -886,24 +886,24 @@ public class GameController implements Observer, Serializable {
 
         if(direction == ColorDirectionAdjacentIsland.RIGHT){
             if(indexOfMother == gameInstance.getIslandsModel().size()-1)
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(0), indexOfMother);
             else
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(indexOfMother+1), indexOfMother);
         }
         if(direction == ColorDirectionAdjacentIsland.LEFT){
             if(indexOfMother == 0)
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size()-1), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size()-1), indexOfMother);
             else
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(indexOfMother-1), indexOfMother);
         }
         if(direction == ColorDirectionAdjacentIsland.BOTH){
             if(indexOfMother == 0) {
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(1), 0);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(gameInstance.getIslandsModel().size() - 1), 0);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(1), 0);
             }
             if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get(0), indexOfMother);
-                new CheckIfJoinableState(islandWithMother).joinIsland(gameInstance.getIslandsModel().get((indexOfMother+1)%12), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get(0), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get((indexOfMother+1)%12), indexOfMother);
             }
         }
         for(PlayerModel p: gameInstance.getPlayersModel()) {
@@ -1013,6 +1013,44 @@ public class GameController implements Observer, Serializable {
     public void setIgnoreColorEffect(ColorPawns colorToExclude) {
         this.colorToExclude = colorToExclude;
 
+    }
+
+    //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
+    /**
+     * Joins the islands with the same influence according to the motherNature's position
+     * @param islandToJoin Island to join with
+     * @param indexFirstIsland The index of the first island in the islandModels list
+     * @return The list of islandModels with the two joined island
+     */
+    public List<IslandModel> joinIsland(IslandModel islandModelToCheck, IslandModel islandToJoin, int indexFirstIsland){
+        int sizeStudentsJoined = islandModelToCheck.getStudents().size() + islandToJoin.getStudents().size(); //calcolo studenti di entrambe le isole
+        List<ColorPawns> joinedStudents = new ArrayList<>(sizeStudentsJoined); //inizializzo array degli studenti
+        //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
+        joinedStudents.addAll(islandModelToCheck.getStudents());
+        joinedStudents.addAll(islandToJoin.getStudents());
+
+
+        IslandModel joined = new IslandModel(islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
+        joined.setTowerColor(islandToJoin.getTowerColor());
+        gameInstance.getPlayerByColorTower(islandToJoin.getTowerColor()).addTowerToBoard();
+        //posiziono gli studenti sulla nuova isola
+        //islandController.addStudent(joinedStudents);
+        joined.setJoined(); //setta a true il valore isJoined
+        int indexToRemove = gameInstance.getIslandsModel().indexOf(islandToJoin);
+        return compressIsland(gameInstance.getIslandsModel(), joined, indexFirstIsland, indexToRemove);
+    }
+
+    /**
+     * Utility method. Sets in the position of the first joined island the joining result and remove the other one
+     * @param islandModels The list of island in the current game
+     * @param joined The joining result of the two islands
+     * @param indexFirstIsland Index of the first joined island
+     * @return The list of islandModels with the two joined island
+     */
+    private List<IslandModel> compressIsland(List<IslandModel> islandModels, IslandModel joined, int indexFirstIsland, int indexToRemove){
+        islandModels.set(indexFirstIsland, joined);
+        islandModels.remove(indexToRemove);
+        return islandModels;
     }
 
     public void setConsiderTower(boolean considerTower) {

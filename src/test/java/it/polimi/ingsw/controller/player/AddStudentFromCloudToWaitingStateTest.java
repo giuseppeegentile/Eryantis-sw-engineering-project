@@ -20,9 +20,9 @@ class AddStudentFromCloudToWaitingStateTest {
         PlayerModel player = new PlayerModel("prova");
 
         cloud.setStudents(students);
-        AddStudentFromCloudToWaitingState currState = new AddStudentFromCloudToWaitingState(player);
+        //AddStudentFromCloudToWaitingState currState = new AddStudentFromCloudToWaitingState(player);
 
-        currState.moveStudentFromCloudToWaiting(cloud);
+        //currState.moveStudentFromCloudToWaiting(cloud);
 
         assertEquals(4,player.getStudentInEntrance().size());
         assertEquals(ColorPawns.GREEN,player.getStudentInEntrance().get(0));

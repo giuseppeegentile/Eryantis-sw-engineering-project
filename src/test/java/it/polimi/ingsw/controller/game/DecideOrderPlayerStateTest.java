@@ -39,8 +39,8 @@ class DecideOrderPlayerStateTest {
         AssistantCardModel card4 = new AssistantCardModel(1, (byte) 3);
         card4.setOwner(player4);
         cemetery.add(card4);
-        DecideOrderPlayerState decide = new DecideOrderPlayerState();
-        decide.setPlayersOrderForActionPhase(cemetery);
+        //DecideOrderPlayerState decide = new DecideOrderPlayerState();
+        //decide.setPlayersOrderForActionPhase(cemetery);
         assertEquals("quarto", testGame.getPhaseOrder().get(0).getNickname());
         assertEquals("john", testGame.getPhaseOrder().get(1).getNickname());
         assertEquals("jack", testGame.getPhaseOrder().get(2).getNickname());

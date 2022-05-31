@@ -1,7 +1,5 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.controller.game.DecideOrderPlayerState;
-import it.polimi.ingsw.controller.game.StartGameState;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -18,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PlayCardAssistantStateTest {
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState();
+    //StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
     PlayerModel player2 = new PlayerModel("christian");
     PlayerModel player3 = new PlayerModel("giuseppe");
     PlayerModel player4 = new PlayerModel("quarto");
-    List<PlayCardAssistantState> plays = new ArrayList<>(4);
+   // List<PlayCardAssistantState> plays = new ArrayList<>(4);
 
     AssistantCardModel cardOne;
     AssistantCardModel cardTwo;
@@ -42,13 +40,13 @@ class PlayCardAssistantStateTest {
         List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
         GameMode princ = GameMode.PRINCIPIANTE;
 
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+        //ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
     }
 
-    void testPlayCard(){
+    void testPlayCard() {
         init();
 
-        PlayCardAssistantState playCardPlayerOne = new PlayCardAssistantState(player1, testGame);
+        /*PlayCardAssistantState playCardPlayerOne = new PlayCardAssistantState(player1, testGame);
         PlayCardAssistantState playCardPlayerTwo = new PlayCardAssistantState(player2, testGame);
         PlayCardAssistantState playCardPlayerThree = new PlayCardAssistantState(player3, testGame);
         PlayCardAssistantState playCardPlayerFour = new PlayCardAssistantState(player4, testGame);
@@ -138,5 +136,6 @@ class PlayCardAssistantStateTest {
 
 
 
+    }*/
     }
 }

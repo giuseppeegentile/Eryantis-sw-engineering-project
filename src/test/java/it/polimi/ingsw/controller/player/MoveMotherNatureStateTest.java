@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller.player;
 
-import it.polimi.ingsw.controller.game.StartGameState;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoveMotherNatureStateTest {
 
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg = new StartGameState();
+    //StartGameState ssg = new StartGameState();
     PlayerModel player1 = new PlayerModel("davide");
 
     void init(){
@@ -33,17 +32,17 @@ class MoveMotherNatureStateTest {
         List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
         GameMode princ = GameMode.PRINCIPIANTE;
 
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+       // ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
     }
 
     @Test
     void testMoveMotherNature(){
         init();
-        MoveMotherNatureState moveMother = new MoveMotherNatureState(player1);
+        //MoveMotherNatureState moveMother = new MoveMotherNatureState(player1);
         int indexOldMother;
         for(indexOldMother = 0; !this.testGame.getIslandsModel().get(indexOldMother).getMotherNature(); indexOldMother++);
 
-        moveMother.moveMotherNature((byte) 2);
+        //moveMother.moveMotherNature((byte) 2);
         assertFalse(this.testGame.getIslandsModel().get(indexOldMother).getMotherNature());
         assertTrue(this.testGame.getIslandsModel().get((indexOldMother+2)%12).getMotherNature());
         assertEquals(12, this.testGame.getIslandsModel().size());

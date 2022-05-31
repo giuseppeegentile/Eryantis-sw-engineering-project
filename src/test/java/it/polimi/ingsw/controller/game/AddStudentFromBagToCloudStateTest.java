@@ -16,11 +16,11 @@ class AddStudentFromBagToCloudStateTest extends StartGameStateTest{
 
         //ssg.assignBag();
 
-        AddStudentFromBagToCloudState addStudentTest = new AddStudentFromBagToCloudState();
+        //AddStudentFromBagToCloudState addStudentTest = new AddStudentFromBagToCloudState();
 
         List<ColorPawns> studentFromBag = testGame.getBag().subList(88, 92);
         List<ColorPawns> studentFromBag2 = testGame.getBag().subList(85, 89);
-        addStudentTest.moveStudentFromBagToClouds();
+       // addStudentTest.moveStudentFromBagToClouds();
 
         List<ColorPawns> studentOfFirstCloud = testGame.getCloudsModel().get(0).getStudents();
 

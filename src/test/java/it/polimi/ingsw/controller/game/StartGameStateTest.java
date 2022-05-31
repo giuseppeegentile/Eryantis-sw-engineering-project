@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StartGameStateTest {
     GameModel testGame = GameModel.getInstance();
-    StartGameState ssg= new StartGameState();
+    //StartGameState ssg= new StartGameState();
 
     void init(){
         List<PlayerModel> playersModels = new ArrayList<>();
@@ -37,7 +37,7 @@ class StartGameStateTest {
         List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
         GameMode princ = GameMode.PRINCIPIANTE;
 
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+       // ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
     }
 
     @Test
@@ -56,7 +56,7 @@ class StartGameStateTest {
         List<ColorTower> colorTowers = new ArrayList<>(Arrays.asList(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
         GameMode princ = GameMode.PRINCIPIANTE;
 
-        ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
+       // ssg.setInitialGameConfiguration(playersModels, colorTowers, princ);
         assertEquals(12, testGame.getIslandsModel().size());
         AtomicInteger numNoMother = new AtomicInteger(0);
         AtomicInteger numYesMother = new AtomicInteger(0);
@@ -81,7 +81,7 @@ class StartGameStateTest {
 
         int sizeIslandWithStudents = 10;
         List<ColorPawns> colors = new ArrayList<>(sizeIslandWithStudents);
-        colors = ssg.fillListWithColors(2);
+        //colors = ssg.fillListWithColors(2);
         /*colors.forEach(c->{
             System.out.println(c.toString());
         });*/
