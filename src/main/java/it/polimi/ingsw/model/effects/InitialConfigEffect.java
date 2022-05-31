@@ -30,7 +30,7 @@ public class InitialConfigEffect implements Effect, Serializable {
 
     @Override
     public int getCoinsForEffect() {
-        return 0;
+        return this.costForEffect;
     }
 
     @Override

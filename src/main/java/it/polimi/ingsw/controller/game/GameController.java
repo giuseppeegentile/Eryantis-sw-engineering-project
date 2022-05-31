@@ -38,7 +38,8 @@ public class GameController implements Observer, Serializable {
     private PlayerModel playerWithEffectAdditionalInfluence;
     private ColorPawns colorToExclude = null;
     private boolean considerTower = true;
-
+    private List<ColorPawns> movedStudents;
+    private byte movement;
 
     public void setPlayerWithEffectAdditionalInfluence(PlayerModel player){
         this.playerWithEffectAdditionalInfluence = player;
@@ -176,14 +177,23 @@ public class GameController implements Observer, Serializable {
                 break;
             case CHARACTER_CARD_PLAYED:
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
-                characterCardPlayed.getEffect().enable(playerActive);
+                if(characterCardPlayed != null) {
+                    characterCardPlayed.getEffect().enable(playerActive);
+                }
 
                 switch (this.oldState){
                     case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+                        if (gameInstance.getPlayersNumber() % 2 == 0) {
+                            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                        } else {
+                            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+                        }
                         break;
                     case PLAYER_MOVED_STUDENTS_ON_HALL:
+                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive,  playerActive.getMovementMotherNatureCurrentActionPhase());
                         break;
                     case PLAYER_MOVED_MOTHER:
+                        motherActions(this.movement);
                         break;
                     case PLAYED_ASSISTANT_CARD:
                         virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
@@ -204,8 +214,8 @@ public class GameController implements Observer, Serializable {
 
             case PLAYER_MOVED_MOTHER:
                 askCharacter(MessageType.PLAYER_MOVED_MOTHER);
-
-                motherActions(receivedMessage);
+                byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
+                motherActions(movement);
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
@@ -260,8 +270,8 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-    private void motherActions(Message receivedMessage) {
-        byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
+    private void motherActions(byte movement) {
+        this.movement = movement;
         byte movementAllowed = playerActive.getMovementMotherNatureCurrentActionPhase();
 
         if (movement > movementAllowed) {
@@ -294,6 +304,7 @@ public class GameController implements Observer, Serializable {
 
     private void studentsOnIslandActions(Message receivedMessage) {
         List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage) receivedMessage).getStudents();
+        this.movedStudents = movedStudents;
         IslandModel islandCurrent = gameInstance.getIslandsModel().get(((MovedStudentOnIslandMessage) receivedMessage).getIslandIndex());
         moveStudentToIsland(playerActive, movedStudents, islandCurrent);
 
@@ -941,24 +952,28 @@ public class GameController implements Observer, Serializable {
 
 
     private void setCharacterCards() {
+        List<ColorPawns> subBag = new ArrayList<>(gameInstance.getBag().subList(0, 4));
+        List<ColorPawns> subBag2 = new ArrayList<>(gameInstance.getBag().subList(4, 10));
+        List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
+
         List<Effect> effects = List.of(
-                new AddToIslandEffect(gameInstance.getBag().subList(0, 4)),
+                new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
                 new PickIslandInfluenceEffect(this),
                 new ExtraMovementMotherEffect(),
                 new ProhibitionEffect(),
                 new IgnoreTowerEffect(this),
-                new ExchangeConfigEntranceEffect(gameInstance.getBag().subList(4, 10)),
+                new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),
                 new ExcludeColorInfluenceEffect(this),
                 new ExchangeHallEntranceEffect(),
-                new AddToHallEffect(gameInstance.getBag().subList(10, 14))
-                );
+                new AddToHallEffect(subBag3)
+        );
 
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);
         for(int i = 0; i < 11; i++){
-            characterDeck.add(new CharacterCardModel(0,effects.get(i), i));
+            characterDeck.add(new CharacterCardModel(1,effects.get(i), i));
         }
 
         Collections.shuffle(characterDeck);

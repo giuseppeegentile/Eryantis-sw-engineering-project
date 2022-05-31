@@ -52,6 +52,9 @@ public class ClientController implements ViewObserver, Observer {
             case REQ_ENTRANCE_TO_ISLAND:
                 queueTasks.execute(() -> view.askMoveEntranceToHall(message.getNickname(), ((StudentToHallMessage)message).getEntrance(), ((StudentToHallMessage)message).getNumberStudentsToMove()));
                 break;
+            case REQ_CARD_TO_HALL:
+                queueTasks.execute(() -> view.askStudentFromCardToHall(message.getNickname(), ((ReqStudentFromCardToHall)message).getStudentsOnCard()));
+                break;
             case INIT:
                 queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));
                 break;
@@ -212,6 +215,13 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance) {
         client.sendMessage(new MovedFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
     }
+
+    @Override
+    public void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent) {
+        client.sendMessage(new MovedStudentFromCardToHall(nickname, pickedStudent));
+    }
+
+
 
     @Override
     public void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {

@@ -9,7 +9,6 @@ public class MovedStudentFromCardToHall extends Message {
         super(nickname, MessageType.CHARACTER_CARD_PLAYED);
         this.pickedStudent = pickedStudent;
     }
-
     public ColorPawns getPickedStudent() {
         return pickedStudent;
     }

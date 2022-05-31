@@ -116,4 +116,6 @@ public interface View {
     void askColorRemoveForAll(String active);
 
     void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall);
+
+    void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard);
 }

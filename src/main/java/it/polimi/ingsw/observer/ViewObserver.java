@@ -72,6 +72,8 @@ public interface ViewObserver {
 
     void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance);
 
+    void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent);
+
     void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
 
     void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
