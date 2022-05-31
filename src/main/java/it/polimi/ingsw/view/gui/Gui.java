@@ -120,14 +120,12 @@ public class Gui extends ViewObservable implements View {
     public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
         towerColorSceneController.addAllObservers(observers);
-        towerColorSceneController.setTowerColor(availableColorTowers);
         Platform.runLater(() -> SceneController.changeRootPane(observers, "TowerColorScene.fxml"));
     }
 
     public void askPlayersNumber(){
         PlayersNumberSceneController playersNumberSceneController = new PlayersNumberSceneController();
         playersNumberSceneController.addAllObservers(observers);
-        playersNumberSceneController.setPlayersRange(2,4);
         Platform.runLater(() -> SceneController.changeRootPane(observers, "PlayersNumberScene.fxml"));
     }
 
@@ -135,7 +133,6 @@ public class Gui extends ViewObservable implements View {
     public void askGameMode(){
         GameModeSceneController gameModeSceneController = new GameModeSceneController();
         gameModeSceneController.addAllObservers(observers);
-        gameModeSceneController.setGameMode();
         Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
     }
 

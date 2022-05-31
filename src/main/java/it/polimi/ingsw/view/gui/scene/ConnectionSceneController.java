@@ -28,9 +28,6 @@ public class ConnectionSceneController extends ViewObservable implements Generic
     private final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
     @FXML
-    private AnchorPane rootPane;
-
-    @FXML
     private TextField serverAddressField;
 
     @FXML
