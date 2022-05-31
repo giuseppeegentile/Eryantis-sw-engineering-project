@@ -512,24 +512,13 @@ public class Cli extends ViewObservable implements View {
     public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
-        List<Integer> indexes = new ArrayList<>(); //indici che può selezionare
         out.println(nickname + ", select your assistant card for this round.\nThis is your deck:");
         for (AssistantCardModel card : playerDeck) {
-            if(card.getPriority() != 0 && card.getMotherNatureMovement() != 0) {
-                stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
-                indexes.add(i);
-                i++;
-            }
+            stringBuilder.append(i).append(" -> Priority = ").append(card.getPriority()).append(", Mothernature movements = ").append(card.getMotherNatureMovement()).append("\n");
+            i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
-        while(!indexes.contains(chosenIndex)){
-            chosenIndex = askUntilValid(playerDeck.size(), message, stringBuilder);
-        }
-        /*for(AssistantCardModel card : cemetery) {
-            if (playerDeck.get(chosenIndex - 1).getPriority() == card.getPriority() && playerDeck.get(chosenIndex-1).getMotherNatureMovement() == card.getMotherNatureMovement())
-                System.out.println("You've chosen a card already played, please select a different card from the list shown");
-        }*/
         int finalChosenIndex = chosenIndex - 1;
         notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalChosenIndex));
     }

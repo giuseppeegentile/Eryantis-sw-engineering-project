@@ -3,9 +3,11 @@ package it.polimi.ingsw.model.effects;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serializable;
 import java.util.List;
 //11
-public class AddToHallEffect extends InitialConfigEffect{
+public class AddToHallEffect extends InitialConfigEffect implements Serializable {
+    private static final long serialVersionUID = -5901051516602737452L;
     private ColorPawns studentChosen;
 
     public AddToHallEffect(List<ColorPawns> students) {

@@ -3,8 +3,12 @@ package it.polimi.ingsw.model.effects;
 import it.polimi.ingsw.controller.game.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.player.PlayerModel;
+
+import java.io.Serializable;
+
 //9
-public class ExcludeColorInfluenceEffect implements Effect{
+public class ExcludeColorInfluenceEffect implements Effect, Serializable {
+    private static final long serialVersionUID = 3426679041693564864L;
     private int costForEffect = 3;
     private final GameController gameController;
     private ColorPawns colorToExclude;

@@ -3,11 +3,13 @@ package it.polimi.ingsw.model.effects;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 //7
-public class ExchangeConfigEntranceEffect extends InitialConfigEffect{
+public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements Serializable {
 
+    private static final long serialVersionUID = -8153829027755488618L;
     private List<ColorPawns> studentFromHall;
     private List<ColorPawns> studentFromCard;
 

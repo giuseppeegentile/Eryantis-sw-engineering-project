@@ -491,6 +491,7 @@ public class GameController implements Observer, Serializable {
                 if(c.getPriority() == cem.getPriority() && (cem.getMotherNatureMovement() == c.getMotherNatureMovement())) {
                     copy.remove(c);
                 }
+
             }
         }
         virtualViewMap.get(player).askPlayCard(player, copy);
@@ -701,7 +702,8 @@ public class GameController implements Observer, Serializable {
     private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
         int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
         gameInstance.addToCemetery(assistantCardModel);
-        player.removeCard(index);
+        player.getDeckAssistantCardModel().remove(assistantCardModel);
+        //player.removeCard(index);
     }
 
     //chiamato quando tutti i giocatori hanno usato la loro carta
@@ -833,7 +835,7 @@ public class GameController implements Observer, Serializable {
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
         PlayerModel playerWithInfluence = islandWithMother.getInfluence(playerWithEffectAdditionalInfluence, colorToExclude, considerTower);
-        if(playerWithInfluence.getColorTower()!=ColorTower.NULL) {
+        if(playerWithInfluence.getColorTower()!=ColorTower.NULL) { //if a player has influence
             if (!islandWithMother.hasTower() && playerWithInfluence.getColorTower() != ColorTower.NULL) {
                 islandWithMother.setTowerColor(playerWithInfluence.getColorTower());
             } else {
@@ -954,8 +956,8 @@ public class GameController implements Observer, Serializable {
                 );
 
 
-        List<CharacterCardModel> characterDeck = new ArrayList<>(12);
-        for(int i = 0; i < 12; i++){
+        List<CharacterCardModel> characterDeck = new ArrayList<>(11);
+        for(int i = 0; i < 11; i++){
             characterDeck.add(new CharacterCardModel(0,effects.get(i), i));
         }
 

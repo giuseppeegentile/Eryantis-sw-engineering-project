@@ -3,9 +3,11 @@ package it.polimi.ingsw.model.effects;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serializable;
 import java.util.List;
 //10
-public class ExchangeHallEntranceEffect implements Effect{
+public class ExchangeHallEntranceEffect implements Effect, Serializable {
+    private static final long serialVersionUID = 8204489708195898922L;
     int costForEffect = 1;
     private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromHall;

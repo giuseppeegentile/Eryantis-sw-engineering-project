@@ -3,7 +3,10 @@ package it.polimi.ingsw.model.effects;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
-public class ProhibitionEffect implements Effect {
+import java.io.Serializable;
+
+public class ProhibitionEffect implements Effect, Serializable {
+    private static final long serialVersionUID = -3636736011809156600L;
     private int costForEffect = 2;
     private int chosenIndexIsland;
     private int numberProhibition = 4;

@@ -5,9 +5,11 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serializable;
 import java.util.List;
 //1
-public class AddToIslandEffect extends InitialConfigEffect{
+public class AddToIslandEffect extends InitialConfigEffect implements Serializable {
+    private static final long serialVersionUID = -872892232191009661L;
     private ColorPawns studentChosen;
     private IslandModel islandChosen;
     public AddToIslandEffect(List<ColorPawns> students) {

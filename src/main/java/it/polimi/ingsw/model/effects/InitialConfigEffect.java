@@ -4,9 +4,11 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class InitialConfigEffect implements Effect{
+public class InitialConfigEffect implements Effect, Serializable {
+    private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
     final List<ColorPawns> students;
     private int numStudents;
