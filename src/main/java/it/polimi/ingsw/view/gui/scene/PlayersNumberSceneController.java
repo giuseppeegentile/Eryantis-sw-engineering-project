@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-public class PlayersNumberSceneController extends ViewObservable implements GenericSceneController{
+/**
+ * This class implements the scene where the game host chooses the number of players who are going to play.
+ */
+public class PlayersNumberSceneController extends ViewObservable implements GenericSceneController {
 
     @FXML
     final Spinner<Integer> spinner = new Spinner<>();
