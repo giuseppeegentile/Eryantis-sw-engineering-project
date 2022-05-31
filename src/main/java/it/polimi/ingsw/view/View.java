@@ -101,4 +101,19 @@ public interface View {
     void showSkippingMotherMovement(String activeNick);
 
     void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck);
+
+    //da implementare nella cli
+    void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard);
+
+    void askExtraGetInfluence(String active, List<IslandModel> islands);
+
+    void askMoveBanCard(String active, List<IslandModel> islands);
+
+    void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance);
+
+    void askColorStudentToIgnore(String active);
+
+    void askColorRemoveForAll(String active);
+
+    void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall);
 }

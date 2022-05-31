@@ -87,6 +87,26 @@ public class ClientController implements ViewObserver, Observer {
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
                 break;
+            case MOVING_ONE_STUDENT_FROM_CARD:
+                AskMoveStudentFromCardToIslandMessage oneStudentMessage = (AskMoveStudentFromCardToIslandMessage)message;
+                queueTasks.execute(()-> view.askMoveStudentFromCardToIsland(oneStudentMessage.getNickname(), oneStudentMessage.getIslands(), oneStudentMessage.getStudentsOnCard()));
+                break;
+            case ASK_EXTRA_GET_INFLUENCE:
+                AskExtraGetInfluenceMessage extraGetInfluenceMessage = (AskExtraGetInfluenceMessage)message;
+                queueTasks.execute(()-> view.askExtraGetInfluence(extraGetInfluenceMessage.getNickname(), extraGetInfluenceMessage.getIslands()));
+                break;
+            case ASK_MOVE_BAN_CARD:
+                AskMoveBanCardMessage askMoveBanCardMessage = (AskMoveBanCardMessage)message;
+                queueTasks.execute(()-> view.askMoveBanCard(askMoveBanCardMessage.getNickname(), askMoveBanCardMessage.getIslands()));
+                break;
+            case MOVE_FROM_CARD_TO_HALL:
+                AskMoveStudentsFromCardToEntrance askMoveStudentsFromCardToHall = (AskMoveStudentsFromCardToEntrance)message;
+                queueTasks.execute(()-> view.askMoveFromCardToEntrance(askMoveStudentsFromCardToHall.getNickname(), askMoveStudentsFromCardToHall.getStudentsOnCard(), askMoveStudentsFromCardToHall.getEntrance()));
+                break;
+            case ASK_COLOR_TO_IGNORE:
+                AskColorToIgnore askColorToIgnore = (AskColorToIgnore)message;
+                queueTasks.execute(()-> view.askColorStudentToIgnore(askColorToIgnore.getNickname()));
+                break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage)message).getObjectDisplay();
                 switch (objectDisplay){
@@ -133,7 +153,6 @@ public class ClientController implements ViewObserver, Observer {
                         ));
                         break;
                 }
-
                 break;
 
             case GENERIC_MESSAGE:
@@ -167,6 +186,41 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard) {
         client.sendMessage(new PlayedCharacterCardMessage(activePlayer, chosenCard));
+    }
+
+    @Override
+    public void onUpdateColorToIgnore(String active, ColorPawns color) {
+        client.sendMessage(new ChosenColorToIgnore(active, color));
+    }
+
+    @Override
+    public void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex) {
+        client.sendMessage(new MovedFromCardToIsland(active, indexIsland, colorChosenIndex));
+    }
+
+    @Override
+    public void onUpdateExtraGetInfluence(String active, int indexIsland) {
+        client.sendMessage(new ExtraGetInfluence(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateBanCard(String active, int indexIsland) {
+        client.sendMessage(new MovedBanCardMessage(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new MovedFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
+    }
+
+    @Override
+    public void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {
+        client.sendMessage(new ChosenColorRemoveForAll(active, equivalentColorPawns));
+    }
+
+    @Override
+    public void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new ChosenChangeEntranceHall(active, studentsFromHall, studentsFromEntrance));
     }
 
     @Override

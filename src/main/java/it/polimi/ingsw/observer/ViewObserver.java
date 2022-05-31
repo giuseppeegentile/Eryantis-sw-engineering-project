@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+import it.polimi.ingsw.view.cli.ColorCli;
 
 import java.util.List;
 import java.util.Map;
@@ -60,4 +61,18 @@ public interface ViewObserver {
     void onUpdateGameMode(GameMode finalMode);
 
     void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
+
+    void onUpdateColorToIgnore(String active, ColorPawns color);
+
+    void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex);
+
+    void onUpdateExtraGetInfluence(String active, int indexIsland);
+
+    void onUpdateBanCard(String active, int indexIsland);
+
+    void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance);
+
+    void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
+
+    void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
 }

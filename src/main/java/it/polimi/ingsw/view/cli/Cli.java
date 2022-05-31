@@ -15,13 +15,16 @@ import it.polimi.ingsw.network.message.TextMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import static java.lang.Byte.parseByte;
 import static java.lang.Integer.parseInt;
+import static java.util.Arrays.asList;
 
 
 //sout per fare printout
@@ -375,7 +378,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
         StringBuilder strBoardBld = new StringBuilder();
-        List<ColorPawns> colors = new ArrayList<>();
+        List<ColorPawns> colors = new ArrayList<>(asList(ColorPawns.GREEN, ColorPawns.RED, ColorPawns.YELLOW, ColorPawns.PINK, ColorPawns.BLUE));
         colors.add(ColorPawns.GREEN);
         colors.add(ColorPawns.RED);
         colors.add(ColorPawns.YELLOW);
@@ -565,7 +568,8 @@ public class Cli extends ViewObservable implements View {
     public void askPlayCharacterCard(String activePlayer, List<CharacterCardModel> characterDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
-        out.println(activePlayer + ", select your character card for this round.\nThis is your deck:");
+        out.println(activePlayer + ", select your character card for this round.\nThis is your deck:\n");
+        stringBuilder.append("0 -> Not playing a character card\n");
         for (CharacterCardModel card : characterDeck) {
             if(card.enoughCoins()) {
                 stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getMoneyOnCard()).append(", Effect = ").append(card.getEffect().getDescription()).append("\n");
@@ -574,9 +578,13 @@ public class Cli extends ViewObservable implements View {
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = askUntilValid(characterDeck.size(), message, stringBuilder);
-        int finalChosenIndex = chosenIndex - 1;
-        CharacterCardModel cardPlayed = characterDeck.get(finalChosenIndex);
-        notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, cardPlayed));
+        if(chosenIndex != 0) {
+            CharacterCardModel cardPlayed = characterDeck.get(chosenIndex);
+            CharacterCardModel finalCardPlayed = cardPlayed;
+            notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, finalCardPlayed));
+        } else {
+            notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, null));
+        }
     }
 
     /**
@@ -660,6 +668,110 @@ public class Cli extends ViewObservable implements View {
         out.println(strBoardBld2);
     }
 
+    @Override
+    public void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard) {
+        System.out.println("Choose a student to move from the card to an island\n");
+        StringBuilder str = new StringBuilder();
+        int i = 1;
+        for (ColorPawns color : studentsOnCard) {
+            str.append(i + " -> ");
+            str.append(ColorCli.getEquivalentColorPawn(color)).append(color + "  \n").append(ColorCli.RESET);
+            i++;
+        }
+        String message = "You've entered an invalid number, please select a color from the list shown\n";
+        int chosenIndex = askUntilValid(listColor.size(), message, str);
+        int colorChosenIndex = chosenIndex - 1;
+
+        StringBuilder str2 = new StringBuilder();
+        out.println("Choose an island from the following list: \n");
+        int sizeIslands= islands.size();
+        showIslands(active, islands);
+        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str2) - 1;
+        notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(active, indexIsland, studentsOnCard.get(colorChosenIndex)));
+    }
+
+    @Override
+    public void askColorStudentToIgnore(String active) {
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println("Choose a color to be ignored during the next influence calculation.\n");
+        int i = 1;
+        for (ColorCli c: listColor) {
+            stringBuilder.append(i).append(" -> " + c.name() + "\n");
+            i++;
+        }
+        String message = "You've entered an invalid number, please select a color from the list shown\n";
+        int chosenIndex = askUntilValid(listColor.size(), message, stringBuilder);
+        int finalChosenIndex = chosenIndex - 1;
+        notifyObserver(obs -> obs.onUpdateColorToIgnore(active, ColorPawns.getEquivalentColorPawns(listColor.get(finalChosenIndex).name())));
+    }
+
+    @Override
+    public void askExtraGetInfluence(String active, List<IslandModel> islands) {
+        StringBuilder str = new StringBuilder();
+        out.println("Choose the island that you want to calculate the influence from the following list: \n");
+        int sizeIslands= islands.size();
+        showIslands(active, islands);
+        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str) - 1;
+        notifyObserver(obs -> obs.onUpdateExtraGetInfluence(active, indexIsland));
+    }
+
+    @Override
+    public void askMoveBanCard(String active, List<IslandModel> islands) {
+        StringBuilder str = new StringBuilder();
+        out.println("Choose the island where you want to place a prohibition card \n");
+        int sizeIslands= islands.size();
+        showIslands(active, islands);
+        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str) - 1;
+        notifyObserver(obs -> obs.onUpdateBanCard(active, indexIsland));
+    }
+
+    @Override
+    public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
+        System.out.println("How many students do you want to move from the card to your entrance?");
+        int number = parseInt(read());
+        List<ColorPawns> studentsFromCard = new ArrayList<>();
+        List<ColorPawns> studentsFromEntrance = new ArrayList<>();
+        askingMoveStudents(studentsOnCard, studentsFromCard, number, "entrance");
+
+        System.out.println("Choose the students to move from your entrance to the card\n");
+        askingMoveStudents(entrance, studentsFromEntrance, number, "card");
+
+        notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
+    }
+
+    @Override
+    public void askColorRemoveForAll(String active) {
+        System.out.println("Select the color that all the players have to remove 3 students from their entrance\n");
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 1;
+        for (ColorCli c: listColor) {
+            stringBuilder.append(i).append(" -> " + c.name() + "\n");
+            i++;
+        }
+        String message = "You've entered an invalid number, please select a color from the list shown\n";
+        int chosenIndex = askUntilValid(listColor.size(), message, stringBuilder);
+        int finalChosenIndex = chosenIndex - 1;
+        notifyObserver(obs -> obs.onUpdateColorRemoveForAll(active, ColorPawns.getEquivalentColorPawns(listColor.get(finalChosenIndex).name())));
+    }
+
+    @Override
+    public void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall) {
+        System.out.println("How many students do you want to move from the card to your entrance?");
+        int number = parseInt(read());
+        List<ColorPawns> studentsFromEntrance = new ArrayList<>();
+        List<ColorPawns> studentsFromHall = new ArrayList<>();
+        List<ColorPawns> studentsInHall = new ArrayList<>();
+        for(ColorPawns c: hall.keySet())
+            for(int i=0; i<hall.get(c); i++)
+                studentsInHall.add(c);
+        askingMoveStudents(studentsInHall, studentsFromHall, number, "entrance");
+
+        System.out.println("Choose the students to move from your entrance to the card\n");
+        askingMoveStudents(entrance, studentsFromEntrance, number, "hall");
+
+        notifyObserver(obs -> obs.onUpdateChangeHallEntrance(active, studentsFromHall, studentsFromEntrance));
+    }
+
     private void buildIsland(IslandModel island, StringBuilder strBoardBld) {
         strBoardBld.append("| ");
         listColor.forEach(c->{
@@ -675,4 +787,6 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append(ColorCli.getEquivalentColorPawn(ColorPawns.getEquivalentColorPawns(c.name()))).append(occurrence).append(" ").append(ColorCli.RESET);
         });
     }
+
+
 }

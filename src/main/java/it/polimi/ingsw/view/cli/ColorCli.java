@@ -3,6 +3,12 @@ package it.polimi.ingsw.view.cli;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 public enum ColorCli {
     //Color end string, color reset
     RESET("\033[0m"),
@@ -32,7 +38,6 @@ public enum ColorCli {
     public static ColorCli getEquivalentColorCliTower(ColorTower colorTower) {
          return ColorCli.valueOf(colorTower.name());
     }
-
 
     @Override
     public String toString() {

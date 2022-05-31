@@ -127,6 +127,41 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new ReqPlayCharacterCardMessage(active, characterDeck));
     }
 
+    @Override
+    public void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard) {
+        clientHandler.sendMessage(new AskMoveStudentFromCardToIslandMessage(active, islands, studentsOnCard));
+    }
+
+    @Override
+    public void askExtraGetInfluence(String active, List<IslandModel> islands) {
+        clientHandler.sendMessage(new AskExtraGetInfluenceMessage(active, islands));
+    }
+
+    @Override
+    public void askMoveBanCard(String active, List<IslandModel> islands) {
+        clientHandler.sendMessage(new AskMoveBanCardMessage(active, islands));
+    }
+
+    @Override
+    public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
+        clientHandler.sendMessage(new AskMoveStudentsFromCardToEntrance(active, studentsOnCard, entrance));
+    }
+
+    @Override
+    public void askColorStudentToIgnore(String active) {
+        clientHandler.sendMessage(new AskColorToIgnore(active));
+    }
+
+    @Override
+    public void askColorRemoveForAll(String active) {
+        clientHandler.sendMessage(new AskColorRemoveFromAll(active));
+    }
+
+    @Override
+    public void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall) {
+        clientHandler.sendMessage(new AskStudentsChangeEntranceHall(active, entrance, hall));
+    }
+
     /*@Override
     public void showCards(PlayerModel playerModel) {
         clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
