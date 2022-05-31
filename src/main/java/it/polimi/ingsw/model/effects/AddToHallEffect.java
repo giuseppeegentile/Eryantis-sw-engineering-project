@@ -15,7 +15,7 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     }
 
     public void choose(int indexStudent) {
-        this.studentChosen = students.get(indexStudent);
+        this.studentChosen = studentsConfig.get(indexStudent);
 
     }
 

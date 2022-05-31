@@ -101,4 +101,6 @@ public interface View {
     void showSkippingMotherMovement(String activeNick);
 
     void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck);
+
+    void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard);
 }

@@ -17,7 +17,7 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     }
 
     public void choose(int indexStudent, int indexIsland) {
-        this.studentChosen = students.get(indexStudent);
+        this.studentChosen = studentsConfig.get(indexStudent);
         this.islandChosen = GameModel.getInstance().getIslandsModel().get(indexIsland);
 
     }

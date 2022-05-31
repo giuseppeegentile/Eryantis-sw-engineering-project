@@ -10,27 +10,28 @@ import java.util.List;
 public class InitialConfigEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
-    final List<ColorPawns> students;
+    final List<ColorPawns> studentsConfig;
     private int numStudents;
 
-    public InitialConfigEffect(List<ColorPawns>  students, int costForEffect, int numStudents){
-        this.students = students;
+    public InitialConfigEffect(List<ColorPawns> studentsConfig, int costForEffect, int numStudents){
+        this.studentsConfig = studentsConfig;
         this.costForEffect = costForEffect;
         this.numStudents = numStudents;
     }
+
     @Override
     public void enable(PlayerModel playerModel) {
 
     }
 
     void getFromBag(){
-        students.add(GameModel.getInstance().getBag().get(0));
+        studentsConfig.add(GameModel.getInstance().getBag().get(0));
         GameModel.getInstance().getBag().remove(0);
     }
 
     @Override
     public int getCoinsForEffect() {
-        return 0;
+        return this.costForEffect;
     }
 
     @Override
@@ -39,8 +40,8 @@ public class InitialConfigEffect implements Effect, Serializable {
                 "EFFECT: ";
     }
 
-    public List<ColorPawns> getStudents() {
-        return students;
+    public List<ColorPawns> getStudentsConfig() {
+        return studentsConfig;
     }
 
     public int getCostForEffect() {

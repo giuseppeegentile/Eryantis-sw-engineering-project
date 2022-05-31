@@ -568,7 +568,7 @@ public class Cli extends ViewObservable implements View {
         out.println(activePlayer + ", select your character card for this round.\nThis is your deck:");
         for (CharacterCardModel card : characterDeck) {
             if(card.enoughCoins()) {
-                stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getMoneyOnCard()).append(", Effect = ").append(card.getEffect().getDescription()).append("\n");
+                stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getEffect().getCoinsForEffect()).append(", Effect = ").append(card.getEffect().getDescription()).append("\n");
             }
             i++;
         }
@@ -577,6 +577,23 @@ public class Cli extends ViewObservable implements View {
         int finalChosenIndex = chosenIndex - 1;
         CharacterCardModel cardPlayed = characterDeck.get(finalChosenIndex);
         notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, cardPlayed));
+    }
+
+    @Override
+    public void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard) {
+        //
+        ColorPawns pickedStudent;
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 1;
+        out.println(nickname + ", pick a student from the card.\nThese are the students:");
+        for (ColorPawns student : studentsOnCard) {
+            stringBuilder.append("Student ").append(i).append(i).append(" -> ").append(student).append("\n");
+            i++;
+        }
+        String message = "You've entered an invalid number, please select a card from the list shown\n";
+        int chosenIndex = askUntilValid(studentsOnCard.size(), message, stringBuilder) - 1;
+        pickedStudent = studentsOnCard.get(chosenIndex);
+        notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, pickedStudent));
     }
 
     /**

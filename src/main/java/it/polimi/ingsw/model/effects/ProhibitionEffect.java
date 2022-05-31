@@ -31,7 +31,7 @@ public class ProhibitionEffect implements Effect, Serializable {
 
     @Override
     public int getCoinsForEffect() {
-        return costForEffect;
+        return this.costForEffect;
     }
 
     @Override

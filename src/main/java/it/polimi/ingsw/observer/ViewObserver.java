@@ -60,4 +60,6 @@ public interface ViewObserver {
     void onUpdateGameMode(GameMode finalMode);
 
     void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
+
+    void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent);
 }

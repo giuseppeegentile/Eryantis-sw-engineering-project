@@ -127,6 +127,11 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new ReqPlayCharacterCardMessage(active, characterDeck));
     }
 
+    @Override
+    public void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard) {
+        clientHandler.sendMessage(new ReqStudentFromCardToHall(nickname, studentsOnCard));
+    }
+
     /*@Override
     public void showCards(PlayerModel playerModel) {
         clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
@@ -255,4 +260,6 @@ public class VirtualView implements View, Observer {
     public void askPlayersNumber() {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
+
+
 }

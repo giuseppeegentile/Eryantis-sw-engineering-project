@@ -148,6 +148,10 @@ public class ClientController implements ViewObserver, Observer {
             case START_TURN:
                 queueTasks.execute(() -> view.showStartTurn(message.getNickname()));
                 break;
+            case REQ_CARD_TO_HALL:
+
+                queueTasks.execute(() -> view.askStudentFromCardToHall(message.getNickname(), ((ReqStudentFromCardToHall)message).getStudentsOnCard()));
+                break;
             case END_TURN:
                 queueTasks.execute(() -> view.showEndTurn(message.getNickname()));
                 break;
@@ -167,6 +171,11 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard) {
         client.sendMessage(new PlayedCharacterCardMessage(activePlayer, chosenCard));
+    }
+
+    @Override
+    public void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent) {
+        client.sendMessage(new MovedStudentFromCardToHall(nickname, pickedStudent));
     }
 
     @Override
