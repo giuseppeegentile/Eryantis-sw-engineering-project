@@ -53,7 +53,6 @@ public class ConnectionSceneController extends ViewObservable implements Generic
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToTitleButtonClick);
     }
 
-
     /**
      * Handle the click on the connect button.
      *
@@ -95,7 +94,6 @@ public class ConnectionSceneController extends ViewObservable implements Generic
 
             Map<String, String> serverInfo = Map.of("address", address, "port", port);
             new Thread(() -> notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo))).start();
-            SceneController.changeRootPane(observers, "LoginScene.fxml");
         }
     }
 

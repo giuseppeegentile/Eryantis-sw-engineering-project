@@ -37,7 +37,7 @@ public class LoginSceneController extends ViewObservable implements GenericScene
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToTitleButtonClick);
     }
 
-    String nickname = nicknameField.getText();
+
 
     /**
      * Handle click on "Inizia partita" button.
@@ -45,6 +45,7 @@ public class LoginSceneController extends ViewObservable implements GenericScene
      * @param event the mouse click event.
      */
     private void onNextStageButtonClick(Event event) {
+        String nickname = nicknameField.getText();
         new Thread(() -> notifyObserver(obs -> obs.onUpdateNickname(nickname))).start();
     }
 
