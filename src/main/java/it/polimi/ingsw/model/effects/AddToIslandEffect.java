@@ -31,6 +31,16 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
         setCostForEffect(getCostForEffect()+1);
     }
 
+    public ColorPawns getStudentChosen() {
+        return studentChosen;
+    }
+
+    public IslandModel getIslandChosen() {
+        return islandChosen;
+    }
+
+
+    //serve?
     @Override
     public int getCoinsForEffect() {
         return getCostForEffect();

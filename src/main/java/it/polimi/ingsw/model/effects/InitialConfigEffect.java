@@ -39,6 +39,11 @@ public class InitialConfigEffect implements Effect, Serializable {
                 "EFFECT: ";
     }
 
+
+    public int getNumStudents() {
+        return numStudents;
+    }
+
     public List<ColorPawns> getStudents() {
         return students;
     }

@@ -9,7 +9,6 @@ public class AssistantCardModel implements Serializable {
     private static final long serialVersionUID = -7197818777051204570L;
     private byte motherNatureMovement;
     private int priority;
-    private boolean isPlayed;
     private PlayerModel owner;
 
     /**
@@ -20,14 +19,12 @@ public class AssistantCardModel implements Serializable {
     public AssistantCardModel(int priority, byte motherNatureMovement) {
         this.priority = priority;
         this.motherNatureMovement = motherNatureMovement;
-        this.isPlayed = false;
         this.owner = null;
     }
 
     public AssistantCardModel(int priority, PlayerModel p, byte motherNatureMovement) {
         this.priority = priority;
         this.motherNatureMovement = motherNatureMovement;
-        this.isPlayed = false;
         this.owner = p;
     }
 
@@ -45,21 +42,6 @@ public class AssistantCardModel implements Serializable {
      */
     public PlayerModel getOwner(){
         return this.owner;
-    }
-
-    /**
-     * Sets isPlayed to the true value if the player uses the card
-     */
-    private void setPlayed() {
-        isPlayed = true;
-    }
-
-    /**
-     *
-     * @return The value of isPlayed attribute
-     */
-    private boolean isPlayed() {
-        return isPlayed;
     }
 
     /**

@@ -19,7 +19,7 @@ public class CharacterCardModel implements Serializable {
         this.characterId = characterId;
     }
 
-    private void setCharacterId(int characterId){
+    public void setCharacterId(int characterId){
         this.characterId = characterId;
     }
 
