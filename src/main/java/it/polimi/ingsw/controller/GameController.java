@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.game;
+package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.effects.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
@@ -24,7 +23,6 @@ import java.util.stream.Stream;
 
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
-    private PhaseGame phase;
     private boolean gameStarted = false;
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameModel gameInstance;
@@ -47,7 +45,6 @@ public class GameController implements Observer, Serializable {
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.gameInstance =  GameModel.getInstance();
-        this.phase = PhaseGame.START;
         this.numberPlayersPlayedCard = 0;
         this.playersThatHavePlayedCard = new ArrayList<>();
         playerWithEffectAdditionalInfluence = null;
@@ -55,12 +52,6 @@ public class GameController implements Observer, Serializable {
 
     public GameModel getGameInstance(){
         return this.gameInstance;
-    }
-
-    public PhaseGame getPhaseGame(){return this.phase;}
-
-    public void setPhaseGame(PhaseGame phase){
-        this.phase = phase;
     }
 
     private void showBoard(String nickname){
@@ -125,7 +116,7 @@ public class GameController implements Observer, Serializable {
                             //virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
 
                         }
-                        if(gameInstance.getGameMode() == GameMode.ESPERTO){
+                        if(gameInstance.getGameMode() == GameMode.ADVANCED){
                             for(PlayerModel pl : gameInstance.getPlayersModel())
                                 pl.setCoins();
                         }
@@ -146,7 +137,7 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYED_ASSISTANT_CARD:
-                if(gameInstance.getGameMode()==GameMode.ESPERTO) setCharacterCards();
+                if(gameInstance.getGameMode()==GameMode.ADVANCED) setCharacterCards();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
@@ -760,7 +751,7 @@ public class GameController implements Observer, Serializable {
     public void moveStudentToHall(PlayerModel player, List<ColorPawns> students) {
         for(ColorPawns student: students) {
             //conta le occorrenze per ogni studente di un colore
-            if ( gameInstance.getGameMode() == GameMode.ESPERTO && player.getStudentInHall().get(student) + 1 % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+            if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) + 1 % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
             }
 
@@ -1000,7 +991,7 @@ public class GameController implements Observer, Serializable {
 
     private void askCharacter(MessageType oldState){
         this.oldState = oldState;
-        if(gameInstance.getGameMode() == GameMode.ESPERTO) {
+        if(gameInstance.getGameMode() == GameMode.ADVANCED) {
             boolean existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
             if(existsCardPlayable) {
                 String active = playerActive.getNickname();
@@ -1055,6 +1046,11 @@ public class GameController implements Observer, Serializable {
 
     public void setConsiderTower(boolean considerTower) {
         this.considerTower = considerTower;
+    }
+
+
+    public boolean getConsiderTower(){
+        return this.considerTower;
     }
 }
 

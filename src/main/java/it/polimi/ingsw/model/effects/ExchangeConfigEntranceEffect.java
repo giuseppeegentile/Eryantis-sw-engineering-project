@@ -27,8 +27,8 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
         playerModel.addStudentsHall(studentFromCard);
         playerModel.removeStudentFromHall(studentFromHall);
 
-        this.getStudents().addAll(studentFromHall);
-        this.getStudents().removeAll(studentFromCard);
+        students.addAll(studentFromHall);
+        students.removeAll(studentFromCard);
 
 
         setCostForEffect(getCostForEffect()+1);
@@ -37,6 +37,14 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     @Override
     public int getCoinsForEffect() {
         return getCostForEffect();
+    }
+
+    public List<ColorPawns> getStudentFromCard() {
+        return studentFromCard;
+    }
+
+    public List<ColorPawns> getStudentFromHall() {
+        return studentFromHall;
     }
 
     public String getDescription(){

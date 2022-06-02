@@ -73,8 +73,8 @@ class GameModelTest {
         testGame.addToCemetery(cardToAdd);
         assertTrue(testGame.getCemetery().contains(cardToAdd));
 
-        testGame.setGameMode(GameMode.PRINCIPIANTE);
-        assertEquals(GameMode.PRINCIPIANTE, testGame.getGameMode());
+        testGame.setGameMode(GameMode.BEGINNER);
+        assertEquals(GameMode.BEGINNER, testGame.getGameMode());
 
 
         testGame.setBag(List.of(ColorPawns.BLUE, ColorPawns.RED));

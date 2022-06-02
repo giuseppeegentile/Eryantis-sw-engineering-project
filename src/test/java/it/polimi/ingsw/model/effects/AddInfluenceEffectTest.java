@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.effects;
 
-import it.polimi.ingsw.controller.game.GameController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
 

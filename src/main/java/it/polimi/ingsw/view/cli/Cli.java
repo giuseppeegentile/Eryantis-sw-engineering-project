@@ -15,7 +15,6 @@ import it.polimi.ingsw.network.message.TextMessage;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
-import java.awt.*;
 import java.io.PrintStream;
 import java.util.*;
 import java.util.List;
@@ -370,7 +369,7 @@ public class Cli extends ViewObservable implements View {
 
             mode = parseInt(read());
         }
-        GameMode finalMode = List.of(GameMode.PRINCIPIANTE, GameMode.ESPERTO).get(mode-1);
+        GameMode finalMode = List.of(GameMode.BEGINNER, GameMode.ADVANCED).get(mode-1);
 
         notifyObserver(obs -> obs.onUpdateGameMode(finalMode));
     }

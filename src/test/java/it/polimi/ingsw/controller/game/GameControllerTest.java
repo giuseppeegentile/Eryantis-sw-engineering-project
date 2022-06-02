@@ -1,22 +1,8 @@
 package it.polimi.ingsw.controller.game;
-import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.enums.PhaseGame;
-import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
-import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.*;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 class GameControllerTest {
     private final GameController gameController = new GameController();
     private final String player1 = "pl1";
@@ -26,7 +12,7 @@ class GameControllerTest {
     private final ColorTower tower2 = ColorTower.WHITE;
     private final String player3 = "pl3";
     private final ColorTower tower3 = ColorTower.GREY;
-
+/*
     @Test
     @Order(1)
     void testingGameTurn() {
@@ -99,14 +85,14 @@ class GameControllerTest {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority());
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getMotherNatureMovement());
                 assertEquals(3, gameInstance.getCemetery().size());
-/*
+*//*
                 System.out.println("carta " + player1 + " " + msgCardPl1.getCard().getPriority() + ", "+ msgCardPl1.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player2 + " " + msgCardPl2.getCard().getPriority() + ", "+ msgCardPl2.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player3 + " " + msgCardPl3.getCard().getPriority() + ", "+ msgCardPl3.getCard().getMotherNatureMovement() );
                 System.out.println("cimitero:");
                 System.out.println(gameInstance.getCemetery().get(0).getPriority() + ", " +gameInstance.getCemetery().get(0).getMotherNatureMovement() );
                 System.out.println(gameInstance.getCemetery().get(1).getPriority() + ", " +gameInstance.getCemetery().get(1).getMotherNatureMovement() );
-                System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*/
+                System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*//*
 
 
                 assertEquals(priority3, gameInstance.getCemetery().get(2).getPriority());
@@ -119,9 +105,9 @@ class GameControllerTest {
                     i++;
                 }
 
-/*                for(PlayerModel p: gameInstance.getPhaseOrder()){
+*//*                for(PlayerModel p: gameInstance.getPhaseOrder()){
                     System.out.println(p.getNickname());
-                }*/
+                }*//*
             } else {
                 int priority4 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(6).getPriority();
                 int movement4 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(6).getMotherNatureMovement();
@@ -143,9 +129,9 @@ class GameControllerTest {
             //turno primo giocatore
 
             PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
-/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+*//*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
-            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*//*
             ColorPawns student1ToMove = firstPlayer.getStudentInEntrance().get(0); //to island
             ColorPawns student2ToMove = firstPlayer.getStudentInEntrance().get(1);
             List<ColorPawns> playersToMove = new ArrayList<>();
@@ -191,9 +177,9 @@ class GameControllerTest {
 
             //turno secondo giocatore
             PlayerModel secondPlayer = gameInstance.getPhaseOrder().get(1);
-/*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+*//*          System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
             System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
-            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
+            System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*//*
             ColorPawns secondStudent1ToMove = secondPlayer.getStudentInEntrance().get(0); //to island
             ColorPawns secondStudent2ToMove = secondPlayer.getStudentInEntrance().get(1);
             ColorPawns secondStudent3ToMove = secondPlayer.getStudentInEntrance().get(2);
@@ -311,14 +297,14 @@ class GameControllerTest {
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getPriority());
                 assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(8).getMotherNatureMovement());
                 assertEquals(3, gameInstance.getCemetery().size());
-/*
+*//*
                 System.out.println("carta " + player1 + " " + msgCardPl1.getCard().getPriority() + ", "+ msgCardPl1.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player2 + " " + msgCardPl2.getCard().getPriority() + ", "+ msgCardPl2.getCard().getMotherNatureMovement() );
                 System.out.println("carta " + player3 + " " + msgCardPl3.getCard().getPriority() + ", "+ msgCardPl3.getCard().getMotherNatureMovement() );
                 System.out.println("cimitero:");
                 System.out.println(gameInstance.getCemetery().get(0).getPriority() + ", " +gameInstance.getCemetery().get(0).getMotherNatureMovement() );
                 System.out.println(gameInstance.getCemetery().get(1).getPriority() + ", " +gameInstance.getCemetery().get(1).getMotherNatureMovement() );
-                System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*/
+                System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*//*
 
 
                 assertEquals(priority3, gameInstance.getCemetery().get(2).getPriority());
@@ -326,10 +312,10 @@ class GameControllerTest {
                 assertEquals(PhaseGame.ADD_STUDENT_TO_ISLAND, gameController.getPhaseGame());
 
 
-                /*
+                *//*
                 for(PlayerModel p: gameInstance.getPhaseOrder()){
                     System.out.println(p.getNickname());
-                }*/
+                }*//*
             } else {
                 int priority4 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(1).getPriority();
                 int movement4 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(1).getMotherNatureMovement();
@@ -391,5 +377,5 @@ class GameControllerTest {
         clouds.add(cloud2);
         gameController.getGameInstance().setCloudsModel(clouds);
         assertEquals(cloud1, gameController.getAvailableClouds().get(0));
-    }
+    }*/
 }

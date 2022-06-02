@@ -38,4 +38,8 @@ public class ProhibitionEffect implements Effect, Serializable {
     public String getDescription() {
         return null;
     }
+
+    public int getNumberProhibition() {
+        return numberProhibition;
+    }
 }

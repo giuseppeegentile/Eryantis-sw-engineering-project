@@ -15,8 +15,6 @@ public class ControlProfEffect implements Effect, Serializable {
     private PlayerModel playerWithProfs;
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
 
-
-
     @Override
     public void enable(PlayerModel playerModel) {
         playerWithProfs = playerModel;
@@ -27,7 +25,8 @@ public class ControlProfEffect implements Effect, Serializable {
             }
         }
         for(ColorPawns prof: List.of(ColorPawns.GREEN, ColorPawns.BLUE, ColorPawns.RED, ColorPawns.PINK, ColorPawns.YELLOW)) {
-            playerModel.addProf(prof);
+            if (!playerModel.getProfs().contains(prof))
+                playerModel.addProf(prof);
         }
         costForEffect++;
     }

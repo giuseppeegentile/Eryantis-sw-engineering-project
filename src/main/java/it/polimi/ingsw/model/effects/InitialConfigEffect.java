@@ -12,7 +12,7 @@ import java.util.List;
 public class InitialConfigEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
-    private final List<ColorPawns> students;
+    final List<ColorPawns> students;
     private final int numStudents;
 
     public InitialConfigEffect(List<ColorPawns>  students, int costForEffect, int numStudents){

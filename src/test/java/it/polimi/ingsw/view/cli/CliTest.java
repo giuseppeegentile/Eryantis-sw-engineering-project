@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 class CliTest {
-
+/*
     @Test
     void showOrderPhaseUpperRightCorner4(){
         Cli cli = new Cli();
@@ -56,7 +56,7 @@ class CliTest {
         cli.showOrderPhase("Davide", playerOrder);
     }
 
-    /*@Test
+    *//*@Test
     void showCards(){
         Cli cli = new Cli();
         AssistantCardModel cardOne = new AssistantCardModel(5, (byte)4);
@@ -69,7 +69,7 @@ class CliTest {
         cards.add(cardThree);
         cards.add(cardFour);
         cli.showDeckMessage("John Snow", cards);
-    }*/
+    }*//*
 
     @Test
     void printEriantys(){
@@ -118,12 +118,12 @@ class CliTest {
         cards.add(cardFour);
         cli.showCemeteryMessage("J Jonah Jameson Junior", cards);
     }
-    /*@Test
+    *//*@Test
     void showAssistantCardPlayed(){
         Cli cli = new Cli();
         AssistantCardModel card = new AssistantCardModel(5, (byte)2);
         cli.showPlayAssistantCardMessage("Jovanotti", card);
-    }*/
+    }*//*
 
     @Test
     void showStudentsOnClouds(){
@@ -304,5 +304,5 @@ class CliTest {
         Cli cli = new Cli();
         TextMessage message = new TextMessage("Massimo Ruggero", "JOINING ISLANDS...");
         cli.showMessageJoiningIsland(message);
-    }
+    }*/
 }

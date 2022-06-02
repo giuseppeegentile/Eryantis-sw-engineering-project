@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.enums.StatePlayer;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -21,7 +21,6 @@ public class PlayerModel implements Serializable {
     private List<AssistantCardModel> deckAssistantCardModel;
     private Map<ColorPawns, Integer> studentInHall = new HashMap<>();
     private List<ColorPawns> studentInEntrance;
-    private StatePlayer state;
     private byte movementMotherNatureCurrentActionPhase;
     private int coins;
     private List<CharacterCardModel> characterDeck = new ArrayList<>();
@@ -153,14 +152,6 @@ public class PlayerModel implements Serializable {
 
     /**
      *
-     * @return the state of the player, which is an enum
-     */
-    public StatePlayer getState(){
-        return this.state;
-    }
-
-    /**
-     *
      * @param studentToRemove the color of the student to remove from the entrance
      */
     public void removeStudentFromEntrance(ColorPawns studentToRemove) {
@@ -172,8 +163,6 @@ public class PlayerModel implements Serializable {
             }
         }
     }
-
-    private static void playCard(){ }
 
     public int getCoins(){
         return this.coins;
@@ -278,13 +267,6 @@ public class PlayerModel implements Serializable {
 
     /**
      *
-     * @param colorTower The tower color chosen for the player
-     */
-    public void setTowers(ColorTower colorTower) {
-        this.colorTower = colorTower;
-    }
-    /**
-     *
      * @return The list of students placed in the entrance of the player board
      */
     public List<ColorPawns> getStudentInEntrance() {
@@ -299,22 +281,6 @@ public class PlayerModel implements Serializable {
         this.studentInEntrance = new ArrayList(studentInEntrance);
     }
 
-    /**
-     *
-     * @param state The next state of the player's turn
-     */
-    public void setState(StatePlayer state) {
-        this.state = state;
-    }
-
-    /**
-     *
-     * @param index The index of the player's deck played that has to be removed from the player's deck
-     */
-    public void removeCard(int index){
-        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, this, (byte) 0)); //remove the card..method remove is bugged for list
-    }
-
     //**********************************
     //DA TESTARE
     public void removeStudentFromEntrance(List<ColorPawns> studentsToRemove){
@@ -326,19 +292,6 @@ public class PlayerModel implements Serializable {
                 }
             }
         }
-/*
-
-Iterator<ColorPawns> iteratorStudentsToRemove = studentsToRemove.iterator();
-        Iterator<ColorPawns> iteratorEntranceStudent = studentInEntrance.iterator();
-        while(iteratorStudentsToRemove.hasNext()){
-            while(iteratorEntranceStudent.hasNext()){
-                if(iteratorEntranceStudent.next().equals(iteratorStudentsToRemove.next())){
-                    iteratorEntranceStudent.remove();
-                    break;
-                }
-            }
-        }*/
-
     }
 
     public void addTowerToBoard(){

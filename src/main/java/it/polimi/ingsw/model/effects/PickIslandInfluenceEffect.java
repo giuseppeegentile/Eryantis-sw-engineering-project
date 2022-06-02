@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.effects;
 
-import it.polimi.ingsw.controller.game.GameController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;

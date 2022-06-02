@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.controller.game.GameController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.effects.AddInfluenceEffect;
 import it.polimi.ingsw.model.effects.AddToHallEffect;

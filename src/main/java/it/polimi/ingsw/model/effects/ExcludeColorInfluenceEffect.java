@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.effects;
 
-import it.polimi.ingsw.controller.game.GameController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.player.PlayerModel;
 
@@ -36,4 +36,9 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     public String getDescription() {
         return null;
     }
+
+    public ColorPawns getColorToExclude() {
+        return colorToExclude;
+    }
+
 }

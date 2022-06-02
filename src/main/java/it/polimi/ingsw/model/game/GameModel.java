@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -26,8 +25,7 @@ public class GameModel extends Observable implements Serializable {
     private int playersNumber=0;
     private List<PlayerModel> playersModels = new ArrayList<>();
     private List<CloudModel> cloudsModel;
-    private List<ColorPawns> bag; //non sicuro sui 130
-    private PhaseGame gameState;
+    private List<ColorPawns> bag;
     public GameMode mode;
     public List<CharacterCardModel> chosenCards;
     private List<AssistantCardModel> deck = null;

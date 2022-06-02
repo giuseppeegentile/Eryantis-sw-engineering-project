@@ -12,7 +12,7 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
     private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromHall;
 
-    public void chose(List<ColorPawns> studentFromEntrance, List<ColorPawns> studentFromHall){
+    public void choose(List<ColorPawns> studentFromEntrance, List<ColorPawns> studentFromHall){
         this.studentFromEntrance = studentFromEntrance;
         this.studentFromHall = studentFromHall;
     }
@@ -28,10 +28,19 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
         costForEffect++;
     }
 
+    public List<ColorPawns> getStudentFromEntrance() {
+        return studentFromEntrance;
+    }
+
+    public List<ColorPawns> getStudentFromHall() {
+        return studentFromHall;
+    }
+
     @Override
     public int getCoinsForEffect() {
         return costForEffect;
     }
+
 
     @Override
     public String getDescription() {
