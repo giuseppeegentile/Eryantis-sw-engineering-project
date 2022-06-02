@@ -364,8 +364,8 @@ public class Cli extends ViewObservable implements View {
         int mode = 0;
         while (mode < 1 || mode > 2){
             out.println("Enter the Game Modality: ");
-            out.println("1 - PRINCIPIANTE: ");
-            out.println("2 - ESPERTO: ");
+            out.println("1 - BEGINNER: ");
+            out.println("2 - ADVANCED: ");
 
             mode = parseInt(read());
         }
