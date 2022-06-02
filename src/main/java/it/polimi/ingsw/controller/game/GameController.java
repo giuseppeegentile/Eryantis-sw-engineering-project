@@ -711,7 +711,7 @@ public class GameController implements Observer, Serializable {
      * @param assistantCardModel The card played by the player
      */
     private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
-        int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
+        //int index = player.getDeckAssistantCardModel().indexOf(assistantCardModel);
         gameInstance.addToCemetery(assistantCardModel);
         player.getDeckAssistantCardModel().remove(assistantCardModel);
         //player.removeCard(index);

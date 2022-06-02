@@ -46,17 +46,6 @@ public class IslandModel implements Serializable {
     /**
      * Constructor for island in the model: initializes isJoined tho the false value and motherNature and set the list of the students on the island. It's used when joining islands
      */
-
-    public ColorPawns getStudentWithInfluence(){
-        Map<ColorPawns, Integer> frequency = new HashMap<>();
-        frequency.put(ColorPawns.RED, Collections.frequency(students, RED));
-        frequency.put(ColorPawns.BLUE, Collections.frequency(students, BLUE));
-        frequency.put(ColorPawns.GREEN, Collections.frequency(students, GREEN));
-        frequency.put(ColorPawns.PINK, Collections.frequency(students, PINK));
-        frequency.put(ColorPawns.YELLOW, Collections.frequency(students, YELLOW));
-        return Collections.max(frequency.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }
-
     public IslandModel(boolean motherNature, List<ColorPawns> students){
         this.students = new ArrayList<>();
         this.students.addAll(students);
@@ -82,12 +71,23 @@ public class IslandModel implements Serializable {
 
     /**
      *
+     * @return true if island is the result of a join.
+     */
+    public boolean isJoined(){
+        return isJoined;
+    }
+    /**
+     *
      * @return The value of motherNature. It depends on whether mother nature is on the island or not
      */
     public boolean getMotherNature(){
         return motherNature;
     }
 
+    /**
+     * Set a new value for mother nature on island
+     * @param newValue Mother nature is present or not on the island
+     */
     public void setMotherNature(boolean newValue){
         this.motherNature = newValue;
     }
@@ -134,7 +134,6 @@ public class IslandModel implements Serializable {
         this.prohibition = prohibition;
     }
 
-
     public PlayerModel getInfluence(PlayerModel playerWithEffectAdditionalInfluence,ColorPawns ignoreColorEffect, boolean considerTower){
         GameModel gameModel = GameModel.getInstance();
         List<ColorPawns> profsOwned = new ArrayList<>();
@@ -153,6 +152,7 @@ public class IslandModel implements Serializable {
             if (ignoreColorEffect != null) {
                 copyStudents.removeIf(c -> c.equals(ignoreColorEffect));
             }
+
 
             for (PlayerModel p : gameModel.getPlayersModel()) {
                 profsOwned.addAll(p.getProfs());
@@ -186,7 +186,7 @@ public class IslandModel implements Serializable {
 
         // find the max frequency using linear traversal
         int max_count = 1;
-        ColorPawns res = arr.get(0);
+        ColorPawns maxFrequencyColor = arr.get(0);
         int curr_count = 1;
 
         for (int i = 1; i < n; i++) {
@@ -197,7 +197,7 @@ public class IslandModel implements Serializable {
 
             if (curr_count > max_count) {
                 max_count = curr_count;
-                res = arr.get(i - 1);
+                maxFrequencyColor = arr.get(i - 1);
             }
         }
         int maxValue = -1;
@@ -206,13 +206,13 @@ public class IslandModel implements Serializable {
             if(maxValue < Collections.frequency(arr, c)){
                 maxValue = Collections.frequency(arr, c);
                 oldColor = c;
-            }else if (maxValue == Collections.frequency(arr, c) && c.equals(res)){
+            }else if (maxValue == Collections.frequency(arr, c) && c.equals(maxFrequencyColor)){
                 return List.of(oldColor, c);
             }
 
         }
 
-        return List.of(res);
+        return List.of(maxFrequencyColor);
 
     }
 }

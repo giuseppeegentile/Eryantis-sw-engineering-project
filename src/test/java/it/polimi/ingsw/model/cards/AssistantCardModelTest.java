@@ -22,4 +22,5 @@ class AssistantCardModelTest {
         assertEquals("Undi", card2.getOwner().getNickname());
     }
 
+
 }

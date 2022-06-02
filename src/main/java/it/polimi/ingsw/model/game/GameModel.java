@@ -46,11 +46,12 @@ public class GameModel extends Observable implements Serializable {
      * @throws NullPointerException
      */
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
-        try{
+        /*try{
             return playersModels;
         }catch (NullPointerException e){
             return new ArrayList<>();
-        }
+        }*/
+        return playersModels;
     }
 
 
@@ -158,21 +159,6 @@ public class GameModel extends Observable implements Serializable {
                 .findAny().get();
     }
 
-    //DA TESTARE
-    public int getIndexOfPlayer(PlayerModel playerModel){
-       // return this.playersModels.indexOf(playerModel);
-
-
-        int index = -1;
-        // Iterate over the elements of the list
-        for (PlayerModel pl : playersModels) {
-            if (pl.getNickname().equals(playerModel.getNickname())) index = getPhaseOrder().indexOf(pl);
-        }
-        // If you didn't know here we have if / else
-        // if index == -1 print song not found else print the index
-        // If song isn't found index is -1
-        return index;
-    }
     /**
      *
      * @param islandsModel The island to add to the game
@@ -222,23 +208,6 @@ public class GameModel extends Observable implements Serializable {
 
     /**
      *
-     * @return The current phase of the game
-     */
-    public PhaseGame getGameState() {
-        return gameState;
-    }
-
-
-    /**
-     *
-     * @param gameState The next phase of the game
-     */
-    public void setGameState(PhaseGame gameState) {
-        this.gameState = gameState;
-    }
-
-    /**
-     *
      * @return The list of students in the bag
      */
     public List<ColorPawns> getBag() {
@@ -262,13 +231,6 @@ public class GameModel extends Observable implements Serializable {
     }
 
     /**
-     * Clears the cemetery replacing the existing one with an empty list
-     */
-    public void clearCemetery(){
-        this.cemetery = new ArrayList<>(playersNumber);
-    }
-
-    /**
      *
      * @param colorTower The tower color of which you want to find the player
      * @return The player who has the given tower color
@@ -284,6 +246,7 @@ public class GameModel extends Observable implements Serializable {
         return playersModels.stream()
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
+
     public void endGame() {
         GameModel.resetInstance();
 
@@ -293,10 +256,13 @@ public class GameModel extends Observable implements Serializable {
 
     //convenzione: senso orario
     /**
-     * Explores the adjacent islands and checks if there are others with the same influence
+     * Explores the adjacent islands and checks if there are others with the same tower color
      * @return The direction where we can find an island with the same influence
      */
     public ColorDirectionAdjacentIsland getAdjacentSameColor(IslandModel islandModelToCheck){
+        if(islandModelToCheck.getTowerColor() == ColorTower.NULL){
+            return ColorDirectionAdjacentIsland.NONE;
+        }
         //indice dell'isola nell'array delle isole
         int right, left;
         int indexIslandToCheckAdjacent = this.islandModels.indexOf(islandModelToCheck);
@@ -340,17 +306,25 @@ public class GameModel extends Observable implements Serializable {
         int minNumTower = Collections.min(towersNumber);
         int indexMinTower;
         indexMinTower = towersNumber.indexOf(minNumTower);
+        List<Integer> indexesPlayersSameTowerNum = new ArrayList<>();
         int i; // is the index Of Player With Same Tower Number (if any)
         for (i = 0; i < playersModels.size(); i++) {
             if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
-                count++;
-                break; //esci dal ciclo, ci sono due giocatori con stesso numero di torri
+                count++; // ci sono giocatori con stesso numero minimo di torri
+                indexesPlayersSameTowerNum.add(i);
             }
         }
-        if (count != 0) { //se ci sono giocatori con stesso # di torri -> controlla numProf
-            //prende, tra i due a parità di torri, il giocatore con più prof
-            return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
-                    playersModels.get(i).getColorTower() : playersModels.get(indexMinTower).getColorTower();
+        if (count != 0) { //se ci sono due giocatori con stesso # di torri -> controlla numProf
+            //prende, tra i quelli a parità di torri, il giocatore con più prof
+            int profMax = playersModels.get(indexesPlayersSameTowerNum.get(0)).getNumProfs();
+            PlayerModel candidatePlayer = playersModels.get(indexesPlayersSameTowerNum.get(0));
+            for(int j = 1; j < indexesPlayersSameTowerNum.size(); j++){
+                if(playersModels.get(indexesPlayersSameTowerNum.get(j)).getNumProfs() > profMax){
+                    profMax = playersModels.get(indexesPlayersSameTowerNum.get(j)).getNumProfs();
+                    candidatePlayer = playersModels.get(indexesPlayersSameTowerNum.get(j));
+                }
+            }
+            return candidatePlayer.getColorTower();
         } else {        //controlla torri -> restituisce quello con minimo numero di torri
             return playersModels.get(towersNumber.indexOf(minNumTower)).getColorTower();
 
@@ -366,18 +340,6 @@ public class GameModel extends Observable implements Serializable {
         int index = 0;
         for(; !this.islandModels.get(index).getMotherNature(); index++);
         return index;
-    }
-
-    public void setColorTowers(List<ColorTower> colorTowers){
-        this.colorTowers = colorTowers;
-    }
-
-    public void addColorTowers(ColorTower colorTowers) {
-        this.colorTowers.add(colorTowers);
-    }
-
-    public List<ColorTower> getColorTowers() {
-        return colorTowers;
     }
 
     public boolean havePlayersFinishedCards() {

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CharacterCardModelTest {
 
@@ -19,12 +20,17 @@ class CharacterCardModelTest {
         card.setOwner(new PlayerModel("Dustin"));
         assertEquals(6, card.getCharacterId());
         assertEquals(effect, card.getEffect());
-        assertEquals(true, card.enoughCoins());
+        assertTrue(card.enoughCoins());
         assertEquals(1, card.getMoneyOnCard());
         assertEquals("Dustin", card.getOwner().getNickname());
         AddToHallEffect effect2 = new AddToHallEffect(asList(ColorPawns.BLUE, ColorPawns.RED));
         card.setEffect(effect2);
         assertEquals(effect2, card.getEffect());
+
+        int oldMoney = card.getMoneyOnCard();
+        card.incrementMoneyCost();
+        assertEquals(oldMoney+1, card.getMoneyOnCard());
+
         //card.incrementMoneyCost();
         //assertEquals(2, card.getMoneyOnCard());
         //card.setMoneyOnCard(3);

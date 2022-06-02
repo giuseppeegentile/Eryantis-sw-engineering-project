@@ -27,8 +27,8 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
         playerModel.addStudentsHall(studentFromCard);
         playerModel.removeStudentFromHall(studentFromHall);
 
-        students.addAll(studentFromHall);
-        students.removeAll(studentFromCard);
+        this.getStudents().addAll(studentFromHall);
+        this.getStudents().removeAll(studentFromCard);
 
 
         setCostForEffect(getCostForEffect()+1);

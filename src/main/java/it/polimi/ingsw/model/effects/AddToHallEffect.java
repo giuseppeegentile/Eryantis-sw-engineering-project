@@ -15,16 +15,13 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     }
 
     public void choose(int indexStudent) {
-        this.studentChosen = students.get(indexStudent);
-
+        this.studentChosen = this.getStudents().get(indexStudent);
     }
 
     @Override
     public void enable(PlayerModel playerModel) {
         playerModel.addStudentsHall(List.of(studentChosen));
-
         getFromBag();
-
         setCostForEffect(getCostForEffect()+1);
     }
 

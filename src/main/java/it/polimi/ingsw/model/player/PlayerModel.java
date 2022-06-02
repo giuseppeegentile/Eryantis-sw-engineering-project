@@ -115,7 +115,9 @@ public class PlayerModel implements Serializable {
      * @return the set of profs owned by the player
      */
     public List<ColorPawns> getProfs(){
-        return this.profs;
+        if(this.profs!= null)
+            return this.profs;
+        return new ArrayList<>();
     }
 
     /**

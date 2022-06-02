@@ -5,13 +5,15 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class InitialConfigEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
-    final List<ColorPawns> students;
-    private int numStudents;
+    private final List<ColorPawns> students;
+    private final int numStudents;
 
     public InitialConfigEffect(List<ColorPawns>  students, int costForEffect, int numStudents){
         this.students = students;
@@ -24,7 +26,8 @@ public class InitialConfigEffect implements Effect, Serializable {
     }
 
     void getFromBag(){
-        students.add(GameModel.getInstance().getBag().get(0));
+        ColorPawns stud = GameModel.getInstance().getBag().get(0);
+        this.students.add(stud);
         GameModel.getInstance().getBag().remove(0);
     }
 
@@ -45,7 +48,7 @@ public class InitialConfigEffect implements Effect, Serializable {
     }
 
     public List<ColorPawns> getStudents() {
-        return students;
+        return new ArrayList<>(this.students);
     }
 
     public int getCostForEffect() {
@@ -55,5 +58,4 @@ public class InitialConfigEffect implements Effect, Serializable {
     public void setCostForEffect(int costForEffect){
         this.costForEffect = costForEffect;
     }
-
 }

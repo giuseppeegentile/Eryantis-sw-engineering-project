@@ -10,16 +10,12 @@ public class CharacterCardModel implements Serializable {
 
     private int moneyOnCard;
     private Effect effect;
-    private int characterId;
-
+    private final int characterId;
     private PlayerModel owner;
+
     public CharacterCardModel(int moneyOnCard, Effect effect, int characterId){
         this.moneyOnCard = moneyOnCard;
         this.effect = effect;
-        this.characterId = characterId;
-    }
-
-    public void setCharacterId(int characterId){
         this.characterId = characterId;
     }
 
@@ -39,11 +35,6 @@ public class CharacterCardModel implements Serializable {
         return moneyOnCard;
     }
 
-    public void setMoneyOnCard(int moneyOnCard) {
-        this.moneyOnCard = moneyOnCard;
-    }
-
-
     public void incrementMoneyCost(){
         this.moneyOnCard++;
     }
@@ -59,5 +50,4 @@ public class CharacterCardModel implements Serializable {
     public void setOwner(PlayerModel owner) {
         this.owner = owner;
     }
-
 }
