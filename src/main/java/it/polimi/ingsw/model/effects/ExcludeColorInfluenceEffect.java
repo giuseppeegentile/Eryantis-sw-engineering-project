@@ -27,6 +27,11 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
         costForEffect++;
     }
 
+    public ColorPawns getColorToExclude() {
+        return colorToExclude;
+    }
+
+
     @Override
     public int getCoinsForEffect() {
         return costForEffect;

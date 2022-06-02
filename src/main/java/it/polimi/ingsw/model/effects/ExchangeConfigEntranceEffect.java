@@ -39,6 +39,14 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
         return getCostForEffect();
     }
 
+    public List<ColorPawns> getStudentFromCard() {
+        return studentFromCard;
+    }
+
+    public List<ColorPawns> getStudentFromHall() {
+        return studentFromHall;
+    }
+
     public String getDescription(){
         return super.getDescription() + " You can take up to 3 students from this card and exchange them with students on your hall.";
     }

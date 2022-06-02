@@ -538,6 +538,10 @@ public class GameController implements Observer, Serializable {
     }
 
 
+    public boolean getConsiderTower(){
+        return this.considerTower;
+    }
+
     public boolean isGameStarted() {
         return gameStarted;
     }
