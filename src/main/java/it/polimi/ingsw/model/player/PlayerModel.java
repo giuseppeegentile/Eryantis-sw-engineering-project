@@ -151,14 +151,6 @@ public class PlayerModel implements Serializable {
 
     /**
      *
-     * @return the state of the player, which is an enum
-     */
-    public StatePlayer getState(){
-        return this.state;
-    }
-
-    /**
-     *
      * @param studentToRemove the color of the student to remove from the entrance
      */
     public void removeStudentFromEntrance(ColorPawns studentToRemove) {
@@ -170,8 +162,6 @@ public class PlayerModel implements Serializable {
             }
         }
     }
-
-    private static void playCard(){ }
 
     public int getCoins(){
         return this.coins;
@@ -276,13 +266,6 @@ public class PlayerModel implements Serializable {
 
     /**
      *
-     * @param colorTower The tower color chosen for the player
-     */
-    public void setTowers(ColorTower colorTower) {
-        this.colorTower = colorTower;
-    }
-    /**
-     *
      * @return The list of students placed in the entrance of the player board
      */
     public List<ColorPawns> getStudentInEntrance() {
@@ -295,22 +278,6 @@ public class PlayerModel implements Serializable {
      */
     public void setStudentInEntrance(List<ColorPawns> studentInEntrance) {
         this.studentInEntrance = new ArrayList(studentInEntrance);
-    }
-
-    /**
-     *
-     * @param state The next state of the player's turn
-     */
-    public void setState(StatePlayer state) {
-        this.state = state;
-    }
-
-    /**
-     *
-     * @param index The index of the player's deck played that has to be removed from the player's deck
-     */
-    public void removeCard(int index){
-        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, this, (byte) 0)); //remove the card..method remove is bugged for list
     }
 
     //**********************************
