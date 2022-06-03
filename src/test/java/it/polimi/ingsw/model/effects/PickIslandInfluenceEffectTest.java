@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PickIslandInfluenceEffectTest {
 
@@ -24,7 +23,7 @@ class PickIslandInfluenceEffectTest {
         effect.chose(0);
         effect.enable(new PlayerModel("Giannni"));
         assertEquals(4, effect.getCoinsForEffect());
-        assertNull(effect.getDescription());
+        assertEquals("EFFECT: choose an island and calculate the majority as if mother nature ended her movement there. In this turn, mother nature will move as usual and on the island where her movement ends, the majority will normally be calculated.", effect.getDescription());
         assertEquals(0, effect.getIndexIslandEffect());
         effect.setIndexIslandEffect(3);
         assertEquals(3, effect.getIndexIslandEffect());

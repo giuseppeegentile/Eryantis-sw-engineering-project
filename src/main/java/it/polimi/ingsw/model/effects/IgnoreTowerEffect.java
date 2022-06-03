@@ -28,6 +28,6 @@ public class IgnoreTowerEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: when counting the influence on an island (or a group of islands), the towers present are not calculated.";
     }
 }

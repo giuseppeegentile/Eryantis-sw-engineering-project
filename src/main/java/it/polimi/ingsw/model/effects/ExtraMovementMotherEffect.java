@@ -24,6 +24,6 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: you can move mother nature up to 2 more islands than indicated on the assistant card you played";
     }
 }

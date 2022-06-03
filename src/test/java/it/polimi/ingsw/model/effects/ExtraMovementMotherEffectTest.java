@@ -15,6 +15,6 @@ class ExtraMovementMotherEffectTest {
         effect.enable(player);
         assertEquals(6, player.getMovementMotherNatureCurrentActionPhase());
         assertEquals(2, effect.getCoinsForEffect());
-        assertNull(effect.getDescription());
+        assertEquals("EFFECT: you can move mother nature up to 2 more islands than indicated on the assistant card you played", effect.getDescription());
     }
 }

@@ -48,7 +48,7 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     }
 
     public String getDescription(){
-        return super.getDescription() + " You can take up to 3 students from this card and exchange them with students on your hall.";
+        return super.getDescription() + " you can take up to 3 students from this card and exchange them with students in your entrance.";
     }
 
 }

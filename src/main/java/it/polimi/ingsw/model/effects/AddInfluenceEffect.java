@@ -28,6 +28,7 @@ public class AddInfluenceEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+
+        return "EFFECT: this turn, during the influence calculation you have 2 additional influence points.";
     }
 }

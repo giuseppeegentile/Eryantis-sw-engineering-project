@@ -13,7 +13,7 @@ class AddInfluenceEffectTest {
         AddInfluenceEffect effect = new AddInfluenceEffect(new GameController());
         effect.enable(new PlayerModel("Chrissy"));
         assertEquals(3, effect.getCoinsForEffect());
-        assertEquals(null, effect.getDescription());
+        assertEquals("EFFECT: this turn, during the influence calculation you have 2 additional influence points.", effect.getDescription());
     }
 
 }

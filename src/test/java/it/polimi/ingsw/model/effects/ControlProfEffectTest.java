@@ -35,7 +35,7 @@ class ControlProfEffectTest {
         assertEquals(oldAssociationProfs, effect.getOldAssociationProfs());
         assertTrue(GameModel.getInstance().getPlayerByNickname("Gandalf").getProfs().containsAll(asList(ColorPawns.GREEN, ColorPawns.BLUE, ColorPawns.RED, ColorPawns.PINK, ColorPawns.YELLOW)));
         assertEquals(3, effect.getCoinsForEffect());
-        assertNull(effect.getDescription());
+        assertEquals("EFFECT: during this turn, take control of the professors even if you have the same number of students in your room as the player currently controlling them.", effect.getDescription());
         assertEquals(player, effect.getPlayerWithProfs());
     }
 

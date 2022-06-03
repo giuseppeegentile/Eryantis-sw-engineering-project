@@ -38,7 +38,7 @@ public class ControlProfEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: during this turn, take control of the professors even if you have the same number of students in your room as the player currently controlling them.";
     }
 
     public Map<ColorPawns, PlayerModel> getOldAssociationProfs(){

@@ -44,6 +44,6 @@ class ExchangeHallEntranceEffectTest {
         assertEquals(studentsFromHall, player.getStudentInEntrance());
         assertEquals(asList(ColorPawns.BLUE, ColorPawns.BLUE, ColorPawns.BLUE), effect.getStudentFromEntrance());
         assertEquals(asList(ColorPawns.RED, ColorPawns.RED, ColorPawns.RED), effect.getStudentFromHall());
-        assertNull(effect.getDescription());
+        assertEquals("EFFECT: you can exchange up to 2 students present in your room and in your hall.", effect.getDescription());
     }
 }

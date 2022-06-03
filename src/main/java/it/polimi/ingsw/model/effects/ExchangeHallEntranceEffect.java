@@ -44,6 +44,6 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: you can exchange up to 2 students present in your room and in your hall.";
     }
 }

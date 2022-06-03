@@ -37,7 +37,7 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: choose an island and calculate the majority as if mother nature ended her movement there. In this turn, mother nature will move as usual and on the island where her movement ends, the majority will normally be calculated.";
     }
 
     public int getIndexIslandEffect() {

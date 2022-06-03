@@ -44,6 +44,6 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     }
 
     public String getDescription(){
-        return super.getDescription() + " Take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.";
+        return super.getDescription() + " take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.";
     }
 }

@@ -16,7 +16,7 @@ class ExcludeColorInfluenceEffectTest {
         effect.chose(ColorPawns.RED);
         effect.enable(new PlayerModel("Mindflayer"));
         assertEquals(4, effect.getCoinsForEffect());
-        assertNull(effect.getDescription());
+        assertEquals("EFFECT: choose a student color; this turn, during the influence calculation that color provides no influence.", effect.getDescription());
         assertEquals(ColorPawns.RED, effect.getColorToExclude());
     }
 }

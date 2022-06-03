@@ -36,7 +36,8 @@ public class ProhibitionEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "At the beginning of the game, place the 4 prohibition tiles on this card.\n" +
+                "EFFECT: place a ban tile on an island of your choice. the first time mother nature ends her movement there, put the prohibition tile back on the card without calculating the influence on that island or placing towers.";
     }
 
     public int getNumberProhibition() {

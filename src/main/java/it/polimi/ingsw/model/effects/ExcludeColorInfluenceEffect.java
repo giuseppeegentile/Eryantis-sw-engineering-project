@@ -34,7 +34,7 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
 
     @Override
     public String getDescription() {
-        return null;
+        return "EFFECT: choose a student color; this turn, during the influence calculation that color provides no influence.";
     }
 
     public ColorPawns getColorToExclude() {
