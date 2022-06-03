@@ -15,6 +15,7 @@ import it.polimi.ingsw.view.gui.scene.PlayCardsSceneController;
 import it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController;
 import it.polimi.ingsw.view.gui.scene.TowerColorSceneController;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 
 import java.util.List;
 import java.util.Map;
@@ -112,15 +113,18 @@ public class Gui extends ViewObservable implements View {
         PlayCardsSceneController playCardsSceneController = new PlayCardsSceneController();
         playCardsSceneController.addAllObservers(observers);
         playCardsSceneController.playCards(nickname, playerDeck);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "PlayCards.fxml"));
+        Platform.runLater(() -> SceneController.changeRootPane(playCardsSceneController, "PlayCards.fxml"));
     }
 
     public void showOrderPhase(String nickname, List<PlayerModel> order){}
 
     public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
+
         towerColorSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "TowerColorScene.fxml"));
+
+        towerColorSceneController.setAvailableTowers(availableColorTowers);
+        Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
     }
 
     public void askPlayersNumber(){
@@ -133,7 +137,7 @@ public class Gui extends ViewObservable implements View {
     public void askGameMode(){
         GameModeSceneController gameModeSceneController = new GameModeSceneController();
         gameModeSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
+        Platform.runLater(() -> SceneController.changeRootPane(gameModeSceneController, "GameModeScene.fxml"));
     }
 
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){}

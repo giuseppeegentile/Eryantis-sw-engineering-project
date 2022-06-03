@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.observer.ViewObservable;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class TowerColorSceneController extends ViewObservable implements GenericSceneController{
 
+    private List<ColorTower> availableColorTowers;
     @FXML
     private Button button;
 
@@ -24,9 +26,24 @@ public class TowerColorSceneController extends ViewObservable implements Generic
     @FXML
     private RadioButton black_button;
 
+
+    private void hide(RadioButton btnToHide){
+        btnToHide.setVisible(false);
+        btnToHide.managedProperty().bind(btnToHide.visibleProperty());
+    }
+
     @FXML
-    public void initialize() {
+    private void initialize() {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBtnClick);
+        if(!availableColorTowers.contains(ColorTower.GREY)){
+            hide(grey_button);
+        }
+        if(!availableColorTowers.contains(ColorTower.BLACK)){
+            hide(black_button);
+        }
+        if(!availableColorTowers.contains(ColorTower.WHITE)){
+            hide(white_button);
+        }
     }
 
     private void onBtnClick(Event e) {
@@ -47,4 +64,7 @@ public class TowerColorSceneController extends ViewObservable implements Generic
 
     }
 
+    public void setAvailableTowers(List<ColorTower> availableColorTowers) {
+        this.availableColorTowers =availableColorTowers;
+    }
 }

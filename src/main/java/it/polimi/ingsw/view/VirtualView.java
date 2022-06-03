@@ -34,7 +34,6 @@ public class VirtualView implements View, Observer {
     @Override
     public void askTowerColor(String nickMessage, List<ColorTower> availableTowers) {
         clientHandler.sendMessage(new InitialResMessage(nickMessage, availableTowers));
-
     }
 
     @Override
