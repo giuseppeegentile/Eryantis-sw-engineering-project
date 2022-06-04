@@ -53,14 +53,29 @@ public class GameModel extends Observable implements Serializable {
     }
 
 
+    /**
+     *
+     * @param playersNumber The number of the players joined the current match
+     */
     public void setPlayerNumber(int playersNumber){
         this.playersNumber = playersNumber;
     }
+
     //da testare
+
+    /**
+     *
+     * @param player A player that has to be added to the current match
+     */
     public void addPlayer(PlayerModel player){
         this.playersModels.add(player);
     }
 
+    /**
+     *
+     * @param nickname The nickname of the player that has to be removed from the current match
+     * @return The outcome of the removal
+     */
     public boolean removePlayerByNickname(String nickname) {
         boolean result = playersModels.remove(getPlayerByNickname(nickname));
 
@@ -72,7 +87,9 @@ public class GameModel extends Observable implements Serializable {
         return result;
     }
 
-
+    /**
+     * It sets the istance to null
+     */
     public static void resetInstance() {
         GameModel.istance = null;
     }
@@ -101,14 +118,25 @@ public class GameModel extends Observable implements Serializable {
         this.phaseOrder = playersModels; //quando non hanno ancora giocato la carta l'ordine è quello in della lista dei player
     }
 
+    /**
+     *
+     * @param phaseOrder The new order phase calculated through the assistant cards played
+     */
     public void setPhaseOrder(List<PlayerModel> phaseOrder){
         this.phaseOrder = phaseOrder;
     }
 
+    /**
+     *
+     * @return The order phase of the current round
+     */
     public List<PlayerModel> getPhaseOrder(){
         return this.phaseOrder;
     }
 
+    /**
+     * It resets the order phase for the next turn
+     */
     public void clearPhaseOrder(){
         this.phaseOrder = new ArrayList<>(playersNumber);
     }
@@ -240,11 +268,19 @@ public class GameModel extends Observable implements Serializable {
         return new PlayerModel();
     }
 
+    /**
+     *
+     * @param nickname The nickname chosen by the player and that has to be verified
+     * @return True if the nickname chosen is already taken by another player
+     */
     public boolean isNicknameTaken(String nickname) {
         return playersModels.stream()
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
 
+    /**
+     * It ends the game. It' used in case of error and in tests
+     */
     public void endGame() {
         GameModel.resetInstance();
 
@@ -330,20 +366,36 @@ public class GameModel extends Observable implements Serializable {
     }
 
     //********************DA TESTARE
+
+    /**
+     *
+     * @return The island where mother nature is placed
+     */
     public IslandModel getIslandWithMother(){
         return this.islandModels.stream().filter(IslandModel::getMotherNature).findAny().orElse(null);
     }
 
+    /**
+     *
+     * @return The index of the island where mother nature in placed
+     */
     public int getMotherNatureIndex(){
         int index = 0;
         for(; !this.islandModels.get(index).getMotherNature(); index++);
         return index;
     }
 
+    /**
+     * It's used in checkedWin
+     * @return True if a player has finished his cards
+     */
     public boolean havePlayersFinishedCards() {
         return havePlayerFinishedCards;
     }
 
+    /**
+     * It set havePlayerFinishedCards to true if a player has finished his assistant cards
+     */
     public void setTrueHavePlayerFinishedCards(){
         this.havePlayerFinishedCards = true;
     }

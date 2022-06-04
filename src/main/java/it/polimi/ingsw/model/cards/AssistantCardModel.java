@@ -22,6 +22,12 @@ public class AssistantCardModel implements Serializable {
         this.owner = null;
     }
 
+    /**
+     * Constructor for assistant card in the model: initializes isPlayed to the false value and owner to null value
+     * @param priority The priority of the card. Will compete for the game turn management
+     * @param p The player owning this card
+     * @param motherNatureMovement The number of movements motherNature will be able to do with the card
+     */
     public AssistantCardModel(int priority, PlayerModel p, byte motherNatureMovement) {
         this.priority = priority;
         this.motherNatureMovement = motherNatureMovement;

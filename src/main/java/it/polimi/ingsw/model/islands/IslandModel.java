@@ -4,8 +4,11 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
+
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
@@ -116,25 +119,41 @@ public class IslandModel implements Serializable {
         this.colorTower = colorTower;
     }
 
-    /**********************************************************/
+
     //DA TESTARE
+
+    /**
+     *
+     * @param studentsToAdd The list of students to add to the island
+     */
     public void addStudent(List<ColorPawns> studentsToAdd){
         this.students.addAll(studentsToAdd);
     }
 
+    /**
+     *
+     * @return True if the island has a tower on it
+     */
     public boolean hasTower(){
         return ColorTower.NULL != colorTower;
     }
 
+    /**
+     *
+     * @return True if the island has a prohibition card on it
+     */
     public boolean hasProhibition() {
         return prohibition;
     }
 
-    public void setHasProhibition(boolean prohibition) {
-        this.prohibition = prohibition;
-    }
-
-    public PlayerModel getInfluence(PlayerModel playerWithEffectAdditionalInfluence,ColorPawns ignoreColorEffect, boolean considerTower){
+    /**
+     * It calculates the influence for the islands
+     * @param playerWithEffectAdditionalInfluence  The player who has activated the effect that gives additional influence
+     * @param ignoreColorEffect The color ignored by the effect activated by a player
+     * @param considerTower True if a player has activated the corresponding effect
+     * @return
+     */
+    public PlayerModel getInfluence(PlayerModel playerWithEffectAdditionalInfluence, ColorPawns ignoreColorEffect, boolean considerTower){
         GameModel gameModel = GameModel.getInstance();
         List<ColorPawns> profsOwned = new ArrayList<>();
         List<ColorPawns> copyStudents = new ArrayList<>(this.getStudents());

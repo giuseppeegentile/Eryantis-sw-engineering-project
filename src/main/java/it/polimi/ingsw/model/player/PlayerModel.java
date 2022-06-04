@@ -27,11 +27,9 @@ public class PlayerModel implements Serializable {
 
 
     /**
-     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set se map for the student hall
+     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
      * @param nickname nickname choose by player
      * @param colorTower tower color assigned to a player, identifier for the team in 4-player version
-     *
-     *
      */
     public PlayerModel(String nickname, ColorTower colorTower){
         this.nickname = nickname;
@@ -50,6 +48,10 @@ public class PlayerModel implements Serializable {
         ));
     }
 
+    /**
+     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
+     * @param nickname nickname choose by player
+     */
     public PlayerModel(String nickname){
         this.nickname = nickname;
         this.coins = 0;
@@ -66,6 +68,10 @@ public class PlayerModel implements Serializable {
         ));
     }
 
+    /**
+     *
+     * @param students The list of students to add to the student's hall
+     */
     public void addStudentsHall(List<ColorPawns> students){
         for(ColorPawns s: students){
             int oldValue = studentInHall.get(s);
@@ -73,11 +79,19 @@ public class PlayerModel implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param students The list of students to add to the student's entrance
+     */
     public void addStudentsEntrance(List<ColorPawns> students){
         studentInEntrance.addAll(students);
 
     }
 
+    /**
+     *
+     * @param students The list of the students to remove from the student's hall
+     */
     public void removeStudentFromHall(List<ColorPawns> students){
         for(ColorPawns s: students){
             int oldValue = studentInHall.get(s);
@@ -86,6 +100,9 @@ public class PlayerModel implements Serializable {
         }
     }
 
+    /**
+     * Costructor for player in the model: initialize colorTower to null.
+     */
     public PlayerModel(){
         this.colorTower = ColorTower.NULL;
     }
@@ -164,6 +181,10 @@ public class PlayerModel implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return The coins owned by the player
+     */
     public int getCoins(){
         return this.coins;
     }
@@ -177,7 +198,7 @@ public class PlayerModel implements Serializable {
     }
 
     /**
-     * add one coins to the coins value
+     * Add one coins to the coins value
      */
     public void addCoins(){
         this.coins +=1 ;
@@ -283,6 +304,11 @@ public class PlayerModel implements Serializable {
 
     //**********************************
     //DA TESTARE
+
+    /**
+     *
+     * @param studentsToRemove The list of the students to remove from the entrance
+     */
     public void removeStudentFromEntrance(List<ColorPawns> studentsToRemove){
         for (ColorPawns student : new ArrayList<>(studentsToRemove)) {
             for (ColorPawns entranceStudent : new ArrayList<>(studentInEntrance)) {
@@ -294,14 +320,21 @@ public class PlayerModel implements Serializable {
         }
     }
 
+    /**
+     * It adds a tower to the player board
+     */
     public void addTowerToBoard(){
         this.towerNumber++;
     }
 
+    /**
+     * It removes a tower from the player board
+     */
     public void removeTowerFromBoard(){
         if(this.towerNumber!= 0)
             this.towerNumber--;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -316,10 +349,18 @@ public class PlayerModel implements Serializable {
         return Objects.hash(nickname);
     }
 
+    /**
+     *
+     * @param characterDeck The list of the character card to give to the player
+     */
     public void assignCharacterDeck(List<CharacterCardModel> characterDeck) {
         this.characterDeck = characterDeck;
     }
 
+    /**
+     *
+     * @return The list of the character card owned by the player
+     */
     public List<CharacterCardModel> getCharacterDeck() {
         return characterDeck;
     }
