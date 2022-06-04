@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.Group?>
+<?import java.net.URL?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" fx:controller="it.polimi.ingsw.view.gui.scene.GameModeSceneController"
+           minWidth="-Infinity" styleClass="menuBackground" prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Group scaleX="1.5" scaleY="1.5" scaleZ="1.5">
+         <children>
+            <Label id="label" alignment="TOP_RIGHT" layoutX="531.0" layoutY="268.0" text="Inserisci la modalità di gioco:">
+               <font>
+                  <Font name="High Tower Text" size="36.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="beginner_button" layoutX="586.0" layoutY="331.0" mnemonicParsing="false" text="Principiante">
+               <font>
+                  <Font name="High Tower Text" size="24.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="advanced_button" layoutX="586.0" layoutY="377.0" mnemonicParsing="false"  text="Esperto">
+               <font>
+                  <Font name="High Tower Text" size="24.0" />
+               </font>
+            </RadioButton>
+         </children>
+      </Group>
+   </children>
+   <stylesheets>
+      <URL value="@../css/game.css"/>
+   </stylesheets>
+</StackPane>

@@ -1,16 +1,33 @@
 package it.polimi.ingsw.view.gui.scene;
 
+
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.observer.ViewObservable;
+import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.scene.control.RadioButton;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
 public class GameModeSceneController extends ViewObservable implements GenericSceneController{
+    @FXML
+    private RadioButton beginner_button;
 
-    GameMode gameMode;
+    @FXML
+    private RadioButton advanced_button;
 
-    public void setGameMode() {
-        this.gameMode = gameMode;
+    @FXML
+    private void initialize() {
+        beginner_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBeginnerClick);
+        advanced_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAdvancedClick);
+    }
+
+    private void onAdvancedClick(Event e) {
+        new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.ESPERTO))).start();
+    }
+
+    private void onBeginnerClick(Event e) {
+        new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.PRINCIPIANTE))).start();
     }
 }

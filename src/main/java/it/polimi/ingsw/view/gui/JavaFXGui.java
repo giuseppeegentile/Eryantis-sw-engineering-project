@@ -9,9 +9,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 
@@ -45,8 +47,8 @@ public class JavaFXGui extends Application {
         // Show the scene containing the root layout.
         Scene scene = new Scene(rootLayout);
         stage.setScene(scene);
-        stage.setWidth(1280d);
-        stage.setHeight(720d);
+/*        stage.setWidth(1280d);
+        stage.setHeight(720d);*/
         stage.setResizable(false);
         stage.setMaximized(true);
         stage.setFullScreen(true);

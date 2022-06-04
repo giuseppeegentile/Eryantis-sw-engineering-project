@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -48,6 +49,11 @@ public class ConnectionSceneController extends ViewObservable implements Generic
     public void initialize() {
         connectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConnectButtonClick);
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToTitleButtonClick);
+        serverPortField.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onConnectButtonClick(e);
+            }
+        });
     }
 
     /**
@@ -56,7 +62,6 @@ public class ConnectionSceneController extends ViewObservable implements Generic
      * @param event the mouse click event.
      */
     private void onConnectButtonClick(Event event) {
-
         serverIPLabel.setOpacity(1);
         serverPortLabel.setOpacity(1);
         serverAddressField.setOpacity(1);

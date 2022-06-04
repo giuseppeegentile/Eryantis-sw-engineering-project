@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -16,12 +17,6 @@ import javafx.scene.layout.AnchorPane;
  * This class implements the scene where users choose their nicknames.
  */
 public class LoginSceneController extends ViewObservable implements GenericSceneController {
-
-    @FXML
-    private AnchorPane rootPane;
-
-    @FXML
-    private Label nicknameFieldLabel;
 
     @FXML
     private TextField nicknameField;
@@ -35,9 +30,13 @@ public class LoginSceneController extends ViewObservable implements GenericScene
     public void initialize() {
         nextStageButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNextStageButtonClick);
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToTitleButtonClick);
+        nicknameField.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onNextStageButtonClick(e);
+            }
+        });
+
     }
-
-
 
     /**
      * Handle click on "Inizia partita" button.

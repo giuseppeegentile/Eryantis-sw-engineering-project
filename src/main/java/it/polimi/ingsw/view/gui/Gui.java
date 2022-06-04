@@ -137,7 +137,7 @@ public class Gui extends ViewObservable implements View {
     public void askGameMode(){
         GameModeSceneController gameModeSceneController = new GameModeSceneController();
         gameModeSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(gameModeSceneController, "GameModeScene.fxml"));
+        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
     }
 
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){}

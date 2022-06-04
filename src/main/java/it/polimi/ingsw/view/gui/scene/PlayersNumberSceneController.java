@@ -30,8 +30,6 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
     public void initialize() {
         spinner.setEditable(true);
 
-
-
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory<>() {
 
