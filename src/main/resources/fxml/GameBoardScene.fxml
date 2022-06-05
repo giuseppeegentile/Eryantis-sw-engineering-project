@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -27,7 +29,7 @@
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="219.0" fitWidth="584.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="219.0" fitWidth="584.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.33333333333337123" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="790.1332092285156" AnchorPane.topAnchor="502.0">
                      <image>
                         <Image url="@../images_cranio/PLANCIA GIOCO_2.png" />
                      </image>
@@ -44,10 +46,10 @@
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="132.0" layoutX="898.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images_cranio/Modello_nuvola.png" />
+                        <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="777.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="728.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
@@ -62,7 +64,7 @@
                         <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="240.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="223.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
@@ -92,12 +94,17 @@
                         <Image url="@../images_cranio/Modello_isola3.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1103.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1103.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="992.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+                  <Button layoutX="1062.0" layoutY="637.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Lobby Info">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="951.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>

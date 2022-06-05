@@ -31,6 +31,6 @@
       </Group>
    </children>
    <stylesheets>
-      <URL value="@../css/game.css"/>
+      <URL value="@../css/StartingGame.css"/>
    </stylesheets>
 </StackPane>
