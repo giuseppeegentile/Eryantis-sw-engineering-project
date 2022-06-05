@@ -21,6 +21,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static it.polimi.ingsw.network.message.MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND;
+
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
     private boolean gameStarted = false;
@@ -31,6 +33,7 @@ public class GameController implements Observer, Serializable {
     private final boolean boolForTestPlayedCard = true;
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
+    private String effectPlayed;
 
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
@@ -39,6 +42,7 @@ public class GameController implements Observer, Serializable {
     private boolean considerTower = true;
     private List<ColorPawns> movedStudents;
     private byte movement;
+    private MessageType oldState;
 
     public void setPlayerWithEffectAdditionalInfluence(PlayerModel player){
         this.playerWithEffectAdditionalInfluence = player;
@@ -172,11 +176,87 @@ public class GameController implements Observer, Serializable {
             case CHARACTER_CARD_PLAYED:
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
-                    characterCardPlayed.getEffect().enable(playerActive);
-                    activatedEffect = true;
+
+                    effectPlayed = characterCardPlayed.getClass().getSimpleName();
+                    InitialConfigEffect initialConfigEffect;
+                    switch (this.effectPlayed) {
+                        case "AddToHallEffect":
+                            initialConfigEffect = (InitialConfigEffect) characterCardPlayed.getEffect();
+                            virtualViewMap.get(playerActive.getNickname()).askStudentFromCardToHall(playerActive.getNickname(), initialConfigEffect.getStudents());
+                            break;
+                        case "AddToIslandEffect":
+                            initialConfigEffect = (InitialConfigEffect) characterCardPlayed.getEffect();
+                            virtualViewMap.get(playerActive.getNickname()).askMoveStudentFromCardToIsland(playerActive.getNickname(), GameModel.getInstance().getIslandsModel(), initialConfigEffect.getStudents());
+                            break;
+                        case "ExchangeConfigEntranceEffect":
+                            initialConfigEffect = (InitialConfigEffect) characterCardPlayed.getEffect();
+                            virtualViewMap.get(playerActive.getNickname()).askMoveFromCardToEntrance(playerActive.getNickname(), initialConfigEffect.getStudents(), playerActive.getStudentInEntrance());
+                            break;
+                        case "ExchangeHallEntranceEffect":
+                            virtualViewMap.get(playerActive.getNickname()).askStudentsChangeEntranceHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), playerActive.getStudentInHall());
+                            break;
+                        case "ExcludeColorInfluenceEffect":
+                            virtualViewMap.get(playerActive.getNickname()).askColorStudentToIgnore(playerActive.getNickname());
+                            break;
+                        case "PickIslandInfluenceEffect":
+                            virtualViewMap.get(playerActive.getNickname()).askExtraGetInfluence(playerActive.getNickname(), GameModel.getInstance().getIslandsModel());
+                            break;
+                        case "ProhibitionEffect":
+                            virtualViewMap.get(playerActive.getNickname()).askMoveBanCard(playerActive.getNickname(), GameModel.getInstance().getIslandsModel());
+                            break;
+                        default:
+                            characterCardPlayed.getEffect().enable(playerActive);
+                            activatedEffect = true;
+                            break;  //come lo mando avanti?
+                    }
                 }
 
-                switch (this.oldState){
+                break;
+
+            case EFFECT_CARD_PLAYED:
+                switch (this.effectPlayed) {
+                    case "AddToHallEffect":
+                        AddToHallEffect addToHallEffect = (AddToHallEffect)characterCardPlayed.getEffect();
+                        MovedStudentFromCardToHall movedStudentFromCardToHall = (MovedStudentFromCardToHall)receivedMessage;
+                        addToHallEffect.choose(movedStudentFromCardToHall.getPickedStudent());
+                        break;
+                    case "AddToIslandEffect":
+                        AddToIslandEffect addToIslandEffect = (AddToIslandEffect)characterCardPlayed.getEffect();
+                        MovedFromCardToIsland movedFromCardToIsland = (MovedFromCardToIsland)receivedMessage;
+                        addToIslandEffect.choose(movedFromCardToIsland.getStudentToMove(), movedFromCardToIsland.getIslandIndex());
+                        break;
+                    case "ExchangeConfigEntranceEffect":
+                        ExchangeConfigEntranceEffect exchangeConfigEntranceEffect = (ExchangeConfigEntranceEffect)characterCardPlayed.getEffect();
+                        MovedFromCardToEntrance movedFromCardToEntrance = (MovedFromCardToEntrance)characterCardPlayed.getEffect();
+                        exchangeConfigEntranceEffect.choose(movedFromCardToEntrance.getStudentsFromCard(), movedFromCardToEntrance.getStudentsFromEntrance());
+                        break;
+                    case "ExchangeHallEntranceEffect":
+                        ExchangeHallEntranceEffect exchangeHallEntranceEffect = (ExchangeHallEntranceEffect)characterCardPlayed.getEffect();
+                        ChosenChangeEntranceHall chosenChangeEntranceHall = (ChosenChangeEntranceHall)receivedMessage;
+                        exchangeHallEntranceEffect.choose(chosenChangeEntranceHall.getStudentsFromEntrance(), chosenChangeEntranceHall.getStudentsFromHall());
+                        break;
+                    case "ExcludeColorInfluenceEffect":
+                        ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
+                        ChosenColorToIgnore chosenColorToIgnore = (ChosenColorToIgnore)receivedMessage;
+                        excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
+                        break;
+                    case "PickIslandInfluenceEffect":
+                        PickIslandInfluenceEffect pickIslandInfluenceEffect = (PickIslandInfluenceEffect)characterCardPlayed.getEffect();
+                        ExtraGetInfluence extraGetInfluence = (ExtraGetInfluence)receivedMessage;
+                        pickIslandInfluenceEffect.choose(extraGetInfluence.getIndexIsland());
+                        break;
+                    case "ProhibitionEffect":
+                        ProhibitionEffect prohibitionEffect = (ProhibitionEffect)characterCardPlayed.getEffect();
+                        MovedBanCardMessage movedBanCardMessage = (MovedBanCardMessage)receivedMessage;
+                        prohibitionEffect.choose(movedBanCardMessage.getIndexIsland());
+                        break;
+                    //mancherebbe l'ultimo effetto
+                }
+
+                characterCardPlayed.getEffect().enable(playerActive);
+                activatedEffect = true;
+
+                switch (this.oldState) {
                     case PLAYER_MOVED_STUDENTS_ON_ISLAND:
                         if (gameInstance.getPlayersNumber() % 2 == 0) {
                             virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
@@ -185,7 +265,7 @@ public class GameController implements Observer, Serializable {
                         }
                         break;
                     case PLAYER_MOVED_STUDENTS_ON_HALL:
-                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive,  playerActive.getMovementMotherNatureCurrentActionPhase());
+                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
                         break;
                     case PLAYER_MOVED_MOTHER:
                         motherActions(this.movement);
@@ -194,11 +274,10 @@ public class GameController implements Observer, Serializable {
                         virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
                         break;
                 }
-
-                //to complete (?)
                 break;
+
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND);
+                askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
                 studentsOnIslandActions(receivedMessage);
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
@@ -994,8 +1073,6 @@ public class GameController implements Observer, Serializable {
         }
 
     }
-
-    private MessageType oldState;
 
     private void askCharacter(MessageType oldState){
         this.oldState = oldState;

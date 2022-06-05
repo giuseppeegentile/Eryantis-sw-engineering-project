@@ -16,8 +16,8 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
         super(students, 1, 4);
     }
 
-    public void choose(int indexStudent, int indexIsland) {
-        this.studentChosen = this.getStudents().get(indexStudent);
+    public void choose(ColorPawns indexStudent, int indexIsland) {
+        this.studentChosen = indexStudent;
         this.islandChosen = GameModel.getInstance().getIslandsModel().get(indexIsland);
     }
 

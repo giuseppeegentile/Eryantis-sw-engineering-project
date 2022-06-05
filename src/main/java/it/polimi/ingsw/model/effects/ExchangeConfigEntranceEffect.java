@@ -10,12 +10,12 @@ import java.util.List;
 public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements Serializable {
 
     private static final long serialVersionUID = -8153829027755488618L;
-    private List<ColorPawns> studentFromHall;
+    private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromCard;
 
-    public void choose(List<ColorPawns> studentFromCard, List<ColorPawns> studentFromHall){
+    public void choose(List<ColorPawns> studentFromCard, List<ColorPawns> studentFromEntrance){
         this.studentFromCard = studentFromCard;
-        this.studentFromHall = studentFromHall;
+        this.studentFromEntrance = studentFromEntrance;
     }
 
     public ExchangeConfigEntranceEffect(List<ColorPawns> students) {
@@ -25,9 +25,9 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     @Override
     public void enable(PlayerModel playerModel) {
         playerModel.addStudentsHall(studentFromCard);
-        playerModel.removeStudentFromHall(studentFromHall);
+        playerModel.removeStudentFromHall(studentFromEntrance);
 
-        students.addAll(studentFromHall);
+        students.addAll(studentFromEntrance);
         students.removeAll(studentFromCard);
 
 
@@ -43,12 +43,12 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
         return studentFromCard;
     }
 
-    public List<ColorPawns> getStudentFromHall() {
-        return studentFromHall;
+    public List<ColorPawns> getStudentFromEntrance() {
+        return studentFromEntrance;
     }
 
     public String getDescription(){
-        return super.getDescription() + "you can take up to 3 students from this card and exchange them with students in your hall.";
+        return super.getDescription() + "you can take up to 3 students from this card and exchange them with students in your entrance.";
     }
 
 }

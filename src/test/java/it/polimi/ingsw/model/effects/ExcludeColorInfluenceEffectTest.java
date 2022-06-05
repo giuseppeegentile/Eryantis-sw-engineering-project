@@ -13,7 +13,7 @@ class ExcludeColorInfluenceEffectTest {
     void excludeColorInfluenceEffect(){
         GameController gameController = new GameController();
         ExcludeColorInfluenceEffect effect = new ExcludeColorInfluenceEffect(gameController);
-        effect.chose(ColorPawns.RED);
+        effect.choose(ColorPawns.RED);
         effect.enable(new PlayerModel("Mindflayer"));
         assertEquals(4, effect.getCoinsForEffect());
         assertEquals("EFFECT: choose a student color; this turn, during the influence calculation that color provides no influence.", effect.getDescription());

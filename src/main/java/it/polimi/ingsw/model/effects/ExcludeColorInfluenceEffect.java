@@ -17,7 +17,7 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
         this.gameController = gameController;
     }
 
-    public void chose(ColorPawns colorToExclude){
+    public void choose(ColorPawns colorToExclude){
         this.colorToExclude = colorToExclude;
     }
 

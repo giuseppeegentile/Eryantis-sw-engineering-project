@@ -14,13 +14,14 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
         super(students, 2, 4);
     }
 
-    public void choose(int indexStudent) {
-        this.studentChosen = this.getStudents().get(indexStudent);
+    public void choose(ColorPawns studentChosen) {
+        this.studentChosen = studentChosen;
     }
 
     @Override
     public void enable(PlayerModel playerModel) {
         playerModel.addStudentsHall(List.of(studentChosen));
+        this.students.remove(studentChosen);
         getFromBag();
         setCostForEffect(getCostForEffect()+1);
     }

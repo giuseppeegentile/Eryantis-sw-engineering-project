@@ -11,7 +11,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     private int chosenIndexIsland;
     private int numberProhibition = 4;
 
-    public void chose(int chosenIndexIsland){
+    public void choose(int chosenIndexIsland){
         this.chosenIndexIsland = chosenIndexIsland;
     }
 

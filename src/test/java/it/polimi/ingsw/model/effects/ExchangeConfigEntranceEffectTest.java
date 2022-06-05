@@ -41,7 +41,7 @@ class ExchangeConfigEntranceEffectTest {
         assertTrue(effect.getStudents().containsAll(asList(ColorPawns.PINK, ColorPawns.PINK, ColorPawns.PINK, ColorPawns.BLUE, ColorPawns.BLUE, ColorPawns.BLUE)));
         assertEquals(2, effect.getCoinsForEffect());
         assertEquals(asList(ColorPawns.BLUE, ColorPawns.BLUE, ColorPawns.BLUE), effect.getStudentFromCard());
-        assertEquals(asList(ColorPawns.PINK, ColorPawns.PINK,ColorPawns.PINK), effect.getStudentFromHall());
+        assertEquals(asList(ColorPawns.PINK, ColorPawns.PINK,ColorPawns.PINK), effect.getStudentFromEntrance());
         assertEquals("At the start of the match, take " + effect.getNumStudents() + " students and place them on this card.\n" +
                 "EFFECT: You can take up to 3 students from this card and exchange them with students on your hall.", effect.getDescription());
     }

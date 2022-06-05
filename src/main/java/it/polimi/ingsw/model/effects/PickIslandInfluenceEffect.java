@@ -18,7 +18,7 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
         this.gameController = controller;
     }
 
-    public void chose(int indexIslandEffect){
+    public void choose(int indexIslandEffect){
         this.indexIslandEffect = indexIslandEffect;
     }
 

@@ -19,7 +19,7 @@ class ProhibitionEffectTest {
         island.add(new IslandModel(true, ColorPawns.PINK));
         GameModel.getInstance().setIslands(island);
         ProhibitionEffect effect = new ProhibitionEffect();
-        effect.chose(0);
+        effect.choose(0);
         effect.enable(new PlayerModel("Ajeje"));
         assertEquals(3, effect.getNumberProhibition());
         assertEquals(3, effect.getCoinsForEffect());
