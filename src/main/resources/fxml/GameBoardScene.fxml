@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Group>
+         <children>
+            <AnchorPane layoutX="126.0" layoutY="401.0" prefHeight="720.0" prefWidth="1280.0">
+               <children>
+                  <ImageView fitHeight="720.0" fitWidth="1300.0" layoutX="-5.0" layoutY="1.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images_cranio/Color_game_background.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="145.0" layoutX="121.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="398.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="219.0" fitWidth="584.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/PLANCIA GIOCO_2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="145.0" layoutX="260.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="543.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/MAGO 1_1.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="132.0" layoutX="898.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_nuvola.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="777.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_nuvola.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="132.0" layoutX="399.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="132.0" layoutX="756.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="240.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="728.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="145.0" layoutX="899.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="145.0" layoutX="575.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="145.0" layoutX="1015.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="145.0" layoutX="576.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_isola3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1103.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_nuvola.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="992.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images_cranio/Modello_nuvola.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
+   </children>
+</StackPane>
