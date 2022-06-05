@@ -10,46 +10,54 @@
 <?import javafx.scene.layout.StackPane?>
 <?import java.net.URL?>
 <?import javafx.scene.Group?>
-<StackPane  prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" styleClass="menuBackground"
+<?import javafx.scene.layout.AnchorPane?>
+<StackPane prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" styleClass="menuBackground"
            fx:controller="it.polimi.ingsw.view.gui.scene.ConnectionSceneController">
    <children>
-      <Group scaleX="1.5" scaleY="1.5" scaleZ="1.5">
-         <Button fx:id="connectButton" layoutX="320.0" layoutY="360.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Connettiti al server">
-            <font>
-               <Font name="High Tower Text" size="18.0" />
-            </font>
-         </Button>
-         <Button fx:id="backToTitleButton" layoutX="760.0" layoutY="360.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="menuButton"  text="Menù principale">
-            <font>
-               <Font name="High Tower Text" size="18.0" />
-            </font>
-            <effect>
-               <DropShadow>
-                  <color>
-                     <Color red="0.615686297416687" green="0.545098066329956" blue="0.24705882370471954" />
-                  </color>
-               </DropShadow>
-            </effect>
-            <effect>
-               <DropShadow>
-                  <color>
-                     <Color red="0.615686297416687" green="0.545098066329956" blue="0.24705882370471954" />
-                  </color>
-               </DropShadow>
-            </effect>
-         </Button>
-         <Label fx:id="serverIPLabel" layoutX="500.0" layoutY="386.0" opacity="0.0" prefHeight="25.0" prefWidth="349.0" text="Inserisci indirizzo IP server:">
-            <font>
-               <Font name="High Tower Text" size="20.0" />
-            </font>
-         </Label>
-         <Label fx:id="serverPortLabel" layoutX="500.0" layoutY="449.0" opacity="0.0" prefHeight="25.0" prefWidth="349.0" text="Inserisci porta server:">
-            <font>
-               <Font name="High Tower Text" size="20.0" />
-            </font>
-         </Label>
-         <TextField fx:id="serverAddressField" layoutX="500.0" layoutY="411.0" opacity="0.0" prefHeight="25.0" prefWidth="290.0" />
-         <TextField fx:id="serverPortField" layoutX="500.0" layoutY="474.0" opacity="0.0" prefHeight="25.0" prefWidth="290.0" />
+      <Group scaleX="1.0" scaleY="1.0" >
+         <children>
+            <AnchorPane fx:id="rootPane" layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity"
+                        minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="797.0">
+               <children>
+                  <Button fx:id="connectButton" layoutX="320.0" layoutY="360.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Connettiti al server">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backToTitleButton" layoutX="760.0" layoutY="360.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="menuButton"  text="Menù principale">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.615686297416687" green="0.545098066329956" blue="0.24705882370471954" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.615686297416687" green="0.545098066329956" blue="0.24705882370471954" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Label fx:id="serverIPLabel" layoutX="500.0" layoutY="386.0" opacity="0.0" prefHeight="25.0" prefWidth="349.0" text="Inserisci indirizzo IP server:">
+                     <font>
+                        <Font name="High Tower Text" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="serverPortLabel" layoutX="500.0" layoutY="449.0" opacity="0.0" prefHeight="25.0" prefWidth="349.0" text="Inserisci porta server:">
+                     <font>
+                        <Font name="High Tower Text" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="serverAddressField" layoutX="500.0" layoutY="411.0" opacity="0.0" prefHeight="25.0" prefWidth="290.0" />
+                  <TextField fx:id="serverPortField" layoutX="500.0" layoutY="474.0" opacity="0.0" prefHeight="25.0" prefWidth="290.0" />
+               </children>
+            </AnchorPane>
+         </children>
       </Group>
    </children>
    <stylesheets>
