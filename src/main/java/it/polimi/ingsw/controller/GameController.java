@@ -30,6 +30,7 @@ public class GameController implements Observer, Serializable {
     private final int numberStudentsMovedToIsland=0;
     private final boolean boolForTestPlayedCard = true;
     private List<PlayerModel> playersThatHavePlayedCard;
+    private boolean activatedEffect = false;
 
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
@@ -172,6 +173,7 @@ public class GameController implements Observer, Serializable {
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
                     characterCardPlayed.getEffect().enable(playerActive);
+                    activatedEffect = true;
                 }
 
                 switch (this.oldState){
@@ -256,7 +258,10 @@ public class GameController implements Observer, Serializable {
 
                     virtualViewMap.get(nextPlayerNick).showStartTurn(nextPlayerNick);
                     showWhosPlaying();
-                    virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance(), gameInstance.getIslandsModel());
+                    askCharacter(MessageType.PLAYED_ASSISTANT_CARD);
+                    if(gameInstance.getGameMode() == GameMode.BEGINNER) {
+                        virtualViewMap.get(nextPlayerNick).askMoveEntranceToIsland(nextPlayerNick, gameInstance.getPlayerByNickname(nextPlayerNick).getStudentInEntrance(), gameInstance.getIslandsModel());
+                    }
                 }
                 break;
 
@@ -318,6 +323,7 @@ public class GameController implements Observer, Serializable {
         colorToExclude = null;
         considerTower = true;
         playerWithEffectAdditionalInfluence = null;
+        activatedEffect = false;
     }
 
     /**
@@ -993,7 +999,7 @@ public class GameController implements Observer, Serializable {
 
     private void askCharacter(MessageType oldState){
         this.oldState = oldState;
-        if(gameInstance.getGameMode() == GameMode.ADVANCED) {
+        if(gameInstance.getGameMode() == GameMode.ADVANCED && !activatedEffect) {
             boolean existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
             if(existsCardPlayable) {
                 String active = playerActive.getNickname();

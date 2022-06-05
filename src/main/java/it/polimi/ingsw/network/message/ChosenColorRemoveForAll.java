@@ -7,7 +7,7 @@ public class ChosenColorRemoveForAll extends Message {
     private final ColorPawns color;
 
     public ChosenColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {
-        super(active, MessageType.CHARACTER_CARD_PLAYED);
+        super(active, MessageType.EFFECT_CARD_PLAYED);
         this.color = equivalentColorPawns;
     }
 

@@ -8,7 +8,7 @@ public class ChosenColorToIgnore extends Message{
     private final ColorPawns chosenColor;
 
     public ChosenColorToIgnore(String nickname, ColorPawns chosenColor) {
-        super(nickname, MessageType.CHARACTER_CARD_PLAYED);
+        super(nickname, MessageType.EFFECT_CARD_PLAYED);
         this.chosenColor = chosenColor;
     }
 

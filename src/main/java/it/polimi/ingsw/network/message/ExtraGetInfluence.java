@@ -6,7 +6,7 @@ public class ExtraGetInfluence extends Message {
     private final int indexIsland;
 
     public ExtraGetInfluence(String active, int indexIsland) {
-        super(active, MessageType.CHARACTER_CARD_PLAYED);
+        super(active, MessageType.EFFECT_CARD_PLAYED);
         this.indexIsland = indexIsland;
     }
 

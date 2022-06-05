@@ -10,7 +10,7 @@ public class ChosenChangeEntranceHall extends Message {
     private final List<ColorPawns> studentsFromEntrance;
 
     public ChosenChangeEntranceHall(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance) {
-        super(active, MessageType.CHARACTER_CARD_PLAYED);
+        super(active, MessageType.EFFECT_CARD_PLAYED);
         this.studentsFromEntrance = studentsFromEntrance;
         this.studentsFromHall = studentsFromHall;
     }

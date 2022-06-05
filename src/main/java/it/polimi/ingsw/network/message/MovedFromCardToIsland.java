@@ -8,7 +8,7 @@ public class MovedFromCardToIsland extends Message{
     private final ColorPawns studentToMove;
 
     public MovedFromCardToIsland(String nickname, int islandIndex, ColorPawns studentToMove) {
-        super(nickname, MessageType.CHARACTER_CARD_PLAYED);
+        super(nickname, MessageType.EFFECT_CARD_PLAYED);
         this.islandIndex = islandIndex;
         this.studentToMove = studentToMove;
     }
