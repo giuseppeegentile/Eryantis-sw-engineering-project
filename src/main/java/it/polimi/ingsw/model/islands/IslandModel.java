@@ -147,6 +147,14 @@ public class IslandModel implements Serializable {
     }
 
     /**
+     *
+     * @param value The value to set true if the card has a prohibition on it, false if not
+     */
+    public void setHasProhibition(boolean value){
+        this.prohibition = value;
+    }
+
+    /**
      * It calculates the influence for the islands
      * @param playerWithEffectAdditionalInfluence  The player who has activated the effect that gives additional influence
      * @param ignoreColorEffect The color ignored by the effect activated by a player

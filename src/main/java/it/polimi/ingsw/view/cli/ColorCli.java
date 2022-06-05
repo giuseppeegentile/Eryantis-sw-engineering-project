@@ -3,12 +3,6 @@ package it.polimi.ingsw.view.cli;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-
 public enum ColorCli {
     //Color end string, color reset
     RESET("\033[0m"),
@@ -24,7 +18,8 @@ public enum ColorCli {
     BLACK("\033[0;30m"),
     NULL("\033[0;95"),
     MAGENTA("\033[0;95"),   //motherNature
-    GREY("\033[0;90m");
+    GREY("\033[0;90m"),
+    GOLD("\033[1;93m]");
     private final String code;
 
     ColorCli(String code) {

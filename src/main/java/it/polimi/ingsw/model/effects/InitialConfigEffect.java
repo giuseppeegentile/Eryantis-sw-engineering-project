@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class InitialConfigEffect implements Effect, Serializable {
@@ -39,7 +38,7 @@ public class InitialConfigEffect implements Effect, Serializable {
     @Override
     public String getDescription() {
         return "At the start of the match, take " + numStudents + " students and place them on this card.\n" +
-                "EFFECT: ";
+                "                                  EFFECT: ";
     }
 
 

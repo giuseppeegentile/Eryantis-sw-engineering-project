@@ -1,13 +1,10 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.TextMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -269,8 +266,10 @@ class CliTest {
         cli.showIslands("Batman", islands);
     }
 
+    */
     @Test
     void showPlayerBoard(){
+        GameModel.getInstance().setGameMode(GameMode.ADVANCED);
         Cli cli = new Cli();
         PlayerModel player = new PlayerModel("Paolo Bitta");
         player.setTowers(ColorTower.WHITE, 5);
@@ -296,9 +295,14 @@ class CliTest {
         studentsHall.put(ColorPawns.YELLOW, 3);
         studentsHall.put(ColorPawns.PINK, 1);
         player.setStudentHall(studentsHall);
-        //cli.showPlayerBoardMessage(player.getNickname());
+        List<ColorTower> towers = new ArrayList<>();
+        player.setCoins();
+        for(int i = 0; i < player.getTowerNumber(); i++){
+            towers.add(player.getColorTower());
+        }
+        cli.showPlayerBoardMessage(player, towers, player.getStudentInHall(), player.getStudentInEntrance(), player.getProfs());
     }
-
+    /*
     @Test
     void showJoiningIslandMessage(){
         Cli cli = new Cli();

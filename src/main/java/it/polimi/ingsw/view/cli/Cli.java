@@ -17,13 +17,11 @@ import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import static java.lang.Byte.parseByte;
 import static java.lang.Integer.parseInt;
-import static java.util.Arrays.asList;
 
 
 //sout per fare printout
@@ -33,6 +31,7 @@ public class Cli extends ViewObservable implements View {
     private final PrintStream out;
     private Thread inputThread;
     private final List<ColorCli> listColor = List.of(ColorCli.RED, ColorCli.BLUE, ColorCli.GREEN, ColorCli.PINK, ColorCli.YELLOW);
+    private final List<ColorPawns> listColorPawns = List.of(ColorPawns.RED, ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK, ColorPawns.YELLOW);
     private static final String STR_INPUT_CANCELED = "User input canceled.";
 
     /**
@@ -375,40 +374,67 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
+    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
         StringBuilder strBoardBld = new StringBuilder();
-        List<ColorPawns> colors = new ArrayList<>(asList(ColorPawns.GREEN, ColorPawns.RED, ColorPawns.YELLOW, ColorPawns.PINK, ColorPawns.BLUE));
-        colors.add(ColorPawns.GREEN);
-        colors.add(ColorPawns.RED);
-        colors.add(ColorPawns.YELLOW);
-        colors.add(ColorPawns.PINK);
-        colors.add(ColorPawns.BLUE);
-        strBoardBld.append("-----------------------------------\n");
-        strBoardBld.append("  Entry          Hall         Profs\n");
-        for(ColorPawns color : colors){
-            strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
-            int numberStudents = hall.get(color);
-            for (int i=0; i<10; i++){
-                if (numberStudents>0){
-                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
-                    numberStudents--;
+        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER) {
+            strBoardBld.append("-----------------------------------\n");
+            strBoardBld.append("  Entry          Hall         Profs\n");
+            for (ColorPawns color : listColorPawns) {
+                strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
+                int numberStudents = hall.get(color);
+                for (int i = 0; i < 10; i++) {
+                    if (numberStudents > 0) {
+                        strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
+                        numberStudents--;
+                    } else {
+                        strBoardBld.append(ColorCli.RESET).append("  ");
+                    }
+                }
+                strBoardBld.append(ColorCli.RESET).append("| ");
+                if (profs.contains(color)) {
+                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
                 } else {
-                    strBoardBld.append(ColorCli.RESET).append("  ");
+                    strBoardBld.append("  |\n");
                 }
             }
-            strBoardBld.append(ColorCli.RESET).append("| ");
-            if (profs.contains(color)){
-                strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
-            } else {
-                strBoardBld.append("  |\n");
+            playerBoardBase(player, towers, strBoardBld);
+        } else {
+            strBoardBld.append("-----------------------------------\n");
+            strBoardBld.append("  Entry          Hall         Profs\n");
+            for (ColorPawns color : listColorPawns) {
+                strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
+                int numberStudents = hall.get(color);
+                for (int i = 0; i < 10; i++) {
+                    if (numberStudents > 0) {
+                        strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
+                        numberStudents--;
+                    } else if ((i+1)%3 == 0) {
+                        strBoardBld.append(ColorCli.WHITE).append("$ ");
+                    } else {
+                        strBoardBld.append(ColorCli.RESET).append("  ");
+                    }
+
+                }
+                strBoardBld.append(ColorCli.RESET).append("| ");
+                if (profs.contains(color)) {
+                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
+                } else {
+                    strBoardBld.append("  |\n");
+                }
             }
+            playerBoardBase(player, towers, strBoardBld);
         }
+    }
+
+    private void playerBoardBase(PlayerModel player, List<ColorTower> towers, StringBuilder strBoardBld) {
         strBoardBld.append("-----------------------------------\n");
         strBoardBld.append("  Towers ");
-        for (int i=0; i<towers.size(); i++){
+        for (int i = 0; i < towers.size(); i++) {
             strBoardBld.append(ColorCli.getEquivalentColorCliTower(towers.get(0))).append("0 ");
         }
         strBoardBld.append(ColorCli.RESET).append("\n");
+        if (GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
+            strBoardBld.append("   Coins " + player.getCoins());
         out.println(strBoardBld);
     }
 
@@ -552,15 +578,21 @@ public class Cli extends ViewObservable implements View {
         stringBuilder.append("0 -> Not playing a character card\n");
         for (CharacterCardModel card : characterDeck) {
             if(card.enoughCoins()) {
-                stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getEffect().getCoinsForEffect()).append(", Effect = ").append(card.getEffect().getDescription()).append("\n");
+                    stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getEffect().getCoinsForEffect()).append(", ").append(card.getEffect().getDescription()).append("\n");
             }
             i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
-        int chosenIndex = askUntilValid(characterDeck.size(), message, stringBuilder);
+        int chosenIndex = -1;
+        while(chosenIndex > characterDeck.size() || chosenIndex <= -1){
+            out.println(stringBuilder);
+            chosenIndex = parseInt(read());//2
+            if(chosenIndex > characterDeck.size() || chosenIndex <= -1)
+                out.println(message);
+        }
         CharacterCardModel cardPlayed = null;
         if(chosenIndex != 0) {
-            cardPlayed = characterDeck.get(chosenIndex);
+            cardPlayed = characterDeck.get(chosenIndex-1);
         }
         CharacterCardModel finalCardPlayed = cardPlayed;
         notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, finalCardPlayed));

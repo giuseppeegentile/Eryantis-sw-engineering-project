@@ -60,7 +60,7 @@ public class GameController implements Observer, Serializable {
         for(int i = 0; i < playerToDisplay.getTowerNumber(); i++){
             towers.add(playerToDisplay.getColorTower());
         }
-        virtualViewMap.get(nickname).showPlayerBoardMessage(nickname,
+        virtualViewMap.get(nickname).showPlayerBoardMessage(GameModel.getInstance().getPlayerByNickname(nickname),
                 towers,
                 playerToDisplay.getStudentInHall(),
                 playerToDisplay.getStudentInEntrance(),
@@ -163,7 +163,9 @@ public class GameController implements Observer, Serializable {
                         gameInstance.setTrueHavePlayerFinishedCards();
                     showWhosPlaying();
                     askCharacter(MessageType.PLAYED_ASSISTANT_CARD);
-                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
+                    if(gameInstance.getGameMode() == GameMode.BEGINNER) {
+                        virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
+                    }
                 }
                 break;
             case CHARACTER_CARD_PLAYED:
