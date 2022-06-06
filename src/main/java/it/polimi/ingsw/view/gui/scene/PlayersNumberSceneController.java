@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -16,9 +17,6 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
 
     @FXML
     final Spinner<Integer> spinner = new Spinner<>();
-
-    @FXML
-    private Label playersNumberFieldLabel;
 
     @FXML
     private Button nextStageBtn;
@@ -56,6 +54,11 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
         spinner.setValueFactory(valueFactory);
         nextStageBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNextStageClicked);
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToMenu);
+        nextStageBtn.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onNextStageClicked(e);
+            }
+        });
 /*
         confirmBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConfirmBtnClick);
         backToMenuBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToMenuBtnClick);*/

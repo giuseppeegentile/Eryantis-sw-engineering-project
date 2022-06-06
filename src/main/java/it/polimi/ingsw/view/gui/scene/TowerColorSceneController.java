@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 import java.util.List;
@@ -44,6 +45,22 @@ public class TowerColorSceneController extends ViewObservable implements Generic
         if(!availableColorTowers.contains(ColorTower.WHITE)){
             hide(white_button);
         }
+        white_button.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onBtnClick(e);
+            }
+        });
+        grey_button.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onBtnClick(e);
+            }
+        });
+        black_button.setOnKeyPressed(e -> {
+            if( e.getCode() == KeyCode.ENTER ) {
+                onBtnClick(e);
+            }
+        });
+
     }
 
     private void onBtnClick(Event e) {

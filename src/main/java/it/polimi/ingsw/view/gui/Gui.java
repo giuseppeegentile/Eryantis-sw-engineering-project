@@ -95,6 +95,7 @@ public class Gui extends ViewObservable implements View {
             SceneController.changeRootPane(observers, SCREEN_TITLE_FXML);
         });
     }
+
     public void showGenericMessage(String message){
         Platform.runLater(() -> SceneController.showAlert("Info Message", message));
     }
