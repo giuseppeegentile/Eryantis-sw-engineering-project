@@ -23,7 +23,7 @@ class AddToIslandEffectTest {
         List<ColorPawns> list = new ArrayList<>(asList(ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED));
         AddToIslandEffect effect = new AddToIslandEffect(list);
         assertEquals(asList(ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED), effect.getStudents());
-        effect.choose(2, 1);
+        effect.choose(ColorPawns.RED, 1);
         effect.enable(new PlayerModel("Joice"));
         assertEquals(asList(ColorPawns.RED) ,GameModel.getInstance().getIslandsModel().get(1).getStudents());
         assertEquals(2, effect.getCostForEffect());
@@ -31,7 +31,7 @@ class AddToIslandEffectTest {
         assertEquals(GameModel.getInstance().getIslandsModel().get(1), effect.getIslandChosen());
         assertEquals(2, effect.getCoinsForEffect());
         assertEquals("At the start of the match, take " + effect.getNumStudents() + " students and place them on this card.\n" +
-                "EFFECT:  Take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.", effect.getDescription());
+                "                                  EFFECT:  take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.", effect.getDescription());
     }
 
 }

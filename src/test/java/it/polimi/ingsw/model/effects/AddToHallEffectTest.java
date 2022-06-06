@@ -19,7 +19,7 @@ class AddToHallEffectTest {
         List<ColorPawns> list2 = new ArrayList<>(asList(ColorPawns.RED));
         GameModel.getInstance().setBag(list2);
         AddToHallEffect effect = new AddToHallEffect(list);
-        effect.choose(2);
+        effect.choose(ColorPawns.RED);
         PlayerModel player = new PlayerModel("Rafael Nadal");
         effect.enable(player);
         assertEquals(1, player.getStudentInHall().get(ColorPawns.RED));
