@@ -22,16 +22,11 @@ public enum ColorCli {
     GOLD("\033[1;93m]");
     private final String code;
 
+    /**
+     * Colors to show on the cli
+     */
     ColorCli(String code) {
         this.code = code;
-    }
-
-    public static ColorCli getEquivalentColoCliStudent(ColorPawns color){
-        return ColorCli.valueOf(color.name());
-    }
-
-    public static ColorCli getEquivalentColorCliTower(ColorTower colorTower) {
-         return ColorCli.valueOf(colorTower.name());
     }
 
     @Override
@@ -39,10 +34,19 @@ public enum ColorCli {
         return code;
     }
 
+    /**
+     *
+     * @param colorTower color of the tower
+     * @return the cli color of the color of the tower
+     */
     public static ColorCli getEquivalentColorTower(ColorTower colorTower){
         return ColorCli.valueOf(colorTower.name());
     }
-
+    /**
+     *
+     * @param colorPawn color of the student
+     * @return the cli color of the color of the tower
+     */
     public static ColorCli getEquivalentColorPawn(ColorPawns colorPawn){
         return ColorCli.valueOf(colorPawn.name());
     }
@@ -121,10 +125,3 @@ public enum ColorCli {
 //On_ICyan="\[\033[0;106m\]"    # Cyan
 //On_IWhite="\[\033[0;107m\]"   # White
 //
-//# Various variables you might want for your PS1 prompt instead
-//Time12h="\T"
-//Time12a="\@"
-//PathShort="\w"
-//PathFull="\W"
-//NewLine="\n"
-//Jobs="\j"

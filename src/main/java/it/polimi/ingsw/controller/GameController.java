@@ -29,8 +29,6 @@ public class GameController implements Observer, Serializable {
     private transient Map<String, VirtualView> virtualViewMap;
     private final GameModel gameInstance;
     private PlayerModel playerActive;
-    private final int numberStudentsMovedToIsland=0;
-    private final boolean boolForTestPlayedCard = true;
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
     private String effectPlayed;
@@ -44,9 +42,17 @@ public class GameController implements Observer, Serializable {
     private byte movement;
     private MessageType oldState;
 
+    /**
+     * Set the player with additional influence on this turn, caused by character card effect
+     * @param player the player who's going to have additional influence
+     */
     public void setPlayerWithEffectAdditionalInfluence(PlayerModel player){
         this.playerWithEffectAdditionalInfluence = player;
     }
+
+    /**
+     * Game controller. Handles the phase of the game. On the server side.
+     */
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
         this.gameInstance =  GameModel.getInstance();
@@ -55,10 +61,10 @@ public class GameController implements Observer, Serializable {
         playerWithEffectAdditionalInfluence = null;
     }
 
-    public GameModel getGameInstance(){
-        return this.gameInstance;
-    }
-
+    /**
+     * Send the board to client with a message
+     * @param nickname player's going to receive the board
+     */
     private void showBoard(String nickname){
         PlayerModel playerToDisplay = gameInstance.getPlayerByNickname(nickname);
         List<ColorTower> towers = new ArrayList<>();
@@ -73,6 +79,9 @@ public class GameController implements Observer, Serializable {
         );
     }
 
+    /**
+     * send a message showing who's playing on the current turn
+     */
     private void showWhosPlaying(){
         for(PlayerModel p: gameInstance.getPlayersModel()){
             if(!p.getNickname().equals(playerActive.getNickname()))
@@ -80,9 +89,9 @@ public class GameController implements Observer, Serializable {
         }
     }
     /**
-     * Switch on Game State.
+     * Switch on Game State. Logic of the game.
      *
-     * @param receivedMessage Message from players to server.
+     * @param receivedMessage Message from client to server.
      */
     public void onMessageReceived(Message receivedMessage) {
 
@@ -326,6 +335,10 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Enable the effect and return to the phase of the game where the player was before applying the card's effect
+     * @param characterCardPlayed the card played sent by the client
+     */
     private void performEffectAndReset(CharacterCardModel characterCardPlayed){
         characterCardPlayed.getEffect().enable(playerActive);
         activatedEffect = true;
@@ -350,6 +363,11 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+
+    /**
+     * All actions occurring by the movement of mother nature: incorrect movement, influence evaluation, possible join of islands, switch to next phase
+     * @param movement movement performed by the client
+     */
     private void motherActions(byte movement) {
         this.movement = movement;
         byte movementAllowed = playerActive.getMovementMotherNatureCurrentActionPhase();
@@ -363,8 +381,6 @@ public class GameController implements Observer, Serializable {
         moveMotherNature(movement);
         if(!gameInstance.getIslandWithMother().hasProhibition()) { //check he doesn't have a prohib card on
             computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
-
-
             virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
         }else{
             virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
@@ -374,6 +390,10 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Calling the method to move student on hall, showing the board updated and switch to next phase
+     * @param receivedMessage message received from the client
+     */
     private void studentsOnHallActions(Message receivedMessage) {
         if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
             moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
@@ -381,14 +401,15 @@ public class GameController implements Observer, Serializable {
         showBoard(playerActive.getNickname());
         virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
     }
-
+    /**
+     * Calling the method to move student on island, showing the islands updated and switch to next phase
+     * @param receivedMessage message received from the client
+     */
     private void studentsOnIslandActions(Message receivedMessage) {
         List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage) receivedMessage).getStudents();
         this.movedStudents = movedStudents;
         IslandModel islandCurrent = gameInstance.getIslandsModel().get(((MovedStudentOnIslandMessage) receivedMessage).getIslandIndex());
         moveStudentToIsland(playerActive, movedStudents, islandCurrent);
-
-
         for (String gamer : virtualViewMap.keySet()) {
             virtualViewMap.get(gamer).showIslands(playerActive.getNickname(), gameInstance.getIslandsModel());
         }
@@ -400,7 +421,9 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-
+    /**
+     * Reset eventual effect activated in this phase
+     */
     private void resetEffects() {
         colorToExclude = null;
         considerTower = true;
@@ -413,7 +436,6 @@ public class GameController implements Observer, Serializable {
      * @param chosenTower tower's color chosen by the player
      * @param numPlayers number of players
      */
-
     private void setTowers(Message receivedMessage, ColorTower chosenTower, int numPlayers) {
         if(numPlayers != 4) {
             if (numPlayers == 3)
@@ -431,9 +453,8 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-     * Handles the login procedure for each player
+     * Handles the login procedure for each player. Separate logic to first players from next
      */
-
     public void handleLogin(String nickname, VirtualView vv){
         if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
             virtualViewMap.put(nickname, vv);
@@ -462,14 +483,15 @@ public class GameController implements Observer, Serializable {
     /**
      * Method that assigns 10 cards to each player after the deck has been created
      */
-
     private void assignCardsToPlayer(String nickname){
         List<AssistantCardModel> deckPlayer = new ArrayList<>(gameInstance.getDeck().subList((gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10, (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10));
-
         gameInstance.getPlayerByNickname(nickname).setDeckAssistantCardModel(deckPlayer);
-
     }
 
+    /**
+     * Assign to every card of player the owner of that
+     * @param nickname player to be given the card
+     */
     private void setOwnerDeck(String nickname) {
         PlayerModel playerCorrespond = gameInstance.getPlayerByNickname(nickname);
         int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond) + 1) * 10 - 10;
@@ -481,7 +503,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Assigns the tower's color to the players according to the number of players
      */
-
     private List<ColorTower> getAvailableTowers(){
         List<ColorTower> alreadyChosen = new ArrayList<>();
         for (PlayerModel p : gameInstance.getPlayersModel()) {
@@ -508,28 +529,15 @@ public class GameController implements Observer, Serializable {
      * Shows a disconnection message when a player disconnects
      * @param text message shown
      */
-
-
     public void broadcastDisconnectionMessage(String nicknameDisconnected, String text) {
         for (VirtualView vv : virtualViewMap.values()) {
             vv.showDisconnectionMessage(nicknameDisconnected, text);
         }
     }
 
-    public void addVirtualViewMap(String nickname, VirtualView virtualView) {
-        virtualViewMap.put(nickname, virtualView);
-        gameInstance.addObserver(virtualView);
-
-    }
-
-    public Map<String, VirtualView> getVirtualViewMap() {
-        return this.virtualViewMap;
-    }
-
     /**
      * Checks if the winning conditions are observed
      */
-
     private void checkWin(){
         ColorTower winner = gameInstance.checkWin();
         if(winner != ColorTower.NULL){ //se c'è un vincitore
@@ -537,9 +545,12 @@ public class GameController implements Observer, Serializable {
             virtualViewMap.get(winnerNick).showWinMessage(gameInstance.getPlayerByNickname(winnerNick));
         }//else
             //manda in un altro stato
-
     }
 
+    /**
+     *
+     * @return the player who's playing in this phase
+     */
     public PlayerModel getPlayerActive() {
         return playerActive;
     }
@@ -550,7 +561,6 @@ public class GameController implements Observer, Serializable {
      * @param view view assigned to a player
      * @return returns false if the nickname is incorrect or true if it's valid
      */
-
     public boolean checkLoginNickname(String nickname, View view) {
         if (nickname.isEmpty()) {
             view.showGenericMessage("Forbidden name.");
@@ -567,7 +577,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Checks if a player has cards that can be played
      */
-
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = new ArrayList<>(gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel());
         List<AssistantCardModel> copy = new ArrayList<>(playerDeck);
@@ -592,7 +601,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Adds a student from the bag to a cloud
      */
-
     private void fromBagToCloud(){
         if(gameInstance.havePlayersFinishedCards() || gameInstance.getBag().size()==0) {
             this.checkWin();
@@ -610,7 +618,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Removes the virtual view of a player when a player's nickname is removed
      */
-
     public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
 
@@ -618,13 +625,12 @@ public class GameController implements Observer, Serializable {
         gameInstance.removePlayerByNickname(nickname);
     }
 
-
+    /**
+     *
+     * @return true if the game is already started
+     */
     public boolean isGameStarted() {
         return gameStarted;
-    }
-
-    public boolean isBoolForTestPlayedCard() {
-        return boolForTestPlayedCard;
     }
 
     @Override
@@ -637,7 +643,6 @@ public class GameController implements Observer, Serializable {
         int motherNatureIndex = (int)(Math.random() * 12); //numero casuale fra 0 e 11
         List<IslandModel> islands = new ArrayList<>(12);
 
-        int sizeIslandWithStudents = 10;
         int equalNumber = 2;
         List<ColorPawns> colors;
         colors = fillListWithColors(equalNumber);
@@ -654,16 +659,12 @@ public class GameController implements Observer, Serializable {
             else if(i == indexMirrorMotherNature){//posizione specchio di madre natura dove non ci sono studenti
                 islands.add(new IslandModel(false));
             }
-            else if(i == motherNatureIndex) //posizione di madre natura
-                islands.add(new IslandModel(true));
+            else islands.add(new IslandModel(true));
         }
         gameInstance.setIslands(islands);
     }
 
-    //prende una generica lista di studenti e la riempie casualmente
-    //usata per riempire la bag e le isole iniziali
-    //size: dimensione da riempire (bag: 120, isole: 10)
-    //equalNumber: quantità uguali per ogni colore (bag: 24(=120/5)  isole: 2)
+
     /**
      * Takes a generic list of ColorPawns and fills it randomly. Mainly used for the bag and initial islands.
      * @param equalNumber Number of same colors that will be in the List.
@@ -687,7 +688,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Creates the student's bag at every game's beginning
      */
-
     private void assignBag(){
         List<ColorPawns> bag;
         int equalNumber = 24;
@@ -698,7 +698,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Sets the clouds at every game's beginning according to playerSize
      */
-
     private void setClouds(){
         int playerSize = gameInstance.getPlayersNumber();
         int cloudsNumber, sizeStudentsClouds;
@@ -720,7 +719,6 @@ public class GameController implements Observer, Serializable {
      * 9 if there are 3 players, 7 if there are 2 or 4 players
      * @param playerToSet is the current player to receive the initial number of students
      */
-
     private void setInitialStudentEntrance(PlayerModel playerToSet){
         int playerNumber = gameInstance.getPlayersNumber();
         int numStudentEntrance = 7; //gioco a 4 o 2
@@ -740,7 +738,6 @@ public class GameController implements Observer, Serializable {
     /**
      * Method that generates and assigns a deck of cards for each player
      */
-
     private void generateDeck(){
         for(int k = 0; k < 4; k++) {
             byte j = 0;
@@ -923,6 +920,11 @@ public class GameController implements Observer, Serializable {
         gameInstance.getIslandsModel().get(newIndex).setMotherNature(true);
     }
 
+    /**
+     * Perform action caused by mother nature movement. Set tower on island, eventually join islands and then check the winner (if any)
+     * @param active player who's playing in this turn
+     * @param islandWithMother island where mother nature is placed
+     */
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
@@ -949,8 +951,6 @@ public class GameController implements Observer, Serializable {
 
             showBoard(playerWithInfluence.getNickname());//shows the updated board (towers changed) to the player who has influence on this island
         }
-
-
 
         //controllo se posso unificare, se sì, le unisco
         ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
@@ -998,10 +998,12 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.getIslandsModel().size()==3){
             checkWin();
         }
-
-
     }
 
+    /**
+     *
+     * @return all the clouds that the client can choose to move its student on the entrance
+     */
     public List<CloudModel> getAvailableClouds(){
         List<CloudModel> availableClouds = new ArrayList<>();
 
@@ -1016,7 +1018,6 @@ public class GameController implements Observer, Serializable {
      * @param receivedMessage Message received
      * @return false if there aren't any students left to move
      */
-    //****************da testare
     private boolean moveStudentFromCloudToWaiting(Message receivedMessage){
         PlayerModel playerModel = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
         int cloudIndex = ((AddStudentFromCloudToEntranceMessage)receivedMessage).getCloudIndex();
@@ -1031,7 +1032,9 @@ public class GameController implements Observer, Serializable {
             return false;
     }
 
-
+    /**
+     * Assign the character card deck to the player (if game mode is expert)
+     */
     private void setCharacterCards() {
         List<ColorPawns> subBag = new ArrayList<>(gameInstance.getBag().subList(0, 4));
         List<ColorPawns> subBag2 = new ArrayList<>(gameInstance.getBag().subList(4, 10));
@@ -1050,7 +1053,6 @@ public class GameController implements Observer, Serializable {
                 new ExchangeHallEntranceEffect(),
                 new AddToHallEffect(subBag3)
         );
-
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);
         for(int i = 0; i < 11; i++){
@@ -1077,6 +1079,10 @@ public class GameController implements Observer, Serializable {
 
     }
 
+    /**
+     * Ask the client to play the character card (if game mode is expert)
+     * @param oldState the state of the game the player was before calling the effect
+     */
     private void askCharacter(MessageType oldState){
         this.oldState = oldState;
         if(gameInstance.getGameMode() == GameMode.ADVANCED && !activatedEffect) {
@@ -1084,11 +1090,14 @@ public class GameController implements Observer, Serializable {
             if(existsCardPlayable) {
                 String active = playerActive.getNickname();
                 virtualViewMap.get(active).askPlayCharacterCard(active, playerActive.getCharacterDeck());
-
             }
         }
     }
 
+    /**
+     * Called when the effect of a character card occurs
+     * @param colorToExclude color that is not going to be evaluated in the influence
+     */
     public void setIgnoreColorEffect(ColorPawns colorToExclude) {
         this.colorToExclude = colorToExclude;
 
@@ -1107,7 +1116,6 @@ public class GameController implements Observer, Serializable {
         //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
         joinedStudents.addAll(islandModelToCheck.getStudents());
         joinedStudents.addAll(islandToJoin.getStudents());
-
 
         IslandModel joined = new IslandModel(islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
         joined.setTowerColor(islandToJoin.getTowerColor());
@@ -1132,11 +1140,18 @@ public class GameController implements Observer, Serializable {
         return islandModels;
     }
 
+    /**
+     * Called when the effect of a character card occurs
+     * @param considerTower true if the towers are going to be evaluated in the influence algorithm
+     */
     public void setConsiderTower(boolean considerTower) {
         this.considerTower = considerTower;
     }
 
-
+    /**
+     *
+     * @return value of the effect of consider tower. True if the towers are going to be evaluated in the influence algorithm
+     */
     public boolean getConsiderTower(){
         return this.considerTower;
     }

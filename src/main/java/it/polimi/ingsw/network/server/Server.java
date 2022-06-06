@@ -36,7 +36,7 @@ public class Server {
     /**
      * Adds a client to be managed by the server instance.
      *
-     * @param nickname      the nickname associated with the client.
+     * @param nickname the nickname associated with the client.
      * @param clientHandler the ClientHandler associated with the client.
      */
     public void addClient(String nickname, ClientHandler clientHandler) {
@@ -92,7 +92,7 @@ public class Server {
     /**
      * Removes a client given his nickname.
      *
-     * @param nickname      the VirtualView to be removed.
+     * @param nickname the VirtualView to be removed.
      */
     private void removeClient(String nickname) {
         clientHandlerMap.remove(nickname);

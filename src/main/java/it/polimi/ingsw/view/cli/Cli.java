@@ -41,6 +41,11 @@ public class Cli extends ViewObservable implements View {
         out = System.out;
     }
 
+    /**
+     * Read a line from the input of the user
+     * @return The input string
+     * @throws ExecutionException caused by accidental errors of the execution of process
+     */
     public String readLine() throws ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         inputThread = new Thread(futureTask);
@@ -57,6 +62,9 @@ public class Cli extends ViewObservable implements View {
         return input;
     }
 
+    /**
+     * Initialize the cli: shows initial messages and ask initial task
+     */
     public void init() {
         out.println("" +
                         "888888 8888Yb 88    db    88b 88 888888 Yb  dP .dPY8 \n" +
@@ -67,12 +75,16 @@ public class Cli extends ViewObservable implements View {
         out.println("Welcome to Eriantys Board Game!");
 
         try {
-            askServerInfo();   //il test si blocca, non capisco perché
+            askServerInfo();
         } catch (ExecutionException e) {
             out.println(STR_INPUT_CANCELED);
         }
     }
 
+    /**
+     * Ask the client to connect to the server, and verify that address are correct
+     * @throws ExecutionException
+     */
     public void askServerInfo() throws ExecutionException {
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "localhost";
@@ -266,9 +278,9 @@ public class Cli extends ViewObservable implements View {
         strBoardBld.append(ColorCli.RESET).append("|\n");
 
         if(islandModel.getMotherNature())
-            strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islandModel.getTowerColor())).append(" T").append(ColorCli.RESET).append("    |\n");
+            strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islandModel.getTowerColor())).append(" T").append(ColorCli.RESET).append("    |\n");
         else
-            strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCliTower(islandModel.getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |\n");
+            strBoardBld.append("|    ").append(ColorCli.getEquivalentColorTower(islandModel.getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |\n");
         strBoardBld.append(" -----------\n");
         out.println(strBoardBld);
     }
@@ -303,26 +315,6 @@ public class Cli extends ViewObservable implements View {
     }
 
 
-    /*@Override
-    public void updateIslands(String nickname) {
-
-    }
-
-    @Override                                         c'è già showDeckMessage
-    public void showCards(PlayerModel playerModel) {
-
-    }
-
-    @Override
-    public void askGetFromBag() {
-
-    }
-
-    @Override
-    public void showProfsMessage(String player, List<ColorPawns> profs) {
-
-    }*/
-
     @Override
     public void showInvalidTower(String player, ColorTower colorTower) {
         out.println("Oh no! The tower color " + ColorCli.getEquivalentColorTower(colorTower) + colorTower + ColorCli.RESET + " is already taken\n");
@@ -344,10 +336,6 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-    /*@Override
-    public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
-
-    }*/
 
     @Override
     public void askPlayersNumber() {
@@ -380,11 +368,11 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append("-----------------------------------\n");
             strBoardBld.append("  Entry          Hall         Profs\n");
             for (ColorPawns color : listColorPawns) {
-                strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
+                strBoardBld.append("|  ").append(ColorCli.getEquivalentColorPawn(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
                 int numberStudents = hall.get(color);
                 for (int i = 0; i < 10; i++) {
                     if (numberStudents > 0) {
-                        strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
+                        strBoardBld.append(ColorCli.getEquivalentColorPawn(color)).append("0 ");
                         numberStudents--;
                     } else {
                         strBoardBld.append(ColorCli.RESET).append("  ");
@@ -392,7 +380,7 @@ public class Cli extends ViewObservable implements View {
                 }
                 strBoardBld.append(ColorCli.RESET).append("| ");
                 if (profs.contains(color)) {
-                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
+                    strBoardBld.append(ColorCli.getEquivalentColorPawn(color)).append("0 ").append(ColorCli.RESET).append("|\n");
                 } else {
                     strBoardBld.append("  |\n");
                 }
@@ -402,11 +390,11 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append("-----------------------------------\n");
             strBoardBld.append("  Entry          Hall         Profs\n");
             for (ColorPawns color : listColorPawns) {
-                strBoardBld.append("|  ").append(ColorCli.getEquivalentColoCliStudent(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
+                strBoardBld.append("|  ").append(ColorCli.getEquivalentColorPawn(color)).append(" ").append(Collections.frequency(entrance, color)).append(ColorCli.RESET).append("   | ");
                 int numberStudents = hall.get(color);
                 for (int i = 0; i < 10; i++) {
                     if (numberStudents > 0) {
-                        strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ");
+                        strBoardBld.append(ColorCli.getEquivalentColorPawn(color)).append("0 ");
                         numberStudents--;
                     } else if ((i+1)%3 == 0) {
                         strBoardBld.append(ColorCli.WHITE).append("$ ");
@@ -417,7 +405,7 @@ public class Cli extends ViewObservable implements View {
                 }
                 strBoardBld.append(ColorCli.RESET).append("| ");
                 if (profs.contains(color)) {
-                    strBoardBld.append(ColorCli.getEquivalentColoCliStudent(color)).append("0 ").append(ColorCli.RESET).append("|\n");
+                    strBoardBld.append(ColorCli.getEquivalentColorPawn(color)).append("0 ").append(ColorCli.RESET).append("|\n");
                 } else {
                     strBoardBld.append("  |\n");
                 }
@@ -430,7 +418,7 @@ public class Cli extends ViewObservable implements View {
         strBoardBld.append("-----------------------------------\n");
         strBoardBld.append("  Towers ");
         for (int i = 0; i < towers.size(); i++) {
-            strBoardBld.append(ColorCli.getEquivalentColorCliTower(towers.get(0))).append("0 ");
+            strBoardBld.append(ColorCli.getEquivalentColorTower(towers.get(0))).append("0 ");
         }
         strBoardBld.append(ColorCli.RESET).append("\n");
         if (GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
@@ -636,12 +624,12 @@ public class Cli extends ViewObservable implements View {
                 if(islands.get(i).getTowerColor() == ColorTower.NULL)
                     strBoardBld.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
                 else
-                strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+                strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
             else
                 if(islands.get(i).getTowerColor() == ColorTower.NULL)
                     strBoardBld.append("|           |      ");
                 else
-                    strBoardBld.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+                    strBoardBld.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
         }
         strBoardBld.append("\n");
         strBoardBld.append(" -----------       ".repeat(islands.size() / 2));
@@ -664,12 +652,12 @@ public class Cli extends ViewObservable implements View {
                 if(islands.get(i).getTowerColor() == ColorTower.NULL)
                     strBoardBld2.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
                 else
-                    strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+                    strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
             else
             if(islands.get(i).getTowerColor() == ColorTower.NULL)
                 strBoardBld2.append("|           |      ");
             else
-                strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorCliTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+                strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
         }
         strBoardBld2.append("\n");
 
@@ -800,14 +788,23 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, pickedStudent));
     }
 
+    /**
+     * Create the island structure of the strBoardBld
+     * @param island island to show to user
+     * @param strBoardBld string equivalent to the object island
+     */
     private void buildIsland(IslandModel island, StringBuilder strBoardBld) {
         strBoardBld.append("| ");
         listColor.forEach(c->{
             int occurrence = Collections.frequency(island.getStudents(), ColorPawns.getEquivalentColorPawns(c.name()));
-            strBoardBld.append(ColorCli.getEquivalentColoCliStudent(ColorPawns.getEquivalentColorPawns(c.name()))).append(occurrence).append(" ").append(ColorCli.RESET);
+            strBoardBld.append(ColorCli.getEquivalentColorPawn(ColorPawns.getEquivalentColorPawns(c.name()))).append(occurrence).append(" ").append(ColorCli.RESET);
         });
     }
-
+    /**
+     * Create the cloud structure of the strBoardBld
+     * @param cloudModel cloud to show to user
+     * @param strBoardBld string equivalent to the object cloud
+     */
     private void buildCloud(CloudModel cloudModel, StringBuilder strBoardBld) {
         strBoardBld.append("| ");
         listColor.forEach(c->{

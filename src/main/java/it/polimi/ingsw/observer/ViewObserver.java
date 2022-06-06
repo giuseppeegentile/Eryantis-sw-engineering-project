@@ -34,6 +34,7 @@ public interface ViewObserver {
      */
     void setGameBoard(String nickname, int numPlayers, ColorTower colorTower, GameMode gameMode);
 
+
     void onChosenCloud(String nickname, int cloudIndex);
 
     void onUpdateStudentToIsland(String nickname, List<ColorPawns> students, int indexIsland);

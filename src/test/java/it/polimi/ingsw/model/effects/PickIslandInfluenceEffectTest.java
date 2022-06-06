@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class PickIslandInfluenceEffectTest {
         GameController gameController = new GameController();
         List<IslandModel> island = new ArrayList<>();
         island.add(new IslandModel(true, ColorPawns.PINK));
-        gameController.getGameInstance().setIslands(island);
+        GameModel.getInstance().setIslands(island);
         PickIslandInfluenceEffect effect = new PickIslandInfluenceEffect(gameController);
         effect.choose(0);
         effect.enable(new PlayerModel("Giannni"));

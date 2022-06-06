@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -27,11 +26,9 @@ public class GameModel extends Observable implements Serializable {
     private List<CloudModel> cloudsModel;
     private List<ColorPawns> bag;
     public GameMode mode;
-    public List<CharacterCardModel> chosenCards;
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery = new ArrayList<>();
-    private List<PlayerModel> phaseOrder; //ordine della fase di azione
-    private List<ColorTower> colorTowers = new ArrayList<>();
+    private List<PlayerModel> phaseOrder;
 
     private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
