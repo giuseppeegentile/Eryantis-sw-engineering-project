@@ -65,7 +65,7 @@ public class GameController implements Observer, Serializable {
         for(int i = 0; i < playerToDisplay.getTowerNumber(); i++){
             towers.add(playerToDisplay.getColorTower());
         }
-        virtualViewMap.get(nickname).showPlayerBoardMessage(GameModel.getInstance().getPlayerByNickname(nickname),
+        virtualViewMap.get(nickname).showPlayerBoardMessage(gameInstance.getPlayerByNickname(nickname),
                 towers,
                 playerToDisplay.getStudentInHall(),
                 playerToDisplay.getStudentInEntrance(),
@@ -186,7 +186,7 @@ public class GameController implements Observer, Serializable {
                             break;
                         case "AddToIslandEffect":
                             initialConfigEffect = (InitialConfigEffect) characterCardPlayed.getEffect();
-                            virtualViewMap.get(playerActive.getNickname()).askMoveStudentFromCardToIsland(playerActive.getNickname(), GameModel.getInstance().getIslandsModel(), initialConfigEffect.getStudents());
+                            virtualViewMap.get(playerActive.getNickname()).askMoveStudentFromCardToIsland(playerActive.getNickname(), gameInstance.getIslandsModel(), initialConfigEffect.getStudents());
                             break;
                         case "ExchangeConfigEntranceEffect":
                             initialConfigEffect = (InitialConfigEffect) characterCardPlayed.getEffect();
@@ -199,14 +199,13 @@ public class GameController implements Observer, Serializable {
                             virtualViewMap.get(playerActive.getNickname()).askColorStudentToIgnore(playerActive.getNickname());
                             break;
                         case "PickIslandInfluenceEffect":
-                            virtualViewMap.get(playerActive.getNickname()).askExtraGetInfluence(playerActive.getNickname(), GameModel.getInstance().getIslandsModel());
+                            virtualViewMap.get(playerActive.getNickname()).askExtraGetInfluence(playerActive.getNickname(), gameInstance.getIslandsModel());
                             break;
                         case "ProhibitionEffect":
-                            virtualViewMap.get(playerActive.getNickname()).askMoveBanCard(playerActive.getNickname(), GameModel.getInstance().getIslandsModel());
+                            virtualViewMap.get(playerActive.getNickname()).askMoveBanCard(playerActive.getNickname(), gameInstance.getIslandsModel());
                             break;
                         default:
-                            characterCardPlayed.getEffect().enable(playerActive);
-                            activatedEffect = true;
+                            performEffectAndReset(characterCardPlayed);
                             break;  //come lo mando avanti?
                     }
                 }
@@ -252,28 +251,8 @@ public class GameController implements Observer, Serializable {
                         break;
                     //mancherebbe l'ultimo effetto
                 }
+                performEffectAndReset(characterCardPlayed);
 
-                characterCardPlayed.getEffect().enable(playerActive);
-                activatedEffect = true;
-
-                switch (this.oldState) {
-                    case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                        if (gameInstance.getPlayersNumber() % 2 == 0) {
-                            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
-                        } else {
-                            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
-                        }
-                        break;
-                    case PLAYER_MOVED_STUDENTS_ON_HALL:
-                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
-                        break;
-                    case PLAYER_MOVED_MOTHER:
-                        motherActions(this.movement);
-                        break;
-                    case PLAYED_ASSISTANT_CARD:
-                        virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
-                        break;
-                }
                 break;
 
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
@@ -344,6 +323,30 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
 
+        }
+    }
+
+    private void performEffectAndReset(CharacterCardModel characterCardPlayed){
+        characterCardPlayed.getEffect().enable(playerActive);
+        activatedEffect = true;
+
+        switch (this.oldState) {
+            case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+                if (gameInstance.getPlayersNumber() % 2 == 0) {
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                } else {
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+                }
+                break;
+            case PLAYER_MOVED_STUDENTS_ON_HALL:
+                virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
+                break;
+            case PLAYER_MOVED_MOTHER:
+                motherActions(this.movement);
+                break;
+            case PLAYED_ASSISTANT_CARD:
+                virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
+                break;
         }
     }
 
