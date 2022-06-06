@@ -10,18 +10,20 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scene.ConnectionSceneController">
+<?import java.net.URL?>
+<StackPane styleClass="solidBackground" prefHeight="760.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/18"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scene.ConnectionSceneController">
    <children>
-      <Group scaleX="1.0" scaleY="1.0">
+      <Group>
          <children>
-            <AnchorPane fx:id="rootPane" layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0" styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
+            <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0" styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
                <children>
                   <Button fx:id="connectButton" layoutX="310.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Connettiti al server">
                      <font>
                         <Font name="High Tower Text" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="backToTitleButton" layoutX="822.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="menuButton" text="Menù principale">
+                  <Button fx:id="backToTitleButton" layoutX="822.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Menù principale">
                      <font>
                         <Font name="High Tower Text" size="18.0" />
                      </font>
@@ -57,4 +59,7 @@
          </children>
       </Group>
    </children>
+   <stylesheets>
+      <URL value="@../css/StartingGame.css"/>
+   </stylesheets>
 </StackPane>

@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.List;
 
@@ -33,7 +35,18 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
     private void initialize() {
         dialog = new Dialog<>();
         dialog.setTitle("Waiting...");
-        dialog.setContentText("Waiting for other players to connect...");
+        /*dialog.setHeaderText("Waiting for other players to connect...");
+        dialog.setContentText("We override the style classes of the dialog");*/
+        dialog.initStyle(StageStyle.UNDECORATED);
+
+        //dialog.setContentText("Waiting for other players to connect...");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.setHeaderText("Lobby creata con successo!");
+        dialogPane.setContentText("Aspetta gli altri giocatori...");
+        dialogPane.getStylesheets().add(getClass().getResource("/css/StartingGame.css").toExternalForm());
+        dialogPane.getStyleClass().add("solidPanel");
+        dialog.setDialogPane(dialogPane);
+        //dialog.setDialogPane();
         beginner_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBeginnerClick);
         advanced_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAdvancedClick);
     }

@@ -5,3 +5,22 @@
     -fx-position: relative;
 }
 
+.solidBackground {
+    -fx-background-color: #485f93;
+    -fx-min-width: 25%;
+    -fx-min-height: 25%;
+}
+
+.solidPanel > *{
+    -fx-background-color: #485f93;
+}
+
+.solidPanel > *.label.content {
+    -fx-font-size: 20px;
+    -fx-background-color: #707ba8;
+}
+
+.solidPanel > *.header-panel *.label{
+    -fx-font-size: 24px;
+
+}

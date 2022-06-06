@@ -8,35 +8,42 @@
 <?import javafx.scene.layout.StackPane?>
 <?import java.net.URL?>
 <?import javafx.scene.Group?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" styleClass="menuBackground"
+<?import javafx.scene.layout.AnchorPane?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" styleClass="solidBackground"
            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <Group scaleX="1.5" scaleY="1.5" scaleZ="1.5">
-         <RadioButton fx:id="white_button" layoutX="571.0" layoutY="377.0" mnemonicParsing="false" text="BIANCO">
-            <font>
-               <Font name="High Tower Text" size="24.0" />
-            </font>
-         </RadioButton>
-         <RadioButton fx:id="black_button" layoutX="571.0" layoutY="422.0" mnemonicParsing="false" text="NERO">
-            <font>
-               <Font name="High Tower Text" size="24.0" />
-            </font>
-         </RadioButton>
-         <RadioButton fx:id="grey_button" layoutX="571.0" layoutY="460.0" mnemonicParsing="false" text="GRIGIO">
-            <font>
-               <Font name="High Tower Text" size="24.0" />
-            </font>
-         </RadioButton>
-         <Label fx:id="label" layoutX="483.0" layoutY="332.0" text="Scegli il colore della tua torre:">
-            <font>
-               <Font name="High Tower Text" size="36.0" />
-            </font>
-         </Label>
-         <Button fx:id="button" layoutX="522.0" layoutY="520.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Avanti">
-            <font>
-               <Font name="High Tower Text" size="18.0" />
-            </font>
-         </Button>
+      <Group>
+         <children>
+            <AnchorPane fx:id="rootPane" layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0" styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
+               <children>
+                  <RadioButton fx:id="white_button" layoutX="571.0" layoutY="377.0" mnemonicParsing="false" text="BIANCO">
+                     <font>
+                        <Font name="High Tower Text" size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="black_button" layoutX="571.0" layoutY="422.0" mnemonicParsing="false" text="NERO">
+                     <font>
+                        <Font name="High Tower Text" size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="grey_button" layoutX="571.0" layoutY="460.0" mnemonicParsing="false" text="GRIGIO">
+                     <font>
+                        <Font name="High Tower Text" size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <Label fx:id="label" layoutX="483.0" layoutY="332.0" text="Scegli il colore della tua torre:">
+                     <font>
+                        <Font name="High Tower Text" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="button" layoutX="522.0" layoutY="520.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Avanti">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
       </Group>
    </children>
    <stylesheets>

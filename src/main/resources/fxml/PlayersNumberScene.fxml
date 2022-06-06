@@ -9,13 +9,13 @@
 <?import javafx.scene.Group?>
 <?import java.net.URL?>
 <?import javafx.scene.layout.AnchorPane?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0" styleClass="menuBackground"
+<StackPane  styleClass="solidBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1300.0"
            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController">
     <children>
-        <Group scaleX="1.5" scaleY="1.5" scaleZ="1.5">
+        <Group>
             <children>
-                <AnchorPane styleClass="center">
-                    <Label fx:id="playersNumberFieldLabel" layoutX="495.0" layoutY="378.0" text="Scegli il numero di giocatori:">
+                <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0" styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
+                    <Label layoutX="495.0" layoutY="378.0" text="Scegli il numero di giocatori:">
                         <font>
                             <Font name="High Tower Text" size="24.0" />
                         </font>
@@ -26,7 +26,7 @@
                             <Font name="High Tower Text" size="18.0" />
                         </font>
                     </Button>
-                    <Button fx:id="backToTitleButton" layoutX="1066.0" styleClass="menuButton" layoutY="656.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Menù principale">
+                    <Button fx:id="backToTitleButton" layoutX="1066.0" layoutY="656.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Menù principale">
                         <font>
                             <Font name="High Tower Text" size="18.0" />
                         </font>
