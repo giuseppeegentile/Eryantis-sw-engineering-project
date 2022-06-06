@@ -186,7 +186,7 @@ public class GameController implements Observer, Serializable {
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
 
-                    effectPlayed = characterCardPlayed.getClass().getSimpleName();
+                    effectPlayed = characterCardPlayed.getEffect().getClass().getSimpleName();
                     InitialConfigEffect initialConfigEffect;
                     switch (this.effectPlayed) {
                         case "AddToHallEffect":
@@ -218,7 +218,7 @@ public class GameController implements Observer, Serializable {
                             break;  //come lo mando avanti?
                     }
                 }
-
+                ContinueFromOldState();
                 break;
 
             case EFFECT_CARD_PLAYED:
@@ -335,14 +335,7 @@ public class GameController implements Observer, Serializable {
         }
     }
 
-    /**
-     * Enable the effect and return to the phase of the game where the player was before applying the card's effect
-     * @param characterCardPlayed the card played sent by the client
-     */
-    private void performEffectAndReset(CharacterCardModel characterCardPlayed){
-        characterCardPlayed.getEffect().enable(playerActive);
-        activatedEffect = true;
-
+    private void ContinueFromOldState() {
         switch (this.oldState) {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
                 if (gameInstance.getPlayersNumber() % 2 == 0) {
@@ -361,6 +354,17 @@ public class GameController implements Observer, Serializable {
                 virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
                 break;
         }
+    }
+
+    /**
+     * Enable the effect and return to the phase of the game where the player was before applying the card's effect
+     * @param characterCardPlayed the card played sent by the client
+     */
+    private void performEffectAndReset(CharacterCardModel characterCardPlayed){
+        characterCardPlayed.getEffect().enable(playerActive);
+        activatedEffect = true;
+
+        ContinueFromOldState();
     }
 
 
