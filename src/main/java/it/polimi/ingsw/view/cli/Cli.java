@@ -755,17 +755,15 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall) {
-        System.out.println("How many students do you want to move from the card to your entrance?");
+        System.out.println("How many students do you want to move from the entrance to your hall?");
         int number = parseInt(read());
         List<ColorPawns> studentsFromEntrance = new ArrayList<>();
         List<ColorPawns> studentsFromHall = new ArrayList<>();
         List<ColorPawns> studentsInHall = new ArrayList<>();
-        for(ColorPawns c: hall.keySet())
-            for(int i=0; i<hall.get(c); i++)
+        for (ColorPawns c : hall.keySet())
+            for (int i = 0; i < hall.get(c); i++)
                 studentsInHall.add(c);
         askingMoveStudents(studentsInHall, studentsFromHall, number, "entrance");
-
-        System.out.println("Choose the students to move from your entrance to the card\n");
         askingMoveStudents(entrance, studentsFromEntrance, number, "hall");
 
         notifyObserver(obs -> obs.onUpdateChangeHallEntrance(active, studentsFromHall, studentsFromEntrance));
