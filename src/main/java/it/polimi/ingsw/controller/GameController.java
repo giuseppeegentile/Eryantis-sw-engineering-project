@@ -149,8 +149,8 @@ public class GameController implements Observer, Serializable {
                 setClouds();
                 playerActive = gameInstance.getPlayersModel().get(0);
                 break;
-
             case PLAYED_ASSISTANT_CARD:
+                System.out.println("State: " + receivedMessage.getMessageType());
                 if(gameInstance.getGameMode()==GameMode.ADVANCED) setCharacterCards();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
@@ -176,13 +176,14 @@ public class GameController implements Observer, Serializable {
                     if (playerActive.getDeckAssistantCardModel().size() == 0)//se ha finito tutte le carte
                         gameInstance.setTrueHavePlayerFinishedCards();
                     showWhosPlaying();
-                    askCharacter(MessageType.PLAYED_ASSISTANT_CARD);
-                    if(gameInstance.getGameMode() == GameMode.BEGINNER) {
+                    boolean temp = askCharacter(MessageType.PLAYED_ASSISTANT_CARD);
+                    if(!temp) {
                         virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToIsland(playerActive.getNickname(), playerActive.getStudentInEntrance(), gameInstance.getIslandsModel());
                     }
                 }
                 break;
             case CHARACTER_CARD_PLAYED:
+                System.out.println("State: " + receivedMessage.getMessageType());
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
                     effectPlayed = characterCardPlayed.getEffect().getClass().getSimpleName();
@@ -216,10 +217,13 @@ public class GameController implements Observer, Serializable {
                             performEffectAndReset(characterCardPlayed);
                             break;  //come lo mando avanti?
                     }
+                }else{
+                    continueFromOldState();
                 }
                 break;
 
             case EFFECT_CARD_PLAYED:
+                System.out.println("State: " + receivedMessage.getMessageType());
                 switch (this.effectPlayed) {
                     case "AddToHallEffect":
                         AddToHallEffect addToHallEffect = (AddToHallEffect)characterCardPlayed.getEffect();
@@ -259,36 +263,37 @@ public class GameController implements Observer, Serializable {
                     //mancherebbe l'ultimo effetto
                 }
                 performEffectAndReset(characterCardPlayed);
-
                 break;
 
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                boolean existsCardPlayable = askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
-                if(!existsCardPlayable){
-                    studentsOnIslandActions(receivedMessage);
-                }
+                System.out.println("State: " + receivedMessage.getMessageType());
+                this.oldMessage = receivedMessage;
+                studentsOnIslandActions(receivedMessage);
+                askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
-                boolean ex = askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
-                if(!ex)
-                    studentsOnHallActions(receivedMessage);
+                System.out.println("State: " + receivedMessage.getMessageType());
+                this.oldMessage = receivedMessage;
+                studentsOnHallActions(receivedMessage);
+                askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
                 break;
             case PLAYER_MOVED_MOTHER:
-                byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
-                boolean ee = askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
-                if(!ee)
-                    motherActions(movement);
+                System.out.println("State: " + receivedMessage.getMessageType());
+                this.oldMessage = receivedMessage;
+                this.movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
+                motherActions(this.movement);
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
+                System.out.println("State: " + receivedMessage.getMessageType());
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
-                if (chosenCloud.getStudents().size() == 0) {
+                if (chosenCloud.getStudents().size() == 0) { //if cloud isn't valid
                     //Mandare messaggio di scegliere una nuvola non scelta da un altro player
                     virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
                     virtualViewMap.get(playerActive.getNickname()).askMoveCloudToEntrance(playerActive.getNickname(), getAvailableClouds());
                     break;
                 }
-                //if cloud isn't valid ask another one
+                //ask another one
                 boolean successfulMove =moveStudentFromCloudToWaiting(receivedMessage);
                 if(!successfulMove){
                     virtualViewMap.get(receivedMessage.getNickname()).askMoveCloudToEntrance(receivedMessage.getNickname(), getAvailableClouds());
@@ -333,10 +338,11 @@ public class GameController implements Observer, Serializable {
 
         }
     }
-
+    private Message oldMessage;
     private void continueFromOldState() {
         switch (this.oldState) {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
+                movedStudents = ((MovedStudentOnIslandMessage)oldMessage).getStudents();
                 if (gameInstance.getPlayersNumber() % 2 == 0) {
                     virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
                 } else {
@@ -344,8 +350,6 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
-            case PLAYER_MOVED_MOTHER:
-                //motherActions(this.movement);
                 virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
                 break;
             case PLAYED_ASSISTANT_CARD:
@@ -361,7 +365,6 @@ public class GameController implements Observer, Serializable {
     private void performEffectAndReset(CharacterCardModel characterCardPlayed){
         characterCardPlayed.getEffect().enable(playerActive);
         activatedEffect = true;
-
         continueFromOldState();
     }
 
@@ -381,7 +384,9 @@ public class GameController implements Observer, Serializable {
         }
         String activeNick = playerActive.getNickname();
         moveMotherNature(movement);
+
         if(!gameInstance.getIslandWithMother().hasProhibition()) { //check he doesn't have a prohib card on
+            System.out.println("Prohibition");
             computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
         }else{
             virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
@@ -400,7 +405,6 @@ public class GameController implements Observer, Serializable {
             moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
         }
         showBoard(playerActive.getNickname());
-        askCharacter(MessageType.PLAYER_MOVED_MOTHER);
         if(gameInstance.getGameMode()==GameMode.BEGINNER)
             virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
     }
@@ -416,11 +420,12 @@ public class GameController implements Observer, Serializable {
         for (String gamer : virtualViewMap.keySet()) {
             virtualViewMap.get(gamer).showIslands(playerActive.getNickname(), gameInstance.getIslandsModel());
         }
-
-        if (gameInstance.getPlayersNumber() % 2 == 0) {
-            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
-        } else {
-            virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+        if(GameMode.BEGINNER == gameInstance.getGameMode()) {
+            if (gameInstance.getPlayersNumber() % 2 == 0) {
+                virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+            } else {
+                virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+            }
         }
     }
 
@@ -1139,7 +1144,3 @@ public class GameController implements Observer, Serializable {
         return this.considerTower;
     }
 }
-
-
-
-
