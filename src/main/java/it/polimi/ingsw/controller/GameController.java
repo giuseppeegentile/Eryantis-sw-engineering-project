@@ -217,7 +217,6 @@ public class GameController implements Observer, Serializable {
                             break;  //come lo mando avanti?
                     }
                 }
-                continueFromOldState();
                 break;
 
             case EFFECT_CARD_PLAYED:
@@ -264,16 +263,21 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
-                studentsOnIslandActions(receivedMessage);
+                boolean existsCardPlayable = askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
+                if(!existsCardPlayable){
+                    studentsOnIslandActions(receivedMessage);
+                }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
-                askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
-                studentsOnHallActions(receivedMessage);
+                boolean ex = askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
+                if(!ex)
+                    studentsOnHallActions(receivedMessage);
                 break;
             case PLAYER_MOVED_MOTHER:
                 byte movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
-                motherActions(movement);
+                boolean ee = askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
+                if(!ee)
+                    motherActions(movement);
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
@@ -1060,15 +1064,17 @@ public class GameController implements Observer, Serializable {
      * Ask the client to play the character card (if game mode is expert)
      * @param oldState the state of the game the player was before calling the effect
      */
-    private void askCharacter(MessageType oldState){
+    private boolean askCharacter(MessageType oldState){
         this.oldState = oldState;
+        boolean existsCardPlayable  =false;
         if(gameInstance.getGameMode() == GameMode.ADVANCED && !activatedEffect) {
-            boolean existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
+            existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
             if(existsCardPlayable) {
                 String active = playerActive.getNickname();
                 virtualViewMap.get(active).askPlayCharacterCard(active, playerActive.getCharacterDeck());
             }
         }
+        return existsCardPlayable;
     }
 
     /**

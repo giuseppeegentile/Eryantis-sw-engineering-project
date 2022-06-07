@@ -20,7 +20,7 @@ public class MovedStudentToHallMessage extends  Message{
 
     @Override
     public String toString() {
-        return "StudentToHallMessage{" +
+        return "MovedStudentToHallMessage{" +
                 "player=" + getNickname() +
                 ", students=" + students +
                 '}';
