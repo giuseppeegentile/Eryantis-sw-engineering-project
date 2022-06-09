@@ -1046,22 +1046,19 @@ public class GameController implements Observer, Serializable {
         }
 
         Collections.shuffle(characterDeck);
-        List<CharacterCardModel> tempToAssign;
-        for(int j = 0; j<gameInstance.getPlayersNumber(); j++) {
-            tempToAssign = new ArrayList<>();
-            for (int i = j * 3; i < 3 * (j+1); i++) {
-                characterDeck.get(i).setOwner(gameInstance.getPlayersModel().get(j));
-                tempToAssign.add(characterDeck.get(i));
-                if(characterDeck.get(i).getCharacterId() == 0){
-                    gameInstance.getBag().subList(0,4).clear();
-                }else if(characterDeck.get(i).getCharacterId() == 10 ){
-                    gameInstance.getBag().subList(10, 14).clear();
-                }else if(characterDeck.get(i).getCharacterId() == 6 ){
-                    gameInstance.getBag().subList(4, 10).clear();
-                }
+        List<CharacterCardModel> tempToAssign = new ArrayList<>();;
+        for(int j = 0; j<3; j++) {
+            tempToAssign.add(characterDeck.get(j));
+            if(characterDeck.get(j).getCharacterId() == 0){
+                gameInstance.getBag().subList(0,4).clear();
+            }else if(characterDeck.get(j).getCharacterId() == 10 ){
+                gameInstance.getBag().subList(10, 14).clear();
+            }else if(characterDeck.get(j).getCharacterId() == 6 ){
+                gameInstance.getBag().subList(4, 10).clear();
             }
-            gameInstance.getPlayersModel().get(j).assignCharacterDeck(tempToAssign);
         }
+        for(int j = 0; j<gameInstance.getPlayersNumber(); j++)
+            gameInstance.getPlayersModel().get(j).assignCharacterDeck(tempToAssign);
     }
 
     /**

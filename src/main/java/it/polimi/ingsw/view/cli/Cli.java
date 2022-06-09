@@ -583,11 +583,15 @@ public class Cli extends ViewObservable implements View {
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";
         int chosenIndex = -1;
-        while(chosenIndex > characterDeck.size() || chosenIndex <= -1){
+
+        //TESTARE QUESTA CONDIZIONE!!!!
+        while((chosenIndex > characterDeck.size() || chosenIndex <= -1) || 0<chosenIndex && chosenIndex<4 && characterDeck.get(chosenIndex-1).getEffect().getCoinsForEffect()>activePlayer.getCoins()){
             out.println(stringBuilder);
             chosenIndex = parseInt(read());//2
             if(chosenIndex > characterDeck.size() || chosenIndex <= -1)
                 out.println(message);
+            else if(0<chosenIndex && chosenIndex<4 && characterDeck.get(chosenIndex-1).getEffect().getCoinsForEffect()>activePlayer.getCoins())
+                out.println("You don't have enough coins for this effect");
         }
         CharacterCardModel cardPlayed = null;
         if(chosenIndex != 0) {
