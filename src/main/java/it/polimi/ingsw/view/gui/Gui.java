@@ -3,19 +3,14 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
-import it.polimi.ingsw.view.gui.scene.GameModeSceneController;
-import it.polimi.ingsw.view.gui.scene.PlayCardsSceneController;
-import it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController;
-import it.polimi.ingsw.view.gui.scene.TowerColorSceneController;
+import it.polimi.ingsw.view.gui.scene.*;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 
 import java.util.List;
 import java.util.Map;
@@ -27,10 +22,10 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showWinMessage(PlayerModel winner) {
-        Platform.runLater(() -> {
-            SceneController.showWin(winner.getNickname());
-            SceneController.changeRootPane(observers, SCREEN_TITLE_FXML);
-        });
+        WinSceneController winSceneController = new WinSceneController();
+        winSceneController.addAllObservers(observers);
+        winSceneController.setWinnerNickname(winner.getNickname());
+        Platform.runLater(() -> SceneController.changeRootPane(winSceneController, "WinScene.fxml"));
     }
 
     public void showMessageJoiningIsland(Message message){}
@@ -65,12 +60,12 @@ public class Gui extends ViewObservable implements View {
         if (!nicknameAccepted || !connectionSuccessful) {
             if (!nicknameAccepted && connectionSuccessful) {
                 Platform.runLater(() -> {
-                    SceneController.showAlert(STR_ERROR, "Nickname already taken.");
+                    SceneController.showAlert(STR_ERROR, "Nickname già scelto.");
                     SceneController.changeRootPane(observers, "LoginScene.fxml");
                 });
             } else {
                 Platform.runLater(() -> {
-                    SceneController.showAlert(STR_ERROR, "Could not contact server.");
+                    SceneController.showAlert(STR_ERROR, "Impossibile contattare il server.");
                     SceneController.changeRootPane(observers, SCREEN_TITLE_FXML);
                 });
             }

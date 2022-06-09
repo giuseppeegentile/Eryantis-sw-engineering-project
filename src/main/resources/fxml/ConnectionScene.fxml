@@ -16,7 +16,8 @@
    <children>
       <Group>
          <children>
-            <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0" styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
+            <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1308.0"
+                        styleClass="menuBackground" stylesheets="@../css/StartingGame.css">
                <children>
                   <Button fx:id="connectButton" layoutX="310.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Connettiti al server">
                      <font>

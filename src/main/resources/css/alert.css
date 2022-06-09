@@ -1,0 +1,8 @@
+.rootPane {
+    -fx-background-color: red;
+    -fx-background-repeat: no-repeat;
+}
+
+.alertText {
+    -fx-font-size: 16px;
+}

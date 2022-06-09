@@ -25,11 +25,11 @@ public class ErrorSceneController implements GenericSceneController {
     @FXML
     private BorderPane rootPane;
     @FXML
-    private Label titleLbl;
+    private Label titleLabel;
     @FXML
-    private Label messageLbl;
+    private Label messageLabel;
     @FXML
-    private Button okBtn;
+    private Button button;
 
     /**
      * Default constructor.
@@ -48,7 +48,7 @@ public class ErrorSceneController implements GenericSceneController {
     public void initialize() {
         rootPane.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onRootPaneMousePressed);
         rootPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::onRootPaneMouseDragged);
-        okBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onOkBtnClick);
+        button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onOkBtnClick);
     }
 
     /**
@@ -87,7 +87,7 @@ public class ErrorSceneController implements GenericSceneController {
      * @param str title of the Alert Scene.
      */
     public void setAlertTitle(String str) {
-        titleLbl.setText(str);
+        titleLabel.setText(str);
     }
 
     /**
@@ -96,7 +96,7 @@ public class ErrorSceneController implements GenericSceneController {
      * @param str message of the Alert Scene.
      */
     public void setAlertMessage(String str) {
-        messageLbl.setText(str);
+        messageLabel.setText(str);
     }
 
     /**

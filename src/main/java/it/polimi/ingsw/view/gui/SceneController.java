@@ -23,8 +23,6 @@ import java.util.List;
  * This class implements the controller of a generic scene.
  */
 public class SceneController extends ViewObservable {
-
-
     private static Scene activeScene;
     private static GenericSceneController activeController;
 
@@ -36,16 +34,6 @@ public class SceneController extends ViewObservable {
     public static Scene getActiveScene() {
         return activeScene;
     }
-
-    /**
-     * Returns the active controller.
-     *
-     * @return active controller.
-     */
-    public static GenericSceneController getActiveController() {
-        return activeController;
-    }
-
 
     /**
      * Changes the root panel of the scene argument.
@@ -155,7 +143,7 @@ public class SceneController extends ViewObservable {
      * @param message the message of the popup.
      */
     public static void showAlert(String title, String message) {
-        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/alert_scene.fxml"));
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/AlertScene.fxml"));
 
         Parent parent;
         try {
@@ -172,25 +160,4 @@ public class SceneController extends ViewObservable {
         alertSceneController.displayAlert();
     }
 
-    /**
-     * Shows the win message popup.
-     *
-     * @param nickname the nickname of the winning player.
-     */
-    public static void showWin(String nickname) {
-        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/win_scene.fxml"));
-
-        Parent parent;
-        try {
-            parent = loader.load();
-        } catch (IOException e) {
-            Client.LOGGER.severe(e.getMessage());
-            return;
-        }
-        WinSceneController winSceneController = loader.getController();
-        Scene winScene = new Scene(parent);
-        winSceneController.setScene(winScene);
-        winSceneController.setWinnerNickname(nickname);
-        winSceneController.displayWinScene();
-    }
 }
