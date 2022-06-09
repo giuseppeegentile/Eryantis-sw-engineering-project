@@ -1,15 +1,18 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.cards.CharacterCardModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 
 public class ReqPlayCharacterCardMessage extends Message {
     private static final long serialVersionUID = -668254545407621488L;
     private final List<CharacterCardModel> characterDeck;
-    public ReqPlayCharacterCardMessage(String active, List<CharacterCardModel> characterDeck) {
-        super(active, MessageType.REQ_PLAY_CHAR_CARD);
+    private final PlayerModel player;
+    public ReqPlayCharacterCardMessage(PlayerModel active, List<CharacterCardModel> characterDeck) {
+        super(active.getNickname(), MessageType.REQ_PLAY_CHAR_CARD);
         this.characterDeck = characterDeck;
+        player = active;
     }
 
     public List<CharacterCardModel> getCharacterDeck() {
@@ -22,5 +25,9 @@ public class ReqPlayCharacterCardMessage extends Message {
                 "player=" + getNickname() +
                 ", characterDeck=" + characterDeck +
                 '}';
+    }
+
+    public PlayerModel getPlayer() {
+        return player;
     }
 }

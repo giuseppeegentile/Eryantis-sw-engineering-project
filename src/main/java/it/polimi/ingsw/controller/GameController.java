@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.effects.*;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.effects.*;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
@@ -12,16 +12,14 @@ import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
-import it.polimi.ingsw.observer.Observer;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static it.polimi.ingsw.network.message.MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND;
 
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
@@ -125,12 +123,12 @@ public class GameController implements Observer, Serializable {
                         for (String nick : virtualViewMap.keySet()) {
                             virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
                             virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
-
                             showBoard(nick);
                             //virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
 
                         }
                         if(gameInstance.getGameMode() == GameMode.ADVANCED){
+                            setCharacterCards();
                             for(PlayerModel pl : gameInstance.getPlayersModel())
                                 pl.setCoins();
                         }
@@ -151,7 +149,6 @@ public class GameController implements Observer, Serializable {
                 break;
             case PLAYED_ASSISTANT_CARD:
                 System.out.println("State: " + receivedMessage.getMessageType());
-                if(gameInstance.getGameMode()==GameMode.ADVANCED) setCharacterCards();
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
@@ -268,8 +265,10 @@ public class GameController implements Observer, Serializable {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
                 System.out.println("State: " + receivedMessage.getMessageType());
                 this.oldMessage = receivedMessage;
+                System.out.println("0");
                 studentsOnIslandActions(receivedMessage);
-                askCharacter(PLAYER_MOVED_STUDENTS_ON_ISLAND);
+                System.out.println("1");
+                askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND);
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
                 System.out.println("State: " + receivedMessage.getMessageType());
@@ -1072,12 +1071,15 @@ public class GameController implements Observer, Serializable {
     private boolean askCharacter(MessageType oldState){
         this.oldState = oldState;
         boolean existsCardPlayable  =false;
-        if(gameInstance.getGameMode() == GameMode.ADVANCED && !activatedEffect) {
-            existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
-            if(existsCardPlayable) {
-                String active = playerActive.getNickname();
-                virtualViewMap.get(active).askPlayCharacterCard(active, playerActive.getCharacterDeck());
-            }
+        if(gameInstance.getGameMode() == GameMode.ADVANCED) {
+            if (!activatedEffect) {
+                existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
+                if (existsCardPlayable) {
+                    String active = playerActive.getNickname();
+                    virtualViewMap.get(active).askPlayCharacterCard(playerActive, playerActive.getCharacterDeck());
+                }
+            } else
+                continueFromOldState();
         }
         return existsCardPlayable;
     }

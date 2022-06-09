@@ -193,7 +193,7 @@ public class Cli extends ViewObservable implements View {
         List<ColorPawns> colors = new ArrayList<>();
         out.println("You have to move " + numberStudentsHaveToMove + " to your hall");
         if(numberStudentsHaveToMove != 0) {
-            askingMoveStudents(colorPawns, colors, numberStudentsHaveToMove, "hall");
+            askingMoveStudentsFromEntrance(colorPawns, colors, numberStudentsHaveToMove, "hall");
             notifyObserver(obs -> obs.onUpdateStudentToHall(player, colors));
         }else{
             out.println("You moved all the students available for this turn to the island..Skipping to the mother nature movement.\n");
@@ -222,27 +222,38 @@ public class Cli extends ViewObservable implements View {
         }else if(GameModel.getInstance().getPlayersNumber()%2== 0 && (numberStudents < 0 || numberStudents > 3)) {
             numberStudents = askUntilValid(3, "Must be a number between 0 and 3: \n", str);
         }
-        askingMoveStudents(entrance, colors, numberStudents, "island");
+        askingMoveStudentsFromEntrance(entrance, colors, numberStudents, "island");
         notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
-    private void askingMoveStudents(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
-        int finalChosenIndex;
-        int chosenIndex;
-
+    private void askingMoveStudentsFromEntrance(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
             str.append("Type the index of the students you want to move from your entrance to the "+destination + " :\n");
-            int i=0;
-            for(ColorPawns color : entrance){
-                i+=1;
-                str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
-            }
-            chosenIndex = askUntilValid(entrance.size(), "Please select a valid index of the student from the list shown\n", str);
-            finalChosenIndex = chosenIndex - 1;
-            colors.add(entrance.get(finalChosenIndex));
-            entrance.remove(finalChosenIndex);
+            creatingStudentsList(entrance, colors, str);
         }
+    }
+
+    private void askingMoveStudents(List<ColorPawns> origin, String originName, List<ColorPawns> colors, int numberStudents) {
+        for(int j=0; j<numberStudents; j++) {
+            StringBuilder str = new StringBuilder();
+            str.append("Type the index of the students you want to move from " + originName + " to the entrance:\n");
+            creatingStudentsList(origin, colors, str);
+        }
+    }
+
+    private void creatingStudentsList(List<ColorPawns> origin, List<ColorPawns> colors, StringBuilder str) {
+        int chosenIndex;
+        int finalChosenIndex;
+        int i=0;
+        for(ColorPawns color : origin){
+            i+=1;
+            str.append(i).append(" -> ").append(ColorCli.getEquivalentColorPawn(color)).append(color).append(ColorCli.RESET).append("\n");
+        }
+        chosenIndex = askUntilValid(origin.size(), "Please select a valid index of the student from the list shown\n", str);
+        finalChosenIndex = chosenIndex - 1;
+        colors.add(origin.get(finalChosenIndex));
+        origin.remove(finalChosenIndex);
     }
 
     /*@Override
@@ -559,10 +570,10 @@ public class Cli extends ViewObservable implements View {
 
 
     @Override
-    public void askPlayCharacterCard(String activePlayer, List<CharacterCardModel> characterDeck) {
+    public void askPlayCharacterCard(PlayerModel activePlayer, List<CharacterCardModel> characterDeck) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
-        out.println(activePlayer + ", select your character card for this round.\nThis is your deck:\n");
+        out.println(activePlayer.getNickname() + " you have " + activePlayer.getCoins() + " coins, select your character card for this round.\nThis is your deck:\n");
         stringBuilder.append("0 -> Not playing a character card\n");
         for (CharacterCardModel card : characterDeck) {
             if(card.enoughCoins()) {
@@ -583,7 +594,7 @@ public class Cli extends ViewObservable implements View {
             cardPlayed = characterDeck.get(chosenIndex-1);
         }
         CharacterCardModel finalCardPlayed = cardPlayed;
-        notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer, finalCardPlayed));
+        notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(activePlayer.getNickname(), finalCardPlayed));
     }
 
     /**
@@ -620,16 +631,7 @@ public class Cli extends ViewObservable implements View {
         }
         strBoardBld.append("\n");
         for (int i=0; i<islands.size()/2; i++) {
-            if(islands.get(i).getMotherNature())
-                if(islands.get(i).getTowerColor() == ColorTower.NULL)
-                    strBoardBld.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
-                else
-                strBoardBld.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
-            else
-                if(islands.get(i).getTowerColor() == ColorTower.NULL)
-                    strBoardBld.append("|           |      ");
-                else
-                    strBoardBld.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+            placeMotherNature(islands, strBoardBld, i);
         }
         strBoardBld.append("\n");
         strBoardBld.append(" -----------       ".repeat(islands.size() / 2));
@@ -648,16 +650,7 @@ public class Cli extends ViewObservable implements View {
         }
         strBoardBld2.append("\n");
         for (int i=islands.size()-1; i>islands.size()/2-1; i--) {
-            if(islands.get(i).getMotherNature())
-                if(islands.get(i).getTowerColor() == ColorTower.NULL)
-                    strBoardBld2.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
-                else
-                    strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
-            else
-            if(islands.get(i).getTowerColor() == ColorTower.NULL)
-                strBoardBld2.append("|           |      ");
-            else
-                strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+            placeMotherNature(islands, strBoardBld2, i);
         }
         strBoardBld2.append("\n");
 
@@ -665,6 +658,19 @@ public class Cli extends ViewObservable implements View {
 
         strBoardBld2.append("\n");
         out.println(strBoardBld2);
+    }
+
+    private void placeMotherNature(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
+        if(islands.get(i).getMotherNature())
+            if(islands.get(i).getTowerColor() == ColorTower.NULL)
+                strBoardBld2.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
+            else
+                strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+        else
+        if(islands.get(i).getTowerColor() == ColorTower.NULL)
+            strBoardBld2.append("|           |      ");
+        else
+            strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
     }
 
     @Override
@@ -726,14 +732,15 @@ public class Cli extends ViewObservable implements View {
 
     @Override
     public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
-        System.out.println("How many students do you want to move from the card to your entrance?");
-        int number = parseInt(read());
+        System.out.println("How many students do you want to move from the card to your entrance? You can take up to 3 students");
+        String message = "You've entered an invalid number, please select a number from 1 to 3 from the list shown\n";
+        StringBuilder stringBuilder = new StringBuilder("");
+        int number = askUntilValid(listColor.size(), message, stringBuilder);
+
         List<ColorPawns> studentsFromCard = new ArrayList<>();
         List<ColorPawns> studentsFromEntrance = new ArrayList<>();
-        askingMoveStudents(studentsOnCard, studentsFromCard, number, "entrance");
-
-        System.out.println("Choose the students to move from your entrance to the card\n");
-        askingMoveStudents(entrance, studentsFromEntrance, number, "card");
+        askingMoveStudents(studentsOnCard, "card", studentsFromCard, number);
+        askingMoveStudentsFromEntrance(entrance, studentsFromEntrance, number, "card");
 
         notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
     }
@@ -763,8 +770,9 @@ public class Cli extends ViewObservable implements View {
         for (ColorPawns c : hall.keySet())
             for (int i = 0; i < hall.get(c); i++)
                 studentsInHall.add(c);
-        askingMoveStudents(studentsInHall, studentsFromHall, number, "entrance");
-        askingMoveStudents(entrance, studentsFromEntrance, number, "hall");
+
+        askingMoveStudentsFromEntrance(entrance, studentsFromEntrance, number, "hall");
+        askingMoveStudents(studentsInHall, "hall", studentsFromHall, number);
 
         notifyObserver(obs -> obs.onUpdateChangeHallEntrance(active, studentsFromHall, studentsFromEntrance));
     }

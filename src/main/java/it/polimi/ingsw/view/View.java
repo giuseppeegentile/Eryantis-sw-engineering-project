@@ -100,7 +100,7 @@ public interface View {
 
     void showSkippingMotherMovement(String activeNick);
 
-    void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck);
+    void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck);
 
     //da implementare nella cli
     void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard);

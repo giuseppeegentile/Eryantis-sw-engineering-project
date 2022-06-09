@@ -46,7 +46,7 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
             case REQ_PLAY_CHAR_CARD:
-                queueTasks.execute(() -> view.askPlayCharacterCard(message.getNickname(), ((ReqPlayCharacterCardMessage)message).getCharacterDeck()));
+                queueTasks.execute(() -> view.askPlayCharacterCard(((ReqPlayCharacterCardMessage)message).getPlayer(), ((ReqPlayCharacterCardMessage)message).getCharacterDeck()));
                 break;
             case REQ_ENTRANCE_TO_HALL:
                 queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance(), ((StudentToIslandMessage)message).getIslands()));

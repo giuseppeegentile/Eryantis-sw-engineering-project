@@ -123,7 +123,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askPlayCharacterCard(String active, List<CharacterCardModel> characterDeck) {
+    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
         clientHandler.sendMessage(new ReqPlayCharacterCardMessage(active, characterDeck));
     }
 
