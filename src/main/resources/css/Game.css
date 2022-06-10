@@ -1,0 +1,5 @@
+.gameBoardBackground{
+    -fx-background-image: url("../images_cranio/Sfondo_GameBoard.png");
+    -fx-background-size: stretch;
+    -fx-background-position: relative;
+}

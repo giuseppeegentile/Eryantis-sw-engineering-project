@@ -7,16 +7,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.css.PseudoClass;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.util.Map;
@@ -68,15 +65,15 @@ public class ConnectionSceneController extends ViewObservable implements Generic
         serverPortField.setOpacity(1);
 
         Timeline timeConnectButton = new Timeline(
-                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateXProperty(), 220)),
-                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateYProperty(), 150))
+                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateXProperty(), 230)),
+                new KeyFrame(Duration.millis(500), new KeyValue(connectButton.translateYProperty(), 70))
         );
         timeConnectButton.setAutoReverse(false);
         timeConnectButton.play();
 
         Timeline timeBackToTitleButton = new Timeline(
-            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateXProperty(), 280)),
-            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateYProperty(), 290))
+            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateXProperty(), 220)),
+            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateYProperty(), 200))
         );
         timeBackToTitleButton.setAutoReverse(false);
         timeBackToTitleButton.play();

@@ -21,11 +21,11 @@ public interface View {
 
     void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds);
 
-    void askMoveEntranceToHall(String player,List<ColorPawns> students, int numberStudentsToMove);
+    void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove);
 
     void askMotherNatureMovements(String player, byte maxMovement);
 
-    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns);
+    void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns);
 
     //void showHallMessage(String player, Map<ColorPawns, Integer> hall);
 
@@ -98,5 +98,8 @@ public interface View {
 
     void askGameMode();
 
-    void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs);
+    void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs);
+
+    void showGameBoard(String nickname);
+
 }

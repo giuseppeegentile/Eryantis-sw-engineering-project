@@ -640,4 +640,5 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append(ColorCli.RED).append(occurrence).append(" ").append(ColorCli.RESET);
         });
     }
+    public void showGameBoard(String nickname){}
 }

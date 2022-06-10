@@ -2,7 +2,13 @@
 .menuBackground {
     -fx-background-image: url("../images_cranio/Screen_title.png");
     -fx-background-size: stretch;
-    -fx-position: relative;
+    -fx-background-position: relative;
+}
+
+.gameSettingsBackground{
+    -fx-background-image: url("../images_cranio/GameSettings_background.png");
+    -fx-background-size: stretch;
+    -fx-background-position: relative;
 }
 
 .solidBackground {
@@ -22,5 +28,4 @@
 
 .solidPanel > *.header-panel *.label{
     -fx-font-size: 24px;
-
 }

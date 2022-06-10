@@ -59,9 +59,6 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
                 onNextStageClicked(e);
             }
         });
-/*
-        confirmBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConfirmBtnClick);
-        backToMenuBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToMenuBtnClick);*/
     }
 
     private void onBackToMenu(Event event) {

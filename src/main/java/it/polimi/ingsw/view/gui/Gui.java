@@ -105,12 +105,7 @@ public class Gui extends ViewObservable implements View {
 
     public void showErrorAndExit(String error){}
 
-    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){
-        PlayCardsSceneController playCardsSceneController = new PlayCardsSceneController();
-        playCardsSceneController.addAllObservers(observers);
-        playCardsSceneController.playCards(nickname, playerDeck);
-        Platform.runLater(() -> SceneController.changeRootPane(playCardsSceneController, "PlayCards.fxml"));
-    }
+    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){}
 
     public void showOrderPhase(String nickname, List<PlayerModel> order){}
 
@@ -138,4 +133,10 @@ public class Gui extends ViewObservable implements View {
 
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){}
 
+    @Override
+    public void showGameBoard(String nickname) {
+        GameBoardSceneController gamaBoardSceneController = new GameBoardSceneController();
+        gamaBoardSceneController.addAllObservers(observers);
+        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameBoardScene.fxml"));
+    }
 }

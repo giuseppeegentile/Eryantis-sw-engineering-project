@@ -30,6 +30,6 @@
         </AnchorPane>
     </top>
     <stylesheets>
-        <URL value="@../css/alert.css" />
+        <URL value="@../css/Alert.css" />
     </stylesheets>
 </BorderPane>

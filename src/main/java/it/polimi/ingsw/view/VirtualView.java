@@ -253,4 +253,7 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
 
+    @Override
+    public void showGameBoard(String nickname){}
+
 }

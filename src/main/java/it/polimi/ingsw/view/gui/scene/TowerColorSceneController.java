@@ -36,6 +36,9 @@ public class TowerColorSceneController extends ViewObservable implements Generic
     @FXML
     private void initialize() {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBtnClick);
+        black_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBlackBtnClick);
+        white_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onWhiteBtnClick);
+        grey_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGreyBtnClick);
         if(!availableColorTowers.contains(ColorTower.GREY)){
             hide(grey_button);
         }
@@ -66,19 +69,53 @@ public class TowerColorSceneController extends ViewObservable implements Generic
     private void onBtnClick(Event e) {
         ColorTower colorChosen;
         if(black_button.isSelected()){
+
             colorChosen =ColorTower.BLACK;
         }
         else if(white_button.isSelected()){
+
             colorChosen =ColorTower.WHITE;
         }
         else if(grey_button.isSelected()){
+
             colorChosen =ColorTower.GREY;
         }else{
+
             colorChosen = ColorTower.NULL;
         }
 
         new Thread(() -> notifyObserver(obs -> obs.onUpdateTower(colorChosen))).start();
 
+    }
+
+    private void onBlackBtnClick(Event e) {
+        if (!white_button.isDisabled() && !grey_button.isDisabled()){
+            white_button.setDisable(true);
+            grey_button.setDisable(true);
+        }else{
+            white_button.setDisable(false);
+            grey_button.setDisable(false);
+        }
+    }
+
+    private void onWhiteBtnClick(Event e) {
+        if (!black_button.isDisabled() && !grey_button.isDisabled()){
+            black_button.setDisable(true);
+            grey_button.setDisable(true);
+        }else{
+            black_button.setDisable(false);
+            grey_button.setDisable(false);
+        }
+    }
+
+    private void onGreyBtnClick(Event e) {
+        if (!white_button.isDisabled() && !black_button.isDisabled()){
+            white_button.setDisable(true);
+            black_button.setDisable(true);
+        }else{
+            white_button.setDisable(false);
+            black_button.setDisable(false);
+        }
     }
 
     public void setAvailableTowers(List<ColorTower> availableColorTowers) {
