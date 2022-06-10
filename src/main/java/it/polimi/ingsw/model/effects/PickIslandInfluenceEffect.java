@@ -10,12 +10,13 @@ import java.io.Serializable;
 //3
 public class PickIslandInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 3251436688028470073L;
-    int costForEffect = 3;
+    private int costForEffect;
     private int indexIslandEffect;
     private final GameController gameController;
 
     public PickIslandInfluenceEffect(GameController controller){
         this.gameController = controller;
+        this.costForEffect = 3;
     }
 
     public void choose(int indexIslandEffect){
@@ -27,7 +28,12 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
         IslandModel islandChosen = GameModel.getInstance().getIslandsModel().get(indexIslandEffect);
 
         gameController.computeIslandsChanges(playerModel, islandChosen);
-        costForEffect++;
+        incrementCost();
+    }
+    @Override
+    public void incrementCost() {
+        this.costForEffect++;
+        System.out.println(this.costForEffect);
     }
 
     @Override

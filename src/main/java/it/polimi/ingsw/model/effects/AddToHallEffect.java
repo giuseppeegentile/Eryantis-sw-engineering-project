@@ -23,12 +23,6 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
         playerModel.addStudentsHall(List.of(studentChosen));
         this.students.remove(studentChosen);
         getFromBag();
-        setCostForEffect(getCostForEffect()+1);
-    }
-
-    @Override
-    public int getCoinsForEffect() {
-        return getCostForEffect();
     }
 
     public String getDescription(){

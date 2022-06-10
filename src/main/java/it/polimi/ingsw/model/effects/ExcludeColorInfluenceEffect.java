@@ -9,12 +9,13 @@ import java.io.Serializable;
 //9
 public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 3426679041693564864L;
-    private int costForEffect = 3;
+    private int costForEffect;
     private final GameController gameController;
     private ColorPawns colorToExclude;
 
     public ExcludeColorInfluenceEffect(GameController gameController){
         this.gameController = gameController;
+        this.costForEffect = 3;
     }
 
     public void choose(ColorPawns colorToExclude){
@@ -24,7 +25,11 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     @Override
     public void enable(PlayerModel playerModel) {
         gameController.setIgnoreColorEffect(colorToExclude);
-        costForEffect++;
+    }
+    @Override
+    public void incrementCost() {
+        this.costForEffect++;
+        System.out.println(this.costForEffect);
     }
 
     @Override

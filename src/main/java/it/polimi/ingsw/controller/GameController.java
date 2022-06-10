@@ -39,7 +39,7 @@ public class GameController implements Observer, Serializable {
     private List<ColorPawns> movedStudents;
     private byte movement;
     private MessageType oldState;
-
+    private Message oldMessage;
     /**
      * Set the player with additional influence on this turn, caused by character card effect
      * @param player the player who's going to have additional influence
@@ -234,7 +234,7 @@ public class GameController implements Observer, Serializable {
                         break;
                     case "ExchangeConfigEntranceEffect":
                         ExchangeConfigEntranceEffect exchangeConfigEntranceEffect = (ExchangeConfigEntranceEffect)characterCardPlayed.getEffect();
-                        MovedFromCardToEntrance movedFromCardToEntrance = (MovedFromCardToEntrance)characterCardPlayed.getEffect();
+                        MovedFromCardToEntrance movedFromCardToEntrance = (MovedFromCardToEntrance)receivedMessage;
                         exchangeConfigEntranceEffect.choose(movedFromCardToEntrance.getStudentsFromCard(), movedFromCardToEntrance.getStudentsFromEntrance());
                         break;
                     case "ExchangeHallEntranceEffect":
@@ -337,7 +337,7 @@ public class GameController implements Observer, Serializable {
 
         }
     }
-    private Message oldMessage;
+
     private void continueFromOldState() {
         switch (this.oldState) {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
@@ -363,6 +363,12 @@ public class GameController implements Observer, Serializable {
      */
     private void performEffectAndReset(CharacterCardModel characterCardPlayed){
         characterCardPlayed.getEffect().enable(playerActive);
+        for (CharacterCardModel card : playerActive.getCharacterDeck()){
+            if(card.getEffect().getDescription().equals(characterCardPlayed.getEffect().getDescription())){
+                card.getEffect().incrementCost();
+                break;
+            }
+        }
         activatedEffect = true;
         continueFromOldState();
     }
@@ -840,13 +846,14 @@ public class GameController implements Observer, Serializable {
      */
     public void moveStudentToHall(PlayerModel player, List<ColorPawns> students) {
         for(ColorPawns student: students) {
+            player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
             //conta le occorrenze per ogni studente di un colore
             if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
                 System.out.println("incremento di 1");
             }
 
-            player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
+
 
             if(canProfBeAssignedToPlayer(player, student))
                 assignProfToPlayer(player, student);

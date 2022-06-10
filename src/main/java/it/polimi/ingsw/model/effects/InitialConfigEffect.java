@@ -19,6 +19,8 @@ public class InitialConfigEffect implements Effect, Serializable {
         this.costForEffect = costForEffect;
         this.numStudents = numStudents;
     }
+
+
     @Override
     public void enable(PlayerModel playerModel) {
 
@@ -36,11 +38,16 @@ public class InitialConfigEffect implements Effect, Serializable {
     }
 
     @Override
+    public void incrementCost() {
+        this.costForEffect++;
+        System.out.println(this.costForEffect);
+    }
+
+    @Override
     public String getDescription() {
         return "At the start of the match, take " + numStudents + " students and place them on this card.\n" +
                 "                                  EFFECT: ";
     }
-
 
     public int getNumStudents() {
         return numStudents;

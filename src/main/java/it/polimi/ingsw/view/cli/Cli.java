@@ -229,7 +229,7 @@ public class Cli extends ViewObservable implements View {
     private void askingMoveStudentsFromEntrance(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
-            str.append("Type the index of the students you want to move from your entrance to the "+destination + " :\n");
+            str.append("Type the index of the students you want to move from your entrance to the "+destination + " :");
             creatingStudentsList(entrance, colors, str);
         }
     }
@@ -237,7 +237,7 @@ public class Cli extends ViewObservable implements View {
     private void askingMoveStudents(List<ColorPawns> origin, String originName, List<ColorPawns> colors, int numberStudents) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
-            str.append("Type the index of the students you want to move from " + originName + " to the entrance:\n");
+            str.append("Type the index of the students you want to move from " + originName + " to the entrance:");
             creatingStudentsList(origin, colors, str);
         }
     }
@@ -789,7 +789,10 @@ public class Cli extends ViewObservable implements View {
         int i = 1;
         out.println(nickname + ", pick a student from the card.\nThese are the students:");
         for (ColorPawns student : studentsOnCard) {
-            stringBuilder.append("Student ").append(i).append(i).append(" -> ").append(student).append("\n");
+            stringBuilder.append("Student ").append(i).append(" -> ")
+                                                .append(ColorCli.getEquivalentColorPawn(student)).append(student)
+                                                .append(ColorCli.RESET)
+                                                .append("\n");
             i++;
         }
         String message = "You've entered an invalid number, please select a card from the list shown\n";

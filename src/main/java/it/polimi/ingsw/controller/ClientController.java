@@ -112,6 +112,11 @@ public class ClientController implements ViewObserver, Observer {
                 AskColorToIgnore askColorToIgnore = (AskColorToIgnore)message;
                 queueTasks.execute(()-> view.askColorStudentToIgnore(askColorToIgnore.getNickname()));
                 break;
+            case ASK_CHANGE_ENTRANCE_HALL:
+                AskStudentsChangeEntranceHall msg = (AskStudentsChangeEntranceHall)message;
+
+                queueTasks.execute(()-> view.askStudentsChangeEntranceHall(message.getNickname(), msg.getEntrance(), msg.getHall()));
+                break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage)message).getObjectDisplay();
                 switch (objectDisplay){

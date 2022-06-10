@@ -29,10 +29,8 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
 
         students.addAll(studentFromEntrance);
         students.removeAll(studentFromCard);
-
-
-        setCostForEffect(getCostForEffect()+1);
     }
+
 
     @Override
     public int getCoinsForEffect() {

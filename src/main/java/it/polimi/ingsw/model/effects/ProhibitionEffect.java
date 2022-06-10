@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class ProhibitionEffect implements Effect, Serializable {
     private static final long serialVersionUID = -3636736011809156600L;
-    private int costForEffect = 2;
+    private int costForEffect;
     private int chosenIndexIsland;
     private int numberProhibition = 4;
 
@@ -15,12 +15,20 @@ public class ProhibitionEffect implements Effect, Serializable {
         this.chosenIndexIsland = chosenIndexIsland;
     }
 
+    public ProhibitionEffect(){
+        this.costForEffect =2;
+    }
     @Override
     public void enable(PlayerModel playerModel) {
         GameModel.getInstance().getIslandsModel().get(chosenIndexIsland).setHasProhibition(true);
 
         numberProhibition--;
-        costForEffect++;
+    }
+
+    @Override
+    public void incrementCost() {
+        this.costForEffect++;
+        System.out.println(this.costForEffect);
     }
 
     public void endEffect(){
@@ -33,6 +41,8 @@ public class ProhibitionEffect implements Effect, Serializable {
     public int getCoinsForEffect() {
         return costForEffect;
     }
+
+
 
     @Override
     public String getDescription() {

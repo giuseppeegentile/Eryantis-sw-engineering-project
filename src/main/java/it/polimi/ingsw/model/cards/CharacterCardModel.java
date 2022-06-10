@@ -13,7 +13,6 @@ public class CharacterCardModel implements Serializable {
     private final int characterId;
     private PlayerModel owner;
 
-
     /**
      * Constructor for character card in the model
      * @param moneyOnCard The number of money placed on the character card

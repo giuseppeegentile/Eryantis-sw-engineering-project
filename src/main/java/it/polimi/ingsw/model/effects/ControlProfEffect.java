@@ -11,9 +11,13 @@ import java.util.Map;
 //2
 public class ControlProfEffect implements Effect, Serializable {
     private static final long serialVersionUID = 8743730422346855395L;
-    private int costForEffect =2;
+    private int costForEffect;
     private PlayerModel playerWithProfs;
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
+
+    public ControlProfEffect(){
+        this.costForEffect = 2;
+    }
 
     @Override
     public void enable(PlayerModel playerModel) {
@@ -28,7 +32,11 @@ public class ControlProfEffect implements Effect, Serializable {
             if (!playerModel.getProfs().contains(prof))
                 playerModel.addProf(prof);
         }
-        costForEffect++;
+    }
+    @Override
+    public void incrementCost() {
+        this.costForEffect++;
+        System.out.println(this.costForEffect);
     }
 
     @Override
