@@ -199,8 +199,9 @@ class CliTest {
         islandModel2.setTowerColor(ColorTower.NULL);
         IslandModel islandModel3 = new IslandModel(Boolean.FALSE, students);
         islandModel3.setTowerColor(ColorTower.GREY);
-        IslandModel islandModel4 = new IslandModel(Boolean.FALSE, students);
+        IslandModel islandModel4 = new IslandModel(Boolean.TRUE, students);
         islandModel4.setTowerColor(ColorTower.WHITE);
+        islandModel4.setHasProhibition(true);
         IslandModel islandModel5 = new IslandModel(Boolean.FALSE, students);
         islandModel5.setTowerColor(ColorTower.WHITE);
         IslandModel islandModel6 = new IslandModel(Boolean.FALSE, students);

@@ -848,7 +848,7 @@ public class GameController implements Observer, Serializable {
         for(ColorPawns student: students) {
             player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
             //conta le occorrenze per ogni studente di un colore
-            if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+            if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) +1 % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
                 System.out.println("incremento di 1");
             }

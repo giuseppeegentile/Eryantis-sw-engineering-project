@@ -25,7 +25,7 @@ class AddToHallEffectTest {
         assertEquals(1, player.getStudentInHall().get(ColorPawns.RED));
         assertEquals(3, effect.getCoinsForEffect());
         assertEquals("At the start of the match, take " + effect.getNumStudents() + " students and place them on this card.\n" +
-                "EFFECT:  Take 1 student from this card and place it in your hall. Draw then a new student and place it on this card.", effect.getDescription());
+                "EFFECT: Take 1 student from this card and place it in your hall. Draw then a new student and place it on this card.", effect.getDescription());
     }
 
 }

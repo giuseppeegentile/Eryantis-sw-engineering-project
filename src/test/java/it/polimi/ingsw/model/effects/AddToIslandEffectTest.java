@@ -31,7 +31,7 @@ class AddToIslandEffectTest {
         assertEquals(GameModel.getInstance().getIslandsModel().get(1), effect.getIslandChosen());
         assertEquals(2, effect.getCoinsForEffect());
         assertEquals("At the start of the match, take " + effect.getNumStudents() + " students and place them on this card.\n" +
-                "                                  EFFECT:  take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.", effect.getDescription());
+                "                                  EFFECT: take 1 student from this card and place it on an island you chose. Then, draw a student from the bag and place it on this card.", effect.getDescription());
     }
 
 }

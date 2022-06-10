@@ -19,7 +19,7 @@ public enum ColorCli {
     NULL("\033[0;95"),
     MAGENTA("\033[0;95"),   //motherNature
     GREY("\033[0;90m"),
-    GOLD("\033[1;93m]");
+    GOLD("\033[1;93m");
     private final String code;
 
     /**
