@@ -743,7 +743,7 @@ public class Cli extends ViewObservable implements View {
         System.out.println("Choose a color to be ignored during the next influence calculation.\n");
         int i = 1;
         for (ColorCli c: listColor) {
-            stringBuilder.append(i).append(" -> " + c.name() + "\n");
+            stringBuilder.append(i).append(" -> ").append(c).append(c.name() + "\n").append(ColorCli.RESET);
             i++;
         }
         String message = "You've entered an invalid number, please select a color from the list shown\n";
@@ -827,7 +827,7 @@ public class Cli extends ViewObservable implements View {
         int i = 1;
         out.println(nickname + ", pick a student from the card.\nThese are the students:");
         for (ColorPawns student : studentsOnCard) {
-            stringBuilder.append("Student ").append(i).append(" -> ")
+            stringBuilder.append(i).append(" -> ")
                                                 .append(ColorCli.getEquivalentColorPawn(student)).append(student)
                                                 .append(ColorCli.RESET)
                                                 .append("\n");

@@ -845,10 +845,12 @@ public class GameController implements Observer, Serializable {
      * Moves a student from the entrance to the hall of the player
      */
     public void moveStudentToHall(PlayerModel player, List<ColorPawns> students) {
+        int oldValue = 0;
         for(ColorPawns student: students) {
+            oldValue = player.getStudentInHall().get(student);
             player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
             //conta le occorrenze per ogni studente di un colore
-            if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) +1 % 3 == 0) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
+            if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0 && oldValue != player.getStudentInHall().get(student)) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
                 System.out.println("incremento di 1");
             }
@@ -922,6 +924,7 @@ public class GameController implements Observer, Serializable {
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
+        System.out.println(colorToExclude);
         PlayerModel playerWithInfluence = islandWithMother.getInfluence(playerWithEffectAdditionalInfluence, colorToExclude, considerTower);
         if(playerWithInfluence.getColorTower()!=ColorTower.NULL) { //if a player has influence
             if (!islandWithMother.hasTower() && playerWithInfluence.getColorTower() != ColorTower.NULL) {

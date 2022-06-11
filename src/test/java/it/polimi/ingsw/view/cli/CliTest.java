@@ -1,17 +1,5 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.player.PlayerModel;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 class CliTest {
 /*
     @Test
@@ -267,7 +255,7 @@ class CliTest {
         cli.showIslands("Batman", islands);
     }
 
-    */
+
     @Test
     void showPlayerBoard(){
         GameModel.getInstance().setGameMode(GameMode.ADVANCED);
@@ -303,11 +291,17 @@ class CliTest {
         }
         cli.showPlayerBoardMessage(player, towers, player.getStudentInHall(), player.getStudentInEntrance(), player.getProfs());
     }
-    /*
+
     @Test
     void showJoiningIslandMessage(){
         Cli cli = new Cli();
         TextMessage message = new TextMessage("Massimo Ruggero", "JOINING ISLANDS...");
         cli.showMessageJoiningIsland(message);
-    }*/
+
+    @Test
+    void askColorToIgnore(){
+        Cli cli = new Cli();
+        cli.askColorStudentToIgnore("Thomas Shelby");
+    }
+    */
 }
