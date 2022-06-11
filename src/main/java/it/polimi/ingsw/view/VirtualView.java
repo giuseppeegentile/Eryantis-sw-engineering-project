@@ -1,9 +1,9 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -32,49 +32,50 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableTowers) {
+    public void askTowerColor(String nickMessage, List<ColorTower> availableTowers){
         clientHandler.sendMessage(new InitialResMessage(nickMessage, availableTowers));
+
     }
 
     @Override
-    public void askGameMode() {
+    public void askGameMode(){
         clientHandler.sendMessage(new GameModeReq());
     }
 
     @Override
     public void showMessageJoiningIsland(Message message) {
-        clientHandler.sendMessage(new TextMessage(message.getNickname(), ((TextMessage) message).getText()));
+        clientHandler.sendMessage(new TextMessage(message.getNickname(),((TextMessage)message).getText()));
     }
 
     @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds) {
-        clientHandler.sendMessage(new AskStudentFromCloudToEntranceMessage(nickname, clouds));
+        clientHandler.sendMessage(new ReqMoveCloudToEntranceMessage(nickname, clouds));
     }
 
     @Override
-    public void showIslands(String nickname, List<IslandModel> islands) {
+    public void showIslands(String nickname, List<IslandModel> islands){
         clientHandler.sendMessage(new DisplayIslandsMessage(nickname, islands));
     }
 
     @Override
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds) {
-        clientHandler.sendMessage(new DisplayPlayerBoardMessage(nickname, towers, hall, entrance, profs, numClouds));
+    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
+        clientHandler.sendMessage(new DisplayPlayerBoardMessage(player, towers, hall, entrance, profs));
     }
 
     @Override
-    public void askMoveEntranceToHall(String player, List<ColorPawns> colorPawns, int numberStudentsToMove) {
+    public void askMoveEntranceToHall(String player,List<ColorPawns> colorPawns, int numberStudentsToMove) {
         clientHandler.sendMessage(new StudentToHallMessage(player, colorPawns, numberStudentsToMove));
     }
 
     @Override
-    public void askMotherNatureMovements(String player, byte maxMovement) {
+    public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         clientHandler.sendMessage(new ReqMoveMotherNatureMessage(player, maxMovement));
         //clientHandler.sendMessage(new MoveMotherNatureMessage(player, maxMovementAllowed));
     }
 
     @Override
-    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns) {
-        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns));
+    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands) {
+        clientHandler.sendMessage(new StudentToIslandMessage(player, colorPawns, islands));
     }
 
     /*@Override
@@ -92,17 +93,17 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showMoveMotherNatureMessage(String player, byte movement) {
-        clientHandler.sendMessage(new MoveMotherNatureMessage(player, movement));
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
+        clientHandler.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 
     @Override
-    public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
+    public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery){
         clientHandler.sendMessage(new DisplayCemeteryMessage(player, cemetery));
     }
 
     @Override
-    public void showTextMessage(String player, String text) {
+    public void showTextMessage(String player, String text){
         clientHandler.sendMessage(new TextMessage(player, text));
     }
 
@@ -122,10 +123,49 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard) {
-        clientHandler.sendMessage(new PlayAssistantCardMessage(player, assistantCard));
+    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
+        clientHandler.sendMessage(new ReqPlayCharacterCardMessage(active, characterDeck));
     }
 
+    @Override
+    public void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard) {
+        clientHandler.sendMessage(new AskMoveStudentFromCardToIslandMessage(active, islands, studentsOnCard));
+    }
+
+    @Override
+    public void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard) {
+        clientHandler.sendMessage(new ReqStudentFromCardToHall(nickname, studentsOnCard));
+    }
+
+    @Override
+    public void askExtraGetInfluence(String active, List<IslandModel> islands) {
+        clientHandler.sendMessage(new AskExtraGetInfluenceMessage(active, islands));
+    }
+
+    @Override
+    public void askMoveBanCard(String active, List<IslandModel> islands) {
+        clientHandler.sendMessage(new AskMoveBanCardMessage(active, islands));
+    }
+
+    @Override
+    public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
+        clientHandler.sendMessage(new AskMoveStudentsFromCardToEntrance(active, studentsOnCard, entrance));
+    }
+
+    @Override
+    public void askColorStudentToIgnore(String active) {
+        clientHandler.sendMessage(new AskColorToIgnore(active));
+    }
+
+    @Override
+    public void askColorRemoveForAll(String active) {
+        clientHandler.sendMessage(new AskColorRemoveFromAll(active));
+    }
+
+    @Override
+    public void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall) {
+        clientHandler.sendMessage(new AskStudentsChangeEntranceHall(active, entrance, hall));
+    }
 
     /*@Override
     public void showCards(PlayerModel playerModel) {
@@ -142,10 +182,10 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
     }*/
 
-    @Override
+    /*@Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
-        clientHandler.sendMessage(new DisplayDeckMessage(player, playerDeck));
-    }
+        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(player,playerDeck));
+    }*/
 
     /*@Override
     public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
@@ -167,34 +207,39 @@ public class VirtualView implements View, Observer {
 
     //da mettere nel gameController
     @Override
-    public void showOrderPhase(String nickname, List<PlayerModel> order) {
+    public void showOrderPhase(String nickname, List<PlayerModel> order){
         clientHandler.sendMessage(new OrderMessage(nickname, order));
+    }
+
+    @Override
+    public void showSkippingMotherMovement(String activeNick) {
+        clientHandler.sendMessage(new EffectSkippingInfluenceMessage(activeNick));
     }
 
     //--
 
     @Override
-    public void showEndTurn(String nick) {
+    public void showEndTurn(String nick){
         clientHandler.sendMessage(new EndTurnMessage(nick));
     }
 
     @Override
-    public void showInvalidNickname(String nickname) {
+    public void showInvalidNickname(String nickname){
         clientHandler.sendMessage(new InvalidNicknameMessage(nickname));
     }
 
     @Override
-    public void showStartTurn(String nick) {
+    public void showStartTurn(String nick){
         clientHandler.sendMessage(new StartTurnMessage(nick));
     }
 
     @Override
-    public void errorCard(String player, AssistantCardModel card) {
+    public void errorCard(String player, AssistantCardModel card){
         clientHandler.sendMessage(new ErrorCardMessageResponse(player, card));
     }
 
     @Override
-    public void showInvalidTower(String player, ColorTower colorTower) {
+    public void showInvalidTower(String player, ColorTower colorTower){
         clientHandler.sendMessage(new InvalidTowerMessage(player, colorTower));
     }
 
@@ -204,12 +249,12 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showGenericMessage(String message) {
+    public void showGenericMessage(String message){
         clientHandler.sendMessage(new GenericMessage(message));
     }
 
     @Override
-    public void showInvalidNumberOfStudentMoved(String nickname) {
+    public void showInvalidNumberOfStudentMoved(String nickname){
         clientHandler.sendMessage(new InvalidNumberStudentsMovedMessage(nickname));
     }
 
@@ -224,7 +269,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showInvalidCloud(String nick) {
+    public void showInvalidCloud(String nick){
         clientHandler.sendMessage(new TextMessage(nick, "Choose a valid cloud"));
     }
 
@@ -234,25 +279,20 @@ public class VirtualView implements View, Observer {
     }*/
 
     @Override
-    public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted) {
+    public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){
         clientHandler.sendMessage(new InvalidMovementMessage(nick, movementAllowed, movementInserted));
     }
-
     public ClientHandler getClientHandler() {
         return clientHandler;
     }
 
     @Override
-    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck) {
-        clientHandler.sendMessage(new TextMessage(nickname, "Choose a card"));
-        clientHandler.sendMessage(new AssignPlayerDeckResponseMessage(nickname, playerDeck));
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck){
+        clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(nickname, playerDeck));
     }
 
     @Override
     public void askPlayersNumber() {
         clientHandler.sendMessage(new PlayerNumberRequest());
     }
-
-
-
 }
