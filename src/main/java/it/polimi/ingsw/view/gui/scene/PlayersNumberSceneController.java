@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,7 +14,10 @@ import javafx.scene.input.MouseEvent;
 public class PlayersNumberSceneController extends ViewObservable implements GenericSceneController {
 
     @FXML
-    final Spinner<Integer> spinner = new Spinner<>();
+    private Button btn_minus;
+
+    @FXML
+    private Button btn_plus;
 
     @FXML
     private Button nextStageBtn;
@@ -25,33 +26,30 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
     private Button backToTitleButton;
 
     @FXML
+    private Label number_players;
+    @FXML
     public void initialize() {
-        spinner.setEditable(true);
-
-        SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory<>() {
-
-                    @Override
-                    public void decrement(int steps) {
-                        int newValue = this.getValue() - 1;
-                        this.setValue(newValue);
-                    }
-
-                    @Override
-                    public void increment(int steps) {
-                        int newValue = this.getValue() + 1;
-                        this.setValue(newValue);
-                    }
-
-                };
-
-        // Default value for Spinner
-        valueFactory.setValue(2);
-
-        spinner.setValueFactory(valueFactory);
+        number_players.setText("2");
+        btn_plus.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            if(number_players.getText().equals("4")) btn_plus.setDisable(true);
+            else{
+                btn_minus.setDisable(false);
+                int curr = Integer.parseInt(number_players.getText());
+                curr+=1;
+                number_players.setText(String.valueOf(curr));
+            }
+        });
+        btn_minus.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            if(number_players.getText().equals("2")) btn_minus.setDisable(true);
+            else{
+                btn_plus.setDisable(false);
+                int curr = Integer.parseInt(number_players.getText());
+                curr-=1;
+                number_players.setText(String.valueOf(curr));
+            }
+        });
 
 
-        spinner.setValueFactory(valueFactory);
         nextStageBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNextStageClicked);
         backToTitleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBackToMenu);
         nextStageBtn.setOnKeyPressed(e -> {
@@ -67,8 +65,7 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
 
     private void onNextStageClicked(Event event){
         nextStageBtn.setDisable(true);
-        int playersNumber = spinner.getValue();
 
-        new Thread(() -> notifyObserver(obs -> obs.onUpdatePlayersNumber(playersNumber))).start();
+        new Thread(() -> notifyObserver(obs -> obs.onUpdatePlayersNumber(Integer.parseInt(number_players.getText())))).start();
     }
 }

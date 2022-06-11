@@ -39,6 +39,7 @@ public class TowerColorSceneController extends ViewObservable implements Generic
         black_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBlackBtnClick);
         white_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onWhiteBtnClick);
         grey_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGreyBtnClick);
+        System.out.println(availableColorTowers);
         if(!availableColorTowers.contains(ColorTower.GREY)){
             hide(grey_button);
         }
@@ -77,7 +78,6 @@ public class TowerColorSceneController extends ViewObservable implements Generic
             colorChosen =ColorTower.WHITE;
         }
         else if(grey_button.isSelected()){
-
             colorChosen =ColorTower.GREY;
         }else{
 

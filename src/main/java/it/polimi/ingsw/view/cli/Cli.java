@@ -356,7 +356,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs, int numClouds) {
         StringBuilder strBoardBld = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         colors.add(ColorPawns.GREEN);
@@ -640,5 +640,5 @@ public class Cli extends ViewObservable implements View {
             strBoardBld.append(ColorCli.RED).append(occurrence).append(" ").append(ColorCli.RESET);
         });
     }
-    public void showGameBoard(String nickname){}
+
 }

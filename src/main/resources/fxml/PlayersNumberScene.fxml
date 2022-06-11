@@ -4,22 +4,21 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="solidBackground" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="solidBackground"
+           xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" >
     <children>
         <Group>
             <children>
                 <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="gameSettingsBackground" stylesheets="@../css/StartingGame.css">
-                    <Label layoutX="495.0" layoutY="375.0" text="Scegli il numero di giocatori:">
+                    <Label fx:id="lbl" layoutX="495.0" layoutY="375.0" text="Scegli il numero di giocatori:">
                         <font>
                             <Font name="High Tower Text" size="24.0" />
                         </font>
                     </Label>
-                    <Spinner fx:id="spinner" editable="true" initialValue="2" layoutX="523.0" layoutY="420.0" max="4" min="2" prefHeight="25.0" prefWidth="233.0" />
                     <Button fx:id="nextStageBtn" layoutX="540.0" layoutY="468.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Avanti">
                         <font>
                             <Font name="High Tower Text" size="18.0" />
@@ -30,6 +29,21 @@
                             <Font name="High Tower Text" size="18.0" />
                         </font>
                     </Button>
+                   <Label fx:id="number_players" alignment="CENTER_RIGHT" layoutX="567.0" layoutY="403.0" prefHeight="36.0" prefWidth="146.0" text="2">
+                      <font>
+                         <Font name="High Tower Text" size="20.0" />
+                      </font>
+                   </Label>
+                   <Button fx:id="btn_plus" layoutX="723.0" layoutY="403.0" mnemonicParsing="false" prefHeight="2.0" prefWidth="21.0" text="+">
+                      <font>
+                         <Font size="8.0" />
+                      </font>
+                   </Button>
+                   <Button fx:id="btn_minus" layoutX="723.0" layoutY="421.0" mnemonicParsing="false" prefHeight="2.0" prefWidth="21.0" text="-">
+                      <font>
+                         <Font size="8.0" />
+                      </font>
+                   </Button>
                 </AnchorPane>
             </children>
         </Group>

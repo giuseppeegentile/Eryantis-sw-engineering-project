@@ -121,22 +121,28 @@ public class Gui extends ViewObservable implements View {
     public void askPlayersNumber(){
         PlayersNumberSceneController playersNumberSceneController = new PlayersNumberSceneController();
         playersNumberSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "PlayersNumberScene.fxml"));
+        Platform.runLater(() -> SceneController.changeRootPane(playersNumberSceneController, "PlayersNumberScene.fxml"));
     }
 
-    //da aggiustare
+
     public void askGameMode(){
         GameModeSceneController gameModeSceneController = new GameModeSceneController();
         gameModeSceneController.addAllObservers(observers);
         Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
     }
 
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){}
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
+        GameBoardSceneController boardSceneController = new GameBoardSceneController();
 
-    @Override
-    public void showGameBoard(String nickname) {
-        GameBoardSceneController gamaBoardSceneController = new GameBoardSceneController();
-        gamaBoardSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameBoardScene.fxml"));
+        boardSceneController.setTowers(towers);
+        boardSceneController.setHall(hall);
+        boardSceneController.setEntrance(entrance);
+        boardSceneController.setProfs(profs);
+        boardSceneController.setPlayer(nickname);
+        boardSceneController.setNumClouds(numClouds);
+        boardSceneController.addAllObservers(observers);
+        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
     }
+
+
 }

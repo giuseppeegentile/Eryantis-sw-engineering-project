@@ -58,7 +58,8 @@ public class GameController implements Observer, Serializable {
                 towers,
                 playerToDisplay.getStudentInHall(),
                 playerToDisplay.getStudentInEntrance(),
-                playerToDisplay.getProfs()
+                playerToDisplay.getProfs(),
+                gameInstance.getPlayersNumber()
         );
     }
 
