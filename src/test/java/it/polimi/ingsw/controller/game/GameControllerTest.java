@@ -1,5 +1,5 @@
 package it.polimi.ingsw.controller.game;
-
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.GameModel;
 

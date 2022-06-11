@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.enums.StatePlayer;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -20,17 +21,15 @@ public class PlayerModel implements Serializable {
     private List<AssistantCardModel> deckAssistantCardModel;
     private Map<ColorPawns, Integer> studentInHall = new HashMap<>();
     private List<ColorPawns> studentInEntrance;
-    private StatePlayer state;
     private byte movementMotherNatureCurrentActionPhase;
     private int coins;
+    private List<CharacterCardModel> characterDeck = new ArrayList<>();
 
 
     /**
-     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set se map for the student hall
+     * Initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
      * @param nickname nickname choose by player
      * @param colorTower tower color assigned to a player, identifier for the team in 4-player version
-     *
-     *
      */
     public PlayerModel(String nickname, ColorTower colorTower){
         this.nickname = nickname;
@@ -49,6 +48,10 @@ public class PlayerModel implements Serializable {
         ));
     }
 
+    /**
+     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
+     * @param nickname nickname choose by player
+     */
     public PlayerModel(String nickname){
         this.nickname = nickname;
         this.coins = 0;
@@ -65,6 +68,41 @@ public class PlayerModel implements Serializable {
         ));
     }
 
+    /**
+     *
+     * @param students The list of students to add to the student's hall
+     */
+    public void addStudentsHall(List<ColorPawns> students){
+        for(ColorPawns s: students){
+            int oldValue = studentInHall.get(s);
+            studentInHall.put(s, oldValue+1);
+        }
+    }
+
+    /**
+     *
+     * @param students The list of students to add to the student's entrance
+     */
+    public void addStudentsEntrance(List<ColorPawns> students){
+        studentInEntrance.addAll(students);
+
+    }
+
+    /**
+     *
+     * @param students The list of the students to remove from the student's hall
+     */
+    public void removeStudentFromHall(List<ColorPawns> students){
+        for(ColorPawns s: students){
+            int oldValue = studentInHall.get(s);
+            if(oldValue == 0)return;
+            studentInHall.put(s, oldValue-1);
+        }
+    }
+
+    /**
+     * Costructor for player in the model: initialize colorTower to null.
+     */
     public PlayerModel(){
         this.colorTower = ColorTower.NULL;
     }
@@ -93,7 +131,9 @@ public class PlayerModel implements Serializable {
      * @return the set of profs owned by the player
      */
     public List<ColorPawns> getProfs(){
-        return this.profs;
+        if(this.profs!= null)
+            return this.profs;
+        return new ArrayList<>();
     }
 
     /**
@@ -116,7 +156,7 @@ public class PlayerModel implements Serializable {
     }
 
     public boolean hasProf(ColorPawns prof){
-        return this.getProfs().contains(prof);
+        return this.profs.contains(prof);
     }
 
     /**
@@ -125,14 +165,6 @@ public class PlayerModel implements Serializable {
      */
     public void setNickname(String nickname){
         this.nickname = nickname;
-    }
-
-    /**
-     *
-     * @return the state of the player, which is an enum
-     */
-    public StatePlayer getState(){
-        return this.state;
     }
 
     /**
@@ -149,9 +181,11 @@ public class PlayerModel implements Serializable {
         }
     }
 
-    private static void playCard(){ }
-
-    private int getCoins(){
+    /**
+     *
+     * @return The coins owned by the player
+     */
+    public int getCoins(){
         return this.coins;
     }
 
@@ -164,7 +198,7 @@ public class PlayerModel implements Serializable {
     }
 
     /**
-     * add one coins to the coins value
+     * Add one coins to the coins value
      */
     public void addCoins(){
         this.coins +=1 ;
@@ -174,7 +208,7 @@ public class PlayerModel implements Serializable {
      * Set coins value to one
      */
     public void setCoins(){
-        this.coins = 1;
+        this.coins = 99999;
     }
 
     /**
@@ -254,13 +288,6 @@ public class PlayerModel implements Serializable {
 
     /**
      *
-     * @param colorTower The tower color chosen for the player
-     */
-    public void setTowers(ColorTower colorTower) {
-        this.colorTower = colorTower;
-    }
-    /**
-     *
      * @return The list of students placed in the entrance of the player board
      */
     public List<ColorPawns> getStudentInEntrance() {
@@ -275,24 +302,13 @@ public class PlayerModel implements Serializable {
         this.studentInEntrance = new ArrayList(studentInEntrance);
     }
 
-    /**
-     *
-     * @param state The next state of the player's turn
-     */
-    public void setState(StatePlayer state) {
-        this.state = state;
-    }
-
-    /**
-     *
-     * @param index The index of the player's deck played that has to be removed from the player's deck
-     */
-    public void removeCard(int index){
-        this.getDeckAssistantCardModel().set(index, new AssistantCardModel(0, (byte) 0)); //remove the card..method remove is bugged for list
-    }
-
     //**********************************
     //DA TESTARE
+
+    /**
+     *
+     * @param studentsToRemove The list of the students to remove from the entrance
+     */
     public void removeStudentFromEntrance(List<ColorPawns> studentsToRemove){
         for (ColorPawns student : new ArrayList<>(studentsToRemove)) {
             for (ColorPawns entranceStudent : new ArrayList<>(studentInEntrance)) {
@@ -302,27 +318,50 @@ public class PlayerModel implements Serializable {
                 }
             }
         }
-/*
-
-Iterator<ColorPawns> iteratorStudentsToRemove = studentsToRemove.iterator();
-        Iterator<ColorPawns> iteratorEntranceStudent = studentInEntrance.iterator();
-        while(iteratorStudentsToRemove.hasNext()){
-            while(iteratorEntranceStudent.hasNext()){
-                if(iteratorEntranceStudent.next().equals(iteratorStudentsToRemove.next())){
-                    iteratorEntranceStudent.remove();
-                    break;
-                }
-            }
-        }*/
-
     }
 
+    /**
+     * It adds a tower to the player board
+     */
     public void addTowerToBoard(){
         this.towerNumber++;
     }
 
+    /**
+     * It removes a tower from the player board
+     */
     public void removeTowerFromBoard(){
         if(this.towerNumber!= 0)
             this.towerNumber--;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerModel that = (PlayerModel) o;
+        return nickname.equals(that.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickname);
+    }
+
+    /**
+     *
+     * @param characterDeck The list of the character card to give to the player
+     */
+    public void assignCharacterDeck(List<CharacterCardModel> characterDeck) {
+        this.characterDeck = characterDeck;
+    }
+
+    /**
+     *
+     * @return The list of the character card owned by the player
+     */
+    public List<CharacterCardModel> getCharacterDeck() {
+        return characterDeck;
     }
 }

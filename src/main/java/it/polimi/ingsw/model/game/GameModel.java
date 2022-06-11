@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.enums.PhaseGame;
 import it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -26,14 +24,11 @@ public class GameModel extends Observable implements Serializable {
     private int playersNumber=0;
     private List<PlayerModel> playersModels = new ArrayList<>();
     private List<CloudModel> cloudsModel;
-    private List<ColorPawns> bag; //non sicuro sui 130
-    private PhaseGame gameState;
+    private List<ColorPawns> bag;
     public GameMode mode;
-    public List<CharacterCardModel> chosenCards;
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery = new ArrayList<>();
-    private List<PlayerModel> phaseOrder; //ordine della fase di azione
-    private List<ColorTower> colorTowers = new ArrayList<>();
+    private List<PlayerModel> phaseOrder;
 
     private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
@@ -46,22 +41,38 @@ public class GameModel extends Observable implements Serializable {
      * @throws NullPointerException
      */
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
-        try{
+        /*try{
             return playersModels;
         }catch (NullPointerException e){
             return new ArrayList<>();
-        }
+        }*/
+        return playersModels;
     }
 
 
+    /**
+     *
+     * @param playersNumber The number of the players joined the current match
+     */
     public void setPlayerNumber(int playersNumber){
         this.playersNumber = playersNumber;
     }
+
     //da testare
+
+    /**
+     *
+     * @param player A player that has to be added to the current match
+     */
     public void addPlayer(PlayerModel player){
         this.playersModels.add(player);
     }
 
+    /**
+     *
+     * @param nickname The nickname of the player that has to be removed from the current match
+     * @return The outcome of the removal
+     */
     public boolean removePlayerByNickname(String nickname) {
         boolean result = playersModels.remove(getPlayerByNickname(nickname));
 
@@ -73,7 +84,9 @@ public class GameModel extends Observable implements Serializable {
         return result;
     }
 
-
+    /**
+     * It sets the istance to null
+     */
     public static void resetInstance() {
         GameModel.istance = null;
     }
@@ -102,14 +115,25 @@ public class GameModel extends Observable implements Serializable {
         this.phaseOrder = playersModels; //quando non hanno ancora giocato la carta l'ordine è quello in della lista dei player
     }
 
+    /**
+     *
+     * @param phaseOrder The new order phase calculated through the assistant cards played
+     */
     public void setPhaseOrder(List<PlayerModel> phaseOrder){
         this.phaseOrder = phaseOrder;
     }
 
+    /**
+     *
+     * @return The order phase of the current round
+     */
     public List<PlayerModel> getPhaseOrder(){
         return this.phaseOrder;
     }
 
+    /**
+     * It resets the order phase for the next turn
+     */
     public void clearPhaseOrder(){
         this.phaseOrder = new ArrayList<>(playersNumber);
     }
@@ -158,21 +182,6 @@ public class GameModel extends Observable implements Serializable {
                 .findAny().get();
     }
 
-    //DA TESTARE
-    public int getIndexOfPlayer(PlayerModel playerModel){
-       // return this.playersModels.indexOf(playerModel);
-
-
-        int index = -1;
-        // Iterate over the elements of the list
-        for (PlayerModel pl : playersModels) {
-            if (pl.getNickname().equals(playerModel.getNickname())) index = getPhaseOrder().indexOf(pl);
-        }
-        // If you didn't know here we have if / else
-        // if index == -1 print song not found else print the index
-        // If song isn't found index is -1
-        return index;
-    }
     /**
      *
      * @param islandsModel The island to add to the game
@@ -222,23 +231,6 @@ public class GameModel extends Observable implements Serializable {
 
     /**
      *
-     * @return The current phase of the game
-     */
-    public PhaseGame getGameState() {
-        return gameState;
-    }
-
-
-    /**
-     *
-     * @param gameState The next phase of the game
-     */
-    public void setGameState(PhaseGame gameState) {
-        this.gameState = gameState;
-    }
-
-    /**
-     *
      * @return The list of students in the bag
      */
     public List<ColorPawns> getBag() {
@@ -262,13 +254,6 @@ public class GameModel extends Observable implements Serializable {
     }
 
     /**
-     * Clears the cemetery replacing the existing one with an empty list
-     */
-    public void clearCemetery(){
-        this.cemetery = new ArrayList<>(playersNumber);
-    }
-
-    /**
      *
      * @param colorTower The tower color of which you want to find the player
      * @return The player who has the given tower color
@@ -280,10 +265,19 @@ public class GameModel extends Observable implements Serializable {
         return new PlayerModel();
     }
 
+    /**
+     *
+     * @param nickname The nickname chosen by the player and that has to be verified
+     * @return True if the nickname chosen is already taken by another player
+     */
     public boolean isNicknameTaken(String nickname) {
         return playersModels.stream()
                 .anyMatch(p -> nickname.equals(p.getNickname()));
     }
+
+    /**
+     * It ends the game. It' used in case of error and in tests
+     */
     public void endGame() {
         GameModel.resetInstance();
 
@@ -293,21 +287,24 @@ public class GameModel extends Observable implements Serializable {
 
     //convenzione: senso orario
     /**
-     * Explores the adjacent islands and checks if there are others with the same influence
+     * Explores the adjacent islands and checks if there are others with the same tower color
      * @return The direction where we can find an island with the same influence
      */
     public ColorDirectionAdjacentIsland getAdjacentSameColor(IslandModel islandModelToCheck){
+        if(islandModelToCheck.getTowerColor() == ColorTower.NULL){
+            return ColorDirectionAdjacentIsland.NONE;
+        }
         //indice dell'isola nell'array delle isole
         int right, left;
-        int indexIslandToChekAdjacent = this.islandModels.indexOf(islandModelToCheck);
-        if (indexIslandToChekAdjacent != 11)
-            right = indexIslandToChekAdjacent + 1;
+        int indexIslandToCheckAdjacent = this.islandModels.indexOf(islandModelToCheck);
+        if (indexIslandToCheckAdjacent != this.islandModels.size()-1)
+            right = indexIslandToCheckAdjacent + 1;
         else
             right = 0;
-        if (indexIslandToChekAdjacent != 0)
-            left = indexIslandToChekAdjacent - 1;
+        if (indexIslandToCheckAdjacent != 0)
+            left = indexIslandToCheckAdjacent - 1;
         else
-            left = 11;
+            left = this.islandModels.size()-1;
         if(islandModelToCheck.getTowerColor() == islandModels.get(left).getTowerColor() && islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
             return ColorDirectionAdjacentIsland.BOTH;
         else if(islandModelToCheck.getTowerColor() == islandModels.get(right).getTowerColor())
@@ -340,17 +337,25 @@ public class GameModel extends Observable implements Serializable {
         int minNumTower = Collections.min(towersNumber);
         int indexMinTower;
         indexMinTower = towersNumber.indexOf(minNumTower);
+        List<Integer> indexesPlayersSameTowerNum = new ArrayList<>();
         int i; // is the index Of Player With Same Tower Number (if any)
         for (i = 0; i < playersModels.size(); i++) {
             if (i!=indexMinTower && playersModels.get(i).getTowerNumber() == minNumTower) {
-                count++;
-                break; //esci dal ciclo, ci sono due giocatori con stesso numero di torri
+                count++; // ci sono giocatori con stesso numero minimo di torri
+                indexesPlayersSameTowerNum.add(i);
             }
         }
-        if (count != 0) { //se ci sono giocatori con stesso # di torri -> controlla numProf
-            //prende, tra i due a parità di torri, il giocatore con più prof
-            return playersModels.get(i).getNumProfs() > playersModels.get(indexMinTower).getNumProfs() ?
-                    playersModels.get(i).getColorTower() : playersModels.get(indexMinTower).getColorTower();
+        if (count != 0) { //se ci sono due giocatori con stesso # di torri -> controlla numProf
+            //prende, tra i quelli a parità di torri, il giocatore con più prof
+            int profMax = playersModels.get(indexesPlayersSameTowerNum.get(0)).getNumProfs();
+            PlayerModel candidatePlayer = playersModels.get(indexesPlayersSameTowerNum.get(0));
+            for(int j = 1; j < indexesPlayersSameTowerNum.size(); j++){
+                if(playersModels.get(indexesPlayersSameTowerNum.get(j)).getNumProfs() > profMax){
+                    profMax = playersModels.get(indexesPlayersSameTowerNum.get(j)).getNumProfs();
+                    candidatePlayer = playersModels.get(indexesPlayersSameTowerNum.get(j));
+                }
+            }
+            return candidatePlayer.getColorTower();
         } else {        //controlla torri -> restituisce quello con minimo numero di torri
             return playersModels.get(towersNumber.indexOf(minNumTower)).getColorTower();
 
@@ -358,32 +363,36 @@ public class GameModel extends Observable implements Serializable {
     }
 
     //********************DA TESTARE
+
+    /**
+     *
+     * @return The island where mother nature is placed
+     */
     public IslandModel getIslandWithMother(){
         return this.islandModels.stream().filter(IslandModel::getMotherNature).findAny().orElse(null);
     }
 
+    /**
+     *
+     * @return The index of the island where mother nature in placed
+     */
     public int getMotherNatureIndex(){
         int index = 0;
         for(; !this.islandModels.get(index).getMotherNature(); index++);
         return index;
     }
 
-    public void setColorTowers(List<ColorTower> colorTowers){
-        this.colorTowers = colorTowers;
-    }
-
-    public void addColorTowers(ColorTower colorTowers) {
-        this.colorTowers.add(colorTowers);
-    }
-
-    public List<ColorTower> getColorTowers() {
-        return colorTowers;
-    }
-
+    /**
+     * It's used in checkedWin
+     * @return True if a player has finished his cards
+     */
     public boolean havePlayersFinishedCards() {
         return havePlayerFinishedCards;
     }
 
+    /**
+     * It set havePlayerFinishedCards to true if a player has finished his assistant cards
+     */
     public void setTrueHavePlayerFinishedCards(){
         this.havePlayerFinishedCards = true;
     }
