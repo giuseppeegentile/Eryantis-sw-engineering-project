@@ -71,6 +71,29 @@ public class GameController implements Observer, Serializable {
     public void onMessageReceived(Message receivedMessage){
 
         switch (receivedMessage.getMessageType()){
+            case REQ_PLAYER_BOARD:
+                String nickname = ((ReqRealPlayerBoardMessage)receivedMessage).getNickToSend();
+                PlayerModel playerToDisplay = gameInstance.getPlayerByNickname(nickname);
+                List<ColorTower> towers = new ArrayList<>();
+                for(int i = 0; i < playerToDisplay.getTowerNumber(); i++){
+                    towers.add(playerToDisplay.getColorTower());
+                }
+                virtualViewMap.get(receivedMessage.getNickname()).showPlayerBoardMessage(
+                        nickname,
+                        towers,
+                        playerToDisplay.getStudentInHall(),
+                        playerToDisplay.getStudentInEntrance(),
+                        playerToDisplay.getProfs(),
+                        gameInstance.getPlayersNumber()
+                );
+                break;
+            case REQ_LOBBY:
+                List<String> players = new ArrayList<>();
+                for(PlayerModel p: gameInstance.getPlayersModel()){
+                    if(!p.getNickname().equals(receivedMessage.getNickname())) players.add(p.getNickname());
+                }
+                virtualViewMap.get(receivedMessage.getNickname()).showLobbyMessage( players);
+                break;
             case LOGIN_REPLY:
                 String nickMessage = receivedMessage.getNickname();
                 handleLogin(nickMessage, virtualViewMap.get(nickMessage));

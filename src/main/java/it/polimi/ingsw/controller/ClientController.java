@@ -148,6 +148,17 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onRequestLobby(String nickname) {
+        client.sendMessage(new RequestPlayersBoard(nickname));
+    }
+
+    @Override
+    public void onRequestBoard(String nick,String nickChosen) {
+        client.sendMessage(new ReqRealPlayerBoardMessage(nick, nickChosen));
+    }
+
+
+    @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
         try {
             client = new SocketClient(serverInfo.get("address"), Integer.parseInt(serverInfo.get("port")));

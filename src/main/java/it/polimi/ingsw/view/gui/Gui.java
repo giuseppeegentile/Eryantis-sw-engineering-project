@@ -19,7 +19,8 @@ public class Gui extends ViewObservable implements View {
 
     private static final String STR_ERROR = "ERROR";
     private static final String SCREEN_TITLE_FXML = "ScreenTitle.fxml";
-
+    private GameBoardSceneController boardSceneController;
+    private String nickname=null;
     @Override
     public void showWinMessage(PlayerModel winner) {
         WinSceneController winSceneController = new WinSceneController();
@@ -42,7 +43,12 @@ public class Gui extends ViewObservable implements View {
 
     public void showTextMessage(String player, String text){}
 
-    public void showLobbyMessage(List<String> nicknameList){}
+    public void showLobbyMessage(List<String> nicknameList){
+
+        boardSceneController.setPlayersLobby(nicknameList);
+        boardSceneController.addAllObservers(observers);
+        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
+    }
 
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex){}
 
@@ -131,17 +137,32 @@ public class Gui extends ViewObservable implements View {
         Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
     }
 
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
-        GameBoardSceneController boardSceneController = new GameBoardSceneController();
 
-        boardSceneController.setTowers(towers);
-        boardSceneController.setHall(hall);
-        boardSceneController.setEntrance(entrance);
-        boardSceneController.setProfs(profs);
-        boardSceneController.setPlayer(nickname);
-        boardSceneController.setNumClouds(numClouds);
-        boardSceneController.addAllObservers(observers);
-        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
+
+        if(this.nickname!=null && !nickname.equals(this.nickname)){
+            GameBoardSceneController board = new GameBoardSceneController();
+            board.setTowers(towers);
+            board.setHall(hall);
+            board.setEntrance(entrance);
+            board.setProfs(profs);
+            board.setPlayer(nickname);
+            board.setNumClouds(numClouds);
+            board.readOnly(true);
+            System.out.println("enter");
+            Platform.runLater(()->SceneController.changeRootPane(board, "GameBoardScene.fxml"));
+        }else{
+            this.nickname=nickname;
+            boardSceneController = new GameBoardSceneController();
+            boardSceneController.setTowers(towers);
+            boardSceneController.setHall(hall);
+            boardSceneController.setEntrance(entrance);
+            boardSceneController.setProfs(profs);
+            boardSceneController.setPlayer(nickname);
+            boardSceneController.setNumClouds(numClouds);
+            boardSceneController.readOnly(false);
+            new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname))).start();
+        }
     }
 
 

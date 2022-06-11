@@ -4,15 +4,25 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.observer.ViewObservable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
@@ -43,10 +53,18 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private Button lobbyBtn;
 
     @FXML
-    private Button lobbyTable;
+    private TableView<String> lobbyTable;
+
+    private boolean readOnly;
+
 
     @FXML
-    private void initialize() {
+    TableColumn<String, String> gamersCol;
+
+    private List<String> nicknameList;
+
+    @FXML
+    private void initialize() throws InterruptedException {
         lobbyTable.setVisible(false);
         int gapX = 41;
         int gapY = 30;
@@ -67,17 +85,42 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         }
 
+        showCorrectClouds();
+        gamersCol.setVisible(true);
+
+        ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
+        lobbyTable.getColumns().clear();
+        lobbyTable.getColumns().add(gamersCol);
+        gamersCol.setCellValueFactory(d->new SimpleStringProperty(d.getValue()));
+        lobbyTable.setItems(data);
+        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
+        });
+
+        lobbyTable.setRowFactory(tv -> {
+            TableRow<String> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    String nickChosen = row.getItem();
+                    System.out.println(nickChosen);
+                    new Thread(() -> notifyObserver(obs -> obs.onRequestBoard(this.nickname, nickChosen))).start();
+                }
+            });
+            return row ;
+        });
+
+    }
+
+
+    private void showCorrectClouds(){
         if(numClouds == 3){
             cloud_4.setVisible(false);
         }else if (numClouds == 2){
             cloud_3.setVisible(false);
             cloud_4.setVisible(false);
         }
-        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-            lobbyTable.setVisible(!lobbyTable.isVisible()); //toggle
-            //new Thread(() -> notifyObserver(obs -> obs.onLobbyInfoRequest())).start(); ....get the lobby message from server and display rows with nickname
-        });
-
     }
 
     public void setTowers(List<ColorTower> towers) {
@@ -102,5 +145,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setNumClouds(int numClouds) {
         this.numClouds = numClouds;
+    }
+
+    public void readOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+        //to do: disable all buttons and actions, is showing the board of another player to a player: he can't perform actions!
+    }
+
+    public void setPlayersLobby(List<String> nicknameList) {
+        this.nicknameList = nicknameList;
     }
 }

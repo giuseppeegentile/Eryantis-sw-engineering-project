@@ -99,6 +99,4 @@ public interface View {
     void askGameMode();
 
     void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds);
-
-
 }

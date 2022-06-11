@@ -96,7 +96,7 @@
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
                   </ImageView>
-                  <Button  fx:id="lobbyBtn" layoutX="1140.0" layoutY="25.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0" text="Lobby Info">
+                  <Button fx:id="lobbyBtn" layoutX="1140.0" layoutY="25.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="122.0" text="Lobby Info">
                      <font>
                         <Font name="High Tower Text" size="18.0" />
                      </font>
@@ -119,7 +119,7 @@
                   <Button fx:id="student_2" layoutX="14.0" layoutY="566.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="S" />
                   <TableView fx:id="lobbyTable" layoutX="1115.0" layoutY="71.0" prefHeight="125.0" prefWidth="172.0">
                     <columns>
-                      <TableColumn prefWidth="171.0" text="Giocatori:" />
+                      <TableColumn fx:id="gamersCol" prefWidth="171.0" text="Giocatori:" />
                     </columns>
                   </TableView>
                </children>

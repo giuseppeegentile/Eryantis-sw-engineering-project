@@ -57,4 +57,7 @@ public interface ViewObserver {
 
     void onUpdateGameMode(GameMode finalMode);
 
+    void onRequestLobby(String nickname);
+
+    void onRequestBoard(String nick, String nickChosen);
 }

@@ -80,7 +80,8 @@ public class ConnectionSceneController extends ViewObservable implements Generic
 
         String address = serverAddressField.getText();
         String port = serverPortField.getText();
-
+        /*String address = "127.0.0.1";
+        String port = "16847";*/
         boolean isValidIpAddress = ClientController.isValidIpAddress(address);
         boolean isValidPort = ClientController.isValidPort(port);
 
