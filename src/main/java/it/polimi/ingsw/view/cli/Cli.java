@@ -373,7 +373,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
+    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs, int numclouds) {
         StringBuilder strBoardBld = new StringBuilder();
         if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER) {
             strBoardBld.append("-----------------------------------\n");

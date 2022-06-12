@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 
-import it.polimi.ingsw.controller.game.GameController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 

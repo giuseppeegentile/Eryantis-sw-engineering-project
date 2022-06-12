@@ -42,6 +42,18 @@ public class ClientController implements ViewObserver, Observer {
                 WinMessage winMessage = (WinMessage)message;
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
+            case REQ_PLAY_CHAR_CARD:
+                queueTasks.execute(() -> view.askPlayCharacterCard(((ReqPlayCharacterCardMessage)message).getPlayer(), ((ReqPlayCharacterCardMessage)message).getCharacterDeck()));
+                break;
+            case REQ_ENTRANCE_TO_HALL:
+                queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance(), ((StudentToIslandMessage)message).getIslands()));
+                break;
+            case REQ_ENTRANCE_TO_ISLAND:
+                queueTasks.execute(() -> view.askMoveEntranceToHall(message.getNickname(), ((StudentToHallMessage)message).getEntrance(), ((StudentToHallMessage)message).getNumberStudentsToMove()));
+                break;
+            case REQ_CARD_TO_HALL:
+                queueTasks.execute(() -> view.askStudentFromCardToHall(message.getNickname(), ((ReqStudentFromCardToHall)message).getStudentsOnCard()));
+                break;
             case INIT:
                 queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));
                 break;
@@ -67,11 +79,36 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showOrderPhase(orderMessage.getNickname(), orderMessage.getOrder()));
                 break;
             case MOVE_MOTHER_REQ:
-                queueTasks.execute(() -> view.askMotherNatureMovements(message.getNickname(), ((ReqMoveMotherNatureMessage)message).getMaxMovementAllowed()));
+                ReqMoveMotherNatureMessage motherMassage = ((ReqMoveMotherNatureMessage)message);
+                queueTasks.execute(() -> view.askMotherNatureMovements(motherMassage.getPlayer(), motherMassage.getMaxMovementAllowed()));
                 break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
+                break;
+            case MOVING_ONE_STUDENT_FROM_CARD:
+                AskMoveStudentFromCardToIslandMessage oneStudentMessage = (AskMoveStudentFromCardToIslandMessage)message;
+                queueTasks.execute(()-> view.askMoveStudentFromCardToIsland(oneStudentMessage.getNickname(), oneStudentMessage.getIslands(), oneStudentMessage.getStudentsOnCard()));
+                break;
+            case ASK_EXTRA_GET_INFLUENCE:
+                AskExtraGetInfluenceMessage extraGetInfluenceMessage = (AskExtraGetInfluenceMessage)message;
+                queueTasks.execute(()-> view.askExtraGetInfluence(extraGetInfluenceMessage.getNickname(), extraGetInfluenceMessage.getIslands()));
+                break;
+            case ASK_MOVE_BAN_CARD:
+                AskMoveBanCardMessage askMoveBanCardMessage = (AskMoveBanCardMessage)message;
+                queueTasks.execute(()-> view.askMoveBanCard(askMoveBanCardMessage.getNickname(), askMoveBanCardMessage.getIslands()));
+                break;
+            case MOVE_FROM_CARD_TO_HALL:
+                AskMoveStudentsFromCardToEntrance askMoveStudentsFromCardToHall = (AskMoveStudentsFromCardToEntrance)message;
+                queueTasks.execute(()-> view.askMoveFromCardToEntrance(askMoveStudentsFromCardToHall.getNickname(), askMoveStudentsFromCardToHall.getStudentsOnCard(), askMoveStudentsFromCardToHall.getEntrance()));
+                break;
+            case ASK_COLOR_TO_IGNORE:
+                AskColorToIgnore askColorToIgnore = (AskColorToIgnore)message;
+                queueTasks.execute(()-> view.askColorStudentToIgnore(askColorToIgnore.getNickname()));
+                break;
+            case ASK_CHANGE_ENTRANCE_HALL:
+                AskStudentsChangeEntranceHall msg = (AskStudentsChangeEntranceHall)message;
+                queueTasks.execute(()-> view.askStudentsChangeEntranceHall(message.getNickname(), msg.getEntrance(), msg.getHall()));
                 break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
@@ -111,7 +148,7 @@ public class ClientController implements ViewObserver, Observer {
                     case BOARD:
                         DisplayPlayerBoardMessage displayPlayerBoardMessage = (DisplayPlayerBoardMessage)message;
 
-                        queueTasks.execute(() -> view.showPlayerBoardMessage(message.getNickname(),
+                        queueTasks.execute(() -> view.showPlayerBoardMessage(displayPlayerBoardMessage.getPlayer(),
                                 displayPlayerBoardMessage.getTowers(),
                                 displayPlayerBoardMessage.getHall(),
                                 displayPlayerBoardMessage.getEntrance(),

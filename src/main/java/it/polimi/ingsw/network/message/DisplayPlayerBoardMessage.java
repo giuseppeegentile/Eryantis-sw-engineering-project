@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
@@ -17,6 +16,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final List<ColorPawns> entrance;
     private final List<ColorPawns> profs;
     private final int numClouds;
+    private final PlayerModel player;
 
     /**
      * Message shown to display  player's game board
@@ -27,8 +27,9 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
      * @param profs profs of the current player
      */
 
-    public DisplayPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds) {
-        super(nickname);
+    public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds) {
+        super(nickname.getNickname());
+        this.player = nickname;
         this.objectDisplay = ObjectDisplay.BOARD;
         this.towers  =towers;
         this.hall = hall;
@@ -92,5 +93,9 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
 
     public int getNumClouds() {
         return numClouds;
+    }
+
+    public PlayerModel getPlayer() {
+        return player;
     }
 }
