@@ -83,6 +83,9 @@ public class ClientController implements ViewObserver, Observer {
                 ReqMoveMotherNatureMessage motherMassage = ((ReqMoveMotherNatureMessage)message);
                 queueTasks.execute(() -> view.askMotherNatureMovements(motherMassage.getPlayer(), motherMassage.getMaxMovementAllowed()));
                 break;
+            case MOVE_CLOUD_TO_ENTRANCE:
+                queueTasks.execute(() -> view.askMoveCloudToEntrance(message.getNickname(), ((ReqMoveCloudToEntranceMessage)message).getClouds()));
+                break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
