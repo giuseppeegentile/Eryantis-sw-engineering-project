@@ -1,9 +1,11 @@
 package it.polimi.ingsw.view.gui.scene;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.view.gui.SceneController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,12 +21,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
     private List<ColorTower> towers;
@@ -41,10 +46,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private ImageView cloud_4;
 
     @FXML
-    private Button student_1;
-
-    @FXML
-    private Button student_2;
+    private GridPane entrancePane;
 
     @FXML
     private AnchorPane pane;
@@ -56,31 +58,58 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private TableView<String> lobbyTable;
 
     @FXML
+    ImageView wizardView;
+
+    @FXML
     TableColumn<String, String> gamersCol;
 
     private List<String> nicknameList;
+    private List<AssistantCardModel> playerDeck;
+    private DeckSceneController deckSceneController;
 
     @FXML
-    private void initialize() throws InterruptedException {
+    private void initialize(){
         lobbyTable.setVisible(false);
-        int gapX = 41;
-        int gapY = 30;
-        for(int i = 2, j = 1, k=1; i < entrance.size();i++){
-            ColorPawns s = entrance.get(i);
-            if(i%2 == 0){
-                Button btn = new Button();//da mettere poi le image view al posto dei bottoni, con l'immagine dello studente corrispondente a colorPawns
-                btn.setText("S");
-                btn.setLayoutX(student_1.getLayoutX() + (j*gapX));
-                btn.setLayoutY(student_2.getLayoutY() - (k*gapY));
-                j++;
+        Button b = new Button("s");
+        b.setStyle("-fx-background-color:" + entrance.get(0).name().toLowerCase());
+        entrancePane.add(b, 1, 0);
+
+        int idx = 1;
+        for(int j = 1; j < 4; j++){
+            Button bt = new Button("s");
+            bt.setStyle("-fx-background-color:" + entrance.get(idx).name().toLowerCase());
+            entrancePane.add(bt, 0, j);
+            idx++;
+            Button bt2 = new Button("s");
+            bt2.setStyle("-fx-background-color:" + entrance.get(idx).name().toLowerCase());
+            entrancePane.add(bt2, 1, j);
+            idx++;
+        }/*
+        if(idx!= entrance.size()-1){
+            Button bt = new Button("s");
+            bt.setStyle("-fx-background-color:" + entrance.get(idx).name().toLowerCase());
+            entrancePane.add(bt, 1, 4);
+        }
+        int k = 0;
+        String colorTower = towers.get(k).name().toLowerCase();
+        Button bb = new Button("t");
+        bb.setStyle("-fx-background-color:" + colorTower);
+        towersGrid.add(bb, 0, k);
+        k++;
+        for(ColorTower c: towers){
+            Button bt = new Button("t");
+            bt.setStyle("-fx-background-color:" + colorTower);
+            if(k % 2 == 0) {
+                towersGrid.add(bt, 0, k);
             }else{
-                Button btn = new Button();//da mettere poi le image view al posto dei bottoni, con l'immagine dello studente corrispondente a colorPawns
-                btn.setText("S");
-                btn.setLayoutY(student_2.getLayoutY() + (k*gapY));
-                btn.setLayoutX(student_1.getLayoutX() - (j*gapX));
+                towersGrid.add(bt, 1, k);
                 k++;
             }
-        }
+        }*/
+
+        b.setMaxWidth(Double.POSITIVE_INFINITY);
+        b.setPrefHeight(10.0);
+        GridPane.setFillWidth(b, true);
 
         showCorrectClouds();
         gamersCol.setVisible(true);
@@ -92,6 +121,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         lobbyTable.setItems(data);
         lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
+        });
+
+        wizardView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            try {
+                SceneController.showDeck(deckSceneController, "DeckScene.fxml");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         lobbyTable.setRowFactory(tv -> {
@@ -146,5 +183,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setPlayersLobby(List<String> nicknameList) {
         this.nicknameList = nicknameList;
+    }
+
+    public void setDeckSceneController(DeckSceneController deckSceneController) {
+        this.deckSceneController = deckSceneController;
     }
 }

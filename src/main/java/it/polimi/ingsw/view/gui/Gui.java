@@ -85,7 +85,12 @@ public class Gui extends ViewObservable implements View {
 
         }
     }
-    public void showDeckMessage(String player, List<AssistantCardModel> playerDeck){}
+    public void showDeckMessage(String player, List<AssistantCardModel> playerDeck){
+        DeckSceneController deckSceneController = new DeckSceneController();
+        deckSceneController.setDeck(playerDeck);
+
+        boardSceneController.setDeckSceneController(deckSceneController);
+    }
 
     public void showEndTurn(String nick){}
 
@@ -146,7 +151,6 @@ public class Gui extends ViewObservable implements View {
 
 
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
-
         if(this.nickname!=null && !nickname.equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);
@@ -156,7 +160,13 @@ public class Gui extends ViewObservable implements View {
             board.setPlayer(nickname);
             board.setNumClouds(numClouds);
             System.out.println("enter");
-            Platform.runLater(()->SceneController.showWindow(board, nickname,  "GameBoardScene.fxml"));
+            Platform.runLater(()-> {
+                try {
+                    SceneController.showWindow(board, nickname,  "GameBoardScene.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }else{
             this.nickname=nickname;
             boardSceneController = new GameBoardSceneController();
