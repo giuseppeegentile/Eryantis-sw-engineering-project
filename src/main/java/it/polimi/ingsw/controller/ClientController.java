@@ -25,6 +25,11 @@ public class ClientController implements ViewObserver, Observer {
     public static final int UNDO_TIME = 5000;
     private final ExecutorService queueTasks;
 
+    /**
+     * Client controller, on the client side. Handles the message received from the server and perform actions based on that.
+     * @param view the view of the client.
+     */
+
     public ClientController(View view){
         this.view = view;
         this.queueTasks = Executors.newSingleThreadExecutor();

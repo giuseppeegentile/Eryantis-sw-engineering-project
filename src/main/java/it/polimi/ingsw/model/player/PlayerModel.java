@@ -208,7 +208,7 @@ public class PlayerModel implements Serializable {
      * Set coins value to one
      */
     public void setCoins(){
-        this.coins = 99999;
+        this.coins = 1;
     }
 
     /**

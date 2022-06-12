@@ -685,21 +685,21 @@ public class Cli extends ViewObservable implements View {
                 else
                     strBoardBld2.append("|    ").append(ColorCli.RED).append(" M").append(ColorCli.RESET).append("     |      ");
             else
-            if (islands.get(i).hasProhibition())
-                strBoardBld2.append("|   ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append("T ").append(ColorCli.RESET).append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("   |      ");
+                if (islands.get(i).hasProhibition())
+                    strBoardBld2.append("|   ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append("T ").append(ColorCli.RESET).append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("   |      ");
+                else
+                    strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
+        else
+            if(islands.get(i).getTowerColor() == ColorTower.NULL)
+                if(islands.get(i).hasProhibition())
+                    strBoardBld2.append("|    ").append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("     |      ");
+                else
+                    strBoardBld2.append("|           |      ");
             else
-                strBoardBld2.append("|    ").append(ColorCli.RED).append("M").append(ColorCli.RESET).append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T").append(ColorCli.RESET).append("    |      ");
-        else
-        if(islands.get(i).getTowerColor() == ColorTower.NULL)
-            if(islands.get(i).hasProhibition())
-                strBoardBld2.append("|    ").append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("     |      ");
-            else
-                strBoardBld2.append("|           |      ");
-        else
-        if(islands.get(i).hasProhibition())
-            strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append("T").append(ColorCli.RESET).append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("    |      ");
-        else
-            strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
+                if(islands.get(i).hasProhibition())
+                    strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append("T").append(ColorCli.RESET).append(ColorCli.RED).append(" X").append(ColorCli.RESET).append("    |      ");
+                else
+                    strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
     }
 
     private void placeMotherNature(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
