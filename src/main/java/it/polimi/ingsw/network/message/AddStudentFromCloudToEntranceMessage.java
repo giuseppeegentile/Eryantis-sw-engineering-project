@@ -12,7 +12,7 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
      */
 
     public AddStudentFromCloudToEntranceMessage(String nickname, int cloudIndex) {
-        super(nickname, MessageType.MOVE);
+        super(nickname, MessageType.MOVED_CLOUD_TO_ENTRANCE);
         this.cloudIndex = cloudIndex;
     }
 
@@ -27,7 +27,7 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
 
     @Override
     public String toString() {
-        return "AddStudentFromCloudToWaitingMessage{" +
+        return "AddStudentFromCloudToEntranceMessage{" +
                 "nickname=" + getNickname() +
                 ", cloudIndex=" + cloudIndex +
                 '}';

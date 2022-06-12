@@ -25,7 +25,7 @@ public class AskStudentFromCloudToEntranceMessage extends Message{
 
     @Override
     public String toString() {
-        return "AddStudentFromCloudToWaitingMessage{" +
+        return "AskStudentFromCloudToEntranceMessage{" +
                 "nickname=" + getNickname() +
                 ", clouds=" + clouds +
                 '}';
