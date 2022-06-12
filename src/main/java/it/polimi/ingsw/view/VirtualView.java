@@ -168,21 +168,6 @@ public class VirtualView implements View, Observer {
     }
 
     /*@Override
-    public void showCards(PlayerModel playerModel) {
-        clientHandler.sendMessage(new DisplayDeckMessage(playerModel.getNickname(), playerModel.getDeckAssistantCardModel()));
-    }*/
-
-    /*@Override
-    public void askGetFromBag() {  //serve?
-
-    }*/
-
-    /*@Override
-    public void showTowerMessage(String player, ColorTower colorTower, int towerNumber) {
-        clientHandler.sendMessage(new TowerMessage(player, colorTower, towerNumber));
-    }*/
-
-    /*@Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
         clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(player,playerDeck));
     }

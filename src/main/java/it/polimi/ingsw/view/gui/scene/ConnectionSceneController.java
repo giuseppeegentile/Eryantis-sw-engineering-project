@@ -72,15 +72,16 @@ public class ConnectionSceneController extends ViewObservable implements Generic
         timeConnectButton.play();
 
         Timeline timeBackToTitleButton = new Timeline(
-            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateXProperty(), 220)),
-            new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateYProperty(), 200))
+                new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateXProperty(), 220)),
+                new KeyFrame(Duration.millis(500), new KeyValue(backToTitleButton.translateYProperty(), 200))
         );
         timeBackToTitleButton.setAutoReverse(false);
         timeBackToTitleButton.play();
 
         String address = serverAddressField.getText();
         String port = serverPortField.getText();
-
+        /*String address = "127.0.0.1";
+        String port = "16847";*/
         boolean isValidIpAddress = ClientController.isValidIpAddress(address);
         boolean isValidPort = ClientController.isValidPort(port);
 

@@ -74,4 +74,8 @@ public interface ViewObserver {
     void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
 
     void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
+
+    void onRequestLobby(String nickname);
+
+    void onRequestBoard(String nick, String nickChosen);
 }

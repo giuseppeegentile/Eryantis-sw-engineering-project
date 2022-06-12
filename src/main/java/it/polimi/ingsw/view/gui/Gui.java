@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
@@ -11,16 +12,9 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.scene.*;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-
-import static java.util.logging.Level.SEVERE;
 
 public class Gui extends ViewObservable implements View {
 
@@ -42,9 +36,9 @@ public class Gui extends ViewObservable implements View {
 
     public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){}
 
-    public void askMotherNatureMovements(String player, byte maxMovement){}
+    public void askMotherNatureMovements(PlayerModel player, byte maxMovement){}
 
-    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns){}
+    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands){}
 
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery){}
 
@@ -61,7 +55,7 @@ public class Gui extends ViewObservable implements View {
 
     public void showCloudsMessage(String nickname, List<CloudModel> clouds){}
 
-    public void showMoveMotherNatureMessage(String player, byte movement){}
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement){}
 
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){}
 
@@ -93,6 +87,52 @@ public class Gui extends ViewObservable implements View {
 
     public void showStartTurn(String nick){}
 
+    public void showSkippingMotherMovement(String activeNick){}
+
+    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
+
+    }
+
+    @Override
+    public void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard) {
+
+    }
+
+    @Override
+    public void askExtraGetInfluence(String active, List<IslandModel> islands) {
+
+    }
+
+    @Override
+    public void askMoveBanCard(String active, List<IslandModel> islands) {
+
+    }
+
+    @Override
+    public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
+
+    }
+
+    @Override
+    public void askColorStudentToIgnore(String active) {
+
+    }
+
+    @Override
+    public void askColorRemoveForAll(String active) {
+
+    }
+
+    @Override
+    public void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall) {
+
+    }
+
+    @Override
+    public void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard) {
+
+    }
+
     public void showInvalidCloud(String nick){}
 
     public void errorCard(String player, AssistantCardModel card){}
@@ -118,7 +158,7 @@ public class Gui extends ViewObservable implements View {
 
     public void showErrorAndExit(String error){}
 
-    public void askPlayCards(String nickname, List<AssistantCardModel> playerDeck){}
+    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck){}
 
     public void showOrderPhase(String nickname, List<PlayerModel> order){}
 
@@ -145,7 +185,7 @@ public class Gui extends ViewObservable implements View {
     }
 
 
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
+    public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
 
         if(this.nickname!=null && !nickname.equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
@@ -153,20 +193,20 @@ public class Gui extends ViewObservable implements View {
             board.setHall(hall);
             board.setEntrance(entrance);
             board.setProfs(profs);
-            board.setPlayer(nickname);
+            board.setPlayer(nickname.getNickname());
             board.setNumClouds(numClouds);
             System.out.println("enter");
-            Platform.runLater(()->SceneController.showWindow(board, nickname,  "GameBoardScene.fxml"));
+            Platform.runLater(()->SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml"));
         }else{
-            this.nickname=nickname;
+            this.nickname=nickname.getNickname();
             boardSceneController = new GameBoardSceneController();
             boardSceneController.setTowers(towers);
             boardSceneController.setHall(hall);
             boardSceneController.setEntrance(entrance);
             boardSceneController.setProfs(profs);
-            boardSceneController.setPlayer(nickname);
+            boardSceneController.setPlayer(nickname.getNickname());
             boardSceneController.setNumClouds(numClouds);
-            new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname))).start();
+            new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
         }
     }
 

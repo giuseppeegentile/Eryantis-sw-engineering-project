@@ -220,8 +220,6 @@ public class ClientController implements ViewObserver, Observer {
         client.sendMessage(new MovedStudentFromCardToHall(nickname, pickedStudent));
     }
 
-
-
     @Override
     public void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {
         client.sendMessage(new ChosenColorRemoveForAll(active, equivalentColorPawns));
@@ -230,6 +228,16 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance) {
         client.sendMessage(new ChosenChangeEntranceHall(active, studentsFromHall, studentsFromEntrance));
+    }
+
+    @Override
+    public void onRequestLobby(String nickname) {
+        client.sendMessage(new RequestPlayersBoard(nickname));
+    }
+
+    @Override
+    public void onRequestBoard(String nick,String nickChosen) {
+        client.sendMessage(new ReqRealPlayerBoardMessage(nick, nickChosen));
     }
 
     @Override
