@@ -1,10 +1,10 @@
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 import java.util.Map;
@@ -37,11 +37,11 @@ public interface ViewObserver {
 
     void onUpdateStudentToHall(String nickname, List<ColorPawns> students);
 
-    void onUpdateMotherNature(String player, byte movement);
+    void onUpdateMotherNature(PlayerModel player, byte movement);
 
     void onUpdateWaiting(String nickname, int cloudIndex);
 
-    void onUpdateCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
+    void onUpdateCardPlayed(String playerModel, int assistantCardModel);
 
     void onUpdatePlayersNumber(int playersNumber);
     /**
@@ -57,4 +57,21 @@ public interface ViewObserver {
 
     void onUpdateGameMode(GameMode finalMode);
 
+    void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
+
+    void onUpdateColorToIgnore(String active, ColorPawns color);
+
+    void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex);
+
+    void onUpdateExtraGetInfluence(String active, int indexIsland);
+
+    void onUpdateBanCard(String active, int indexIsland);
+
+    void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance);
+
+    void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent);
+
+    void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
+
+    void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
 }

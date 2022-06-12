@@ -1,9 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.*;
@@ -130,8 +131,8 @@ public class ClientController implements ViewObserver, Observer {
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
                     case DECK:
-                        DisplayDeckMessage displayDeckMessage = (DisplayDeckMessage)message;
-                        queueTasks.execute(() -> view.showDeckMessage(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
+                        DisplayDeckAndAskCardMessage displayDeckMessage = (DisplayDeckAndAskCardMessage)message;
+                        queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
                         break;
                    /* case HALL:
                         DisplayHallMessage displayHall = (DisplayHallMessage)message;
@@ -185,6 +186,53 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard) {
+        client.sendMessage(new PlayedCharacterCardMessage(activePlayer, chosenCard));
+    }
+
+    @Override
+    public void onUpdateColorToIgnore(String active, ColorPawns color) {
+        client.sendMessage(new ChosenColorToIgnore(active, color));
+    }
+
+    @Override
+    public void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex) {
+        client.sendMessage(new MovedFromCardToIsland(active, indexIsland, colorChosenIndex));
+    }
+
+    @Override
+    public void onUpdateExtraGetInfluence(String active, int indexIsland) {
+        client.sendMessage(new ExtraGetInfluence(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateBanCard(String active, int indexIsland) {
+        client.sendMessage(new MovedBanCardMessage(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new MovedFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
+    }
+
+    @Override
+    public void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent) {
+        client.sendMessage(new MovedStudentFromCardToHall(nickname, pickedStudent));
+    }
+
+
+
+    @Override
+    public void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {
+        client.sendMessage(new ChosenColorRemoveForAll(active, equivalentColorPawns));
+    }
+
+    @Override
+    public void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new ChosenChangeEntranceHall(active, studentsFromHall, studentsFromEntrance));
+    }
+
+    @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
         try {
             client = new SocketClient(serverInfo.get("address"), Integer.parseInt(serverInfo.get("port")));
@@ -222,8 +270,8 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateMotherNature(String player, byte movement){
-        client.sendMessage(new MoveMotherNatureMessage(nickname, movement));
+    public void onUpdateMotherNature(PlayerModel player, byte movement){
+        client.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 
     @Override
@@ -232,7 +280,7 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCardPlayed(String nickname, AssistantCardModel assistantCardModel){
+    public void onUpdateCardPlayed(String nickname, int assistantCardModel){
         client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
     }
 

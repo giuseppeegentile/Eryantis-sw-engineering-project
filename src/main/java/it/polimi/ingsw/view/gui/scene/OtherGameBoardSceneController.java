@@ -2,31 +2,18 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.observer.ViewObservable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
-public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
+public class OtherGameBoardSceneController extends ViewObservable implements GenericSceneController{
     private List<ColorTower> towers;
     private Map<ColorPawns, Integer> hall;
     private List<ColorPawns> profs;
@@ -49,6 +36,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private AnchorPane pane;
 
+    private boolean readOnly;
     @FXML
     private Button lobbyBtn;
 
@@ -57,12 +45,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     @FXML
     TableColumn<String, String> gamersCol;
-
-    private List<String> nicknameList;
-
     @FXML
     private void initialize() throws InterruptedException {
-        lobbyTable.setVisible(false);
         int gapX = 41;
         int gapY = 30;
         for(int i = 2, j = 1, k=1; i < entrance.size();i++){
@@ -82,31 +66,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         }
 
+        lobbyBtn.setVisible(false);
+        lobbyTable.setVisible(false);
+        gamersCol.setVisible(false);
+
         showCorrectClouds();
-        gamersCol.setVisible(true);
-
-        ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
-        lobbyTable.getColumns().clear();
-        lobbyTable.getColumns().add(gamersCol);
-        gamersCol.setCellValueFactory(d->new SimpleStringProperty(d.getValue()));
-        lobbyTable.setItems(data);
-        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-            lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
-        });
-
-        lobbyTable.setRowFactory(tv -> {
-            TableRow<String> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 2) {
-
-                    String nickChosen = row.getItem();
-                    System.out.println(nickChosen);
-                    new Thread(() -> notifyObserver(obs -> obs.onRequestBoard(this.nickname, nickChosen))).start();
-                }
-            });
-            return row ;
-        });
 
     }
 
@@ -142,9 +106,5 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setNumClouds(int numClouds) {
         this.numClouds = numClouds;
-    }
-
-    public void setPlayersLobby(List<String> nicknameList) {
-        this.nicknameList = nicknameList;
     }
 }

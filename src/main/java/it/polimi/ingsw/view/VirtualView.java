@@ -185,26 +185,8 @@ public class VirtualView implements View, Observer {
     /*@Override
     public void showDeckMessage(String player, List<AssistantCardModel> playerDeck) {
         clientHandler.sendMessage(new DisplayDeckAndAskCardMessage(player,playerDeck));
-    }*/
-
-    /*@Override
-    public void showNewHall(String nickname, HashMap<ColorPawns, Integer> hall) {
-
-    }*/
-    /*@Override
-    public void updateTowerOnIsland(String nickname, IslandModel islandModel){
-        int indexIsland = 0;
-        for(; !GameModel.getInstance().getIslandsModel().get(indexIsland).equals(islandModel); indexIsland++);
-        clientHandler.sendMessage(new DisplayIslandMessage(nickname, islandModel, indexIsland));
     }
-
-
-
-    @Override
-    public void updateIslands(String nickname){
-        clientHandler.sendMessage(new DisplayIslandsMessage(nickname, GameModel.getInstance().getIslandsModel()));
-    }*/
-
+    */
     //da mettere nel gameController
     @Override
     public void showOrderPhase(String nickname, List<PlayerModel> order){
@@ -272,11 +254,6 @@ public class VirtualView implements View, Observer {
     public void showInvalidCloud(String nick){
         clientHandler.sendMessage(new TextMessage(nick, "Choose a valid cloud"));
     }
-
-    /*@Override
-    public void showProfsMessage(String player, List<ColorPawns> profs){
-        clientHandler.sendMessage(new AssignProfResponseMessage(player, profs));
-    }*/
 
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){
