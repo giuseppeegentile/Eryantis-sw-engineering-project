@@ -11,9 +11,16 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.scene.*;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.SEVERE;
 
 public class Gui extends ViewObservable implements View {
 
@@ -141,16 +148,15 @@ public class Gui extends ViewObservable implements View {
     public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
 
         if(this.nickname!=null && !nickname.equals(this.nickname)){
-            GameBoardSceneController board = new GameBoardSceneController();
+            OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);
             board.setHall(hall);
             board.setEntrance(entrance);
             board.setProfs(profs);
             board.setPlayer(nickname);
             board.setNumClouds(numClouds);
-            board.readOnly(true);
             System.out.println("enter");
-            Platform.runLater(()->SceneController.changeRootPane(board, "GameBoardScene.fxml"));
+            Platform.runLater(()->SceneController.showWindow(board, nickname,  "GameBoardScene.fxml"));
         }else{
             this.nickname=nickname;
             boardSceneController = new GameBoardSceneController();
@@ -160,7 +166,6 @@ public class Gui extends ViewObservable implements View {
             boardSceneController.setProfs(profs);
             boardSceneController.setPlayer(nickname);
             boardSceneController.setNumClouds(numClouds);
-            boardSceneController.readOnly(false);
             new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname))).start();
         }
     }

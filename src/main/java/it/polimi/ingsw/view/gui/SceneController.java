@@ -3,9 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.observer.ViewObserver;
-import it.polimi.ingsw.view.gui.scene.ErrorSceneController;
-import it.polimi.ingsw.view.gui.scene.GenericSceneController;
-import it.polimi.ingsw.view.gui.scene.WinSceneController;
+import it.polimi.ingsw.view.gui.scene.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,6 +16,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.SEVERE;
 
 /**
  * This class implements the controller of a generic scene.
@@ -139,8 +140,8 @@ public class SceneController extends ViewObservable {
     /**
      * Shows a custom message in a popup.
      *
-     * @param title   the title of the popup.
-     * @param message the message of the popup.
+     * @param title the popup's title.
+     * @param message the popup's message.
      */
     public static void showAlert(String title, String message) {
         FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/AlertScene.fxml"));
@@ -160,4 +161,26 @@ public class SceneController extends ViewObservable {
         alertSceneController.displayAlert();
     }
 
+    /**
+     * Shows the board of another player in a new window.
+     * @param board the controller of that board window.
+     * @param nickname the nickname owning that board.
+     * @param s the name of the fxml file.
+     */
+    public static void showWindow(OtherGameBoardSceneController board, String nickname, String s) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + s));
+            fxmlLoader.setController(board);
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("Plancia di gioco di: " + nickname);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(SceneController.class.getName());
+            logger.log(SEVERE, "Failed to create new Window.", e);
+        }
+    }
 }
