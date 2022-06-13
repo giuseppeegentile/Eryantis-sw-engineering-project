@@ -58,8 +58,7 @@ public class GameController implements Observer, Serializable {
                 towers,
                 playerToDisplay.getStudentInHall(),
                 playerToDisplay.getStudentInEntrance(),
-                playerToDisplay.getProfs(),
-                gameInstance.getPlayersNumber()
+                playerToDisplay.getProfs()
         );
     }
 
@@ -83,8 +82,7 @@ public class GameController implements Observer, Serializable {
                         towers,
                         playerToDisplay.getStudentInHall(),
                         playerToDisplay.getStudentInEntrance(),
-                        playerToDisplay.getProfs(),
-                        gameInstance.getPlayersNumber()
+                        playerToDisplay.getProfs()
                 );
                 break;
             case REQ_LOBBY:

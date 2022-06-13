@@ -11,16 +11,10 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.scene.*;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-
-import static java.util.logging.Level.SEVERE;
 
 public class Gui extends ViewObservable implements View {
 
@@ -51,7 +45,6 @@ public class Gui extends ViewObservable implements View {
     public void showTextMessage(String player, String text){}
 
     public void showLobbyMessage(List<String> nicknameList){
-
         boardSceneController.setPlayersLobby(nicknameList);
         boardSceneController.addAllObservers(observers);
         Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
@@ -59,13 +52,18 @@ public class Gui extends ViewObservable implements View {
 
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex){}
 
-    public void showCloudsMessage(String nickname, List<CloudModel> clouds){}
+    public void showCloudsMessage(String nickname, List<CloudModel> clouds){
+        boardSceneController = new GameBoardSceneController();
+        boardSceneController.setClouds(clouds);
+    }
 
     public void showMoveMotherNatureMessage(String player, byte movement){}
 
     public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){}
 
-    public void showIslands(String nickname, List<IslandModel> islands){}
+    public void showIslands(String nickname, List<IslandModel> islands){
+        boardSceneController.setIslands(islands);
+    }
 
     public void showInvalidTower(String player, ColorTower colorTower) {}
 
@@ -150,7 +148,7 @@ public class Gui extends ViewObservable implements View {
     }
 
 
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
         if(this.nickname!=null && !nickname.equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);
@@ -158,7 +156,6 @@ public class Gui extends ViewObservable implements View {
             board.setEntrance(entrance);
             board.setProfs(profs);
             board.setPlayer(nickname);
-            board.setNumClouds(numClouds);
             System.out.println("enter");
             Platform.runLater(()-> {
                 try {
@@ -169,13 +166,11 @@ public class Gui extends ViewObservable implements View {
             });
         }else{
             this.nickname=nickname;
-            boardSceneController = new GameBoardSceneController();
             boardSceneController.setTowers(towers);
             boardSceneController.setHall(hall);
             boardSceneController.setEntrance(entrance);
             boardSceneController.setProfs(profs);
             boardSceneController.setPlayer(nickname);
-            boardSceneController.setNumClouds(numClouds);
             new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname))).start();
         }
     }

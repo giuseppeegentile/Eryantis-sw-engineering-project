@@ -115,8 +115,7 @@ public class ClientController implements ViewObserver, Observer {
                                 displayPlayerBoardMessage.getTowers(),
                                 displayPlayerBoardMessage.getHall(),
                                 displayPlayerBoardMessage.getEntrance(),
-                                displayPlayerBoardMessage.getProfs(),
-                                displayPlayerBoardMessage.getNumClouds()
+                                displayPlayerBoardMessage.getProfs()
                         ));
                         break;
                 }

@@ -16,7 +16,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final List<ColorTower> towers;
     private final List<ColorPawns> entrance;
     private final List<ColorPawns> profs;
-    private final int numClouds;
 
     /**
      * Message shown to display  player's game board
@@ -27,14 +26,13 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
      * @param profs profs of the current player
      */
 
-    public DisplayPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds) {
+    public DisplayPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
         super(nickname);
         this.objectDisplay = ObjectDisplay.BOARD;
         this.towers  =towers;
         this.hall = hall;
         this.entrance = entrance;
         this.profs = profs;
-        this.numClouds = numClouds;
     }
 
 
@@ -49,7 +47,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
                 ", hall=" + getHall() +
                 ", entrance=" + getEntrance() +
                 ", prof=" + getProfs() +
-                ", numClouds=" + getNumClouds() +
                 ", objectDisplay=" + objectDisplay +
                 '}';
     }
@@ -88,9 +85,5 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
 
     public List<ColorTower> getTowers() {
         return towers;
-    }
-
-    public int getNumClouds() {
-        return numClouds;
     }
 }

@@ -356,7 +356,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs, int numClouds) {
+    public void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
         StringBuilder strBoardBld = new StringBuilder();
         List<ColorPawns> colors = new ArrayList<>();
         colors.add(ColorPawns.GREEN);

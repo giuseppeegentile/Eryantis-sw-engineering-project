@@ -12,21 +12,21 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="solidBackground"
-           xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="solidBackground" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Group>
          <children>
             <AnchorPane layoutX="168.0" layoutY="450.0" prefHeight="720.0" prefWidth="1280.0" styleClass="gameBoardBackground" stylesheets="@../css/Game.css">
                <children>
-                  <ImageView fitHeight="157.0" fitWidth="176.0" layoutX="19.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island12" fitHeight="157.0" fitWidth="176.0" layoutX="19.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola3.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="204.0" fitWidth="172.0" layoutX="371.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island2" fitHeight="204.0" fitWidth="172.0" layoutX="371.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
@@ -36,7 +36,7 @@
                         <Image url="@../images_cranio/PLANCIA GIOCO_2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="147.0" fitWidth="172.0" layoutX="193.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island_1" fitHeight="147.0" fitWidth="172.0" layoutX="193.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
@@ -46,57 +46,57 @@
                         <Image url="@../images_cranio/MAGO 1_1.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="147.0" fitWidth="159.0" layoutX="898.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island7" fitHeight="147.0" fitWidth="159.0" layoutX="898.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="166.0" fitWidth="159.0" layoutX="955.0" layoutY="447.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cloud1" fitHeight="166.0" fitWidth="159.0" layoutX="955.0" layoutY="447.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="157.0" fitWidth="172.0" layoutX="318.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island10" fitHeight="157.0" fitWidth="172.0" layoutX="318.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="147.0" fitWidth="161.0" layoutX="763.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island4" fitHeight="147.0" fitWidth="161.0" layoutX="763.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="157.0" fitWidth="172.0" layoutX="101.0" layoutY="322.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island11" fitHeight="157.0" fitWidth="172.0" layoutX="101.0" layoutY="322.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="183.0" fitWidth="172.0" layoutX="726.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island8" fitHeight="183.0" fitWidth="172.0" layoutX="726.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="145.0" fitWidth="172.0" layoutX="936.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island5" fitHeight="145.0" fitWidth="172.0" layoutX="936.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="163.0" fitWidth="172.0" layoutX="520.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island9" fitHeight="163.0" fitWidth="172.0" layoutX="520.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola3.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="147.0" fitWidth="159.0" layoutX="1073.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island6" fitHeight="147.0" fitWidth="159.0" layoutX="1073.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola3.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="157.0" fitWidth="161.0" layoutX="571.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island3" fitHeight="157.0" fitWidth="161.0" layoutX="571.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola3.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1106.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cloud2" fitHeight="150.0" fitWidth="200.0" layoutX="1106.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
@@ -134,12 +134,42 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
+                  <GridPane fx:id="towersGrid" layoutX="405.0" layoutY="552.0" prefHeight="116.0" prefWidth="75.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+                  <VBox fx:id="vboxIsland1" spacing="3" layoutX="205.0" layoutY="33.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland2" spacing="3" layoutX="389.0" layoutY="53.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland3" spacing="3" layoutX="583.0" layoutY="24.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland4" spacing="3" layoutX="771.0" layoutY="19.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland5" spacing="3" layoutX="952.0" layoutY="61.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland6" spacing="3" layoutX="1084.0" layoutY="192.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland7" spacing="3" layoutX="909.0" layoutY="288.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland8" spacing="3" layoutX="744.0" layoutY="382.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland9" spacing="3" layoutX="538.0" layoutY="357.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland10" spacing="3" layoutX="328.0" layoutY="316.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland11" spacing="3" layoutX="119.0" layoutY="330.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland12" spacing="3" layoutX="36.0" layoutY="146.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxCloud3" spacing="3" layoutX="844.0" layoutY="568.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxCloud1" spacing="3" layoutX="966.0" layoutY="457.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxCloud2" spacing="3" layoutX="1117.0" layoutY="354.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxCloud4" spacing="3" layoutX="1114.0" layoutY="556.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox layoutX="676.0" layoutY="621.0" prefHeight="67.0" prefWidth="100.0" />
                </children>
             </AnchorPane>
+            <VBox fx:id="vboxCloud21" layoutX="976.0" layoutY="467.0" prefHeight="131.0" prefWidth="137.0" />
          </children>
       </Group>
    </children>
