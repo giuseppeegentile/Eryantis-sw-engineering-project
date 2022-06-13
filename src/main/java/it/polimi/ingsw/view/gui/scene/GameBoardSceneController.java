@@ -16,12 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -106,6 +105,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private void initialize(){
         lobbyTable.setVisible(false);
 
+        /**/
+        /*String path = "/images_cranio/pawns/" + s.name() +  ".png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        tempButton.setBackground(background);*/
+        /**/
+
+
         entranceDisplay();
         towersDisplay();
         showCorrectClouds();
@@ -158,9 +167,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     private Button getStyledButton(ColorPawns s) {
-        Button student = new Button("s");
-        student.setStyle("-fx-background-color:" + s.name().toLowerCase());
-        return student;
+        Button b = new Button();
+        b.setPrefHeight(30.0);
+        b.setPrefWidth(35.0);
+        String path = "/images_cranio/pawns/" + s.name() +  ".png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
     }
 
     private void islandsDisplay() {
@@ -170,8 +186,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         for(IslandModel i: islands){
             vBoxes.get(k).setAlignment(Pos.CENTER);
             if(i.getMotherNature()) {
-                Button student = new Button("M");
-                student.setStyle("-fx-background-color:#360909"); //brown
+                Button student = getStyledButton();
                 vBoxes.get(k).getChildren().add(student);
             }
             for (ColorPawns st : i.getStudents()) {
@@ -184,6 +199,32 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    private Button getStyledButton() {
+        Button b = new Button();
+        b.setPrefHeight(30.0);
+        b.setPrefWidth(23.0);
+        String path = "/images_cranio/pawns/MOTHER.png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
+    }
+
+    private Button getStyledTower(String colorTower) {
+        Button b = new Button();
+        b.setPrefHeight(30.0);
+        b.setPrefWidth(23.0);
+        String path = "/images_cranio/towers/" + colorTower + ".png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
+    }
+
     private void setLobbyTable() {
         ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
         lobbyTable.getColumns().clear();
@@ -193,18 +234,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     private void entranceDisplay() {
-        Button b = new Button("s");
-        b.setStyle("-fx-background-color:" + entrance.get(0).name().toLowerCase());
+        Button b = getStyledButton(entrance.get(0));
         entrancePane.add(b, 1, 0);
 
         int idx = 1;
         int rowGrid = 2;
         for(int j = 1; j < rowGrid; j++){
             Button bt = getStyledButton(entrance.get(idx));
+            bt.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt, true);
             entrancePane.add(bt, 0, j);
             idx++;
             if(idx == entrance.size()) break;
             Button bt2 = getStyledButton(entrance.get(idx));
+            bt2.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt2, true);
             entrancePane.add(bt2, 1, j);
             idx++;
             if(idx == entrance.size()) break;
@@ -218,15 +262,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int i;
         System.out.println(towers.size());
         for (i = 0; i < towers.size() / 2; i++) {
-            Button bt = new Button("t");
-            bt.setStyle("-fx-background-color:" + colorTower);
+            Button bt = getStyledTower(colorTower);
             towersGrid.add(bt, 0, i);
-            Button bt2 = new Button("t");
-            bt2.setStyle("-fx-background-color:" + colorTower);
+            Button bt2 = getStyledTower(colorTower);
             towersGrid.add(bt2, 1, i);
         }
-        Button bt = new Button("t");
-        bt.setStyle("-fx-background-color:" + colorTower);
+        Button bt = getStyledTower(colorTower);
         if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
     }
 

@@ -6,14 +6,10 @@ import it.polimi.ingsw.observer.ViewObservable;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -30,11 +26,15 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
     @FXML
     private RadioButton advanced_button;
 
+
     Dialog<String> dialog;
+
+
     @FXML
     private void initialize() {
         dialog = new Dialog<>();
         dialog.setTitle("Waiting...");
+
         /*dialog.setHeaderText("Waiting for other players to connect...");
         dialog.setContentText("We override the style classes of the dialog");*/
         dialog.initStyle(StageStyle.UNDECORATED);
