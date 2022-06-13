@@ -150,26 +150,25 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <VBox fx:id="vboxIsland1" spacing="3" layoutX="205.0" layoutY="33.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland2" spacing="3" layoutX="389.0" layoutY="53.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland3" spacing="3" layoutX="583.0" layoutY="24.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland4" spacing="3" layoutX="771.0" layoutY="19.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland5" spacing="3" layoutX="952.0" layoutY="61.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland6" spacing="3" layoutX="1084.0" layoutY="192.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland7" spacing="3" layoutX="909.0" layoutY="288.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland8" spacing="3" layoutX="744.0" layoutY="382.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland9" spacing="3" layoutX="538.0" layoutY="357.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland10" spacing="3" layoutX="328.0" layoutY="316.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland11" spacing="3" layoutX="119.0" layoutY="330.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxIsland12" spacing="3" layoutX="36.0" layoutY="146.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxCloud3" spacing="3" layoutX="844.0" layoutY="568.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxCloud1" spacing="3" layoutX="966.0" layoutY="457.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxCloud2" spacing="3" layoutX="1117.0" layoutY="354.0" prefHeight="131.0" prefWidth="137.0" />
-                  <VBox fx:id="vboxCloud4" spacing="3" layoutX="1114.0" layoutY="556.0" prefHeight="131.0" prefWidth="137.0" />
+                  <VBox fx:id="vboxIsland1" layoutX="205.0" layoutY="33.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland2" layoutX="389.0" layoutY="53.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland3" layoutX="583.0" layoutY="24.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland4" layoutX="771.0" layoutY="19.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland5" layoutX="952.0" layoutY="61.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland6" layoutX="1084.0" layoutY="192.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland7" layoutX="909.0" layoutY="288.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland8" layoutX="744.0" layoutY="382.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland9" layoutX="538.0" layoutY="357.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland10" layoutX="328.0" layoutY="316.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland11" layoutX="119.0" layoutY="330.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland12" layoutX="36.0" layoutY="146.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxCloud3" layoutX="844.0" layoutY="568.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxCloud1" layoutX="966.0" layoutY="457.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxCloud2" layoutX="1117.0" layoutY="354.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxCloud4" layoutX="1114.0" layoutY="556.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox layoutX="676.0" layoutY="621.0" prefHeight="67.0" prefWidth="100.0" />
                </children>
             </AnchorPane>
-            <VBox fx:id="vboxCloud21" layoutX="976.0" layoutY="467.0" prefHeight="131.0" prefWidth="137.0" />
          </children>
       </Group>
    </children>
