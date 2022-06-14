@@ -23,6 +23,7 @@ class PickIslandInfluenceEffectTest {
         PickIslandInfluenceEffect effect = new PickIslandInfluenceEffect(gameController);
         effect.choose(0);
         effect.enable(new PlayerModel("Giannni"));
+        effect.incrementCost();
         assertEquals(4, effect.getCoinsForEffect());
         assertEquals("EFFECT: choose an island and calculate the majority as if mother nature ended her movement there. In this turn, mother nature will move as usual and on the island where her movement ends, the majority will normally be calculated.", effect.getDescription());
         assertEquals(0, effect.getIndexIslandEffect());

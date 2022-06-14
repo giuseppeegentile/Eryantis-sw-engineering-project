@@ -30,6 +30,7 @@ class ExchangeConfigEntranceEffectTest {
         ));
         player.setStudentHall(studentInHall);
         effect.enable(player);
+        effect.incrementCost();
         Map<ColorPawns, Integer> studentInHall1 =new HashMap<>( Map.of(
                 GREEN, 0,
                 RED, 0,

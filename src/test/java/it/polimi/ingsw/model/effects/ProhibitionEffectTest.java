@@ -21,6 +21,7 @@ class ProhibitionEffectTest {
         ProhibitionEffect effect = new ProhibitionEffect();
         effect.choose(0);
         effect.enable(new PlayerModel("Ajeje"));
+        effect.incrementCost();
         assertEquals(3, effect.getNumberProhibition());
         assertEquals(3, effect.getCoinsForEffect());
         assertTrue(GameModel.getInstance().getIslandsModel().get(0).hasProhibition());

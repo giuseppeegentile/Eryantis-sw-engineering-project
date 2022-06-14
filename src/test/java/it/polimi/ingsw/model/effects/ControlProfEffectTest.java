@@ -32,6 +32,7 @@ class ControlProfEffectTest {
         oldAssociationProfs.put(ColorPawns.RED, player);
         oldAssociationProfs.put(ColorPawns.GREEN, player1);
         effect.enable(player);
+        effect.incrementCost();
         assertEquals(oldAssociationProfs, effect.getOldAssociationProfs());
         assertTrue(GameModel.getInstance().getPlayerByNickname("Gandalf").getProfs().containsAll(asList(ColorPawns.GREEN, ColorPawns.BLUE, ColorPawns.RED, ColorPawns.PINK, ColorPawns.YELLOW)));
         assertEquals(3, effect.getCoinsForEffect());

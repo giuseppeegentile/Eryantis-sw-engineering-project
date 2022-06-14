@@ -13,6 +13,7 @@ class IgnoreTowerEffectTest {
         GameController gameController = new GameController();
         IgnoreTowerEffect effect = new IgnoreTowerEffect(gameController);
         effect.enable(new PlayerModel("Victor Creel"));
+        effect.incrementCost();
         assertFalse(gameController.getConsiderTower());
         assertEquals(4, effect.getCoinsForEffect());
         assertEquals("EFFECT: when counting the influence on an island (or a group of islands), the towers present are not calculated.", effect.getDescription());

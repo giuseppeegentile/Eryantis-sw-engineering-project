@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class AddInfluenceEffectTest {
 
     @Test
-    void AddInfluence(){
+    void addInfluence(){
         AddInfluenceEffect effect = new AddInfluenceEffect(new GameController());
         effect.enable(new PlayerModel("Chrissy"));
+        effect.incrementCost();
         assertEquals(3, effect.getCoinsForEffect());
         assertEquals("EFFECT: this turn, during the influence calculation you have 2 additional influence points.", effect.getDescription());
     }

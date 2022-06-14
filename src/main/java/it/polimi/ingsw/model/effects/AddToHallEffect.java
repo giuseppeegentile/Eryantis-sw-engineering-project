@@ -26,7 +26,7 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     }
 
     public String getDescription(){
-        return super.getDescription() + " take 1 student from this card and place it in your hall. Draw then a new student and place it on this card.";
+        return super.getDescription() + "Take 1 student from this card and place it in your hall. Draw then a new student and place it on this card.";
     }
 }
 

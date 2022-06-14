@@ -35,6 +35,8 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
     private ImageView card_9;
     @FXML
     private ImageView card_10;
+    private String nickname;
+
     @FXML
     private void initialize()  {
         List<ImageView> imagesList = List.of(card_1,card_2,card_3,card_4,card_5,card_6,card_7,card_8,card_9,card_10);
@@ -44,8 +46,10 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
                 String path = "/images_cranio/cards/Assistente_" + card.getPriority() + ".png";
                 imagesList.get(i).setImage(new Image(Objects.requireNonNull(DeckSceneController.class.getResourceAsStream(path))));
 
+                int finalIndex = i;
                 imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                     //gioca la carta
+                    notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalIndex));
                 });
 
                 i++;
@@ -58,4 +62,7 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
         this.cards =cards;
     }
 
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

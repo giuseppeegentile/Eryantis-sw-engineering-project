@@ -41,29 +41,6 @@ public class AssistantCardModel implements Serializable {
     }
 
     /**
-     * Sets isPlayed to the true value if the player uses the card
-     */
-    private void setPlayed() {
-        isPlayed = true;
-    }
-
-    /**
-     *
-     * @return The value of isPlayed attribute
-     */
-    private boolean isPlayed() {
-        return isPlayed;
-    }
-
-    /**
-     *
-     * @param motherNatureMovement The number of movements motherNature will be able to do with the card
-     */
-    public void setMotherNatureMovement(byte motherNatureMovement) {
-        this.motherNatureMovement = motherNatureMovement;
-    }
-
-    /**
      *
      * @return The number of movements motherNature will be able to do with the card
      */
@@ -78,14 +55,5 @@ public class AssistantCardModel implements Serializable {
     public int getPriority() {
         return priority;
     }
-
-    /**
-     *
-     * @param priority The priority of the card used in the game turn management
-     */
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
 
 }

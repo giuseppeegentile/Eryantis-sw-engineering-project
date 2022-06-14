@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,13 +11,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InitialConfigEffectTest {
+    private static GameModel testGame = GameModel.getInstance();
 
     @Test
-    void InitialConfig() {
+    @BeforeAll
+    static void init() {
+        testGame.endGame();
+    }
+
+
+    @Test
+    void initialConfig() {
         List<ColorPawns> list = new ArrayList<>();
         list.add(ColorPawns.RED);
         list.add(ColorPawns.RED);
-        GameModel.getInstance().setBag(list);
+        testGame.setBag(list);
 
         InitialConfigEffect initialEffect = new InitialConfigEffect(list, 1, 2);
         assertEquals(2, initialEffect.getNumStudents());

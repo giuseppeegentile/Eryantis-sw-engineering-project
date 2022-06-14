@@ -54,8 +54,11 @@ public class Gui extends ViewObservable implements View {
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery){}
     @Override
     public void showTextMessage(String player, String text){}
+
     @Override
     public void showLobbyMessage(List<String> nicknameList){
+        System.out.println("Entered lobby");
+        System.out.println(nicknameList.get(0));
         boardSceneController.setPlayersLobby(nicknameList);
         boardSceneController.addAllObservers(observers);
         Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
@@ -103,10 +106,10 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void askPlayCard(String player, List<AssistantCardModel> playerDeck){
-        System.out.println("entered plauy ");
         DeckSceneController deckSceneController = new DeckSceneController();
         deckSceneController.setDeck(playerDeck);
-
+        deckSceneController.setNickname(player);
+        boardSceneController.setTurnLabel("Gioca una carta");
         boardSceneController.setDeckSceneController(deckSceneController);
     }
     @Override
@@ -222,6 +225,7 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
+        boardSceneController.setTurnLabel("Aspetta il tuo turno");
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);

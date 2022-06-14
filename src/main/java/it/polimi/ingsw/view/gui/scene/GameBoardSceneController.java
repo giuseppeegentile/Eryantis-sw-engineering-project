@@ -12,10 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -93,22 +90,24 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private VBox vboxIsland11;
     @FXML
     private VBox vboxIsland12;
-
+    @FXML
+    private Label turnLabel;
 
     private List<CloudModel> cloudModels;
     private List<String> nicknameList;
     private List<AssistantCardModel> playerDeck;
     private DeckSceneController deckSceneController;
     private List<IslandModel> islands;
+    private String turnText;
 
     @FXML
     private void initialize(){
         lobbyTable.setVisible(false);
-
+        this.turnLabel.setText(turnText);
+        setLobbyTable();
         entranceDisplay();
         towersDisplay();
         showCorrectClouds();
-        setLobbyTable();
         islandsDisplay();
         cloudsDisplay();
 
@@ -139,6 +138,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             return row ;
         });
 
+    }
+
+    public void setTurnLabel(String turnLabel) {
+        this.turnText = turnLabel;
     }
 
     private void cloudsDisplay() {

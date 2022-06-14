@@ -114,7 +114,7 @@ public class GameController implements Observer, Serializable {
                 for(PlayerModel p: gameInstance.getPlayersModel()){
                     if(!p.getNickname().equals(receivedMessage.getNickname())) players.add(p.getNickname());
                 }
-                virtualViewMap.get(receivedMessage.getNickname()).showLobbyMessage( players);
+                virtualViewMap.get(receivedMessage.getNickname()).showLobbyMessage(players);
                 break;
             case LOGIN_REPLY:
                 String nickMessage = receivedMessage.getNickname();
