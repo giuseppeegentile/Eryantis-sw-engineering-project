@@ -28,7 +28,6 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
         IslandModel islandChosen = GameModel.getInstance().getIslandsModel().get(indexIslandEffect);
 
         gameController.computeIslandsChanges(playerModel, islandChosen);
-        incrementCost();
     }
     @Override
     public void incrementCost() {

@@ -11,21 +11,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InitialConfigEffectTest {
-    private static GameModel testGame = GameModel.getInstance();
-
-    @Test
-    @BeforeAll
-    static void init() {
-        testGame.endGame();
-    }
-
-
     @Test
     void initialConfig() {
         List<ColorPawns> list = new ArrayList<>();
         list.add(ColorPawns.RED);
         list.add(ColorPawns.RED);
-        testGame.setBag(list);
+        GameModel.getInstance().setBag(list);
 
         InitialConfigEffect initialEffect = new InitialConfigEffect(list, 1, 2);
         assertEquals(2, initialEffect.getNumStudents());
@@ -36,7 +27,7 @@ class InitialConfigEffectTest {
         //assertEquals(List.of(ColorPawns.RED) ,GameModel.getInstance().getBag());
         assertEquals(1, initialEffect.getCostForEffect());
         assertEquals("At the start of the match, take " + initialEffect.getNumStudents() + " students and place them on this card.\n" +
-                "EFFECT: ", initialEffect.getDescription());
+                "                                  EFFECT: ", initialEffect.getDescription());
         initialEffect.setCostForEffect(4);
         assertEquals(4, initialEffect.getCostForEffect());
     }
