@@ -30,7 +30,7 @@ public class DisplayCemeteryMessage extends DisplayMessage{
 
     @Override
     public String toString() {
-        return "ShowCemeteryMessage{" +
+        return "DisplayCemeteryMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", cemetery=" + cemetery +

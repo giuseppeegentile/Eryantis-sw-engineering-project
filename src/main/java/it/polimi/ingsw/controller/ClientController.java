@@ -130,10 +130,6 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayIslandsMessage displayIslands = (DisplayIslandsMessage)message;
                         queueTasks.execute(() -> view.showIslands(displayIslands.getNickname(), displayIslands.getIslandModels()));
                         break;
-                    /*case PROF:
-                        DisplayProfMessage displayProfMessage = (DisplayProfMessage)message;
-                        queueTasks.execute(() -> view.showProfsMessage(displayProfMessage.getNickname(), displayProfMessage.getProfs()));
-                        break;*/
                     case CLOUDS:
                         DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
@@ -142,14 +138,6 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayDeckAndAskCardMessage displayDeckMessage = (DisplayDeckAndAskCardMessage)message;
                         queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
                         break;
-                   /* case HALL:
-                        DisplayHallMessage displayHall = (DisplayHallMessage)message;
-                        queueTasks.execute(() -> view.showHallMessage(displayHall.getNickname(), displayHall.getHall()));
-                        break;
-                    case ENTRANCE:
-                        DisplayEntranceMessage displayEntrance = (DisplayEntranceMessage)message;
-                        queueTasks.execute(() -> view.showEntranceMessage(displayEntrance.getNickname(), displayEntrance.getEntrance()));
-                        break;*/
                     case CEMETERY:
                         DisplayCemeteryMessage displayCemetery = (DisplayCemeteryMessage)message;
                         queueTasks.execute(() -> view.showCemeteryMessage(displayCemetery.getNickname(), displayCemetery.getCemetery()));
@@ -161,8 +149,7 @@ public class ClientController implements ViewObserver, Observer {
                                 displayPlayerBoardMessage.getTowers(),
                                 displayPlayerBoardMessage.getHall(),
                                 displayPlayerBoardMessage.getEntrance(),
-                                displayPlayerBoardMessage.getProfs(),
-                                displayPlayerBoardMessage.getNumClouds()
+                                displayPlayerBoardMessage.getProfs()
                         ));
                         break;
                 }

@@ -30,7 +30,7 @@ public class DisplayDeckMessage extends DisplayMessage{
 
     @Override
     public String toString() {
-        return "ShowCemeteryMessage{" +
+        return "DisplayDeckMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", deck=" + deck +

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.observer.ViewObserver;
@@ -165,17 +166,32 @@ public class SceneController extends ViewObservable {
      * Shows the board of another player in a new window.
      * @param board the controller of that board window.
      * @param nickname the nickname owning that board.
-     * @param s the name of the fxml file.
+     * @param nameFxml the name of the fxml file.
      */
-    public static void showWindow(OtherGameBoardSceneController board, String nickname, String s) {
+    public static void showWindow(OtherGameBoardSceneController board, String nickname, String nameFxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(board);
+
+        fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+        String title = "Plancia di gioco di: " + nickname;
+        buildWindow(title, fxmlLoader);
+
+    }
+
+    public static void showDeck(DeckSceneController deckSceneController, String nameFxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(deckSceneController);
+        fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+        String title = "Carte disponibili: ";
+        buildWindow(title, fxmlLoader);
+    }
+
+    private static void buildWindow(String title, FXMLLoader fxmlLoader) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + s));
-            fxmlLoader.setController(board);
             Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
             Stage stage = new Stage();
             stage.setResizable(false);
-            stage.setTitle("Plancia di gioco di: " + nickname);
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -96,7 +96,7 @@ public interface View {
 
     void askGameMode();
 
-    void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds);
+    void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs);
 
     void showSkippingMotherMovement(String activeNick);
 

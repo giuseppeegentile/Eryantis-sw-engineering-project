@@ -22,7 +22,7 @@ public class DisplayDeckAndAskCardMessage extends DisplayMessage{
 
     @Override
     public String toString() {
-        return "ShowCemeteryMessage{" +
+        return "DisplayDeckAndAskCardMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", deck=" + deck +

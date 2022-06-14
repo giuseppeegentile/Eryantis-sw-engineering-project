@@ -13,15 +13,16 @@ import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.scene.*;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class Gui extends ViewObservable implements View {
 
     private static final String STR_ERROR = "ERROR";
-    private static final String SCREEN_TITLE_FXML = "ScreenTitle.fxml";
     private GameBoardSceneController boardSceneController;
     private String nickname=null;
+
     @Override
     public void showWinMessage(PlayerModel winner) {
         WinSceneController winSceneController = new WinSceneController();
@@ -30,39 +31,59 @@ public class Gui extends ViewObservable implements View {
         Platform.runLater(() -> SceneController.changeRootPane(winSceneController, "WinScene.fxml"));
     }
 
+    @Override
     public void showMessageJoiningIsland(Message message){}
 
+    @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds){}
 
+    @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){}
 
-    public void askMotherNatureMovements(PlayerModel player, byte maxMovement){}
+    @Override
+    public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
 
-    public void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands){}
+    }
 
+    @Override
+    public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, List<IslandModel> islands) {
+
+    }
+
+    @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery){}
-
+    @Override
     public void showTextMessage(String player, String text){}
-
+    @Override
     public void showLobbyMessage(List<String> nicknameList){
-
         boardSceneController.setPlayersLobby(nicknameList);
         boardSceneController.addAllObservers(observers);
         Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
     }
 
+    @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex){}
 
-    public void showCloudsMessage(String nickname, List<CloudModel> clouds){}
+    @Override
+    public void showCloudsMessage(String nickname, List<CloudModel> clouds){
+        boardSceneController = new GameBoardSceneController();
+        boardSceneController.setClouds(clouds);
+    }
 
-    public void showMoveMotherNatureMessage(PlayerModel player, byte movement){}
+    @Override
+    public void showMoveMotherNatureMessage(PlayerModel player, byte movement) {
 
-    public void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard){}
+    }
 
-    public void showIslands(String nickname, List<IslandModel> islands){}
+    @Override
+    public void showIslands(String nickname, List<IslandModel> islands){
+        boardSceneController.setIslands(islands);
+    }
 
+    @Override
     public void showInvalidTower(String player, ColorTower colorTower) {}
 
+    @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
         if (!nicknameAccepted || !connectionSuccessful) {
             if (!nicknameAccepted && connectionSuccessful) {
@@ -73,22 +94,88 @@ public class Gui extends ViewObservable implements View {
             } else {
                 Platform.runLater(() -> {
                     SceneController.showAlert(STR_ERROR, "Impossibile contattare il server.");
-                    SceneController.changeRootPane(observers, SCREEN_TITLE_FXML);
+                    SceneController.changeRootPane(observers, "ScreenTitle.fxml");
                 });
             }
 
         }
     }
-    public void showDeckMessage(String player, List<AssistantCardModel> playerDeck){}
 
+    @Override
+    public void askPlayCard(String player, List<AssistantCardModel> playerDeck){
+        System.out.println("entered plauy ");
+        DeckSceneController deckSceneController = new DeckSceneController();
+        deckSceneController.setDeck(playerDeck);
+
+        boardSceneController.setDeckSceneController(deckSceneController);
+    }
+    @Override
     public void showEndTurn(String nick){}
-
+    @Override
     public void showInvalidNickname(String nickname){}
-
+    @Override
     public void showStartTurn(String nick){}
+    @Override
+    public void showInvalidCloud(String nick){}
+    @Override
+    public void errorCard(String player, AssistantCardModel card){}
+    @Override
+    public void showDisconnectionMessage(String nickname, String message){
+        Platform.runLater(() -> {
+            SceneController.showAlert("DISCONNECTION",   nickname + " " + message);
+            SceneController.changeRootPane(observers, "ScreenTitle.fxml");
+        });
+    }
+    @Override
+    public void showGenericMessage(String message){
+        Platform.runLater(() -> SceneController.showAlert("Info Message", message));
+    }
+    @Override
+    public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){}
 
-    public void showSkippingMotherMovement(String activeNick){}
+    @Override
+    public void showInvalidNumberOfStudentMoved(String nickname){}
 
+    @Override
+    public void askNickname(){
+        Platform.runLater(() -> SceneController.changeRootPane(observers, "LoginScene.fxml"));
+    }
+
+    @Override
+    public void showErrorAndExit(String error){}
+
+    @Override
+    public void showOrderPhase(String nickname, List<PlayerModel> order){}
+
+    @Override
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
+        TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
+
+        towerColorSceneController.addAllObservers(observers);
+
+        towerColorSceneController.setAvailableTowers(availableColorTowers);
+        Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
+    }
+    @Override
+    public void askPlayersNumber(){
+        PlayersNumberSceneController playersNumberSceneController = new PlayersNumberSceneController();
+        playersNumberSceneController.addAllObservers(observers);
+        Platform.runLater(() -> SceneController.changeRootPane(playersNumberSceneController, "PlayersNumberScene.fxml"));
+    }
+
+    @Override
+    public void askGameMode(){
+        GameModeSceneController gameModeSceneController = new GameModeSceneController();
+        gameModeSceneController.addAllObservers(observers);
+        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
+    }
+
+    @Override
+    public void showSkippingMotherMovement(String activeNick) {
+
+    }
+
+    @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
 
     }
@@ -133,79 +220,30 @@ public class Gui extends ViewObservable implements View {
 
     }
 
-    public void showInvalidCloud(String nick){}
-
-    public void errorCard(String player, AssistantCardModel card){}
-
-    public void showDisconnectionMessage(String nickname, String message){
-        Platform.runLater(() -> {
-            SceneController.showAlert("DISCONNECTION",   nickname + " " + message);
-            SceneController.changeRootPane(observers, SCREEN_TITLE_FXML);
-        });
-    }
-
-    public void showGenericMessage(String message){
-        Platform.runLater(() -> SceneController.showAlert("Info Message", message));
-    }
-
-    public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){}
-
-    public void showInvalidNumberOfStudentMoved(String nickname){}
-
-    public void askNickname(){
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "LoginScene.fxml"));
-    }
-
-    public void showErrorAndExit(String error){}
-
-    public void askPlayCard(String nickname, List<AssistantCardModel> playerDeck){}
-
-    public void showOrderPhase(String nickname, List<PlayerModel> order){}
-
-    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
-        TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
-
-        towerColorSceneController.addAllObservers(observers);
-
-        towerColorSceneController.setAvailableTowers(availableColorTowers);
-        Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
-    }
-
-    public void askPlayersNumber(){
-        PlayersNumberSceneController playersNumberSceneController = new PlayersNumberSceneController();
-        playersNumberSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(playersNumberSceneController, "PlayersNumberScene.fxml"));
-    }
-
-
-    public void askGameMode(){
-        GameModeSceneController gameModeSceneController = new GameModeSceneController();
-        gameModeSceneController.addAllObservers(observers);
-        Platform.runLater(() -> SceneController.changeRootPane(observers, "GameModeScene.fxml"));
-    }
-
-
-    public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numClouds){
-
-        if(this.nickname!=null && !nickname.equals(this.nickname)){
+    @Override
+    public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
+        if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);
             board.setHall(hall);
             board.setEntrance(entrance);
             board.setProfs(profs);
             board.setPlayer(nickname.getNickname());
-            board.setNumClouds(numClouds);
             System.out.println("enter");
-            Platform.runLater(()->SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml"));
+            Platform.runLater(()-> {
+                try {
+                    SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }else{
             this.nickname=nickname.getNickname();
-            boardSceneController = new GameBoardSceneController();
             boardSceneController.setTowers(towers);
             boardSceneController.setHall(hall);
             boardSceneController.setEntrance(entrance);
             boardSceneController.setProfs(profs);
             boardSceneController.setPlayer(nickname.getNickname());
-            boardSceneController.setNumClouds(numClouds);
             new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
         }
     }

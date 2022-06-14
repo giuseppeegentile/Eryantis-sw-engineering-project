@@ -58,8 +58,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, int numclouds) {
-        clientHandler.sendMessage(new DisplayPlayerBoardMessage(player, towers, hall, entrance, profs, numclouds));
+    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
+        clientHandler.sendMessage(new DisplayPlayerBoardMessage(player, towers, hall, entrance, profs));
     }
 
     @Override
