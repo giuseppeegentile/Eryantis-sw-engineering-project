@@ -861,6 +861,7 @@ public class GameController implements Observer, Serializable {
     public void moveStudentToIsland(PlayerModel player, List<ColorPawns> students, IslandModel islandModel){
         islandModel.addStudent(students);
         player.removeStudentFromEntrance(students);
+        virtualViewMap.get(player.getNickname()).showEntranceChange(player.getNickname(), player.getStudentInEntrance());
     }
 
     /**

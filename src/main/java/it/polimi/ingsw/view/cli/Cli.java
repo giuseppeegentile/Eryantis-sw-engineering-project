@@ -256,16 +256,6 @@ public class Cli extends ViewObservable implements View {
         origin.remove(finalChosenIndex);
     }
 
-    /*@Override
-    public void showHallMessage(String player, Map<ColorPawns, Integer> hall) {
-
-    }
-
-    @Override
-    public void showEntranceMessage(String player, List<ColorPawns> entrance) {
-
-    }*/
-
     @Override
     public void showCemeteryMessage(String player, List<AssistantCardModel> cemetery) {
         out.println("This is the cemetery of the current round: ");
@@ -837,6 +827,11 @@ public class Cli extends ViewObservable implements View {
         int chosenIndex = askUntilValid(studentsOnCard.size(), message, stringBuilder) - 1;
         pickedStudent = studentsOnCard.get(chosenIndex);
         notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, pickedStudent));
+    }
+
+    @Override
+    public void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance) {
+
     }
 
     /**
