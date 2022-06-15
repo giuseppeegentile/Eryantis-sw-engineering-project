@@ -77,6 +77,10 @@ public class GameController implements Observer, Serializable {
         );
     }
 
+    public Map<String, VirtualView> getVirtualViewMap(){
+        return this.virtualViewMap;
+    }
+
     /**
      * send a message showing who's playing on the current turn
      */
@@ -518,7 +522,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Method that assigns 10 cards to each player after the deck has been created
      */
-    private void assignCardsToPlayer(String nickname){
+    public void assignCardsToPlayer(String nickname){
         List<AssistantCardModel> deckPlayer = new ArrayList<>(gameInstance.getDeck().subList((gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10-10, (gameInstance.getPlayersModel().indexOf(gameInstance.getPlayerByNickname(nickname))+1)*10));
         gameInstance.getPlayerByNickname(nickname).setDeckAssistantCardModel(deckPlayer);
     }
@@ -527,7 +531,7 @@ public class GameController implements Observer, Serializable {
      * Assign to every card of player the owner of that
      * @param nickname player to be given the card
      */
-    private void setOwnerDeck(String nickname) {
+    public void setOwnerDeck(String nickname) {
         PlayerModel playerCorrespond = gameInstance.getPlayerByNickname(nickname);
         int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond) + 1) * 10 - 10;
 
@@ -723,7 +727,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Creates the student's bag at every game's beginning
      */
-    private void assignBag(){
+    public void assignBag(){
         List<ColorPawns> bag;
         int equalNumber = 24;
         bag = fillListWithColors(equalNumber);
@@ -773,7 +777,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Method that generates and assigns a deck of cards for each player
      */
-    private void generateDeck(){
+    public void generateDeck(){
         for(int k = 0; k < 4; k++) {
             byte j = 0;
             for (int i = 0; i < 10; i++) {
