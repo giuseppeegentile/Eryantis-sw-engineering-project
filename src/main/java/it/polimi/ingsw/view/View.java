@@ -118,4 +118,6 @@ public interface View {
     void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall);
 
     void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard);
+
+    void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance);
 }

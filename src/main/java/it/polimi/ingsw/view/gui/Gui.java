@@ -38,16 +38,21 @@ public class Gui extends ViewObservable implements View {
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds){}
 
     @Override
-    public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){}
+    public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){
+        boardSceneController.setNumberToMove(numberStudentsToMove);
+        System.out.println(numberStudentsToMove);
+        Platform.runLater(()->boardSceneController.setTurnLabel("Sposta "+ numberStudentsToMove +" studenti dall'ingresso alla sala"));
+        Platform.runLater(()->boardSceneController.entranceDisplay());
+    }
 
     @Override
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
-
+        Platform.runLater(()->boardSceneController.setTurnLabel("Seleziona un'isola in cui vuoi spostare madre natura, massimo "+ maxMovement +" posizioni"));
     }
 
     @Override
     public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, List<IslandModel> islands) {
-        boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un isola");
+        Platform.runLater(()->boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola"));
     }
 
     @Override
@@ -76,9 +81,13 @@ public class Gui extends ViewObservable implements View {
 
     }
 
+    boolean checkpointBoard = false;
     @Override
     public void showIslands(String nickname, List<IslandModel> islands){
         boardSceneController.setIslands(islands);
+        if(checkpointBoard) {
+            Platform.runLater(()->boardSceneController.islandsDisplay());
+        }
     }
 
     @Override
@@ -108,8 +117,12 @@ public class Gui extends ViewObservable implements View {
         deckSceneController.setDeck(playerDeck);
         deckSceneController.setNickname(player);
         deckSceneController.addAllObservers(observers);
-        boardSceneController.setTurnLabel("Gioca una carta");
-        boardSceneController.setDeckSceneController(deckSceneController);
+        Platform.runLater(()-> {
+            boardSceneController.setTurnLabel("Gioca una carta");
+            boardSceneController.setDeckSceneController(deckSceneController);
+
+        });
+
     }
     @Override
     public void showEndTurn(String nick){}
@@ -224,8 +237,15 @@ public class Gui extends ViewObservable implements View {
     }
 
     @Override
+    public void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance) {
+        boardSceneController.setEntrance(studentInEntrance);
+        Platform.runLater(() -> boardSceneController.entranceDisplay());
+    }
+
+    @Override
     public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
-        boardSceneController.setTurnLabel("Aspetta il tuo turno");
+        if(!checkpointBoard)
+            boardSceneController.setTurnLabel("Aspetta il tuo turno");
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setTowers(towers);
@@ -242,14 +262,20 @@ public class Gui extends ViewObservable implements View {
                 }
             });
         }else{
-            this.nickname=nickname.getNickname();
+            if(!checkpointBoard){
+                this.nickname=nickname.getNickname();
+                boardSceneController.setTowers(towers);
+                boardSceneController.setHall(hall);
+                boardSceneController.setEntrance(entrance);
+                boardSceneController.setProfs(profs);
+                boardSceneController.setPlayer(nickname.getNickname());
+                new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
+                checkpointBoard = true;
+            }else{
+                boardSceneController.setHall(hall);
+                Platform.runLater(()->boardSceneController.hallDisplay());
+            }
 
-            boardSceneController.setTowers(towers);
-            boardSceneController.setHall(hall);
-            boardSceneController.setEntrance(entrance);
-            boardSceneController.setProfs(profs);
-            boardSceneController.setPlayer(nickname.getNickname());
-            new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
         }
     }
 

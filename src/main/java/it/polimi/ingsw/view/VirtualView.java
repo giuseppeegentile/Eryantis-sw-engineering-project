@@ -138,6 +138,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance) {
+        clientHandler.sendMessage(new EntranceChangeMessage(nickname, studentInEntrance));
+    }
+
+    @Override
     public void askExtraGetInfluence(String active, List<IslandModel> islands) {
         clientHandler.sendMessage(new AskExtraGetInfluenceMessage(active, islands));
     }

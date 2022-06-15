@@ -119,6 +119,10 @@ public class ClientController implements ViewObserver, Observer {
                 AskStudentsChangeEntranceHall msg = (AskStudentsChangeEntranceHall)message;
                 queueTasks.execute(()-> view.askStudentsChangeEntranceHall(message.getNickname(), msg.getEntrance(), msg.getHall()));
                 break;
+            case ENTRANCE_CHANGES:
+                EntranceChangeMessage entranceChangeMessage = (EntranceChangeMessage)message;
+                queueTasks.execute(() -> view.showEntranceChange(entranceChangeMessage.getNickname(), entranceChangeMessage.getStudentInEntrance()));
+                break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
                 switch (objectDisplay){
