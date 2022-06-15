@@ -14,7 +14,7 @@
          <children>
             <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="gameSettingsBackground" stylesheets="@../css/StartingGame.css">
                <children>
-                  <Label id="label" alignment="TOP_RIGHT" layoutX="420.0" layoutY="360.0" text="Inserisci la modalità di gioco:">
+                  <Label id="label" fx:id="insertGameMode" alignment="TOP_RIGHT" layoutX="420.0" layoutY="360.0" text="Inserisci la modalità di gioco:">
                      <font>
                         <Font name="High Tower Text" size="36.0" />
                      </font>
@@ -29,6 +29,16 @@
                         <Font name="High Tower Text" size="24.0" />
                      </font>
                   </RadioButton>
+                  <Label id="label" fx:id="waitOtherPlayers" alignment="TOP_RIGHT" layoutX="448.0" layoutY="338.0" text="Lobby creata con successo">
+                     <font>
+                        <Font name="High Tower Text" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelMinor" layoutX="547.0" layoutY="382.0" text="Aspetta gli altri giocatori!">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

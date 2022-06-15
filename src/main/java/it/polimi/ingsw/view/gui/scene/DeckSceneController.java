@@ -3,11 +3,13 @@ package it.polimi.ingsw.view.gui.scene;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.observer.ViewObservable;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +37,7 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
     private ImageView card_9;
     @FXML
     private ImageView card_10;
+
     private String nickname;
 
     @FXML
@@ -48,13 +51,20 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
 
                 int finalIndex = i;
                 imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                    //gioca la carta
-                    notifyObserver(obs -> obs.onUpdateCardPlayed(nickname, finalIndex));
+                    new Thread(()->notifyObserver(obs -> obs.onUpdateCardPlayed(this.nickname, finalIndex))).start();
+                    ((Stage)card_1.getScene().getWindow()).close();
                 });
-
+                imagesList.get(i).addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{ //hover effect
+                    imagesList.get(finalIndex).setOpacity(0.7);
+                });
+                imagesList.get(i).addEventHandler(MouseEvent.MOUSE_EXITED, (e)->{
+                    imagesList.get(finalIndex).setOpacity(1);
+                });
                 i++;
             }
         }
+
+
 
     }
 

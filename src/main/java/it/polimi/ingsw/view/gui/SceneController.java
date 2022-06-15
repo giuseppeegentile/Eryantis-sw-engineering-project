@@ -175,8 +175,8 @@ public class SceneController extends ViewObservable {
         fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
         String title = "Plancia di gioco di: " + nickname;
         buildWindow(title, fxmlLoader);
-
     }
+
 
     public static void showDeck(DeckSceneController deckSceneController, String nameFxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();

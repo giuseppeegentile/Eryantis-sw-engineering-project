@@ -64,8 +64,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private VBox vboxCloud3;
     @FXML
     private VBox vboxCloud4;
-
-
     @FXML
     private VBox vboxIsland1;
     @FXML
@@ -95,7 +93,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     private List<CloudModel> cloudModels;
     private List<String> nicknameList;
-    private List<AssistantCardModel> playerDeck;
     private DeckSceneController deckSceneController;
     private List<IslandModel> islands;
     private String turnText;
@@ -119,6 +116,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         wizardView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             try {
                 SceneController.showDeck(deckSceneController, "DeckScene.fxml");
+                turnLabel.setText("Aspetta il tuo turno...");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -127,8 +125,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         lobbyTable.setRowFactory(tv -> {
             TableRow<String> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 2) {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY  && event.getClickCount() == 2) {
 
                     String nickChosen = row.getItem();
                     System.out.println(nickChosen);
@@ -142,6 +139,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setTurnLabel(String turnLabel) {
         this.turnText = turnLabel;
+        if(this.turnLabel != null)
+            this.turnLabel.setText(turnLabel);
     }
 
     private void cloudsDisplay() {
@@ -300,6 +299,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setDeckSceneController(DeckSceneController deckSceneController) {
         this.deckSceneController = deckSceneController;
+        if(this.turnLabel != null){
+            this.turnLabel.setText("Gioca una carta");
+        }
     }
 
     public void setIslands(List<IslandModel> islands){

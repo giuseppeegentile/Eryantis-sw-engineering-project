@@ -47,7 +47,7 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, List<IslandModel> islands) {
-
+        boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un isola");
     }
 
     @Override
@@ -57,8 +57,6 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showLobbyMessage(List<String> nicknameList){
-        System.out.println("Entered lobby");
-        System.out.println(nicknameList.get(0));
         boardSceneController.setPlayersLobby(nicknameList);
         boardSceneController.addAllObservers(observers);
         Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
@@ -109,6 +107,7 @@ public class Gui extends ViewObservable implements View {
         DeckSceneController deckSceneController = new DeckSceneController();
         deckSceneController.setDeck(playerDeck);
         deckSceneController.setNickname(player);
+        deckSceneController.addAllObservers(observers);
         boardSceneController.setTurnLabel("Gioca una carta");
         boardSceneController.setDeckSceneController(deckSceneController);
     }
@@ -131,7 +130,8 @@ public class Gui extends ViewObservable implements View {
     }
     @Override
     public void showGenericMessage(String message){
-        Platform.runLater(() -> SceneController.showAlert("Info Message", message));
+        if(!message.contains("is playing..."))
+            Platform.runLater(() -> SceneController.showAlert("Info Message", message));
     }
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){}
@@ -243,6 +243,7 @@ public class Gui extends ViewObservable implements View {
             });
         }else{
             this.nickname=nickname.getNickname();
+
             boardSceneController.setTowers(towers);
             boardSceneController.setHall(hall);
             boardSceneController.setEntrance(entrance);
