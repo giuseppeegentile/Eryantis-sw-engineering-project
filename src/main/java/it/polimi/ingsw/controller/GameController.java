@@ -301,6 +301,7 @@ public class GameController implements Observer, Serializable {
                 this.oldMessage = receivedMessage;
                 studentsOnHallActions(receivedMessage);
                 askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
+                virtualViewMap.get(playerActive.getNickname()).showEntranceChange(playerActive.getNickname(), playerActive.getStudentInEntrance());
                 break;
             case PLAYER_MOVED_MOTHER:
                 System.out.println("State: " + receivedMessage.getMessageType());

@@ -4,18 +4,16 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -92,6 +90,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private VBox vboxIsland12;
     @FXML
     private Label turnLabel;
+    @FXML
+    private Label subtitle;
+
 
     private List<CloudModel> cloudModels;
     private List<String> nicknameList;
@@ -99,22 +100,22 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<IslandModel> islands;
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
-
     @FXML
     private void initialize(){
         lobbyTable.setVisible(false);
+        lobbyBtn.setVisible(false);
         this.turnLabel.setText(turnText);
-        setLobbyTable();
+        //setLobbyTable();
         entranceDisplay();
         towersDisplay();
         showCorrectClouds();
         islandsDisplay();
         cloudsDisplay();
 
-        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+/*        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
             gamersCol.setVisible(!gamersCol.isVisible());
-        });
+        });*/
 
         wizardView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             try {
@@ -125,7 +126,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         });
 
-        lobbyTable.setRowFactory(tv -> {
+/*        lobbyTable.setRowFactory(tv -> {
             TableRow<String> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY  && event.getClickCount() == 2) {
@@ -136,8 +137,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 }
             });
             return row ;
-        });
+        });*/
 
+    }
+
+    public void setSubtitleText(String text){
+        subtitle.setText(text);
+    }
+
+    public void hideSubtitle(){
+        subtitle.setVisible(false);
     }
 
     public void setTurnLabel(String turnLabel) {
@@ -173,7 +182,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setBackground(background);
         return b;
     }
-
     public void islandsDisplay() {
         int k = 0;
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
@@ -183,7 +191,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             setIslandEventListener(vBoxes.get(k), k);
             vBoxes.get(k).setAlignment(Pos.CENTER);
             if(i.getMotherNature()) {
-                Button student = getStyledButton();
+                Button student = getStyledMotherButton();
                 vBoxes.get(k).getChildren().add(student);
             }
             for (ColorPawns st : i.getStudents()) {
@@ -197,13 +205,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     private void setIslandEventListener(VBox vBox, int islandIndex) {
-        vBox.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-            new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToIsland(this.nickname, studentToIsland, islandIndex))).start();
-        });
-
+        EventHandler<MouseEvent> moveToIslandHandler = new EventHandler<>() {
+            @Override public void handle(MouseEvent event) {
+                System.out.println("hanfler normale");
+                new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToIsland(nickname, studentToIsland, islandIndex))).start();
+                for(VBox v: List.of(vboxIsland1, vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11))
+                    v.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+            }
+        };
+        vBox.addEventHandler(MouseEvent.MOUSE_CLICKED,moveToIslandHandler);
     }
 
-    private Button getStyledButton() {
+
+    private Button getStyledMotherButton() {
         Button b = new Button();
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
@@ -229,13 +243,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         return b;
     }
 
-    private void setLobbyTable() {
-        ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
-        lobbyTable.getColumns().clear();
-        lobbyTable.getColumns().add(gamersCol);
-        gamersCol.setCellValueFactory(d->new SimpleStringProperty(d.getValue()));
-        lobbyTable.setItems(data);
-    }
 
     public void entranceDisplay() {
         entrancePane.getChildren().clear();
@@ -274,12 +281,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             });
         }else{
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-
-                if (studentToHall.size() < numberStudentsToMove) {
-                    System.out.println("press");
-                    System.out.println("up" + numberStudentsToMove);
-                    studentToHall.add(colorToMove);
-                    this.numberStudentsToMove--;
+                if (studentToHall.size() <= this.numberStudentsToMove) {
+                    this.studentToHall.add(colorToMove);
+                    this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
                         new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
                     }
@@ -375,4 +379,17 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             hallGrid.add(getStyledButton(ColorPawns.BLUE) , i, 4);
         }
     }
+
+
+
+/*
+    private void setLobbyTable() {
+        ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
+        lobbyTable.getColumns().clear();
+        lobbyTable.getColumns().add(gamersCol);
+        gamersCol.setCellValueFactory(d->new SimpleStringProperty(d.getValue()));
+        lobbyTable.setItems(data);
+    }*/
+
+
 }

@@ -47,7 +47,12 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
-        Platform.runLater(()->boardSceneController.setTurnLabel("Seleziona un'isola in cui vuoi spostare madre natura, massimo "+ maxMovement +" posizioni"));
+        Platform.runLater(()-> {
+            boardSceneController.setTurnLabel("Seleziona un'isola in cui vuoi spostare madre natura");
+            boardSceneController.setSubtitleText("Massimo " + maxMovement + " posizioni");
+            boardSceneController.islandHandlerMother(player, maxMovement);
+        });
+
     }
 
     @Override
@@ -62,9 +67,9 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showLobbyMessage(List<String> nicknameList){
-        boardSceneController.setPlayersLobby(nicknameList);
+        /*boardSceneController.setPlayersLobby(nicknameList);
         boardSceneController.addAllObservers(observers);
-        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
+        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));*/
     }
 
     @Override
@@ -253,7 +258,6 @@ public class Gui extends ViewObservable implements View {
             board.setEntrance(entrance);
             board.setProfs(profs);
             board.setPlayer(nickname.getNickname());
-            System.out.println("enter");
             Platform.runLater(()-> {
                 try {
                     SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml");
@@ -269,7 +273,9 @@ public class Gui extends ViewObservable implements View {
                 boardSceneController.setEntrance(entrance);
                 boardSceneController.setProfs(profs);
                 boardSceneController.setPlayer(nickname.getNickname());
-                new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
+                //new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
+                boardSceneController.addAllObservers(observers);
+                Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
                 checkpointBoard = true;
             }else{
                 boardSceneController.setHall(hall);

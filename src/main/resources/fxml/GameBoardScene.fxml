@@ -194,6 +194,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
+                  <Label fx:id="subtitle" layoutX="610.0" layoutY="269.0">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
