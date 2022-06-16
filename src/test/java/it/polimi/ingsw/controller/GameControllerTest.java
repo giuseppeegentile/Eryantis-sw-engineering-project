@@ -12,7 +12,8 @@ import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.network.server.Server;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,19 +25,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameControllerTest {
 
-    private GameModel gameInstance;
-    private GameController gameController;
-    private ClientHandler clientHandler;
+    private static GameModel gameInstance;
+    private static GameController gameController;
+    private static ClientHandler clientHandler;
 
-    String player1 = "Milan";
-    String player2 = "Juventus";
-    String player3 = "Inter";
+    static String player1 = "Milan";
+    static String player2 = "Juventus";
+    static String player3 = "Inter";
     ColorTower tower1 = ColorTower.BLACK;
     ColorTower tower2 = ColorTower.WHITE;
     ColorTower tower3 = ColorTower.GREY;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         gameController = new GameController();
         gameInstance = GameModel.getInstance();
 
@@ -60,8 +61,8 @@ class GameControllerTest {
         connectAndSetup(player1, player2, player3);
     }
 
-    @After
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
 
         GameModel.resetInstance();
 
@@ -69,7 +70,13 @@ class GameControllerTest {
         clientHandler = null;
     }
 
-    private void connectAndSetup(String p1, String p2, String p3) {
+    private static void connectAndSetup(String p1, String p2, String p3) {
+
+
+        Server server = new Server(gameController);
+        server.addClient(p1, clientHandler);
+        server.addClient(p2, clientHandler);
+        server.addClient(p3, clientHandler);
         LoginRequest loginRequest = new LoginRequest(p1);
         gameController.onMessageReceived(loginRequest);
         PlayerNumberReply playerNumberReply = new PlayerNumberReply(p1, 3);
@@ -78,12 +85,6 @@ class GameControllerTest {
         gameController.onMessageReceived(loginRequestSamuele);
         LoginRequest loginRequestSamuel = new LoginRequest(p3);
         gameController.onMessageReceived(loginRequestSamuel);
-
-        Server server = new Server(gameController);
-        server.addClient(p1, clientHandler);
-        server.addClient(p2, clientHandler);
-        server.addClient(p3, clientHandler);
-
 
     }
 
