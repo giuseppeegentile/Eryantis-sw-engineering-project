@@ -1,6 +1,5 @@
-package it.polimi.ingsw.controller.game;
+package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
@@ -10,7 +9,10 @@ import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
-import org.junit.jupiter.api.Order;
+import it.polimi.ingsw.network.server.ClientHandler;
+import it.polimi.ingsw.network.server.Server;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -21,27 +23,72 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameControllerTest {
-    private final GameController gameController = new GameController();
-    private final String player1 = "pl1";
-    private final ColorTower tower1 = ColorTower.BLACK;
-    private final GameModel gameInstance = GameModel.getInstance();
-    private final String player2 = "pl2";
-    private final ColorTower tower2 = ColorTower.WHITE;
-    private final String player3 = "pl3";
-    private final ColorTower tower3 = ColorTower.GREY;
+
+    private GameModel gameInstance;
+    private GameController gameController;
+    private ClientHandler clientHandler;
+
+    String player1 = "Milan";
+    String player2 = "Juventus";
+    String player3 = "Inter";
+    ColorTower tower1 = ColorTower.BLACK;
+    ColorTower tower2 = ColorTower.WHITE;
+    ColorTower tower3 = ColorTower.GREY;
+
+    @Before
+    public void setUp() {
+        gameController = new GameController();
+        gameInstance = GameModel.getInstance();
+
+        clientHandler = new ClientHandler() {
+            @Override
+            public boolean isConnected() {
+                return true;
+            }
+
+            @Override
+            public void disconnect() {
+
+            }
+
+            @Override
+            public void sendMessage(Message message) {
+
+            }
+        };
+
+        connectAndSetup(player1, player2, player3);
+    }
+
+    @After
+    public void tearDown() {
+
+        GameModel.resetInstance();
+
+        gameController = null;
+        clientHandler = null;
+    }
+
+    private void connectAndSetup(String p1, String p2, String p3) {
+        LoginRequest loginRequest = new LoginRequest(p1);
+        gameController.onMessageReceived(loginRequest);
+        PlayerNumberReply playerNumberReply = new PlayerNumberReply(p1, 3);
+        gameController.onMessageReceived(playerNumberReply);
+        LoginRequest loginRequestSamuele = new LoginRequest(p2);
+        gameController.onMessageReceived(loginRequestSamuele);
+        LoginRequest loginRequestSamuel = new LoginRequest(p3);
+        gameController.onMessageReceived(loginRequestSamuel);
+
+        Server server = new Server(gameController);
+        server.addClient(p1, clientHandler);
+        server.addClient(p2, clientHandler);
+        server.addClient(p3, clientHandler);
+
+
+    }
 
     @Test
-    @Order(1)
     void testingGameTurn() {
-
-        gameController.assignBag();
-        gameController.generateDeck();
-        PlayerNumberReply playerNumberReply = new PlayerNumberReply(player1, 3);
-        gameInstance.setPlayers(asList(new PlayerModel(player1), new PlayerModel(player2), new PlayerModel(player3)));
-        for (String s : asList(player1, player2, player3)){
-            gameController.setOwnerDeck(s);
-            gameController.assignCardsToPlayer(s);
-        }
 
         GameModeRes gameModeRes = new GameModeRes(player1, GameMode.BEGINNER);
         gameController.onMessageReceived(gameModeRes);
