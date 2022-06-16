@@ -172,7 +172,7 @@ class GameControllerTest {
 
         int indexOldMother = gameInstance.getMotherNatureIndex();
 
-        MovedMotherNatureMessage motherNatureMessage = new MovedMotherNatureMessage(firstPlayer, (byte) 1);
+        MovedMotherNatureMessage motherNatureMessage = new MovedMotherNatureMessage(firstPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage);
 
         assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother + 1) % 11);
@@ -211,7 +211,7 @@ class GameControllerTest {
 
 
         indexOldMother = gameInstance.getMotherNatureIndex();
-        MovedMotherNatureMessage motherNatureMessage2 = new MovedMotherNatureMessage(secondPlayer, (byte) 1);
+        MovedMotherNatureMessage motherNatureMessage2 = new MovedMotherNatureMessage(secondPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage2);
 
         assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
@@ -251,7 +251,7 @@ class GameControllerTest {
             assertEquals(2, thirdPlayer.getStudentInHall().get(color3));
 
         indexOldMother = gameInstance.getMotherNatureIndex();
-        MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer, (byte) 1);
+        MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage3);
         assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%11);
 

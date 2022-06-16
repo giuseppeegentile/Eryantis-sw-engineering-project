@@ -7,12 +7,12 @@ public class MovedMotherNatureMessage extends Message{
 
     private static final long serialVersionUID = 1566360713494368537L;
 
-    private final PlayerModel playerModel;
+    private final String playerModel;
 
     private final byte movement;
 
-    public MovedMotherNatureMessage(PlayerModel player, byte movement){
-        super(player.getNickname(), MessageType.PLAYER_MOVED_MOTHER);
+    public MovedMotherNatureMessage(String player, byte movement){
+        super(player, MessageType.PLAYER_MOVED_MOTHER);
         this.playerModel = player;
         this.movement = movement;
     }
@@ -24,7 +24,7 @@ public class MovedMotherNatureMessage extends Message{
     @Override
     public String toString() {
         return "MoveMotherNatureMessage{" +
-                "player=" + playerModel.getNickname() +
+                "player=" + playerModel +
                 ", motherMovement=" + movement +
                 '}';
     }

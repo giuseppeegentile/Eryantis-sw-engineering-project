@@ -185,7 +185,7 @@ public class Cli extends ViewObservable implements View {
                 out.println("You've entered an invalid number, it can be between 0 and " + (int) maxMovement + "\n");
         }
         byte finalMovementChosen = movementChosen;
-        notifyObserver(obs -> obs.onUpdateMotherNature(player, finalMovementChosen));
+        notifyObserver(obs -> obs.onUpdateMotherNature(player.getNickname(), finalMovementChosen));
     }
 
     @Override

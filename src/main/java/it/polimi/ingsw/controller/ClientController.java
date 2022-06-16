@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.*;
@@ -277,7 +276,7 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateMotherNature(PlayerModel player, byte movement){
+    public void onUpdateMotherNature(String player, byte movement){
         client.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 

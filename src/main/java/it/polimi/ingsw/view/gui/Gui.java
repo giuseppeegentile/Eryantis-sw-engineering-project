@@ -35,7 +35,9 @@ public class Gui extends ViewObservable implements View {
     public void showMessageJoiningIsland(Message message){}
 
     @Override
-    public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds){}
+    public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds){
+        boardSceneController.setClouds(clouds);
+    }
 
     @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){
@@ -50,7 +52,7 @@ public class Gui extends ViewObservable implements View {
         Platform.runLater(()-> {
             boardSceneController.setTurnLabel("Seleziona un'isola in cui vuoi spostare madre natura");
             boardSceneController.setSubtitleText("Massimo " + maxMovement + " posizioni");
-            boardSceneController.islandHandlerMother(player, maxMovement);
+            boardSceneController.islandHandlerMother(maxMovement);
         });
 
     }

@@ -326,6 +326,7 @@ public class GameController implements Observer, Serializable {
                     break;
                 }
 
+                virtualViewMap.get(receivedMessage.getNickname()).showEntranceChange(receivedMessage.getNickname(), playerActive.getStudentInEntrance());
                 //picking new player for the next turn
                 int indexCurrent = 0;
                 for(PlayerModel p: gameInstance.getPlayersModel()){
@@ -338,7 +339,10 @@ public class GameController implements Observer, Serializable {
 
                 virtualViewMap.get(nickCurrent).showEndTurn(nickCurrent);
 
-
+                for(String pl: virtualViewMap.keySet()){
+                    virtualViewMap.get(pl).showCloudsMessage(pl, gameInstance.getCloudsModel());
+                    virtualViewMap.get(pl).showIslands(pl, gameInstance.getIslandsModel());
+                }
                 int lastIndex = gameInstance.getPlayersNumber() - 1;
 
                 resetEffects();
