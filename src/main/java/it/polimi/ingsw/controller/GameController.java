@@ -287,9 +287,7 @@ public class GameController implements Observer, Serializable {
 
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
                 this.oldMessage = receivedMessage;
-                System.out.println("0");
                 studentsOnIslandActions(receivedMessage);
-                System.out.println("1");
                 askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND);
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
@@ -451,9 +449,15 @@ public class GameController implements Observer, Serializable {
         }
         if(GameMode.BEGINNER == gameInstance.getGameMode()) {
             if (gameInstance.getPlayersNumber() % 2 == 0) {
-                virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                if(movedStudents.size() != 3)
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                else
+                    virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
             } else {
-                virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+                if(movedStudents.size()  != 4)
+                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+                else
+                    virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
             }
         }
     }

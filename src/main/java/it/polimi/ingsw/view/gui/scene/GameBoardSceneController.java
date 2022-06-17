@@ -108,6 +108,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<ColorPawns> studentToHall = new ArrayList<>();
     @FXML
     private void initialize(){
+        skipMove.setVisible(false);
         lobbyTable.setVisible(false);
         lobbyBtn.setVisible(false);
         this.turnLabel.setText(turnText);
@@ -117,6 +118,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         showCorrectClouds();
         islandsDisplay();
         cloudsDisplay();
+
+        skipMove.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
+            this.skipMove.setVisible(false);
+            this.alreadyMovedStudent = true;
+        });
 
 /*        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
@@ -177,6 +184,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cloudsVboxes.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 new Thread(()->notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex))).start();
                 cloudsVboxes.get(chosenIndex).getChildren().clear();
+                turnLabel.setText("Aspetta il tuo turno");
+                subtitle.setVisible(false);
             });
             index++;
         }
@@ -282,11 +291,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
 
+    @FXML
+    private Button skipMove;
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
         if(this.numberStudentsToMove == 0) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                skipMove.setVisible(false);
                 if (studentToIsland.size() < 3)
                     studentToIsland.add(colorToMove);
+                //if(studentToIsland.size() == 3) enableOnlyIsland();
             });
         }else{
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -295,6 +308,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
                         new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
+                        //enableOnlyIsland();
                     }
                 }
             });
@@ -387,6 +401,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
         System.out.println("tmp " + tempIndex);
         System.out.println("max " + maxMovement);
+        //enableOnlyIsland();
         for(int i = 0; i <= islands.size(); i++){
             int idx = i;
             System.out.println("idx");
@@ -398,10 +413,67 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 vBoxes.get(idx).getChildren().add(getStyledMotherButton());
                 turnLabel.setText("Seleziona una nuvola");
                 subtitle.setText("Sposterai gli studenti nell'ingresso");
+                //enableOnlyClouds();
             });
 
         }
     }
+
+    public void setVisibleSkip() {
+        this.skipMove.setVisible(true);
+    }
+
+//    public void enableOnlyIsland(){
+//        entrancePane.setDisable(true);
+//        vboxCloud1.setDisable(true);
+//        vboxCloud2.setDisable(true);
+//        vboxCloud3.setDisable(true);
+//        vboxCloud4.setDisable(true);
+//        wizardView.setDisable(true);
+//    }
+//
+//    public void enableOnlyClouds(){
+//        entrancePane.setDisable(true);
+//        vboxCloud1.setDisable(false);
+//        vboxCloud2.setDisable(false);
+//        vboxCloud3.setDisable(false);
+//        vboxCloud4.setDisable(false);
+//        wizardView.setDisable(true);
+//        vboxIsland1.setDisable(true);
+//        vboxIsland2.setDisable(true);
+//        vboxIsland3.setDisable(true);
+//        vboxIsland4.setDisable(true);
+//        vboxIsland5.setDisable(true);
+//        vboxIsland6.setDisable(true);
+//        vboxIsland7.setDisable(true);
+//        vboxIsland8.setDisable(true);
+//        vboxIsland9.setDisable(true);
+//        vboxIsland10.setDisable(true);
+//        vboxIsland11.setDisable(true);
+//        vboxIsland12.setDisable(true);
+//    }
+//
+//    public void enableOnlyEntrance(){
+//        entrancePane.setDisable(false);
+//        vboxCloud1.setDisable(true);
+//        vboxCloud2.setDisable(true);
+//        vboxCloud3.setDisable(true);
+//        vboxCloud4.setDisable(true);
+//        wizardView.setDisable(true);
+//        vboxIsland1.setDisable(true);
+//        vboxIsland2.setDisable(true);
+//        vboxIsland3.setDisable(true);
+//        vboxIsland4.setDisable(true);
+//        vboxIsland5.setDisable(true);
+//        vboxIsland6.setDisable(true);
+//        vboxIsland7.setDisable(true);
+//        vboxIsland8.setDisable(true);
+//        vboxIsland9.setDisable(true);
+//        vboxIsland10.setDisable(true);
+//        vboxIsland11.setDisable(true);
+//        vboxIsland12.setDisable(true);
+//
+//    }
 /*
     private void setLobbyTable() {
         ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
