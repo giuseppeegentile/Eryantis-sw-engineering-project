@@ -43,8 +43,10 @@ public class Gui extends ViewObservable implements View {
     public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){
         boardSceneController.setNumberToMove(numberStudentsToMove);
         System.out.println(numberStudentsToMove);
-        Platform.runLater(()->boardSceneController.setTurnLabel("Sposta "+ numberStudentsToMove +" studenti dall'ingresso alla sala"));
-        Platform.runLater(()->boardSceneController.entranceDisplay());
+        Platform.runLater(() -> {
+            boardSceneController.setTurnLabel("Sposta " + numberStudentsToMove + " studenti dall'ingresso alla sala");
+            boardSceneController.entranceDisplay();
+        });
     }
 
     @Override
@@ -59,7 +61,11 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, List<IslandModel> islands) {
-        Platform.runLater(()->boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola"));
+        Platform.runLater(()-> {
+            boardSceneController.setVisibleSkip();
+            boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola");
+            //boardSceneController.enableOnlyEntrance();
+        });
     }
 
     @Override
@@ -132,11 +138,18 @@ public class Gui extends ViewObservable implements View {
 
     }
     @Override
-    public void showEndTurn(String nick){}
+    public void showEndTurn(String nick){
+        Platform.runLater(() -> {boardSceneController.setTurnLabel("Aspetta il tuo turno");});
+
+    }
     @Override
     public void showInvalidNickname(String nickname){}
+
     @Override
-    public void showStartTurn(String nick){}
+    public void showStartTurn(String nick){
+        Platform.runLater(() -> {boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata");});
+    }
+
     @Override
     public void showInvalidCloud(String nick){}
     @Override
