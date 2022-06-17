@@ -24,11 +24,12 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
 
     @Override
     public void enable(PlayerModel playerModel) {
-        playerModel.addStudentsHall(studentFromCard);
-        playerModel.removeStudentFromHall(studentFromEntrance);
+        playerModel.getStudentInEntrance().addAll(studentFromCard);
+        playerModel.getStudentInEntrance().removeAll(studentFromEntrance);
 
         students.addAll(studentFromEntrance);
-        students.removeAll(studentFromCard);
+        for(ColorPawns c : studentFromCard)
+            students.remove(c);
     }
 
 

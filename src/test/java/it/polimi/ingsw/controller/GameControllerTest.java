@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.network.server.Server;
-import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -72,25 +71,25 @@ class GameControllerTest {
 
     private static void connectAndSetup(String p1, String p2, String p3) {
 
-
         Server server = new Server(gameController);
         server.addClient(p1, clientHandler);
-        server.addClient(p2, clientHandler);
-        server.addClient(p3, clientHandler);
-        LoginRequest loginRequest = new LoginRequest(p1);
-        gameController.onMessageReceived(loginRequest);
         PlayerNumberReply playerNumberReply = new PlayerNumberReply(p1, 3);
         gameController.onMessageReceived(playerNumberReply);
-        LoginRequest loginRequestSamuele = new LoginRequest(p2);
-        gameController.onMessageReceived(loginRequestSamuele);
-        LoginRequest loginRequestSamuel = new LoginRequest(p3);
-        gameController.onMessageReceived(loginRequestSamuel);
+        server.addClient(p2, clientHandler);
+        server.addClient(p3, clientHandler);
+        /*LoginRequest loginRequest = new LoginRequest(p1);
+        gameController.onMessageReceived(playerNumberReply);
+        LoginRequest loginRequest2 = new LoginRequest(p2);
+        gameController.onMessageReceived(loginRequest2);
+        LoginRequest loginRequest3 = new LoginRequest(p3);
+        gameController.onMessageReceived(loginRequest3);*/
 
     }
 
     @Test
     void testingGameTurn() {
 
+        //System.out.println(gameInstance.getPlayersModel().get(0) + " " + gameInstance.getPlayersModel().get(1) + " " + gameInstance.getPlayersModel().get(2));
         GameModeRes gameModeRes = new GameModeRes(player1, GameMode.BEGINNER);
         gameController.onMessageReceived(gameModeRes);
 
@@ -98,19 +97,15 @@ class GameControllerTest {
         gameController.onMessageReceived(chosenTowerMessage);
         chosenTowerMessage = new ChosenTowerMessage(player2, tower2);
         gameController.onMessageReceived(chosenTowerMessage);
-        chosenTowerMessage = new ChosenTowerMessage(player2, tower3);
+        chosenTowerMessage = new ChosenTowerMessage(player3, tower3);
         gameController.onMessageReceived(chosenTowerMessage);
 
         assertEquals(gameInstance.getPlayersModel().get(0).getNickname(), player1);
         assertEquals(gameInstance.getPlayersModel().get(0).getColorTower(), ColorTower.BLACK);
 
-        PlayerNicknameMessage message2 = new PlayerNicknameMessage(this.player2, 3, tower2, GameMode.BEGINNER);
-        gameController.onMessageReceived(message2);
         assertEquals(gameInstance.getPlayersModel().get(1).getNickname(), player2);
         assertEquals(gameInstance.getPlayersModel().get(1).getColorTower(), ColorTower.WHITE);
 
-        PlayerNicknameMessage message3 = new PlayerNicknameMessage(this.player3, 3, tower3, GameMode.BEGINNER);
-        gameController.onMessageReceived(message3);
         assertEquals(gameInstance.getPlayersModel().get(2).getNickname(), player3);
         assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), ColorTower.GREY);
 
@@ -134,10 +129,11 @@ class GameControllerTest {
         //giocano carte
         int priority1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getPriority();
         int movement1 = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
+        AssistantCardModel after = gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(6);
+
         PlayAssistantCardMessage msgCardPl1 = new PlayAssistantCardMessage(player1, 5);
         gameController.onMessageReceived(msgCardPl1);
-        assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getPriority());
-        assertEquals(0, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5).getMotherNatureMovement());
+        assertEquals(after, gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(5));
         assertEquals(1, gameInstance.getCemetery().size());
 
         assertEquals(priority1, gameInstance.getCemetery().get(0).getPriority());
@@ -145,11 +141,12 @@ class GameControllerTest {
 
         int priority2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getPriority();
         int movement2 = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
+        after = gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(6);
         PlayAssistantCardMessage msgCardPl2 = new PlayAssistantCardMessage(player2, 5);
+
         gameController.onMessageReceived(msgCardPl2);
 
-        assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getPriority());
-        assertEquals(0, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5).getMotherNatureMovement());
+        assertEquals(after, gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(5));
         assertEquals(2, gameInstance.getCemetery().size());
 
         assertEquals(priority2, gameInstance.getCemetery().get(1).getPriority());
@@ -158,19 +155,19 @@ class GameControllerTest {
 
         int priority3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority();
         int movement3 = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getMotherNatureMovement();
+        after = gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(6);
         PlayAssistantCardMessage msgCardPl3 = new PlayAssistantCardMessage(player3, 3);
         gameController.onMessageReceived(msgCardPl3);
 
-        assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getPriority());
-        assertEquals(0, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(3).getMotherNatureMovement());
+        assertEquals(after, gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(5));
         assertEquals(3, gameInstance.getCemetery().size());
-        System.out.println("carta " + player1 + " " + gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(msgCardPl1.getIndexCard()).getPriority() + ", "+ gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(msgCardPl1.getIndexCard()).getMotherNatureMovement());
+        /*System.out.println("carta " + player1 + " " + gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(msgCardPl1.getIndexCard()).getPriority() + ", "+ gameInstance.getPlayerByNickname(player1).getDeckAssistantCardModel().get(msgCardPl1.getIndexCard()).getMotherNatureMovement());
         System.out.println("carta " + player2 + " " + gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(msgCardPl2.getIndexCard()).getPriority() + ", "+ gameInstance.getPlayerByNickname(player2).getDeckAssistantCardModel().get(msgCardPl2.getIndexCard()).getMotherNatureMovement());
         System.out.println("carta " + player3 + " " + gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(msgCardPl3.getIndexCard()).getPriority() + ", "+ gameInstance.getPlayerByNickname(player3).getDeckAssistantCardModel().get(msgCardPl3.getIndexCard()).getMotherNatureMovement() );
         System.out.println("cimitero:");
         System.out.println(gameInstance.getCemetery().get(0).getPriority() + ", " +gameInstance.getCemetery().get(0).getMotherNatureMovement() );
         System.out.println(gameInstance.getCemetery().get(1).getPriority() + ", " +gameInstance.getCemetery().get(1).getMotherNatureMovement() );
-        System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );
+        System.out.println(gameInstance.getCemetery().get(2).getPriority() + ", " +gameInstance.getCemetery().get(2).getMotherNatureMovement() );*/
 
 
         assertEquals(priority3, gameInstance.getCemetery().get(2).getPriority());
@@ -182,39 +179,34 @@ class GameControllerTest {
             i++;
         }
 
-        for(PlayerModel p: gameInstance.getPhaseOrder()){
+        /*for(PlayerModel p: gameInstance.getPhaseOrder()){
             System.out.println(p.getNickname());
-        }
+        }*/
 
         //turno primo giocatore
 
         PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
-        System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+        /*System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
         System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
-        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
         ColorPawns student1ToMove = firstPlayer.getStudentInEntrance().get(0); //to island
         ColorPawns student2ToMove = firstPlayer.getStudentInEntrance().get(1);
         List<ColorPawns> playersToMove = new ArrayList<>();
         playersToMove.add(student1ToMove);
         playersToMove.add(student2ToMove);
-        //StudentToIslandMessage msgPlayer1 = new StudentToIslandMessage(firstPlayer.getNickname(), playersToMove, 1);
-        //gameController.onMessageReceived(msgPlayer1);
-        assertEquals(gameController.getPlayerActive().getNickname(), firstPlayer.getNickname());
+        MovedStudentOnIslandMessage msgPlayer1 = new MovedStudentOnIslandMessage(firstPlayer.getNickname(), playersToMove, 1);
+        gameController.onMessageReceived(msgPlayer1);
+        //assertEquals(gameController.getPlayerActive().getNickname(), firstPlayer.getNickname());
 
         //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);
         assertTrue(gameInstance.getIslandsModel().get(1).getStudents().containsAll(playersToMove));
 
         ColorPawns color = firstPlayer.getStudentInEntrance().get(0);
-        ColorPawns color2 = firstPlayer.getStudentInEntrance().get(1);
+        ColorPawns color2;
         assertEquals(firstPlayer, gameController.getPlayerActive());
-        MovedStudentToHallMessage toHallMessage = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color, color2));
+        MovedStudentToHallMessage toHallMessage = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color));
         gameController.onMessageReceived(toHallMessage);
-        if(color != color2) {
-            assertEquals(1, firstPlayer.getStudentInHall().get(color));
-            assertEquals(1, firstPlayer.getStudentInHall().get(color2));
-        }
-        else
-            assertEquals(2, firstPlayer.getStudentInHall().get(color));
+        assertEquals(1, firstPlayer.getStudentInHall().get(color));
 
 
 
@@ -223,19 +215,24 @@ class GameControllerTest {
         MovedMotherNatureMessage motherNatureMessage = new MovedMotherNatureMessage(firstPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage);
 
-        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother + 1) % 11);
+        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother + 1) % 12);
 
 
+
+        /*System.out.println(gameInstance.getCloudsModel().get(0).getStudents());
+        System.out.println(gameInstance.getCloudsModel().get(1).getStudents());
+        System.out.println(gameInstance.getCloudsModel().get(2).getStudents());*/
+        CloudModel cloud = gameInstance.getCloudsModel().get(2);
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting = new AddStudentFromCloudToEntranceMessage(firstPlayer.getNickname(), 1);
         gameController.onMessageReceived(msgCloudToWaiting);
         //System.out.println(gameInstance.getCloudsModel().get(1).getStudents());
-        assertEquals(0, gameInstance.getCloudsModel().get(1).getStudents().size());
+        assertEquals(cloud, gameInstance.getCloudsModel().get(1));
 
         //turno secondo giocatore
         PlayerModel secondPlayer = gameInstance.getPhaseOrder().get(1);
-        System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
+        /*System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
         System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
-        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
         ColorPawns secondStudent1ToMove = secondPlayer.getStudentInEntrance().get(0); //to island
         ColorPawns secondStudent2ToMove = secondPlayer.getStudentInEntrance().get(1);
         ColorPawns secondStudent3ToMove = secondPlayer.getStudentInEntrance().get(2);
@@ -243,8 +240,8 @@ class GameControllerTest {
         secondStudentsToMove.add(secondStudent1ToMove);
         secondStudentsToMove.add(secondStudent2ToMove);
         secondStudentsToMove.add(secondStudent3ToMove);
-        // StudentToIslandMessage msgPlayer2 = new StudentToIslandMessage(secondPlayer.getNickname(), secondStudentsToMove, 5);
-        //gameController.onMessageReceived(msgPlayer2);
+        MovedStudentOnIslandMessage msgPlayer2 = new MovedStudentOnIslandMessage(secondPlayer.getNickname(), secondStudentsToMove, 5);
+        gameController.onMessageReceived(msgPlayer2);
         assertEquals(gameController.getPlayerActive().getNickname(), secondPlayer.getNickname());
 
         //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);

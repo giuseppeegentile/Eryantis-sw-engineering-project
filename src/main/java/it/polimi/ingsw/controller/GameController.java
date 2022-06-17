@@ -174,7 +174,6 @@ public class GameController implements Observer, Serializable {
                 playerActive = gameInstance.getPlayersModel().get(0);
                 break;
             case PLAYED_ASSISTANT_CARD:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 PlayerModel player = gameInstance.getPlayerByNickname(receivedMessage.getNickname());
                 playersThatHavePlayedCard.add(player);
                 numberPlayersPlayedCard++;
@@ -194,7 +193,7 @@ public class GameController implements Observer, Serializable {
                     playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
                     numberPlayersPlayedCard = 0;
                     setPlayersOrderForActionPhase();
-                    playerActive = gameInstance.getPlayersModel().get(0);
+                    playerActive = gameInstance.getPhaseOrder().get(0); //era playerActive = gameInstance.getPlayersModel().get(0)
 
                     if (playerActive.getDeckAssistantCardModel().size() == 0)//se ha finito tutte le carte
                         gameInstance.setTrueHavePlayerFinishedCards();
@@ -206,7 +205,6 @@ public class GameController implements Observer, Serializable {
                 }
                 break;
             case CHARACTER_CARD_PLAYED:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
                     effectPlayed = characterCardPlayed.getEffect().getClass().getSimpleName();
@@ -246,7 +244,6 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case EFFECT_CARD_PLAYED:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 switch (this.effectPlayed) {
                     case "AddToHallEffect":
                         AddToHallEffect addToHallEffect = (AddToHallEffect)characterCardPlayed.getEffect();
@@ -289,7 +286,6 @@ public class GameController implements Observer, Serializable {
                 break;
 
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 this.oldMessage = receivedMessage;
                 System.out.println("0");
                 studentsOnIslandActions(receivedMessage);
@@ -297,20 +293,17 @@ public class GameController implements Observer, Serializable {
                 askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_ISLAND);
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 this.oldMessage = receivedMessage;
                 studentsOnHallActions(receivedMessage);
                 askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
                 virtualViewMap.get(playerActive.getNickname()).showEntranceChange(playerActive.getNickname(), playerActive.getStudentInEntrance());
                 break;
             case PLAYER_MOVED_MOTHER:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 this.oldMessage = receivedMessage;
                 this.movement = ((MovedMotherNatureMessage) receivedMessage).getMovement();
                 motherActions(this.movement);
                 break;
             case MOVED_CLOUD_TO_ENTRANCE:
-                System.out.println("State: " + receivedMessage.getMessageType());
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
                 if (chosenCloud.getStudents().size() == 0) { //if cloud isn't valid
@@ -345,7 +338,8 @@ public class GameController implements Observer, Serializable {
                 }
                 int lastIndex = gameInstance.getPlayersNumber() - 1;
 
-                resetEffects();
+                if(GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
+                    resetEffects();
 
                 if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(lastIndex).getNickname())) { //se è l'ultimo giocatore ad aver giocato, fai giocare le carte a tutti i giocatori
                     fromBagToCloud();
@@ -422,7 +416,6 @@ public class GameController implements Observer, Serializable {
         moveMotherNature(movement);
 
         if(!gameInstance.getIslandWithMother().hasProhibition()) { //check he doesn't have a prohib card on
-            System.out.println("Prohibition");
             computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
         }else{
             virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
