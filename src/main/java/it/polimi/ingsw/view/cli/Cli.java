@@ -397,7 +397,7 @@ public class Cli extends ViewObservable implements View {
                     if (numberStudents > 0) {
                         strBoardBld.append(ColorCli.getEquivalentColorPawn(color)).append("0 ");
                         numberStudents--;
-                    } else if ((i+1)%3 == 0) {
+                    } else if ((i+1)%3 == 0 && GameModel.getInstance().getGameMode() == GameMode.ADVANCED) {
                         strBoardBld.append(ColorCli.WHITE).append("$ ");
                     } else {
                         strBoardBld.append(ColorCli.RESET).append("  ");

@@ -193,7 +193,8 @@ public class GameController implements Observer, Serializable {
                     playersThatHavePlayedCard = new ArrayList<>(gameInstance.getPlayersNumber());
                     numberPlayersPlayedCard = 0;
                     setPlayersOrderForActionPhase();
-                    playerActive = gameInstance.getPhaseOrder().get(0); //era playerActive = gameInstance.getPlayersModel().get(0)
+                    gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
+                    playerActive = gameInstance.getPlayersModel().get(0);
 
                     if (playerActive.getDeckAssistantCardModel().size() == 0)//se ha finito tutte le carte
                         gameInstance.setTrueHavePlayerFinishedCards();
@@ -341,7 +342,6 @@ public class GameController implements Observer, Serializable {
 
                 if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(lastIndex).getNickname())) { //se è l'ultimo giocatore ad aver giocato, fai giocare le carte a tutti i giocatori
                     fromBagToCloud();
-                    gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
                     PlayerModel nextPlayer = gameInstance.getPlayersModel().get(0);
                     askPlayCardsController(nextPlayer.getNickname());
                     //virtualViewMap.get(nextPlayer.getNickname()).askPlayCard(nextPlayer.getNickname(), nextPlayer.getDeckAssistantCardModel());
