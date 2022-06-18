@@ -17,10 +17,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class GameControllerTest {
+class GameControllerAdvancedTest {
 
     private static GameModel gameInstance;
     private static GameController gameController;
@@ -85,8 +84,7 @@ class GameControllerTest {
     }
 
     @Test
-    void testingGameTurnBeginner() {
-
+    void testingGameTurnAdvanced(){
         //System.out.println(gameInstance.getPlayersModel().get(0) + " " + gameInstance.getPlayersModel().get(1) + " " + gameInstance.getPlayersModel().get(2));
         GameModeRes gameModeRes = new GameModeRes(player1, GameMode.BEGINNER);
         gameController.onMessageReceived(gameModeRes);
@@ -334,6 +332,5 @@ class GameControllerTest {
         /*for(PlayerModel p: gameInstance.getPhaseOrder()){
             System.out.println(p.getNickname());
         }*/
-
     }
 }
