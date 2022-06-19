@@ -23,7 +23,6 @@ public class AddInfluenceEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
     }
 
     @Override

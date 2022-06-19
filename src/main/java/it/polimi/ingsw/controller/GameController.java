@@ -40,6 +40,8 @@ public class GameController implements Observer, Serializable {
     private byte movement;
     private MessageType oldState;
     private Message oldMessage;
+    private int test = 0;
+
     /**
      * Set the player with additional influence on this turn, caused by character card effect
      * @param player the player who's going to have additional influence
@@ -1090,7 +1092,7 @@ public class GameController implements Observer, Serializable {
         if(shuffle)
             Collections.shuffle(characterDeck);
         List<CharacterCardModel> tempToAssign = new ArrayList<>();;
-        for(int j = 0; j<3; j++) {
+        for(int j = test; j<3 + test; j++) {
             tempToAssign.add(characterDeck.get(j));
             if(characterDeck.get(j).getCharacterId() == 0){
                 gameInstance.getBag().subList(0,4).clear();
@@ -1102,6 +1104,10 @@ public class GameController implements Observer, Serializable {
         }
         for(int j = 0; j<gameInstance.getPlayersNumber(); j++)
             gameInstance.getPlayersModel().get(j).assignCharacterDeck(tempToAssign);
+    }
+
+    public void incrementTest(int incr){
+        test += incr;
     }
 
     /**
@@ -1188,5 +1194,13 @@ public class GameController implements Observer, Serializable {
 
     public void setShuffleFalse() {
         this.shuffle = false;
+    }
+
+    public PlayerModel getPlayerWithEffectAdditionalInfluence(){
+        return playerWithEffectAdditionalInfluence;
+    }
+
+    public ColorPawns getColorToExclude(){
+        return colorToExclude;
     }
 }

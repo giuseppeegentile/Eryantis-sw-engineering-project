@@ -23,7 +23,7 @@ import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class GameControllerAdvancedTest {
+class GameControllerAdvancedTest1 {
 
     private static GameModel gameInstance;
     private static GameController gameController;
