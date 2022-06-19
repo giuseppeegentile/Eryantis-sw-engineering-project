@@ -85,8 +85,10 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showCloudsMessage(String nickname, List<CloudModel> clouds){
-        boardSceneController = new GameBoardSceneController();
+        if(!checkpointBoard)
+            boardSceneController = new GameBoardSceneController();
         boardSceneController.setClouds(clouds);
+        if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
     }
 
     @Override

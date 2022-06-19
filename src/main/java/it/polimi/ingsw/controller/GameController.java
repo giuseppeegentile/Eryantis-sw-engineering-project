@@ -305,6 +305,7 @@ public class GameController implements Observer, Serializable {
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
+                System.out.println(chosenCloud.getStudents().get(0));
                 if (chosenCloud.getStudents().size() == 0) { //if cloud isn't valid
                     //Mandare messaggio di scegliere una nuvola non scelta da un altro player
                     virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
@@ -420,6 +421,8 @@ public class GameController implements Observer, Serializable {
             gameInstance.getIslandWithMother().setHasProhibition(false);
             ((ProhibitionEffect)characterCardPlayed.getEffect()).endEffect();
         }
+        for(String gamer: virtualViewMap.keySet())
+            virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
         virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
     }
 
@@ -805,7 +808,6 @@ public class GameController implements Observer, Serializable {
             for (int j = 0; j < gameInstance.getPlayersNumber(); j++) {
                 gameInstance.getCloudsModel().add(new CloudModel(numStudentToMove));
                 List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (j + 1), bagSize - numStudentToMove * j));
-
                 gameInstance.getCloudsModel().get(j).setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
             }
         }else {
