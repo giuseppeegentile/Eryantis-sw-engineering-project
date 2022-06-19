@@ -169,11 +169,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             this.turnLabel.setText(turnLabel);
     }
 
-    private void cloudsDisplay() {
+    public void cloudsDisplay() {
         List<VBox> cloudsVboxes = List.of(vboxCloud1, vboxCloud2);
         if(cloudModels.size() > 2) cloudsVboxes.add(vboxCloud3);
         if(cloudModels.size() > 3) cloudsVboxes.add(vboxCloud4);
         int index = 0;
+        for (VBox clBox: cloudsVboxes) clBox.getChildren().clear();
         for(CloudModel c: cloudModels){
             cloudsVboxes.get(index).setAlignment(Pos.CENTER);
             for (ColorPawns s: c.getStudents()){
@@ -402,7 +403,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         System.out.println("tmp " + tempIndex);
         System.out.println("max " + maxMovement);
         //enableOnlyIsland();
-        for(int i = 0; i <= islands.size(); i++){
+        for(int i = 0; i < islands.size(); i++){
             int idx = i;
             System.out.println("idx");
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
@@ -422,6 +423,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void setVisibleSkip() {
         this.skipMove.setVisible(true);
     }
+
 
 //    public void enableOnlyIsland(){
 //        entrancePane.setDisable(true);

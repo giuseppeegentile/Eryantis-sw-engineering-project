@@ -420,6 +420,8 @@ public class GameController implements Observer, Serializable {
             gameInstance.getIslandWithMother().setHasProhibition(false);
             ((ProhibitionEffect)characterCardPlayed.getEffect()).endEffect();
         }
+        for(String gamer: virtualViewMap.keySet())
+            virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
         virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
     }
 
@@ -805,7 +807,7 @@ public class GameController implements Observer, Serializable {
             for (int j = 0; j < gameInstance.getPlayersNumber(); j++) {
                 gameInstance.getCloudsModel().add(new CloudModel(numStudentToMove));
                 List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (j + 1), bagSize - numStudentToMove * j));
-
+                //System.out.println("Add cloud");
                 gameInstance.getCloudsModel().get(j).setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
             }
         }else {
