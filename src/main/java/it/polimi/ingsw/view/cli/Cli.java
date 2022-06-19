@@ -272,7 +272,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex) {
         StringBuilder strBoardBld = new StringBuilder();
-        out.println(nickname + ", this is the updated island N " + islandIndex + 1 + "\n");
+        out.println(nickname + ", this is the updated island \n");
         strBoardBld.append(" -----------\n");
 
         buildIsland(islandModel, strBoardBld);

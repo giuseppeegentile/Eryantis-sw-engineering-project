@@ -181,14 +181,28 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 Button b = getStyledButton(s);
                 cloudsVboxes.get(index).getChildren().add(b);
             }
+            if(!cloudsHasHandler){
+                cloudsHasHandler = true;
+                setHandlerClouds();
+            }
+            index++;
+        }
+    }
+    private boolean cloudsHasHandler = false;
+
+    public void setHandlerClouds(){
+        List<VBox> cloudsVboxes = List.of(vboxCloud1, vboxCloud2);
+        if(cloudModels.size() > 2) cloudsVboxes.add(vboxCloud3);
+        if(cloudModels.size() > 3) cloudsVboxes.add(vboxCloud4);
+        for(int index = 0; index < cloudModels.size(); index++){
             int chosenIndex = index;
             cloudsVboxes.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+                System.out.println(chosenIndex);
                 new Thread(()->notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex))).start();
                 cloudsVboxes.get(chosenIndex).getChildren().clear();
                 turnLabel.setText("Aspetta il tuo turno");
                 subtitle.setVisible(false);
             });
-            index++;
         }
     }
 
@@ -217,6 +231,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 Button student = getStyledMotherButton();
                 tempIndex = k;
                 vBoxes.get(k).getChildren().add(student);
+            }
+            if(i.getTowerColor() != ColorTower.NULL) {
+                Button towerBtn = getStyledTower(i.getTowerColor().name());
+                vBoxes.get(k).getChildren().add(towerBtn);
             }
             for (ColorPawns st : i.getStudents()) {
                 if (!st.name().equals("NULL")) {
@@ -326,6 +344,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             Button bt2 = getStyledTower(colorTower);
             towersGrid.add(bt2, 1, i);
         }
+        i+=1;
         Button bt = getStyledTower(colorTower);
         if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
     }
@@ -408,10 +427,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             System.out.println("idx");
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)(idx-tempIndex)))).start();
-                vBoxes.get(tempIndex).getChildren().remove(getStyledMotherButton()); //non funziona
 
+                towersDisplay();
                 tempIndex = idx;
-                vBoxes.get(idx).getChildren().add(getStyledMotherButton());
+                //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
                 turnLabel.setText("Seleziona una nuvola");
                 subtitle.setText("Sposterai gli studenti nell'ingresso");
                 //enableOnlyClouds();
