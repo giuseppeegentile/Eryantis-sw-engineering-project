@@ -30,7 +30,7 @@ public class GameController implements Observer, Serializable {
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
     private String effectPlayed;
-
+    private boolean shuffle = true;
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
     private PlayerModel playerWithEffectAdditionalInfluence;
@@ -1085,7 +1085,8 @@ public class GameController implements Observer, Serializable {
             characterDeck.add(new CharacterCardModel(1,effects.get(i), i));
         }
 
-        Collections.shuffle(characterDeck);
+        if(shuffle)
+            Collections.shuffle(characterDeck);
         List<CharacterCardModel> tempToAssign = new ArrayList<>();;
         for(int j = 0; j<3; j++) {
             tempToAssign.add(characterDeck.get(j));
@@ -1181,5 +1182,9 @@ public class GameController implements Observer, Serializable {
      */
     public boolean getConsiderTower(){
         return this.considerTower;
+    }
+
+    public void setShuffleFalse() {
+        this.shuffle = false;
     }
 }
