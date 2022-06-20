@@ -4,10 +4,8 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
-import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -32,6 +30,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private int tempIndex;
     private List<ColorPawns> studentToIsland = new ArrayList<>();
     private boolean alreadyMovedStudent = false;
+    private boolean cloudsHasHandler = false;
+
+    @FXML
+    private Button skipMove;
+
+    @FXML
+    private GridPane profsGrid;
 
     @FXML
     private GridPane hallGrid;
@@ -106,6 +111,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<IslandModel> islands;
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
+
     @FXML
     private void initialize(){
         skipMove.setVisible(false);
@@ -123,6 +129,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
             this.skipMove.setVisible(false);
             this.alreadyMovedStudent = true;
+            skipped = true;
         });
 
 /*        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
@@ -159,10 +166,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         subtitle.setText(text);
     }
 
-    public void hideSubtitle(){
-        subtitle.setVisible(false);
-    }
-
     public void setTurnLabel(String turnLabel) {
         this.turnText = turnLabel;
         if(this.turnLabel != null)
@@ -170,7 +173,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void cloudsDisplay() {
-        List<VBox> cloudsVboxes = List.of(vboxCloud1, vboxCloud2);
+        List<VBox> cloudsVboxes = new ArrayList<>(List.of(vboxCloud1, vboxCloud2));
         if(cloudModels.size() > 2) cloudsVboxes.add(vboxCloud3);
         if(cloudModels.size() > 3) cloudsVboxes.add(vboxCloud4);
         int index = 0;
@@ -178,7 +181,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         for(CloudModel c: cloudModels){
             cloudsVboxes.get(index).setAlignment(Pos.CENTER);
             for (ColorPawns s: c.getStudents()){
-                Button b = getStyledButton(s);
+                Button b = getPawnByColor(s);
                 cloudsVboxes.get(index).getChildren().add(b);
             }
             if(!cloudsHasHandler){
@@ -188,16 +191,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             index++;
         }
     }
-    private boolean cloudsHasHandler = false;
+
 
     public void setHandlerClouds(){
-        List<VBox> cloudsVboxes = List.of(vboxCloud1, vboxCloud2);
+        List<VBox> cloudsVboxes = new ArrayList<>(List.of(vboxCloud1, vboxCloud2));
         if(cloudModels.size() > 2) cloudsVboxes.add(vboxCloud3);
         if(cloudModels.size() > 3) cloudsVboxes.add(vboxCloud4);
         for(int index = 0; index < cloudModels.size(); index++){
             int chosenIndex = index;
             cloudsVboxes.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                System.out.println(chosenIndex);
                 new Thread(()->notifyObserver(obs -> obs.onChosenCloud(nickname, chosenIndex))).start();
                 cloudsVboxes.get(chosenIndex).getChildren().clear();
                 turnLabel.setText("Aspetta il tuo turno");
@@ -206,7 +208,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    private Button getStyledButton(ColorPawns s) {
+    private Button getPawnByColor(ColorPawns s) {
         Button b = new Button();
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
@@ -238,7 +240,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
             for (ColorPawns st : i.getStudents()) {
                 if (!st.name().equals("NULL")) {
-                    Button student = getStyledButton(st);
+                    Button student = getPawnByColor(st);
                     vBoxes.get(k).getChildren().add(student);
                 }
             }
@@ -253,6 +255,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 //System.out.println("entra ancora qui");
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToIsland(nickname, studentToIsland, islandIndex))).start();
                 this.alreadyMovedStudent = true;
+                skipped = true;
             }
         });
     }
@@ -285,20 +288,20 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void entranceDisplay() {
         entrancePane.getChildren().clear();
-        Button b = getStyledButton(entrance.get(0));
+        Button b = getPawnByColor(entrance.get(0));
         entrancePane.add(b, 1, 0);
         setEntranceEventListener(b, entrance.get(0));
         int idx = 1;
         int rowGrid = 2;
         for(int j = 1; j < rowGrid; j++){
-            Button bt = getStyledButton(entrance.get(idx));
+            Button bt = getPawnByColor(entrance.get(idx));
             bt.setMaxHeight(30.0);
             setEntranceEventListener(bt, entrance.get(idx));
             GridPane.setFillWidth(bt, true);
             entrancePane.add(bt, 0, j);
             idx++;
             if(idx == entrance.size()) break;
-            Button bt2 = getStyledButton(entrance.get(idx));
+            Button bt2 = getPawnByColor(entrance.get(idx));
             setEntranceEventListener(bt2, entrance.get(idx));
             bt2.setMaxHeight(30.0);
             GridPane.setFillWidth(bt2, true);
@@ -310,10 +313,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
 
-    @FXML
-    private Button skipMove;
+    private boolean skipped = false;
+
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
-        if(this.numberStudentsToMove == 0) {
+        if(this.numberStudentsToMove == 0 && !skipped) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 skipMove.setVisible(false);
                 if (studentToIsland.size() < 3)
@@ -337,7 +340,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private void towersDisplay() {
         String colorTower = towers.get(0).name().toLowerCase();
         int i;
-        System.out.println(towers.size());
         for (i = 0; i < towers.size() / 2; i++) {
             Button bt = getStyledTower(colorTower);
             towersGrid.add(bt, 0, i);
@@ -401,30 +403,27 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void hallDisplay() {
         for(int i=0; i < hall.get(ColorPawns.GREEN); i++){
-            hallGrid.add(getStyledButton(ColorPawns.GREEN) , i, 0);
+            hallGrid.add(getPawnByColor(ColorPawns.GREEN) , i, 0);
         }
         for(int i=0; i < hall.get(ColorPawns.RED); i++){
-            hallGrid.add(getStyledButton(ColorPawns.RED) , i, 1);
+            hallGrid.add(getPawnByColor(ColorPawns.RED) , i, 1);
         }
         for(int i=0; i < hall.get(ColorPawns.YELLOW); i++){
-            hallGrid.add(getStyledButton(ColorPawns.YELLOW) , i, 2);
+            hallGrid.add(getPawnByColor(ColorPawns.YELLOW) , i, 2);
         }
         for(int i=0; i < hall.get(ColorPawns.PINK); i++){
-            hallGrid.add(getStyledButton(ColorPawns.PINK) , i, 3);
+            hallGrid.add(getPawnByColor(ColorPawns.PINK) , i, 3);
         }
         for(int i=0; i < hall.get(ColorPawns.BLUE); i++){
-            hallGrid.add(getStyledButton(ColorPawns.BLUE) , i, 4);
+            hallGrid.add(getPawnByColor(ColorPawns.BLUE) , i, 4);
         }
     }
 
     public void islandHandlerMother(byte maxMovement) {
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
-        System.out.println("tmp " + tempIndex);
-        System.out.println("max " + maxMovement);
         //enableOnlyIsland();
-        for(int i = 0; i < islands.size(); i++){
+        for(int i = tempIndex; i <= (tempIndex + maxMovement); i++){
             int idx = i;
-            System.out.println("idx");
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)(idx-tempIndex)))).start();
 
@@ -441,6 +440,17 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setVisibleSkip() {
         this.skipMove.setVisible(true);
+    }
+
+    public void displayProfs(){
+        int row = 0;
+        profsGrid.getChildren().clear();
+        for (ColorPawns pr: List.of(ColorPawns.GREEN, ColorPawns.RED, ColorPawns.YELLOW,ColorPawns.PINK,ColorPawns.BLUE)){
+            if(profs.contains(pr)){
+                profsGrid.add(getPawnByColor(pr), 0, row);
+            }
+            row+=1;
+        }
     }
 
 

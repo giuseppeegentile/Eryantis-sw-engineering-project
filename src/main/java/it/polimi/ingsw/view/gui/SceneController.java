@@ -1,18 +1,14 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.observer.ViewObserver;
 import it.polimi.ingsw.view.gui.scene.*;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -67,15 +63,14 @@ public class SceneController extends ViewObservable {
     /**
      * Changes the root panel of the scene argument.
      *
+     * @param <T>          this is the type parameter.
      * @param observerList a list of observers to be set into the scene controller.
      * @param event        the event which is happened into the scene.
      * @param fxml         the new scene fxml name. It must include the extension ".fxml" (i.e. next_scene.fxml).
-     * @param <T>          this is the type parameter.
-     * @return the controller of the new scene loaded by the FXMLLoader.
      */
-    public static <T> T changeRootPane(List<ViewObserver> observerList, Event event, String fxml) {
+    public static <T> void changeRootPane(List<ViewObserver> observerList, Event event, String fxml) {
         Scene scene = ((Node) event.getSource()).getScene();
-        return changeRootPane(observerList, scene, fxml);
+        changeRootPane(observerList, scene, fxml);
     }
 
     /**
@@ -122,10 +117,10 @@ public class SceneController extends ViewObservable {
      * @param event      the event which is happened into the scene.
      * @param fxml       the new scene fxml name. It must include the extension ".fxml" (i.e. next_scene.fxml).
      */
-    public static void changeRootPane(GenericSceneController controller, Event event, String fxml) {
+    /*public static void changeRootPane(GenericSceneController controller, Event event, String fxml) {
         Scene scene = ((Node) event.getSource()).getScene();
         changeRootPane(controller, scene, fxml);
-    }
+    }*/
 
     /**
      * Changes the root panel of the active scene.

@@ -42,7 +42,6 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void askMoveEntranceToHall(String player, List<ColorPawns> students, int numberStudentsToMove){
         boardSceneController.setNumberToMove(numberStudentsToMove);
-        System.out.println(numberStudentsToMove);
         Platform.runLater(() -> {
             boardSceneController.setTurnLabel("Sposta " + numberStudentsToMove + " studenti dall'ingresso alla sala");
             boardSceneController.entranceDisplay();
@@ -141,7 +140,7 @@ public class Gui extends ViewObservable implements View {
     }
     @Override
     public void showEndTurn(String nick){
-        Platform.runLater(() -> {boardSceneController.setTurnLabel("Aspetta il tuo turno");});
+        Platform.runLater(() -> boardSceneController.setTurnLabel("Aspetta il tuo turno"));
 
     }
     @Override
@@ -149,7 +148,7 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showStartTurn(String nick){
-        Platform.runLater(() -> {boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata");});
+        Platform.runLater(() -> boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata"));
     }
 
     @Override
@@ -283,20 +282,24 @@ public class Gui extends ViewObservable implements View {
                 }
             });
         }else{
+            boardSceneController.setHall(hall);
+            boardSceneController.setProfs(profs);
             if(!checkpointBoard){
                 this.nickname=nickname.getNickname();
                 boardSceneController.setTowers(towers);
-                boardSceneController.setHall(hall);
                 boardSceneController.setEntrance(entrance);
-                boardSceneController.setProfs(profs);
                 boardSceneController.setPlayer(nickname.getNickname());
                 //new Thread(() -> notifyObserver(obs -> obs.onRequestLobby(nickname.getNickname()))).start();
                 boardSceneController.addAllObservers(observers);
                 Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
                 checkpointBoard = true;
             }else{
-                boardSceneController.setHall(hall);
-                Platform.runLater(()->boardSceneController.hallDisplay());
+
+                Platform.runLater(()-> {
+                            boardSceneController.hallDisplay();
+                            boardSceneController.displayProfs();
+                        }
+                );
             }
 
         }
