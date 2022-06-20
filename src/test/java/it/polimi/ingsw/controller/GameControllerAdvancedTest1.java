@@ -3,9 +3,11 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.effects.InitialConfigEffect;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
+import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
@@ -17,9 +19,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class GameControllerAdvancedTest {
+class GameControllerAdvancedTest1 {
 
     private static GameModel gameInstance;
     private static GameController gameController;
@@ -35,6 +39,7 @@ class GameControllerAdvancedTest {
     @BeforeAll
     public static void setUp() {
         gameController = new GameController();
+        gameController.setShuffleFalse();
         gameInstance = GameModel.getInstance();
 
         clientHandler = new ClientHandler() {
@@ -86,7 +91,7 @@ class GameControllerAdvancedTest {
     @Test
     void testingGameTurnAdvanced(){
         //System.out.println(gameInstance.getPlayersModel().get(0) + " " + gameInstance.getPlayersModel().get(1) + " " + gameInstance.getPlayersModel().get(2));
-        GameModeRes gameModeRes = new GameModeRes(player1, GameMode.BEGINNER);
+        GameModeRes gameModeRes = new GameModeRes(player1, GameMode.ADVANCED);
         gameController.onMessageReceived(gameModeRes);
 
         ChosenTowerMessage chosenTowerMessage = new ChosenTowerMessage(player1, tower1);
@@ -105,13 +110,14 @@ class GameControllerAdvancedTest {
         assertEquals(gameInstance.getPlayersModel().get(2).getNickname(), player3);
         assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), ColorTower.GREY);
 
-        //DA TESTARE CON 4 giocatori per vedere se assegnamento torri è giusto
-
         assertEquals(0, gameInstance.getPlayersModel().get(0).getStudentInHall().get(ColorPawns.RED));
         assertEquals(0, gameInstance.getPlayersModel().get(2).getStudentInHall().get(ColorPawns.BLUE));
         assertEquals(4, gameInstance.getCloudsModel().get(0).getStudents().size());
         assertEquals(gameInstance.getPlayersModel().get(0), gameController.getPlayerActive());
-
+        assertEquals(3, gameInstance.getPlayersModel().get(0).getCharacterDeck().size());
+        assertEquals("AddToIslandEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect().getClass().getSimpleName());
+        assertEquals("ControlProfEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(1).getEffect().getClass().getSimpleName());
+        assertEquals("PickIslandInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(2).getEffect().getClass().getSimpleName());
         assertEquals(3, gameInstance.getCloudsModel().size());
 
         gameInstance.getPlayersModel().forEach(p -> {
@@ -173,6 +179,21 @@ class GameControllerAdvancedTest {
         }*/
 
         //turno primo giocatore
+
+        PlayedCharacterCardMessage playedCharacterCardMessage = new PlayedCharacterCardMessage(gameInstance.getPlayersModel().get(0).getNickname(), gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0));
+        gameController.onMessageReceived(playedCharacterCardMessage);
+        InitialConfigEffect initialConfigEffect = (InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect();
+        ColorPawns studentChosen = initialConfigEffect.getStudents().get(1);
+        IslandModel oldIsland = gameInstance.getIslandsModel().get(1);
+        oldIsland.getStudents().add(studentChosen);
+        InitialConfigEffect oldCard = (InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect();
+        oldCard.getStudents().remove(studentChosen);
+        MovedFromCardToIsland movedFromCardToIsland = new MovedFromCardToIsland(player1, 1, initialConfigEffect.getStudents().get(1));
+        gameController.onMessageReceived(movedFromCardToIsland);
+        assertEquals(gameInstance.getIslandsModel().get(1).getStudents(), oldIsland.getStudents());
+        InitialConfigEffect newCard = (InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect();
+        assertEquals(oldCard.getStudents(), newCard.getStudents());
+
 
         PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
         /*System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
@@ -237,8 +258,13 @@ class GameControllerAdvancedTest {
         assertTrue(gameInstance.getIslandsModel().get(5).getStudents().containsAll(secondStudentsToMove));
 
         color2 = secondPlayer.getStudentInEntrance().get(0);
-
         assertEquals(secondPlayer, gameController.getPlayerActive());
+
+        gameInstance.getPlayersModel().get(1).addCoins();
+        playedCharacterCardMessage = new PlayedCharacterCardMessage(gameInstance.getPlayersModel().get(1).getNickname(), gameInstance.getPlayersModel().get(1).getCharacterDeck().get(1));
+        gameController.onMessageReceived(playedCharacterCardMessage);
+        assertTrue(gameInstance.getPlayersModel().get(1).getProfs().containsAll(asList(ColorPawns.GREEN, ColorPawns.PINK, ColorPawns.BLUE, ColorPawns.RED, ColorPawns.YELLOW)));
+
         MovedStudentToHallMessage toHallMessage2 = new MovedStudentToHallMessage(gameController.getPlayerActive().getNickname(), List.of(color2));
         gameController.onMessageReceived(toHallMessage2);
         assertEquals(1, secondPlayer.getStudentInHall().get(color2));
@@ -284,6 +310,20 @@ class GameControllerAdvancedTest {
         }
         else
             assertEquals(2, thirdPlayer.getStudentInHall().get(color3));
+
+        gameInstance.getPlayersModel().get(2).addCoins();
+        gameInstance.getPlayersModel().get(2).addCoins();
+        playedCharacterCardMessage = new PlayedCharacterCardMessage(gameInstance.getPlayersModel().get(2).getNickname(), gameInstance.getPlayersModel().get(2).getCharacterDeck().get(2));
+        gameController.onMessageReceived(playedCharacterCardMessage);
+        gameInstance.getPlayersModel().get(0).getProfs().clear();
+        gameInstance.getPlayersModel().get(1).getProfs().clear();
+        gameInstance.getPlayersModel().get(2).getProfs().clear();
+        gameInstance.getPlayersModel().get(2).addProf(ColorPawns.GREEN);
+        gameInstance.getIslandsModel().get(2).getStudents().clear();
+        gameInstance.getIslandsModel().get(2).addStudent(ColorPawns.GREEN);
+        ExtraGetInfluence extraGetInfluence = new ExtraGetInfluence(gameInstance.getPlayersModel().get(2).getNickname(), 2);
+        gameController.onMessageReceived(extraGetInfluence);
+        assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), gameInstance.getIslandsModel().get(2).getTowerColor());
 
         indexOldMother = gameInstance.getMotherNatureIndex();
         MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
