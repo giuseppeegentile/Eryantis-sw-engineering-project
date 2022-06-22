@@ -298,6 +298,17 @@ public class GameController implements Observer, Serializable {
                 studentsOnHallActions(receivedMessage);
                 askCharacter(MessageType.PLAYER_MOVED_STUDENTS_ON_HALL);
                 virtualViewMap.get(playerActive.getNickname()).showEntranceChange(playerActive.getNickname(), playerActive.getStudentInEntrance());
+                for(String s: virtualViewMap.keySet()) {
+                    PlayerModel p = gameInstance.getPlayerByNickname(s);
+                    List<ColorTower> updatedTowers = new ArrayList<>();
+                    for(int j = 0; j < p.getTowerNumber(); j++) updatedTowers.add(p.getColorTower());
+                    virtualViewMap.get(s).showPlayerBoardMessage(p,
+                            updatedTowers,
+                            p.getStudentInHall(),
+                            p.getStudentInEntrance(),
+                            p.getProfs()
+                    );
+                }
                 break;
             case PLAYER_MOVED_MOTHER:
                 this.oldMessage = receivedMessage;

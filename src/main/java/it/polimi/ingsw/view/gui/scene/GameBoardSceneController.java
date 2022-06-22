@@ -226,6 +226,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int k = 0;
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
 
+
         for(IslandModel i: islands){
             vBoxes.get(k).getChildren().clear();
             setIslandEventListener(vBoxes.get(k), k);
@@ -247,14 +248,17 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
             k++;
         }
+        for(; k< 12; k++){
+            vBoxes.get(k).getChildren().clear();
+            vBoxes.get(k).setDisable(true);
+
+            //vImages.get(k).setVisible(false);
+        }
     }
 
     private void setIslandEventListener(VBox vBox, int islandIndex) {
         vBox.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
-            //System.out.println(alreadyMovedStudent);
             if(!alreadyMovedStudent) {
-                System.out.println("Handler evenetListener student to island ");
-                //System.out.println("entra ancora qui");
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToIsland(nickname, studentToIsland, islandIndex))).start();
                 this.alreadyMovedStudent = true;
             }
@@ -341,9 +345,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    private void towersDisplay() {
+    public void towersDisplay() {
         String colorTower = towers.get(0).name().toLowerCase();
         int i;
+        towersGrid.getChildren().clear();
         for (i = 0; i < towers.size() / 2; i++) {
             Button bt = getStyledTower(colorTower);
             towersGrid.add(bt, 0, i);
@@ -428,7 +433,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
         //enableOnlyIsland();
         for(int i = tempIndex; i <= (tempIndex + maxMovement); i++){
-            int idx = i % 12;
+            int idx = i % islands.size();
             int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 if(!alreadyMovedMother) {

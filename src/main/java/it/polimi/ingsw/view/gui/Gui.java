@@ -303,10 +303,12 @@ public class Gui extends ViewObservable implements View {
                 checkpointBoard = true;
             }else{
                 Platform.runLater(()-> {
-                            boardSceneController.hallDisplay();
-                            boardSceneController.displayProfs();
-                        }
-                );
+                    boardSceneController.setTowers(towers);
+                    boardSceneController.setProfs(profs);
+                    boardSceneController.towersDisplay();
+                    boardSceneController.hallDisplay();
+                    boardSceneController.displayProfs();
+                });
             }
 
         }
