@@ -375,6 +375,9 @@ public class GameController implements Observer, Serializable {
         }
     }
 
+    /**
+     * Updates the old state of the game, in particular the movement of students from entrance to islands, from entrance to hall and the play of an assistant card
+     */
     private void continueFromOldState() {
         switch (this.oldState) {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
@@ -1117,6 +1120,11 @@ public class GameController implements Observer, Serializable {
             gameInstance.getPlayersModel().get(j).assignCharacterDeck(tempToAssign);
     }
 
+    /**
+     *
+     * @param incr test is incremented by "incr"'s value
+     */
+
     public void incrementTest(int incr){
         test += incr;
     }
@@ -1203,13 +1211,26 @@ public class GameController implements Observer, Serializable {
         return this.considerTower;
     }
 
+    /**
+     * sets shuffle to false
+     */
+
     public void setShuffleFalse() {
         this.shuffle = false;
     }
 
+    /**
+     *
+     * @return return the player that used the character's card with the additional influence effect
+     */
+
     public PlayerModel getPlayerWithEffectAdditionalInfluence(){
         return playerWithEffectAdditionalInfluence;
     }
+
+    /**
+     * @return the color to exclude due to a usage of a character card
+     */
 
     public ColorPawns getColorToExclude(){
         return colorToExclude;

@@ -11,6 +11,10 @@ public class AddInfluenceEffect implements Effect, Serializable {
     private int costForEffect;
     GameController gameController;
 
+    /**
+     * Adds the "add influence" effect of a character card to game controller
+     */
+
     public AddInfluenceEffect(GameController gameController){
         this.gameController = gameController;
         this.costForEffect = 2;

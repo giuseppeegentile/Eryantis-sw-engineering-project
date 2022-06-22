@@ -16,6 +16,12 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
         this.costForEffect = 1;
     }
 
+    /**
+     * Gets the parameters chosen by the player
+     * @param studentFromEntrance students chosen from the entrance
+     * @param studentFromHall students chosen from the hall
+     */
+
     public void choose(List<ColorPawns> studentFromEntrance, List<ColorPawns> studentFromHall){
         this.studentFromEntrance = studentFromEntrance;
         this.studentFromHall = studentFromHall;
@@ -36,9 +42,16 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
         System.out.println(this.costForEffect);
     }
 
+    /**
+     * @return the list of student chosen from entrance
+     */
     public List<ColorPawns> getStudentFromEntrance() {
         return studentFromEntrance;
     }
+
+    /**
+     * @return the list of students chosen from hall
+     */
 
     public List<ColorPawns> getStudentFromHall() {
         return studentFromHall;

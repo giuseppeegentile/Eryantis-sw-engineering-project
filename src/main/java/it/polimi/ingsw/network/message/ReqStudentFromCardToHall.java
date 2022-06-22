@@ -9,6 +9,12 @@ public class ReqStudentFromCardToHall extends Message{
 
     private final List<ColorPawns> studentsOnCard;
 
+    /**
+     * Message sent to move a student from the character's card to the hall
+     * @param nickname current player
+     * @param studentsOnCard students to move
+     */
+
     public ReqStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard) {
         super(nickname, MessageType.REQ_CARD_TO_HALL);
         this.studentsOnCard = studentsOnCard;

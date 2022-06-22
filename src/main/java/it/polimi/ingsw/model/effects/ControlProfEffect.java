@@ -15,6 +15,10 @@ public class ControlProfEffect implements Effect, Serializable {
     private PlayerModel playerWithProfs;
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
 
+    /**
+     * Cost of the card's effect in number of coins
+     */
+
     public ControlProfEffect(){
         this.costForEffect = 2;
     }
@@ -49,9 +53,17 @@ public class ControlProfEffect implements Effect, Serializable {
         return "EFFECT: during this turn, take control of the professors even if you have the same number of students in your room as the player currently controlling them.";
     }
 
+    /**
+     * @return the old association of a prof to a player
+     */
+
     public Map<ColorPawns, PlayerModel> getOldAssociationProfs(){
         return this.oldAssociationProfs;
     }
+
+    /**
+     * @return the player with profs so far
+     */
 
     public PlayerModel getPlayerWithProfs() {
         return playerWithProfs;

@@ -9,6 +9,9 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
     private static final long serialVersionUID = -5520393474357646858L;
     private int costForEffect;
 
+    /**
+     * Gets the card's cost in number of coins
+     */
     public ExtraMovementMotherEffect(){
         this.costForEffect = 1;
     }

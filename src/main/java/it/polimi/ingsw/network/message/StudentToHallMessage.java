@@ -9,6 +9,13 @@ public class StudentToHallMessage extends Message {
     private final List<ColorPawns> entrance;
     private final int numberStudentsToMove;
 
+    /**
+     * Message sent to move a student from the entrance to the hall
+     * @param player current player
+     * @param entrance player's entrance
+     * @param numberStudentsToMove number of students to move
+     */
+
     public StudentToHallMessage(String player, List<ColorPawns> entrance, int numberStudentsToMove) {
         super(player, MessageType.REQ_ENTRANCE_TO_ISLAND);
         this.entrance =entrance;

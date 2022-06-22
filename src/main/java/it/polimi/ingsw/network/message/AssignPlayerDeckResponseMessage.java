@@ -34,6 +34,10 @@ public class AssignPlayerDeckResponseMessage extends Message {
                 '}';
     }
 
+    /**
+     * @return the models of the assistant cards
+     */
+
     public List<AssistantCardModel> getAssistantCardModels() {
         return assistantCardModels;
     }

@@ -11,6 +11,13 @@ public class StudentToIslandMessage extends Message{
     private final List<ColorPawns> entrance;
     private final List<IslandModel> islands;
 
+    /**
+     * Message sent to move a student from the entrance to the island
+     * @param nickname current player
+     * @param entrance player's entrance
+     * @param islands island to which move the student
+     */
+
     public StudentToIslandMessage(String nickname, List<ColorPawns> entrance,List<IslandModel> islands) {
         super(nickname, MessageType.REQ_ENTRANCE_TO_HALL);
         this.entrance = entrance;

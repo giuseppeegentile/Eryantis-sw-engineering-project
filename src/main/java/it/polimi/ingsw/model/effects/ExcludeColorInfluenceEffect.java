@@ -13,10 +13,18 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     private final GameController gameController;
     private ColorPawns colorToExclude;
 
+    /**
+     * Adds the card's effect to game controller
+     */
+
     public ExcludeColorInfluenceEffect(GameController gameController){
         this.gameController = gameController;
         this.costForEffect = 3;
     }
+
+    /**
+     * @param colorToExclude gets the color to exclude chosen by the player
+     */
 
     public void choose(ColorPawns colorToExclude){
         this.colorToExclude = colorToExclude;
@@ -41,6 +49,10 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     public String getDescription() {
         return "EFFECT: choose a student color; this turn, during the influence calculation that color provides no influence.";
     }
+
+    /**
+     * @return the color to exclude
+     */
 
     public ColorPawns getColorToExclude() {
         return colorToExclude;

@@ -26,6 +26,10 @@ public class InitialConfigEffect implements Effect, Serializable {
 
     }
 
+    /**
+     * Gets students from the bag
+     */
+
     void getFromBag(){
         ColorPawns stud = GameModel.getInstance().getBag().get(0);
         this.students.add(stud);
@@ -49,17 +53,32 @@ public class InitialConfigEffect implements Effect, Serializable {
                 "                                  EFFECT: ";
     }
 
+    /**
+     * @return the number of students
+     */
     public int getNumStudents() {
         return numStudents;
     }
 
+    /**
+     * @return the list of students
+     */
     public List<ColorPawns> getStudents() {
         return new ArrayList<>(this.students);
     }
 
+    /**
+     * @return the card's effect cost in number of money
+     */
+
     public int getCostForEffect() {
         return costForEffect;
     }
+
+    /**
+     * Sets the effect's cost
+     * @param costForEffect is the cost for the activation of the effect
+     */
 
     public void setCostForEffect(int costForEffect){
         this.costForEffect = costForEffect;

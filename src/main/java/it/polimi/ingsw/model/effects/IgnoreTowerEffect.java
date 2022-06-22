@@ -11,6 +11,10 @@ public class IgnoreTowerEffect implements Effect, Serializable {
     private int costForEffect;
     private final GameController controller;
 
+    /**
+     * Gets the card's effect in number of coins
+     */
+
     public IgnoreTowerEffect(GameController controller){
         this.controller = controller;
         this.costForEffect = 3;

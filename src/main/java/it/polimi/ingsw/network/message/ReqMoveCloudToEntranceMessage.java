@@ -8,6 +8,12 @@ public class ReqMoveCloudToEntranceMessage extends Message{
     private static final long serialVersionUID = -175250577233070966L;
     private final List<CloudModel> clouds;
 
+    /**
+     * Message sent to move students from clouds to the entrance
+     * @param nickname current player
+     * @param clouds list of clouds
+     */
+
     public ReqMoveCloudToEntranceMessage(String nickname, List<CloudModel> clouds) {
         super(nickname, MessageType.MOVE_CLOUD_TO_ENTRANCE);
         this.clouds = new ArrayList<>(clouds);

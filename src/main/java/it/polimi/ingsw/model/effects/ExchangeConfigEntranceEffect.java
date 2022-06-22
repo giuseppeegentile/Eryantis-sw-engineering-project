@@ -13,10 +13,20 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromCard;
 
+    /**
+     * Gets the parameters chosen by the player
+     * @param studentFromCard students chosen from the card
+     * @param studentFromEntrance students chosen from the card
+     */
+
     public void choose(List<ColorPawns> studentFromCard, List<ColorPawns> studentFromEntrance){
         this.studentFromCard = studentFromCard;
         this.studentFromEntrance = studentFromEntrance;
     }
+
+    /**
+     * Activates the card's effect
+     */
 
     public ExchangeConfigEntranceEffect(List<ColorPawns> students) {
         super(students, 1, 6);
@@ -45,6 +55,10 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     public List<ColorPawns> getStudentFromEntrance() {
         return studentFromEntrance;
     }
+
+    /**
+     * Gets the character card's description
+     */
 
     public String getDescription(){
         return super.getDescription() + "you can take up to 3 students from this card and exchange them with students in your entrance.";

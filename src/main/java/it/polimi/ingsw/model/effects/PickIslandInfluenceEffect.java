@@ -14,10 +14,18 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
     private int indexIslandEffect;
     private final GameController gameController;
 
+    /**
+     * Gets the card's effect cost in number of coins
+     */
+
     public PickIslandInfluenceEffect(GameController controller){
         this.gameController = controller;
         this.costForEffect = 3;
     }
+
+    /**
+     * Gets index of the island chosen by the player
+     */
 
     public void choose(int indexIslandEffect){
         this.indexIslandEffect = indexIslandEffect;
@@ -45,9 +53,18 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
         return "EFFECT: choose an island and calculate the majority as if mother nature ended her movement there. In this turn, mother nature will move as usual and on the island where her movement ends, the majority will normally be calculated.";
     }
 
+    /**
+     * @return the index of the island
+     */
+
     public int getIndexIslandEffect() {
         return indexIslandEffect;
     }
+
+    /**
+     * Gets the index of the island in which activate the effect
+     * @param indexIslandEffect the index of the island
+     */
 
     public void setIndexIslandEffect(int indexIslandEffect) {
         this.indexIslandEffect = indexIslandEffect;

@@ -11,9 +11,17 @@ public class ProhibitionEffect implements Effect, Serializable {
     private int chosenIndexIsland;
     private int numberProhibition = 4;
 
+    /**
+     * Sets rhw index of the chosen island
+     */
+
     public void choose(int chosenIndexIsland){
         this.chosenIndexIsland = chosenIndexIsland;
     }
+
+    /**
+     * Sets the card's cost in number of coins
+     */
 
     public ProhibitionEffect(){
         this.costForEffect =2;
@@ -30,6 +38,10 @@ public class ProhibitionEffect implements Effect, Serializable {
         this.costForEffect++;
         System.out.println(this.costForEffect);
     }
+
+    /**
+     * Ends the card's effect
+     */
 
     public void endEffect(){
         this.numberProhibition++;
@@ -50,6 +62,10 @@ public class ProhibitionEffect implements Effect, Serializable {
                 "EFFECT: place a ban tile on an island of your choice. The first time mother nature ends her movement there, put the prohibition tile back on the card without calculating the influence on that island or placing towers.";
 
     }
+
+    /**
+     * @return the prohibition's number
+     */
 
     public int getNumberProhibition() {
         return numberProhibition;
