@@ -27,6 +27,7 @@ public class ScreenTitleSceneController extends ViewObservable implements Generi
         quitGameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> System.exit(0));
     }
 
+
     /**
      * Handles click on Play button.
      *
