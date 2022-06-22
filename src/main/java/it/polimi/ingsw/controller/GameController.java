@@ -127,7 +127,7 @@ public class GameController implements Observer, Serializable {
                 break;
             case PLAYERNUMBER_REPLY:
                 gameInstance.setPlayerNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
-                virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+                virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers(), gameInstance.getGameMode());
                 break;
             case CHOSEN_TOWER:
                 ColorTower chosenTower = ((ChosenTowerMessage) receivedMessage).getColorTowers();
@@ -135,7 +135,7 @@ public class GameController implements Observer, Serializable {
                     //it can happen even if in the client side we show only the
                     //available towers, because is async for other players
                     //future feature?: add live update for client when available towers change
-                    virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers());
+                    virtualViewMap.get(receivedMessage.getNickname()).askTowerColor(receivedMessage.getNickname(), getAvailableTowers(), gameInstance.getGameMode());
                 } else {
                     int numPlayers = gameInstance.getPlayersNumber();
                     setTowers(receivedMessage, chosenTower, numPlayers);
@@ -520,7 +520,7 @@ public class GameController implements Observer, Serializable {
                 setOwnerDeck(nickname);
                 assignCardsToPlayer(nickname);
                 vv.showLoginResult(true, true, "SERVER_NICKNAME");
-                vv.askTowerColor(nickname, getAvailableTowers());
+                vv.askTowerColor(nickname, getAvailableTowers(), gameInstance.getGameMode());
             }
         }
     }

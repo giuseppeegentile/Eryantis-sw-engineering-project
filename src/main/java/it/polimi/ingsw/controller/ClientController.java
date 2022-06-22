@@ -60,7 +60,7 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.askStudentFromCardToHall(message.getNickname(), ((ReqStudentFromCardToHall)message).getStudentsOnCard()));
                 break;
             case INIT:
-                queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));
+                queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers(), ((InitialResMessage)message).getGameMode()));
                 break;
             case GAMEMODE_REQUEST:
                 queueTasks.execute(view::askGameMode);

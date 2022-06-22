@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -89,7 +90,7 @@ public interface View {
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
 
-    void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers);
+    void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode);
 
 
     void askPlayersNumber();

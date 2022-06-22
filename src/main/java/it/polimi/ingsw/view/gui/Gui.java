@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -22,6 +23,7 @@ public class Gui extends ViewObservable implements View {
     private static final String STR_ERROR = "ERROR";
     private GameBoardSceneController boardSceneController;
     private String nickname=null;
+    boolean checkpointBoard = false;
 
     @Override
     public void showWinMessage(PlayerModel winner) {
@@ -95,7 +97,6 @@ public class Gui extends ViewObservable implements View {
 
     }
 
-    boolean checkpointBoard = false;
     @Override
     public void showIslands(String nickname, List<IslandModel> islands){
         boardSceneController.setIslands(islands);
@@ -198,7 +199,7 @@ public class Gui extends ViewObservable implements View {
     public void showOrderPhase(String nickname, List<PlayerModel> order){}
 
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode){
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
 
         towerColorSceneController.addAllObservers(observers);
