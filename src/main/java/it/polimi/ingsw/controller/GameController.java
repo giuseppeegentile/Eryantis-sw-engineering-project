@@ -1,5 +1,4 @@
 package it.polimi.ingsw.controller;
-
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;

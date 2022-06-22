@@ -2,7 +2,9 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
@@ -68,6 +70,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     TableColumn<String, String> gamersCol;
 
     @FXML
+    ImageView character;
+
+    @FXML
     private VBox vboxCloud1;
     @FXML
     private VBox vboxCloud2;
@@ -117,6 +122,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         skipMove.setVisible(false);
         lobbyTable.setVisible(false);
         lobbyBtn.setVisible(false);
+        if(GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
+            character.setVisible(false);
         this.turnLabel.setText(turnText);
         //setLobbyTable();
         entranceDisplay();
@@ -145,6 +152,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 ex.printStackTrace();
             }
         });
+
+        
 
 
 /*        lobbyTable.setRowFactory(tv -> {
