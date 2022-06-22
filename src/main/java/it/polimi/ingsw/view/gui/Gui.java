@@ -136,8 +136,21 @@ public class Gui extends ViewObservable implements View {
             boardSceneController.setDeckSceneController(deckSceneController);
 
         });
-
     }
+
+    @Override
+    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
+        CharacterSceneController characterSceneController = new CharacterSceneController();
+        characterSceneController.setDeck(characterDeck);
+        characterSceneController.setNickname(active.getNickname());
+        characterSceneController.addAllObservers(observers);
+        Platform.runLater(()-> {
+            boardSceneController.setTurnLabel("Scegli un effetto");
+            boardSceneController.setCharacterSceneController(characterSceneController);
+
+        });
+    }
+
     @Override
     public void showEndTurn(String nick){
         Platform.runLater(() -> boardSceneController.setTurnLabel("Aspetta il tuo turno"));
@@ -212,10 +225,6 @@ public class Gui extends ViewObservable implements View {
 
     }
 
-    @Override
-    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
-
-    }
 
     @Override
     public void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard) {

@@ -10,7 +10,10 @@ import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -113,6 +116,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<CloudModel> cloudModels;
     private List<String> nicknameList;
     private DeckSceneController deckSceneController;
+    private CharacterSceneController characterSceneController;
     private List<IslandModel> islands;
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
@@ -122,7 +126,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         skipMove.setVisible(false);
         lobbyTable.setVisible(false);
         lobbyBtn.setVisible(false);
-        if(GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
+        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER)
             character.setVisible(false);
         this.turnLabel.setText(turnText);
         //setLobbyTable();
@@ -153,7 +157,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         });
 
-        
+        character.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            try {
+                SceneController.showCharacter(characterSceneController, "CharacterScene.fxml");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
 
 
 /*        lobbyTable.setRowFactory(tv -> {
@@ -328,6 +340,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(this.numberStudentsToMove == 0 && !skipped) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 skipMove.setVisible(false);
+                new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                 if (studentToIsland.size() < 3)
                     studentToIsland.add(colorToMove);
                 //if(studentToIsland.size() == 3) enableOnlyIsland();
@@ -336,6 +349,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 if (studentToHall.size() <= this.numberStudentsToMove) {
                     this.studentToHall.add(colorToMove);
+                    new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                     this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
                         new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
@@ -396,6 +410,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    public void setCharacterSceneController(CharacterSceneController characterSceneController){
+        this.characterSceneController = characterSceneController;
+        if(this.turnLabel != null){
+            this.turnLabel.setText("Gioca una carta");
+        }
+    }
+
     public void setIslands(List<IslandModel> islands){
         this.islands = islands;
     }
@@ -434,6 +455,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         for(int i = tempIndex; i <= (tempIndex + maxMovement); i++){
             int idx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+                new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)(idx-tempIndex)))).start();
 
                 towersDisplay();
