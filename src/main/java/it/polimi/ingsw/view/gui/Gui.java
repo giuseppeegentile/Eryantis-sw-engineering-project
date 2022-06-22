@@ -62,6 +62,8 @@ public class Gui extends ViewObservable implements View {
     public void askMoveEntranceToIsland(String player, List<ColorPawns> colorPawns, List<IslandModel> islands) {
         Platform.runLater(()-> {
             boardSceneController.setVisibleSkip();
+            boardSceneController.setEntrance(colorPawns);
+            boardSceneController.entranceDisplay();
             boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola");
             //boardSceneController.enableOnlyEntrance();
         });
@@ -140,7 +142,10 @@ public class Gui extends ViewObservable implements View {
     }
     @Override
     public void showEndTurn(String nick){
-        Platform.runLater(() -> boardSceneController.setTurnLabel("Aspetta il tuo turno"));
+        Platform.runLater(() -> {
+            boardSceneController.setTurnLabel("Aspetta il tuo turno");
+            boardSceneController.setEndTurn();
+        });
 
     }
     @Override
@@ -148,7 +153,10 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showStartTurn(String nick){
-        Platform.runLater(() -> boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata"));
+        Platform.runLater(() -> {
+            boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata");
+            boardSceneController.setNewTurn();
+        });
     }
 
     @Override
@@ -294,7 +302,6 @@ public class Gui extends ViewObservable implements View {
                 Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
                 checkpointBoard = true;
             }else{
-
                 Platform.runLater(()-> {
                             boardSceneController.hallDisplay();
                             boardSceneController.displayProfs();

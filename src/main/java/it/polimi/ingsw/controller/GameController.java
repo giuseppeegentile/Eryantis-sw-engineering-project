@@ -197,7 +197,7 @@ public class GameController implements Observer, Serializable {
                     setPlayersOrderForActionPhase();
                     gameInstance.setPlayers(gameInstance.getPhaseOrder()); //aggiorno la lista con l'ordine nuovo
                     playerActive = gameInstance.getPlayersModel().get(0);
-
+                    virtualViewMap.get(playerActive.getNickname()).showStartTurn(playerActive.getNickname());
                     if (playerActive.getDeckAssistantCardModel().size() == 0)//se ha finito tutte le carte
                         gameInstance.setTrueHavePlayerFinishedCards();
                     showWhosPlaying();

@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,6 +112,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<IslandModel> islands;
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
+    private boolean alreadyMovedMother = false;
 
     @FXML
     private void initialize(){
@@ -129,7 +131,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
             this.skipMove.setVisible(false);
             this.alreadyMovedStudent = true;
-            skipped = true;
         });
 
 /*        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
@@ -252,10 +253,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         vBox.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
             //System.out.println(alreadyMovedStudent);
             if(!alreadyMovedStudent) {
+                System.out.println("Handler evenetListener student to island ");
                 //System.out.println("entra ancora qui");
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToIsland(nickname, studentToIsland, islandIndex))).start();
                 this.alreadyMovedStudent = true;
-                skipped = true;
             }
         });
     }
@@ -313,26 +314,29 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
 
-    private boolean skipped = false;
-
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
-        if(this.numberStudentsToMove == 0 && !skipped) {
+        if(this.numberStudentsToMove == 0) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                System.out.println("entered to island");
                 skipMove.setVisible(false);
                 if (studentToIsland.size() < 3)
                     studentToIsland.add(colorToMove);
-                //if(studentToIsland.size() == 3) enableOnlyIsland();
+                //if(studentToIsland.size() == 3) this.alreadyMovedMother = false;
             });
         }else{
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                System.out.println("entered to hall");
                 if (studentToHall.size() <= this.numberStudentsToMove) {
                     this.studentToHall.add(colorToMove);
                     this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
+                        this.alreadyMovedMother = false;
                         new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
                         //enableOnlyIsland();
+
                     }
                 }
+
             });
         }
     }
@@ -366,6 +370,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setEntrance(List<ColorPawns> entrance) {
         this.entrance =entrance;
+        for(ColorPawns c: entrance) System.out.println(c.name());
     }
 
     public void setProfs(List<ColorPawns> profs) {
@@ -373,7 +378,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void setHall(Map<ColorPawns, Integer> hall) {
-        this.hall =hall;
+        this.hall = hall;
     }
 
     public void setPlayer(String nickname) {
@@ -423,16 +428,20 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
         //enableOnlyIsland();
         for(int i = tempIndex; i <= (tempIndex + maxMovement); i++){
-            int idx = i;
+            int idx = i % 12;
+            int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)(idx-tempIndex)))).start();
-
-                towersDisplay();
-                tempIndex = idx;
-                //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
-                turnLabel.setText("Seleziona una nuvola");
-                subtitle.setText("Sposterai gli studenti nell'ingresso");
-                //enableOnlyClouds();
+                if(!alreadyMovedMother) {
+                    System.out.println("Handler mother");
+                    new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
+                    towersDisplay();
+                    tempIndex = idx;
+                    //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
+                    turnLabel.setText("Seleziona una nuvola");
+                    subtitle.setText("Sposterai gli studenti nell'ingresso");
+                    //enableOnlyClouds();
+                    alreadyMovedMother = true;
+                }
             });
 
         }
@@ -451,6 +460,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
             row+=1;
         }
+    }
+
+    public void setEndTurn() {
+        this.alreadyMovedStudent = false;
+        this.numberStudentsToMove = 0;
+        this.alreadyMovedMother = true;
+    }
+
+    public void setNewTurn(){
+        displayProfs();
+        islandsDisplay();
+        entranceDisplay();
+        System.out.println("new turn entered");
+        this.studentToIsland.clear();
+        this.studentToHall.clear();
     }
 
 

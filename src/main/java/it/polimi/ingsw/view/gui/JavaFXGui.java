@@ -47,7 +47,7 @@ public class JavaFXGui extends Application {
         // Show the scene containing the root layout.
         Scene scene = new Scene(rootLayout);
         stage.setScene(scene);
-/*        stage.setWidth(1280d);
+        /*stage.setWidth(1280d);
         stage.setHeight(720d);*/
         stage.setResizable(false);
         stage.setMaximized(true);
