@@ -112,9 +112,9 @@
                         <Image url="@../images_cranio/Modello_nuvola.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="101.0" layoutX="677.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="character" fitHeight="150.0" fitWidth="101.0" layoutX="677.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images_cranio/personaggi_DEF.jpg" />
+                         <Image url="@../characters/CarteTOT_retro.jpeg" />
                      </image></ImageView>
                   <ImageView fx:id="cloud_4" fitHeight="150.0" fitWidth="200.0" layoutX="1103.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -32,8 +33,8 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableTowers){
-        clientHandler.sendMessage(new InitialResMessage(nickMessage, availableTowers));
+    public void askTowerColor(String nickMessage, List<ColorTower> availableTowers, GameMode gameMode){
+        clientHandler.sendMessage(new InitialResMessage(nickMessage, availableTowers, gameMode));
 
     }
 

@@ -2,7 +2,9 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
+import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
@@ -32,6 +34,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<ColorPawns> studentToIsland = new ArrayList<>();
     private boolean alreadyMovedStudent = false;
     private boolean cloudsHasHandler = false;
+    private CharacterSceneController characterSceneController;
 
     @FXML
     private Button skipMove;
@@ -104,6 +107,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private Label turnLabel;
     @FXML
     private Label subtitle;
+    @FXML
+    ImageView character;
 
 
     private List<CloudModel> cloudModels;
@@ -113,6 +118,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
     private boolean alreadyMovedMother = false;
+    private GameMode gameMode;
 
     @FXML
     private void initialize(){
@@ -126,6 +132,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         showCorrectClouds();
         islandsDisplay();
         cloudsDisplay();
+
+        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER)
+            character.setVisible(false);
 
         skipMove.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
@@ -144,6 +153,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 turnLabel.setText("Aspetta il tuo turno...");
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        character.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            try {
+                SceneController.showCharacter(characterSceneController, "CharacterScene.fxml");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+
             }
         });
 
@@ -323,6 +341,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 System.out.println("entered to island");
                 skipMove.setVisible(false);
+                if(gameMode == GameMode.ADVANCED)
+                    new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                 if (studentToIsland.size() < 3)
                     studentToIsland.add(colorToMove);
                 //if(studentToIsland.size() == 3) this.alreadyMovedMother = false;
@@ -332,6 +352,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 System.out.println("entered to hall");
                 if (studentToHall.size() <= this.numberStudentsToMove) {
                     this.studentToHall.add(colorToMove);
+                    if(gameMode == GameMode.ADVANCED)
+                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                     this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
                         this.alreadyMovedMother = false;
@@ -437,6 +459,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 if(!alreadyMovedMother) {
+                    if(gameMode == GameMode.ADVANCED)
+                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
                     System.out.println("Handler mother");
                     new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
                     towersDisplay();
@@ -480,6 +504,18 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         System.out.println("new turn entered");
         this.studentToIsland.clear();
         this.studentToHall.clear();
+    }
+
+    public void setCharacterSceneController(CharacterSceneController characterSceneController){
+        this.characterSceneController = characterSceneController;
+        characterSceneController.setEntrance(entrance);
+        if(this.turnLabel != null){
+            this.turnLabel.setText("Gioca una carta");
+        }
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 
 

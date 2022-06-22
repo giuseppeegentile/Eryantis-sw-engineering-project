@@ -32,7 +32,7 @@ public class DisplayProfMessage extends DisplayMessage{
 
     @Override
     public String toString() {
-        return "DisplayEntranceMessage{" +
+        return "DisplayProfMessage{" +
                 "player=" + getNickname() +
                 ", profs=" + getProfs() +
                 ", objectDisplay=" + objectDisplay +

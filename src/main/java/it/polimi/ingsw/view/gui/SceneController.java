@@ -194,4 +194,11 @@ public class SceneController extends ViewObservable {
             logger.log(SEVERE, "Failed to create new Window.", e);
         }
     }
+    public static void showCharacter(CharacterSceneController characterSceneController, String nameFxml)  throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setController(characterSceneController);
+        fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+        String title = "Carte disponibili: ";
+        buildWindow(title, fxmlLoader);
+    }
 }

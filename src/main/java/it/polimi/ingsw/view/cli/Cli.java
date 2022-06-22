@@ -34,6 +34,8 @@ public class Cli extends ViewObservable implements View {
     private final List<ColorPawns> listColorPawns = List.of(ColorPawns.RED, ColorPawns.BLUE, ColorPawns.GREEN, ColorPawns.PINK, ColorPawns.YELLOW);
     private static final String STR_INPUT_CANCELED = "User input canceled.";
 
+    private GameMode gameMode;
+
     /**
      * Default constructor.
      */
@@ -358,6 +360,7 @@ public class Cli extends ViewObservable implements View {
             mode = parseInt(read());
         }
         GameMode finalMode = List.of(GameMode.BEGINNER, GameMode.ADVANCED).get(mode-1);
+        gameMode = finalMode;
 
         notifyObserver(obs -> obs.onUpdateGameMode(finalMode));
     }
@@ -365,7 +368,7 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
         StringBuilder strBoardBld = new StringBuilder();
-        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER) {
+        if(gameMode == GameMode.BEGINNER) {
             strBoardBld.append("-----------------------------------\n");
             strBoardBld.append("  Entry          Hall         Profs\n");
             for (ColorPawns color : listColorPawns) {
@@ -532,8 +535,9 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers) {
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode) {
         StringBuilder str = new StringBuilder();
+        this.gameMode = gameMode;
         str.append("Type the index of the color of the tower you want from the following list: \n");
         int i = 0;
         for(ColorTower t: availableColorTowers){
@@ -625,7 +629,7 @@ public class Cli extends ViewObservable implements View {
         }
         strBoardBld.append("\n");
         for (int i=0; i<islands.size()/2; i++) {
-            if (GameModel.getInstance().getGameMode() == GameMode.BEGINNER)
+            if (gameMode == GameMode.BEGINNER)
                 placeMotherNature(islands, strBoardBld, i);
             else
                 placeMotherNatureExpert(islands,strBoardBld, i);

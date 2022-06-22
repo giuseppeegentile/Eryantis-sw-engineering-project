@@ -22,7 +22,7 @@ public class LobbyInfoMessage extends Message {
 
     @Override
     public String toString() {
-        return "LobbyMessage{" +
+        return "LobbyInfoMessage{" +
                 "player=" + getNickname() +
                 ", nicknameList=" + nicknameList +
                 '}';

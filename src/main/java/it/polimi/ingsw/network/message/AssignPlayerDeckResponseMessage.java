@@ -28,7 +28,7 @@ public class AssignPlayerDeckResponseMessage extends Message {
 
     @Override
     public String toString() {
-        return "AssignPlayerDeckMessage{" +
+        return "AssignPlayerDeckResponseMessage{" +
                 "nickname=" + getNickname() +
                 ", playerModel=" + playerModel +
                 '}';

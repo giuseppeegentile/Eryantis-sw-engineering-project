@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -22,6 +23,7 @@ public class Gui extends ViewObservable implements View {
     private static final String STR_ERROR = "ERROR";
     private GameBoardSceneController boardSceneController;
     private String nickname=null;
+    private GameMode gameMode;
 
     @Override
     public void showWinMessage(PlayerModel winner) {
@@ -89,6 +91,7 @@ public class Gui extends ViewObservable implements View {
         if(!checkpointBoard)
             boardSceneController = new GameBoardSceneController();
         boardSceneController.setClouds(clouds);
+        boardSceneController.setGameMode(gameMode);
         if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
     }
 
@@ -193,7 +196,7 @@ public class Gui extends ViewObservable implements View {
     public void showOrderPhase(String nickname, List<PlayerModel> order){}
 
     @Override
-    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers){
+    public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode){
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
 
         towerColorSceneController.addAllObservers(observers);
@@ -217,12 +220,24 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showSkippingMotherMovement(String activeNick) {
-
+        String message = activeNick + ", l'influenza non viene calcolata poiché su quest'isola è presente una carta proibizione";
+        Platform.runLater(() -> {
+            SceneController.showAlert("CARTA PROIBIZIONE", nickname + " " + message);
+        });
     }
+
 
     @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
+        CharacterSceneController characterSceneController = new CharacterSceneController();
+        characterSceneController.setDeck(characterDeck);
+        characterSceneController.setNickname(active.getNickname());
+        characterSceneController.addAllObservers(observers);
+        Platform.runLater(()-> {
+            boardSceneController.setTurnLabel("Scegli un effetto");
+            boardSceneController.setCharacterSceneController(characterSceneController);
 
+        });
     }
 
     @Override
