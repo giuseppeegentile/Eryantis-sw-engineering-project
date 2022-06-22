@@ -29,7 +29,7 @@ public class DisplayCloudsMessage extends DisplayMessage {
 
     @Override
     public String toString() {
-        return "CloudsMessage{" +
+        return "DisplayCloudsMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", clouds=" + clouds +

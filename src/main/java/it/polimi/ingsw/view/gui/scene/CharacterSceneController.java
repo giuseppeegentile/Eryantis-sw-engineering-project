@@ -39,7 +39,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
         int i = 0;
         for(CharacterCardModel card: cards){
-            String path = "/images_cranio/characters/CarteTOT_front" + card.getCharacterId() + ".jpg";
+            String path = "/images_cranio/characters/CarteTOT_front" + card.getCharacterId()+1 + ".jpg";
             imagesList.get(i).setImage(new Image(Objects.requireNonNull(DeckSceneController.class.getResourceAsStream(path))));
 
             int finalIndex = i;

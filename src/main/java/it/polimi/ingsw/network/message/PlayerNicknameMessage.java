@@ -39,7 +39,7 @@ public class PlayerNicknameMessage extends Message{
 
     @Override
     public String toString() {
-        return "NumberOfPlayerMessage{" +
+        return "PlayerNicknameMessage{" +
                 "player=" + getNickname() +
                 ", colorTowerOfPlayer=" + this.getNumPlayers() +
                 '}';
