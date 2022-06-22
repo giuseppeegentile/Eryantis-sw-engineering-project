@@ -24,6 +24,7 @@ public class Gui extends ViewObservable implements View {
     private GameBoardSceneController boardSceneController;
     private String nickname=null;
     boolean checkpointBoard = false;
+    private GameMode gameMode;
 
     @Override
     public void showWinMessage(PlayerModel winner) {
@@ -89,6 +90,7 @@ public class Gui extends ViewObservable implements View {
         if(!checkpointBoard)
             boardSceneController = new GameBoardSceneController();
         boardSceneController.setClouds(clouds);
+        boardSceneController.setGameMode(gameMode);
         if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
     }
 
@@ -201,9 +203,8 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode){
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
-
+        this.gameMode = gameMode;
         towerColorSceneController.addAllObservers(observers);
-
         towerColorSceneController.setAvailableTowers(availableColorTowers);
         Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
     }

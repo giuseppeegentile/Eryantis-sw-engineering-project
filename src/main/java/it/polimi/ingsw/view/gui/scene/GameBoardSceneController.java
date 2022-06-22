@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
@@ -120,13 +119,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<IslandModel> islands;
     private String turnText;
     private List<ColorPawns> studentToHall = new ArrayList<>();
+    private GameMode gameMode;
 
     @FXML
     private void initialize(){
         skipMove.setVisible(false);
         lobbyTable.setVisible(false);
         lobbyBtn.setVisible(false);
-        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER)
+        if(gameMode == GameMode.BEGINNER)
             character.setVisible(false);
         this.turnLabel.setText(turnText);
         //setLobbyTable();
@@ -482,6 +482,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
             row+=1;
         }
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 
 

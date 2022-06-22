@@ -5,12 +5,9 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.observer.ViewObservable;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.StageStyle;
 
 public class GameModeSceneController extends ViewObservable implements GenericSceneController{
     @FXML
@@ -34,6 +31,7 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
         labelMinor.setVisible(false);
         beginner_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBeginnerClick);
         advanced_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAdvancedClick);
+
     }
 
     private void onAdvancedClick(Event e) {
