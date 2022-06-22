@@ -1,14 +1,20 @@
 package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.cards.CharacterCardModel;
+import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.effects.InitialConfigEffect;
 import it.polimi.ingsw.observer.ViewObservable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -17,6 +23,9 @@ import java.util.Objects;
 public class CharacterSceneController extends ViewObservable implements GenericSceneController {
 
     private List<CharacterCardModel> cards;
+    private List<ColorPawns> studentsFromCard;
+    private List<ColorPawns> entrance;
+    private List<ColorPawns> studentsFromEntrance;
 
     @FXML
     private HBox boxCost_1;
@@ -24,6 +33,26 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private HBox boxCost_2;
     @FXML
     private HBox boxCost_3;
+    @FXML
+    private GridPane gridEntrance;
+    @FXML
+    private GridPane gridStudent_1;
+    @FXML
+    private GridPane gridStudent_2;
+    @FXML
+    private GridPane gridStudent_3;
+    @FXML
+    private TextField label_1;
+    @FXML
+    private TextField label_2;
+    @FXML
+    private TextField label_3;
+    @FXML
+    private Label text_1;
+    @FXML
+    private Label text_2;
+    @FXML
+    private Label text_3;
     @FXML
     private ImageView card1;
     @FXML
@@ -33,10 +62,21 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
     private String nickname;
 
+    private List<TextField> texts;
+    private List<Label> labels;
+
     @FXML
-    private void initialize()  {
+    private void initialize(){
+        texts = List.of(label_1, label_2, label_3);
+        labels = List.of(text_1, text_2, text_3);
+        gridEntrance.setVisible(false);
+        for (Label l : labels)
+            l.setVisible(false);
+        for (TextField t : texts)
+            t.setVisible(false);
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
+        List<GridPane> gridPaneList = List.of(gridStudent_1, gridStudent_2, gridStudent_3);
         int i = 0;
         for(CharacterCardModel card: cards){
             String path = "/images_cranio/characters/CarteTOT_front" + card.getCharacterId()+1 + ".jpg";
@@ -46,20 +86,63 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             for(int j=0; j<card.getMoneyOnCard();j++) {
                 hboxList.get(i).getChildren().add(getStyledCoins());
             }
+
+            int maxStudentToMove = 1;
+            String effectName = card.getEffect().getClass().getSimpleName();
+            if(effectName == "AddToHallEffect") {
+                maxStudentToMove = 1;
+                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+            } else if (effectName == "AddToIslandEffect"){
+                maxStudentToMove = 1;
+                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+            } else if (effectName == "ExchangeConfigEntranceEffect"){
+                maxStudentToMove = 3;
+                gridEntrance.setVisible(true);
+                placeStudentsOnEntrance(gridEntrance, entrance, 3);
+                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+            }
+
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
                 ((Stage)card1.getScene().getWindow()).close();
             });
+
             Tooltip tooltip = new Tooltip(card.getEffect().getDescription());
             Tooltip.install(imagesList.get(finalIndex), tooltip);
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{ //hover effect
                 imagesList.get(finalIndex).setOpacity(0.7);
             });
+
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_EXITED, (e)->{
                 imagesList.get(finalIndex).setOpacity(1);
             });
             i++;
         }
+    }
+
+    private void placeStudentsOnCard(List<GridPane> gridPaneList, int i, CharacterCardModel card, int maxStudents, String effect) {
+        List<ColorPawns> students = ((InitialConfigEffect) card.getEffect()).getStudents();
+        gridPaneList.get(i).getChildren().clear();
+        int idx = 0;
+        int rowGrid = 1;
+        for (int j = 0; j < rowGrid; j++) {
+            Button bt = getPawnByColor(students.get(idx));
+            bt.setMaxHeight(30.0);
+            setStudentsEventListener(bt, students.get(idx), maxStudents, effect, i);
+            GridPane.setFillWidth(bt, true);
+            gridPaneList.get(i).add(bt, 0, j);
+            idx++;
+            if (idx == students.size()) break;
+            Button bt2 = getPawnByColor(students.get(idx));
+            setStudentsEventListener(bt2, students.get(idx), maxStudents, effect, i);
+            bt2.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt2, true);
+            gridPaneList.get(i).add(bt2, 1, j);
+            idx++;
+            if (idx == students.size()) break;
+            rowGrid++;
+        }
+        gridPaneList.get(i).setEffect(new DropShadow(10, Color.YELLOW));
     }
 
     public void setDeck(List<CharacterCardModel> cards) {
@@ -79,8 +162,75 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         return b;
     }
 
+    private Button getPawnByColor(ColorPawns s) {
+        Button b = new Button();
+        b.setPrefHeight(30.0);
+        b.setPrefWidth(35.0);
+        String path = "/images_cranio/pawns/" + s.name() +  ".png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
+    }
+
+    private void setStudentsEventListener(Button button, ColorPawns colorToMove, int maxStudents, String effect, int numCard) {
+            button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (studentsFromCard.size() < 3)
+                studentsFromCard.add(colorToMove);
+            if (studentsFromCard.size() == maxStudents){
+                if (effect == "AddToHallEffect")
+                    new Thread(()->notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, studentsFromCard.get(0)))).start();
+                else if (effect == "AddToIslandEffect") {
+                    labels.get(numCard).setVisible(true);
+                    texts.get(numCard).setVisible(true);
+                    int indexIsland = Integer.parseInt(labels.get(numCard).getText());
+                    new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland, studentsFromCard.get(0)))).start();
+                } else if (effect == "ExchangeConfigEntranceEffect")
+                    new Thread(()->notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
+            }
+
+            //if(studentToIsland.size() == 3) enableOnlyIsland();
+        });
+    }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setEntrance(List<ColorPawns> studentInEntrance) {
+        this.entrance = studentInEntrance;
+    }
+
+    private void placeStudentsOnEntrance(GridPane gridPane, List<ColorPawns> entrance, int maxStudents) {
+        gridPane.getChildren().clear();
+        int idx = 0;
+        int rowGrid = 1;
+        for (int j = 0; j < rowGrid; j++) {
+            Button bt = getPawnByColor(entrance.get(idx));
+            bt.setMaxHeight(30.0);
+            setStudentsEventListenerEntrance(bt, entrance.get(idx), maxStudents);
+            GridPane.setFillWidth(bt, true);
+            gridPane.add(bt, 0, j);
+            idx++;
+            if (idx == entrance.size()) break;
+            Button bt2 = getPawnByColor(entrance.get(idx));
+            setStudentsEventListenerEntrance(bt2, entrance.get(idx), maxStudents);
+            bt2.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt2, true);
+            gridPane.add(bt2, 1, j);
+            idx++;
+            if (idx == entrance.size()) break;
+            rowGrid++;
+        }
+        gridPane.setEffect(new DropShadow(10, Color.YELLOW));
+    }
+
+    private void setStudentsEventListenerEntrance(Button button, ColorPawns colorToMove, int maxStudents) {
+        button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (studentsFromEntrance.size() < maxStudents)
+                studentsFromEntrance.add(colorToMove);
+        });
     }
 }

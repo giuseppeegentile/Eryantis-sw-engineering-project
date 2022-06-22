@@ -144,6 +144,7 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
         CharacterSceneController characterSceneController = new CharacterSceneController();
+        characterSceneController.setEntrance(active.getStudentInEntrance());
         characterSceneController.setDeck(characterDeck);
         characterSceneController.setNickname(active.getNickname());
         characterSceneController.addAllObservers(observers);
@@ -224,7 +225,10 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showSkippingMotherMovement(String activeNick) {
-
+        String message = activeNick + ", l'influenza non viene calcolata poiché su quest'isola è presente una carta proibizione";
+        Platform.runLater(() -> {
+            SceneController.showAlert("CARTA PROIBIZIONE", nickname + " " + message);
+        });
     }
 
 

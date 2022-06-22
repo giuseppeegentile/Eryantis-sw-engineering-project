@@ -2,10 +2,16 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane prefHeight="720.0" prefWidth="1280.0" styleClass="solidBackground" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -13,12 +19,74 @@
             <children>
                 <AnchorPane layoutX="184.0" layoutY="-111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="gameSettingsBackground" stylesheets="@../css/StartingGame.css">
                     <children>
-                        <ImageView fx:id="card1" fitHeight="300.0" fitWidth="220.0" layoutX="226.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="card2" fitHeight="300.0" fitWidth="220.0" layoutX="526.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="card3" fitHeight="300.0" fitWidth="220.0" layoutX="805.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
-                  <HBox fx:id="boxCost_1" layoutX="241.0" layoutY="305.0" prefHeight="100.0" prefWidth="200.0" />
-                  <HBox fx:id="boxCost_2" layoutX="555.0" layoutY="299.0" prefHeight="100.0" prefWidth="200.0" />
-                  <HBox fx:id="boxCost_3" layoutX="813.0" layoutY="308.0" prefHeight="100.0" prefWidth="200.0" />
+                        <ImageView fx:id="card1" fitHeight="300.0" fitWidth="220.0" layoutX="241.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="card2" fitHeight="300.0" fitWidth="220.0" layoutX="541.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="card3" fitHeight="300.0" fitWidth="220.0" layoutX="820.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
+                  <HBox fx:id="boxCost_1" layoutX="261.0" layoutY="256.0" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="boxCost_2" layoutX="555.0" layoutY="256.0" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="boxCost_3" layoutX="828.0" layoutY="256.0" prefHeight="100.0" prefWidth="200.0" />
+                  <GridPane fx:id="gridStudent_1" layoutX="261.0" layoutY="356.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="gridStudent_2" layoutX="555.0" layoutY="356.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="gridStudent_3" layoutX="828.0" layoutY="356.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <TextField fx:id="label_2" layoutX="566.0" layoutY="520.0" />
+                  <TextField fx:id="label_1" layoutX="277.0" layoutY="520.0" />
+                  <TextField fx:id="label_3" layoutX="856.0" layoutY="520.0" />
+                  <Label fx:id="text_2" layoutX="580.0" layoutY="503.0" prefHeight="14.0" prefWidth="136.0" text="Scegli l'indice dell'isola">
+                     <font>
+                        <Font name="High Tower Text" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="text_3" layoutX="870.0" layoutY="503.0" text="Scegli l'indice dell'isola">
+                     <font>
+                        <Font name="High Tower Text" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="text_1" layoutX="293.0" layoutY="503.0" prefHeight="14.0" prefWidth="117.0" text="Scegli l'indice dell'isola" textAlignment="CENTER">
+                     <font>
+                        <Font name="High Tower Text" size="12.0" />
+                     </font>
+                  </Label>
+                  <GridPane fx:id="entrance" layoutX="528.0" layoutY="587.0" prefHeight="90.0" prefWidth="241.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
                     </children>
                 </AnchorPane>
             </children>
