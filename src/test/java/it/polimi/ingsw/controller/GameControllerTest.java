@@ -250,7 +250,7 @@ class GameControllerTest {
         MovedMotherNatureMessage motherNatureMessage2 = new MovedMotherNatureMessage(secondPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage2);
 
-        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%12);
+        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%gameInstance.getIslandsModel().size());
 
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting2 = new AddStudentFromCloudToEntranceMessage(secondPlayer.getNickname(), 0);
         cloud = gameInstance.getCloudsModel().get(1);
@@ -290,7 +290,7 @@ class GameControllerTest {
         indexOldMother = gameInstance.getMotherNatureIndex();
         MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage3);
-        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%12);
+        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%gameInstance.getIslandsModel().size());
 
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting3 = new AddStudentFromCloudToEntranceMessage(thirdPlayer.getNickname(), 0);
         gameController.onMessageReceived(msgCloudToWaiting3);

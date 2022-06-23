@@ -37,6 +37,36 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private CharacterSceneController characterSceneController;
 
     @FXML
+    private ImageView island1;
+
+    @FXML
+    private ImageView island2;
+    @FXML
+    private ImageView island3;
+
+    @FXML
+    private ImageView island4;
+
+    @FXML
+    private ImageView island5;
+    @FXML
+    private ImageView island6;
+
+    @FXML
+    private ImageView island7;
+    @FXML
+    private ImageView island8;
+
+    @FXML
+    private ImageView island9;
+
+    @FXML
+    private ImageView island10;
+    @FXML
+    private ImageView island11;
+    @FXML
+    private ImageView island12;
+    @FXML
     private Button skipMove;
 
     @FXML
@@ -108,7 +138,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private Label subtitle;
     @FXML
-    ImageView character;
+    private ImageView character;
 
 
     private List<CloudModel> cloudModels;
@@ -133,7 +163,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         islandsDisplay();
         cloudsDisplay();
 
-        if(GameModel.getInstance().getGameMode() == GameMode.BEGINNER)
+        if(gameMode == GameMode.BEGINNER)
             character.setVisible(false);
 
         skipMove.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
@@ -243,7 +273,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void islandsDisplay() {
         int k = 0;
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
-
+        List<ImageView> images = List.of(island1, island2, island3, island4, island5, island6, island7,island8, island9,island10, island11, island12);
 
         for(IslandModel i: islands){
             vBoxes.get(k).getChildren().clear();
@@ -270,7 +300,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             vBoxes.get(k).getChildren().clear();
             vBoxes.get(k).setDisable(true);
 
-            //vImages.get(k).setVisible(false);
+            images.get(k).setVisible(false);
         }
     }
 
@@ -461,7 +491,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 if(!alreadyMovedMother) {
                     if(gameMode == GameMode.ADVANCED)
                         new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
-                    System.out.println("Handler mother");
+
                     new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
                     towersDisplay();
                     tempIndex = idx;
@@ -516,6 +546,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+    }
+
+    public void setVisibleSubtitle() {
+        subtitle.setVisible(true);
     }
 
 

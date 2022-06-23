@@ -65,15 +65,20 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private List<TextField> texts;
     private List<Label> labels;
 
-    @FXML
-    private void initialize(){
-        texts = List.of(label_1, label_2, label_3);
-        labels = List.of(text_1, text_2, text_3);
+    private void initialHide(){
         gridEntrance.setVisible(false);
         for (Label l : labels)
             l.setVisible(false);
         for (TextField t : texts)
             t.setVisible(false);
+    }
+
+    @FXML
+    private void initialize(){
+        texts = List.of(label_1, label_2, label_3);
+        labels = List.of(text_1, text_2, text_3);
+        initialHide();
+
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
         List<GridPane> gridPaneList = List.of(gridStudent_1, gridStudent_2, gridStudent_3);
@@ -81,7 +86,6 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         for(CharacterCardModel card: cards){
             int id = card.getCharacterId()+1;
             String path = "/characters/CarteTOT_front" + id + ".jpg";
-            System.out.println(path);
             imagesList.get(i).setImage(new Image(Objects.requireNonNull(CharacterSceneController.class.getResourceAsStream(path))));
 
             int finalIndex = i;
@@ -91,11 +95,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
             int maxStudentToMove = 1;
             String effectName = card.getEffect().getClass().getSimpleName();
-            if(effectName.equals("AddToHallEffect")) {
-                maxStudentToMove = 1;
-                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
-            } else if (effectName.equals("AddToIslandEffect")){
-                maxStudentToMove = 1;
+            if(effectName.equals("AddToHallEffect") || effectName.equals("AddToIslandEffect")) {
                 placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
             } else if (effectName.equals("ExchangeConfigEntranceEffect")){
                 maxStudentToMove = 3;
@@ -111,6 +111,8 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
             Tooltip tooltip = new Tooltip(card.getEffect().getDescription());
             Tooltip.install(imagesList.get(finalIndex), tooltip);
+            Tooltip.install(hboxList.get(finalIndex), tooltip);
+            Tooltip.install(gridPaneList.get(finalIndex), tooltip);
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{ //hover effect
                 imagesList.get(finalIndex).setOpacity(0.7);
             });
@@ -154,7 +156,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private Button getStyledCoins() {
         Button b = new Button();
         b.setPrefHeight(30.0);
-        b.setPrefWidth(23.0);
+        b.setPrefWidth(30.0);
         String path = "/images_cranio/coin.png";
         BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -182,15 +184,20 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             if (studentsFromCard.size() < 3)
                 studentsFromCard.add(colorToMove);
             if (studentsFromCard.size() == maxStudents){
-                if (effect == "AddToHallEffect")
-                    new Thread(()->notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, studentsFromCard.get(0)))).start();
-                else if (effect == "AddToIslandEffect") {
-                    labels.get(numCard).setVisible(true);
-                    texts.get(numCard).setVisible(true);
-                    int indexIsland = Integer.parseInt(labels.get(numCard).getText());
-                    new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland, studentsFromCard.get(0)))).start();
-                } else if (effect == "ExchangeConfigEntranceEffect")
-                    new Thread(()->notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
+                switch (effect) {
+                    case "AddToHallEffect":
+                        new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, studentsFromCard.get(0)))).start();
+                        break;
+                    case "AddToIslandEffect":
+                        labels.get(numCard).setVisible(true);
+                        texts.get(numCard).setVisible(true);
+                        int indexIsland = Integer.parseInt(labels.get(numCard).getText());
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland, studentsFromCard.get(0)))).start();
+                        break;
+                    case "ExchangeConfigEntranceEffect":
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
+                        break;
+                }
             }
 
             //if(studentToIsland.size() == 3) enableOnlyIsland();

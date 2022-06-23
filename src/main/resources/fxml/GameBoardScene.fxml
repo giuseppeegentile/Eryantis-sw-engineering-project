@@ -37,7 +37,7 @@
                         <Image url="@../images_cranio/PLANCIA GIOCO_2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="island_1" fitHeight="147.0" fitWidth="172.0" layoutX="193.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="island1" fitHeight="147.0" fitWidth="172.0" layoutX="193.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images_cranio/Modello_isola2.png" />
                      </image>

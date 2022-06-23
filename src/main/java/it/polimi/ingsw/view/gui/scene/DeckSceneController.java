@@ -63,9 +63,6 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
                 i++;
             }
         }
-
-
-
     }
 
     public void setDeck(List<AssistantCardModel> cards) {

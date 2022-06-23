@@ -34,7 +34,7 @@ public class PlayerModel implements Serializable {
     public PlayerModel(String nickname, ColorTower colorTower){
         this.nickname = nickname;
         this.colorTower = colorTower;
-        this.coins = 0;
+        this.coins = 1;
         this.numProfs = 0;
         this.profs = new ArrayList<>();
         this.studentInEntrance = new ArrayList<>();
@@ -49,12 +49,12 @@ public class PlayerModel implements Serializable {
     }
 
     /**
-     * Costructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
+     * Constructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
      * @param nickname nickname choose by player
      */
     public PlayerModel(String nickname){
         this.nickname = nickname;
-        this.coins = 0;
+        this.coins = 1;
         this.numProfs = 0;
         this.profs = new ArrayList<>();
         this.studentInEntrance = new ArrayList<>();

@@ -302,7 +302,7 @@ class GameControllerAdvancedTest2 {
         indexOldMother = gameInstance.getMotherNatureIndex();
         MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage3);
-        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%12);
+        assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%gameInstance.getIslandsModel().size());
 
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting3 = new AddStudentFromCloudToEntranceMessage(thirdPlayer.getNickname(), 0);
         gameController.onMessageReceived(msgCloudToWaiting3);

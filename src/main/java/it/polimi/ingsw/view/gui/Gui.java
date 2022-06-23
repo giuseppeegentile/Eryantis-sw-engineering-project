@@ -54,6 +54,7 @@ public class Gui extends ViewObservable implements View {
     public void askMotherNatureMovements(PlayerModel player, byte maxMovement) {
         Platform.runLater(()-> {
             boardSceneController.setTurnLabel("Seleziona un'isola in cui vuoi spostare madre natura");
+            boardSceneController.setVisibleSubtitle();
             boardSceneController.setSubtitleText("Massimo " + maxMovement + " posizioni");
             boardSceneController.islandHandlerMother(maxMovement);
         });

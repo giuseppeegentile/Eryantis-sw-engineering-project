@@ -435,7 +435,11 @@ public class GameController implements Observer, Serializable {
         }else{
             virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
             gameInstance.getIslandWithMother().setHasProhibition(false);
-            ((ProhibitionEffect)characterCardPlayed.getEffect()).endEffect();
+            for(CharacterCardModel c: playerActive.getCharacterDeck()) {
+                if (c.getEffect().getClass().getSimpleName().equals("ProhibitionEffect"))
+                    ((ProhibitionEffect)c.getEffect()).endEffect();
+            }
+
         }
         for(String gamer: virtualViewMap.keySet())
             virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
@@ -902,8 +906,6 @@ public class GameController implements Observer, Serializable {
                 System.out.println("incremento di 1");
             }
 
-
-
             if(canProfBeAssignedToPlayer(player, student))
                 assignProfToPlayer(player, student);
 
@@ -1028,7 +1030,7 @@ public class GameController implements Observer, Serializable {
             }
             if(indexOfMother == gameInstance.getIslandsModel().size() - 1) {
                 joinIsland(islandWithMother, gameInstance.getIslandsModel().get(0), indexOfMother);
-                joinIsland(islandWithMother, gameInstance.getIslandsModel().get((indexOfMother+1)%12), indexOfMother);
+                joinIsland(islandWithMother, gameInstance.getIslandsModel().get((indexOfMother+1)%gameInstance.getIslandsModel().size()), indexOfMother);
             }
         }
         for(PlayerModel p: gameInstance.getPlayersModel()) {
@@ -1100,7 +1102,7 @@ public class GameController implements Observer, Serializable {
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);
         for(int i = 0; i < 11; i++){
-            characterDeck.add(new CharacterCardModel(1,effects.get(i), i));
+            characterDeck.add(new CharacterCardModel(0,effects.get(i), i));
         }
 
         if(shuffle)
