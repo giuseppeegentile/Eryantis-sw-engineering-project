@@ -16,7 +16,6 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     /**
      * Adds a student to an island, both chosen by the player
      */
-
     public AddToIslandEffect(List<ColorPawns> students) {
         super(students, 1, 4);
     }

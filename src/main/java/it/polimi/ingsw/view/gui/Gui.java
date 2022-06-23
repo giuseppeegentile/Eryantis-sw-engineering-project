@@ -102,9 +102,11 @@ public class Gui extends ViewObservable implements View {
     }
 
     boolean checkpointBoard = false;
+    private List<IslandModel> islands;
     @Override
     public void showIslands(String nickname, List<IslandModel> islands){
         boardSceneController.setIslands(islands);
+        this.islands = islands;
         if(checkpointBoard) {
             Platform.runLater(()->boardSceneController.islandsDisplay());
         }
@@ -227,17 +229,17 @@ public class Gui extends ViewObservable implements View {
         });
     }
 
-
+    CharacterSceneController characterSceneController = new CharacterSceneController();
     @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
-        CharacterSceneController characterSceneController = new CharacterSceneController();
         characterSceneController.setDeck(characterDeck);
+        characterSceneController.setIslands(islands);
         characterSceneController.setNickname(active.getNickname());
+        characterSceneController.setPlayerMoney(active.getCoins());
         characterSceneController.addAllObservers(observers);
         Platform.runLater(()-> {
             boardSceneController.setTurnLabel("Scegli un effetto");
             boardSceneController.setCharacterSceneController(characterSceneController);
-
         });
     }
 

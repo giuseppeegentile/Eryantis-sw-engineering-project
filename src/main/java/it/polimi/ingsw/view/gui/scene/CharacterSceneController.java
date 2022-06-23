@@ -3,7 +3,9 @@ package it.polimi.ingsw.view.gui.scene;
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.effects.InitialConfigEffect;
+import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.view.gui.SceneController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,18 +14,21 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class CharacterSceneController extends ViewObservable implements GenericSceneController {
 
     private List<CharacterCardModel> cards;
-    private List<ColorPawns> studentsFromCard;
+    private List<ColorPawns> studentsFromCard = new ArrayList<>();
     private List<ColorPawns> entrance;
     private List<ColorPawns> studentsFromEntrance;
 
@@ -59,11 +64,19 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private ImageView card2;
     @FXML
     private ImageView card3;
+    @FXML
+    private Label moneyPlayerLbl;
 
     private String nickname;
 
     private List<TextField> texts;
     private List<Label> labels;
+    private int playerMoney;
+    private List<IslandModel> islands;
+
+    public void setIslands(List<IslandModel> islands) {
+        this.islands = islands;
+    }
 
     private void initialHide(){
         gridEntrance.setVisible(false);
@@ -78,6 +91,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         texts = List.of(label_1, label_2, label_3);
         labels = List.of(text_1, text_2, text_3);
         initialHide();
+        moneyPlayerLbl.setText(String.valueOf(playerMoney));
 
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
@@ -89,7 +103,8 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             imagesList.get(i).setImage(new Image(Objects.requireNonNull(CharacterSceneController.class.getResourceAsStream(path))));
 
             int finalIndex = i;
-            for(int j=0; j<card.getMoneyOnCard();j++) {
+            hboxList.get(i).getChildren().clear();
+            for(int j=0; j<card.getEffect().getCoinsForEffect();j++) {
                 hboxList.get(i).getChildren().add(getStyledCoins());
             }
 
@@ -102,11 +117,25 @@ public class CharacterSceneController extends ViewObservable implements GenericS
                 gridEntrance.setVisible(true);
                 placeStudentsOnEntrance(gridEntrance, entrance, 3);
                 placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+            } else if(effectName.equals("ProhibitionEffect")){
+                int finalIdx = i;
+                imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+                    texts.get(finalIdx).setVisible(true);
+                    labels.get(finalIndex).setVisible(true);
+                    texts.get(finalIndex).setOnKeyPressed(ev->{
+                        if( ev.getCode() == KeyCode.ENTER ) {
+                            int indexIsland = Integer.parseInt(texts.get(finalIdx).getText());
+                            new Thread(() -> notifyObserver(obs -> obs.onUpdateBanCard(nickname, indexIsland-1))).start();
+                            ((Stage)card1.getScene().getWindow()).close();
+                        }
+                    });
+                });
             }
-
-            imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
-                ((Stage)card1.getScene().getWindow()).close();
+            imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
+                List<String> effectsNotConfig = List.of("AddInfluenceEffect", "ControlProfEffect", "ExtraMovementMotherEffect", "IgnoreTowerEffect");
+                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()))
+                    ((Stage) card1.getScene().getWindow()).close();
             });
 
             Tooltip tooltip = new Tooltip(card.getEffect().getDescription());
@@ -186,21 +215,25 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             if (studentsFromCard.size() == maxStudents){
                 switch (effect) {
                     case "AddToHallEffect":
-                        new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, studentsFromCard.get(0)))).start();
+                        new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, colorToMove))).start();
+                        ((Stage)card1.getScene().getWindow()).close();
                         break;
                     case "AddToIslandEffect":
                         labels.get(numCard).setVisible(true);
                         texts.get(numCard).setVisible(true);
-                        int indexIsland = Integer.parseInt(labels.get(numCard).getText());
-                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland, studentsFromCard.get(0)))).start();
-                        break;
+                        texts.get(numCard).setOnKeyPressed(ev->{
+                            if( ev.getCode() == KeyCode.ENTER ) {
+                                int indexIsland = Integer.parseInt(texts.get(numCard).getText());
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland-1, colorToMove))).start();
+                                ((Stage)card1.getScene().getWindow()).close();
+                            }
+                        });
                     case "ExchangeConfigEntranceEffect":
                         new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
                         break;
                 }
             }
 
-            //if(studentToIsland.size() == 3) enableOnlyIsland();
         });
     }
 
@@ -241,5 +274,13 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             if (studentsFromEntrance.size() < maxStudents)
                 studentsFromEntrance.add(colorToMove);
         });
+    }
+
+    public void setPlayerMoney(int playerMoney) {
+        this.playerMoney = playerMoney;
+    }
+
+    public int getPlayerMoney() {
+        return playerMoney;
     }
 }

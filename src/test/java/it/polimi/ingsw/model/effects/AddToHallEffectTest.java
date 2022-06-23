@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.effects;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -20,7 +21,7 @@ class AddToHallEffectTest {
         List<ColorPawns> list = new ArrayList<>(asList(ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED));
         List<ColorPawns> list2 = new ArrayList<>(asList(ColorPawns.RED));
         GameModel.getInstance().setBag(list2);
-        AddToHallEffect effect = new AddToHallEffect(list);
+        AddToHallEffect effect = new AddToHallEffect(list, new GameController());
         effect.choose(ColorPawns.RED);
         PlayerModel player = new PlayerModel("Rafael Nadal");
         effect.enable(player);

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.effects;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
@@ -9,13 +11,14 @@ import java.util.List;
 public class AddToHallEffect extends InitialConfigEffect implements Serializable {
     private static final long serialVersionUID = -5901051516602737452L;
     private ColorPawns studentChosen;
-
+    private GameController controller;
     /**
      * Adds a student to the player's hall
      */
 
-    public AddToHallEffect(List<ColorPawns> students) {
+    public AddToHallEffect(List<ColorPawns> students, GameController controller) {
         super(students, 2, 4);
+        this.controller = controller;
     }
 
     /**
@@ -29,10 +32,12 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
 
     @Override
     public void enable(PlayerModel playerModel) {
-        playerModel.addStudentsHall(List.of(studentChosen));
-        this.students.remove(studentChosen);
+        //playerModel.addStudentsHall(List.of(studentChosen));
+        controller.moveStudentToHall(playerModel, List.of(studentChosen), true);
         getFromBag();
     }
+
+
 
     /**
      * Gets the description of the character card

@@ -151,12 +151,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <VBox fx:id="vboxIsland1"  layoutX="205.0" layoutY="33.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland1" layoutX="205.0" layoutY="33.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland2" layoutX="389.0" layoutY="53.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland3" layoutX="583.0" layoutY="24.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland4" layoutX="771.0" layoutY="19.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland5" layoutX="952.0" layoutY="61.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
-                  <VBox fx:id="vboxIsland6"  layoutX="1084.0" layoutY="192.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
+                  <VBox fx:id="vboxIsland6" layoutX="1084.0" layoutY="192.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland7" layoutX="909.0" layoutY="288.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland8" layoutX="744.0" layoutY="382.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
                   <VBox fx:id="vboxIsland9" layoutX="538.0" layoutY="357.0" prefHeight="131.0" prefWidth="137.0" spacing="3" />
@@ -216,6 +216,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
+                  <Button fx:id="skipCardGame" layoutX="792.0" layoutY="540.0" mnemonicParsing="false" text="Salta carta">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

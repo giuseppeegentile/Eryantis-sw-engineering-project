@@ -163,8 +163,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         islandsDisplay();
         cloudsDisplay();
 
-        if(gameMode == GameMode.BEGINNER)
+        if(gameMode == GameMode.BEGINNER) {
             character.setVisible(false);
+            skipCardGame.setVisible(false);
+        }
+
+        skipCardGame.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+            new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+        });
+
 
         skipMove.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
@@ -284,6 +291,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 tempIndex = k;
                 vBoxes.get(k).getChildren().add(student);
             }
+            if(i.hasProhibition()){
+                Button prohib = getProhib();
+                vBoxes.get(k).getChildren().add(prohib);
+                islandProhib = k;
+            }
             if(i.getTowerColor() != ColorTower.NULL) {
                 Button towerBtn = getStyledTower(i.getTowerColor().name());
                 vBoxes.get(k).getChildren().add(towerBtn);
@@ -304,6 +316,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    private Button getProhib() {
+        Button b = new Button();
+        b.setPrefHeight(62.0);
+        b.setPrefWidth(53.0);
+        String path = "/images_cranio/cards/prohibition.png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
+    }
+    private int islandProhib;
     private void setIslandEventListener(VBox vBox, int islandIndex) {
         vBox.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
             if(!alreadyMovedStudent) {
@@ -365,7 +390,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
-
+    @FXML
+    private Button skipCardGame;
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
         if(this.numberStudentsToMove == 0) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -382,8 +408,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 System.out.println("entered to hall");
                 if (studentToHall.size() <= this.numberStudentsToMove) {
                     this.studentToHall.add(colorToMove);
-                    if(gameMode == GameMode.ADVANCED)
-                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+
                     this.numberStudentsToMove-=1;
                     if(this.numberStudentsToMove == 0){
                         this.alreadyMovedMother = false;
@@ -489,17 +514,26 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 if(!alreadyMovedMother) {
-                    if(gameMode == GameMode.ADVANCED)
-                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+                    if(idx != islandProhib) {
+                        if(gameMode == GameMode.ADVANCED)
+                            new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
 
-                    new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
-                    towersDisplay();
-                    tempIndex = idx;
-                    //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
+                        towersDisplay();
+                        tempIndex = idx;
+                        //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
+
+                        //enableOnlyClouds();
+
+                    }else{
+                        vBoxes.get(idx).getChildren().remove(getProhib());
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)0))).start();
+                    }
                     turnLabel.setText("Seleziona una nuvola");
                     subtitle.setText("Sposterai gli studenti nell'ingresso");
-                    //enableOnlyClouds();
+
                     alreadyMovedMother = true;
+
                 }
             });
 

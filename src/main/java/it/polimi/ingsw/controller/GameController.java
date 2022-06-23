@@ -30,7 +30,7 @@ public class GameController implements Observer, Serializable {
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
     private String effectPlayed;
-    private boolean shuffle = true;
+    private boolean shuffle = false;
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
     private PlayerModel playerWithEffectAdditionalInfluence;
@@ -383,9 +383,15 @@ public class GameController implements Observer, Serializable {
             case PLAYER_MOVED_STUDENTS_ON_ISLAND:
                 movedStudents = ((MovedStudentOnIslandMessage)oldMessage).getStudents();
                 if (gameInstance.getPlayersNumber() % 2 == 0) {
-                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                    if(movedStudents.size() != 3)
+                        virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 3 - movedStudents.size());
+                    else
+                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
                 } else {
-                    virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), (4 - movedStudents.size()));
+                    if(movedStudents.size() != 4)
+                        virtualViewMap.get(playerActive.getNickname()).askMoveEntranceToHall(playerActive.getNickname(), playerActive.getStudentInEntrance(), 4 - movedStudents.size());
+                    else
+                        virtualViewMap.get(playerActive.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
                 }
                 break;
             case PLAYER_MOVED_STUDENTS_ON_HALL:
@@ -409,6 +415,24 @@ public class GameController implements Observer, Serializable {
                 break;
             }
         }
+
+
+        if(characterCardPlayed.getEffect().getClass().getSimpleName().equals("AddToIslandEffect") ||
+                characterCardPlayed.getEffect().getClass().getSimpleName().equals("ProhibitionEffect"))
+            for(String p: virtualViewMap.keySet()) virtualViewMap.get(p).showIslands(p, gameInstance.getIslandsModel());
+        else if(characterCardPlayed.getEffect().getClass().getSimpleName().equals("AddToHallEffect")){
+            for(PlayerModel p: gameInstance.getPlayersModel()) {
+                List<ColorTower> towers = new ArrayList<>();
+                for (int i = 0; i < p.getTowerNumber(); i++) {
+                    towers.add(p.getColorTower());
+                }
+                virtualViewMap.get(p.getNickname()).showPlayerBoardMessage(p,
+                        towers, p.getStudentInHall(), p.getStudentInEntrance(), p.getProfs());
+            }
+
+
+        }
+
         activatedEffect = true;
         continueFromOldState();
     }
@@ -452,7 +476,7 @@ public class GameController implements Observer, Serializable {
      */
     private void studentsOnHallActions(Message receivedMessage) {
         if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
-            moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents());
+            moveStudentToHall(playerActive, ((MovedStudentToHallMessage) receivedMessage).getStudents(), false);
         }
         showBoard(playerActive.getNickname());
         if(gameInstance.getGameMode()==GameMode.BEGINNER)
@@ -895,7 +919,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Moves a student from the entrance to the hall of the player
      */
-    public void moveStudentToHall(PlayerModel player, List<ColorPawns> students) {
+    public void moveStudentToHall(PlayerModel player, List<ColorPawns> students, boolean fromCard) {
         int oldValue = 0;
         for(ColorPawns student: students) {
             oldValue = player.getStudentInHall().get(student);
@@ -909,7 +933,8 @@ public class GameController implements Observer, Serializable {
             if(canProfBeAssignedToPlayer(player, student))
                 assignProfToPlayer(player, student);
 
-            player.removeStudentFromEntrance(student);
+            if(!fromCard)
+                player.removeStudentFromEntrance(student);
         }
     }
 
@@ -1097,7 +1122,8 @@ public class GameController implements Observer, Serializable {
                 new AddInfluenceEffect(this),
                 new ExcludeColorInfluenceEffect(this),
                 new ExchangeHallEntranceEffect(),
-                new AddToHallEffect(subBag3)
+                new AddToHallEffect(subBag3, this)
+//*+++++++++++++++++++++++++++++++++++++++++++++
         );
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);

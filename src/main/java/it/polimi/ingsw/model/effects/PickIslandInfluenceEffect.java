@@ -15,18 +15,17 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
     private final GameController gameController;
 
     /**
-     * Gets the card's effect cost in number of coins
+     * Constructor for the effect
      */
-
     public PickIslandInfluenceEffect(GameController controller){
         this.gameController = controller;
         this.costForEffect = 3;
     }
 
     /**
-     * Gets index of the island chosen by the player
+     * Sets index of the island chosen by the player
+     * @param indexIslandEffect the index where to perform the influence effect
      */
-
     public void choose(int indexIslandEffect){
         this.indexIslandEffect = indexIslandEffect;
     }
@@ -56,16 +55,14 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
     /**
      * @return the index of the island
      */
-
     public int getIndexIslandEffect() {
         return indexIslandEffect;
     }
 
     /**
-     * Gets the index of the island in which activate the effect
+     * Sets the index of the island in which activate the effect
      * @param indexIslandEffect the index of the island
      */
-
     public void setIndexIslandEffect(int indexIslandEffect) {
         this.indexIslandEffect = indexIslandEffect;
     }

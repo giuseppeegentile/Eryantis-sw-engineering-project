@@ -24,7 +24,6 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
     }
 
     @Override

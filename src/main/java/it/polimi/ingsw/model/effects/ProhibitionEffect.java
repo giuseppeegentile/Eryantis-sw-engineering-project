@@ -29,7 +29,6 @@ public class ProhibitionEffect implements Effect, Serializable {
     @Override
     public void enable(PlayerModel playerModel) {
         GameModel.getInstance().getIslandsModel().get(chosenIndexIsland).setHasProhibition(true);
-
         numberProhibition--;
     }
 
