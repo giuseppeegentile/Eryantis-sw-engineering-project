@@ -10,6 +10,7 @@ public class ReqMoveCloudToEntranceMessage extends Message{
 
     /**
      * Message sent to move students from clouds to the entrance
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param clouds list of clouds
      */
@@ -18,6 +19,10 @@ public class ReqMoveCloudToEntranceMessage extends Message{
         super(nickname, MessageType.MOVE_CLOUD_TO_ENTRANCE);
         this.clouds = new ArrayList<>(clouds);
     }
+
+    /**
+     * @return the list of the clouds
+     */
 
     public List<CloudModel> getClouds(){
         return clouds;

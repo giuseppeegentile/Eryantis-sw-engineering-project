@@ -11,11 +11,22 @@ public class MovedMotherNatureMessage extends Message{
 
     private final byte movement;
 
+    /**
+     * Message sent when moving mother nature
+     * Parameters are set by the constructor
+     * @param player current player
+     * @param movement movement chosen
+     */
+
     public MovedMotherNatureMessage(String player, byte movement){
         super(player, MessageType.PLAYER_MOVED_MOTHER);
         this.playerModel = player;
         this.movement = movement;
     }
+
+    /**
+     * @return the movement chosen
+     */
 
     public byte getMovement() {
         return movement;

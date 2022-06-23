@@ -11,6 +11,7 @@ public class StudentToHallMessage extends Message {
 
     /**
      * Message sent to move a student from the entrance to the hall
+     * Parameters are set by the constructor
      * @param player current player
      * @param entrance player's entrance
      * @param numberStudentsToMove number of students to move
@@ -23,9 +24,17 @@ public class StudentToHallMessage extends Message {
 
     }
 
+    /**
+     * @return the number of students to move
+     */
+
     public int getNumberStudentsToMove() {
         return numberStudentsToMove;
     }
+
+    /**
+     * @return the player's entrance
+     */
 
     public List<ColorPawns> getEntrance() {
         return entrance;

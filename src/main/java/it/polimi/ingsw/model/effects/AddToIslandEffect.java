@@ -14,16 +14,17 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     private IslandModel islandChosen;
 
     /**
-     * Adds a student to an island, both chosen by the player
+     * Constructor for the character card tha has "add island" as effect: costForEffect is set to 1,
+     * numStudents is set to 4
      */
     public AddToIslandEffect(List<ColorPawns> students) {
         super(students, 1, 4);
     }
 
     /**
-     * Gets the index of the student and of the island chosen
-     * @param indexStudent index of the student
-     * @param indexIsland index of the island
+     * Constructor made to assign the parameters chosen by the player
+     * @param indexStudent index of the student chosen by the player
+     * @param indexIsland index of the island chosen by the player
      */
     public void choose(ColorPawns indexStudent, int indexIsland) {
         this.studentChosen = indexStudent;

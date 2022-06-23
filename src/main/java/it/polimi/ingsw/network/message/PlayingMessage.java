@@ -7,6 +7,7 @@ public class PlayingMessage extends  Message{
 
     /**
      * Message sent to show the current player
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param nicknameActive active player
      */
@@ -14,6 +15,10 @@ public class PlayingMessage extends  Message{
         super(nickname, MessageType.WHO_PLAY);
         this.nicknameActive = nicknameActive;
     }
+
+    /**
+     * @return the current player
+     */
 
     public String getNicknameActive() {
         return nicknameActive;

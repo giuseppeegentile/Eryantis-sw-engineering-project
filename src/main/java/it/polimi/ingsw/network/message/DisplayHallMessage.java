@@ -11,7 +11,8 @@ public class DisplayHallMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display a player's game board's hall
+     * Message sent to display a player's game board's hall
+     * Parameters are set by the constructor
      * @param nickname player whom hall is shown
      * @param hall hall shown
      */
@@ -20,6 +21,10 @@ public class DisplayHallMessage extends DisplayMessage{
         this.hall = hall;
         this.objectDisplay = ObjectDisplay.HALL;
     }
+
+    /**
+     * @return the player's hall
+     */
 
     public Map<ColorPawns, Integer> getHall() {
         return hall;

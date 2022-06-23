@@ -16,7 +16,7 @@ public class ControlProfEffect implements Effect, Serializable {
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
 
     /**
-     * Cost of the card's effect in number of coins
+     * Constructor for the character card that has "control prof" as effect: costForEffect is set to 2
      */
 
     public ControlProfEffect(){

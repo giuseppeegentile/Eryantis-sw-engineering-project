@@ -7,7 +7,8 @@ public class LobbyInfoMessage extends Message {
     private final List<String> nicknameList;
 
     /**
-     * Message shown to display the players' list
+     * Message sent to display the players' list
+     * Parameters are set by the constructor
      * @param nicknameList list of players
      */
 

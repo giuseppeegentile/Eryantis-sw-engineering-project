@@ -10,6 +10,7 @@ public class ReqMoveMotherNatureMessage extends Message {
 
     /**
      * Message sent to move mother nature
+     * Parameters are set by the constructor
      * @param player current player
      * @param maxMovementAllowed number of movements allowed
      */
@@ -20,6 +21,10 @@ public class ReqMoveMotherNatureMessage extends Message {
         this.player = player;
 
     }
+
+    /**
+     * @return max movement allowed
+     */
 
     public byte getMaxMovementAllowed() {
         return maxMovementAllowed;
@@ -32,6 +37,10 @@ public class ReqMoveMotherNatureMessage extends Message {
                 ", maxMovementAllowed=" + maxMovementAllowed +
                 '}';
     }
+
+    /**
+     * @return current player
+     */
 
     public PlayerModel getPlayer() {
         return player;

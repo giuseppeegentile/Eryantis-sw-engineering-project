@@ -11,7 +11,8 @@ public class PlayerNicknameMessage extends Message{
     private final GameMode gameMode;
 
     /**
-     * Message shown when a player is asked to choose a nickname
+     * Message sent when a player is asked to choose a nickname
+     * Parameters are set by the constructor
      * @param nickname nickname chosen
      * @param numPlayers number of players
      * @param colorTower color chosen
@@ -25,13 +26,25 @@ public class PlayerNicknameMessage extends Message{
         this.gameMode = gameMode;
     }
 
+    /**
+     * @return the number of players
+     */
+
     public int getNumPlayers() {
         return this.numPlayers;
     }
 
+    /**
+     * @return the color of the towers
+     */
+
     public ColorTower getColorTower() {
         return this.colorTower;
     }
+
+    /**
+     * @return the game mode chosen
+     */
 
     public GameMode getGameMode() {
         return this.gameMode;

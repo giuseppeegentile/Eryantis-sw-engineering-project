@@ -9,7 +9,8 @@ public class AskStudentFromCloudToEntranceMessage extends Message{
     private final List<CloudModel> clouds;
 
     /**
-     * Message shown when asked to move a student from a cloud to a player's board's entrance
+     * Message sent when asked to move a student from a cloud to a player's board's entrance
+     * Parameters are set by the constructor
      * @param nickname nickname of the player that makes a move
      * @param clouds list of clouds
      */

@@ -6,7 +6,8 @@ public class TextMessage extends Message{
     private final String text;
 
     /**
-     * Text message shown
+     * Text message sent
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param text text in the message
      */
@@ -15,6 +16,10 @@ public class TextMessage extends Message{
         super(nickname, MessageType.TEXT);
         this.text = text;
     }
+
+    /**
+     * @return the text of the message
+     */
 
     public String getText() {
         return text;

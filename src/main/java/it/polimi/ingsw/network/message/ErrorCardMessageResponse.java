@@ -7,7 +7,8 @@ public class ErrorCardMessageResponse extends Message{
     private final AssistantCardModel card;
 
     /**
-     * Message shown as a response of an error when playing a card
+     * Message sent as a response of an error when playing a card
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param card card played
      */
@@ -16,6 +17,10 @@ public class ErrorCardMessageResponse extends Message{
         super(nickname, MessageType.ERROR);
         this.card = card;
     }
+
+    /**
+     * @return the card selected
+     */
 
     public AssistantCardModel getCard() {
         return card;

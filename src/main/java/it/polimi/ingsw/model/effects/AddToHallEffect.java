@@ -13,7 +13,8 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     private ColorPawns studentChosen;
     private GameController controller;
     /**
-     * Adds a student to the player's hall
+     * Constructor for the character card that has "add student from card to hall" as effect:costForEffect is set to
+     * 2 and numStudents to 4
      */
 
     public AddToHallEffect(List<ColorPawns> students, GameController controller) {
@@ -22,7 +23,7 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     }
 
     /**
-     * Gets the student chosen thanks to the card's effect
+     * Constructor made to set the chosen the student to move
      * @param studentChosen student chosen by the player
      */
 

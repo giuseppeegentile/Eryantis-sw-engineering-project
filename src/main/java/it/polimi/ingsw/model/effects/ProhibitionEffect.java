@@ -12,7 +12,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     private int numberProhibition = 4;
 
     /**
-     * Sets rhw index of the chosen island
+     * Constructor made to initialize the parameter chosen by the player
      */
 
     public void choose(int chosenIndexIsland){
@@ -20,7 +20,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     }
 
     /**
-     * Sets the card's cost in number of coins
+     * Constructor for the character card tha has "prohibition" as effect: costForEffect is set to 2
      */
 
     public ProhibitionEffect(){
@@ -39,7 +39,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     }
 
     /**
-     * Ends the card's effect
+     * Constructor that ends the effect of the card: HasProhibition is set to false
      */
 
     public void endEffect(){

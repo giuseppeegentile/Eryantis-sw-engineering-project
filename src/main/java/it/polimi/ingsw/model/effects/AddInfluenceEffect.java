@@ -12,7 +12,8 @@ public class AddInfluenceEffect implements Effect, Serializable {
     GameController gameController;
 
     /**
-     * Adds the "add influence" effect of a character card to game controller
+     * Constructor for the character card that has "add influence" as effect: costForEffect is set to 2
+     * @param gameController it's the game controller
      */
 
     public AddInfluenceEffect(GameController gameController){

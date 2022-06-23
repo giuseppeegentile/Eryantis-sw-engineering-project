@@ -7,15 +7,31 @@ public class MovedFromCardToIsland extends Message{
     private final int islandIndex;
     private final ColorPawns studentToMove;
 
+    /**
+     * Message sent when moving a student from a character card to an island
+     * Parameters are set by the constructor
+     * @param nickname current player
+     * @param islandIndex index of the island chosen
+     * @param studentToMove student chosen
+     */
+
     public MovedFromCardToIsland(String nickname, int islandIndex, ColorPawns studentToMove) {
         super(nickname, MessageType.EFFECT_CARD_PLAYED);
         this.islandIndex = islandIndex;
         this.studentToMove = studentToMove;
     }
 
+    /**
+     * @return index of the island chosen
+     */
+
     public int getIslandIndex() {
         return islandIndex;
     }
+
+    /**
+     * @return student chosen
+     */
 
     public ColorPawns getStudentToMove() {
         return studentToMove;

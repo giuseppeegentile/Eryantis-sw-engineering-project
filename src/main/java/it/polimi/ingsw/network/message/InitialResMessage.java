@@ -13,15 +13,31 @@ public class InitialResMessage extends Message{
     private final List<ColorTower> availableTowers;
     private GameMode gameMode;
 
+    /**
+     * Message sent as a response to the initial configuration request
+     * Parameters are set by the constructor
+     * @param nickname current player
+     * @param availableTowers list of tower's colors available
+     * @param gameMode game mode chosen
+     */
+
     public InitialResMessage(String nickname, List<ColorTower> availableTowers, GameMode gameMode) {
         super(nickname, MessageType.INIT);
         this.availableTowers = availableTowers;
         this.gameMode = gameMode;
     }
 
+    /**
+     * @return the list of the available tower colors
+     */
+
     public List<ColorTower> getAvailableTowers() {
         return availableTowers;
     }
+
+    /**
+     * @return the game mode chosen
+     */
 
     public GameMode getGameMode(){
         return gameMode;
