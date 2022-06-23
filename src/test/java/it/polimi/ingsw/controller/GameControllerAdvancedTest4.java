@@ -37,6 +37,10 @@ class GameControllerAdvancedTest4 {
     ColorTower tower1 = ColorTower.BLACK;
     ColorTower tower2 = ColorTower.WHITE;
     ColorTower tower3 = ColorTower.GREY;
+    AssistantCardModel card1 = new AssistantCardModel(1, (byte)1);
+    AssistantCardModel card2 = new AssistantCardModel(2, (byte)1);
+    AssistantCardModel card3 = new AssistantCardModel(3, (byte)1);
+    List<ColorPawns> entrance = new ArrayList<>(List.of(ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED, ColorPawns.RED));
 
     @BeforeAll
     public static void setUp() {
@@ -113,6 +117,18 @@ class GameControllerAdvancedTest4 {
         assertEquals(gameInstance.getPlayersModel().get(2).getNickname(), player3);
         assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), ColorTower.GREY);
 
+        for(int i=0; i<gameInstance.getPlayersModel().size(); i++)
+            gameInstance.getPlayersModel().get(i).setStudentInEntrance(entrance);
+
+        card1.setOwner(gameInstance.getPlayerByNickname(player1));
+        card2.setOwner(gameInstance.getPlayerByNickname(player2));
+        card3.setOwner(gameInstance.getPlayerByNickname(player3));
+
+        gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().set(5, card1);
+        gameInstance.getPlayersModel().get(1).getDeckAssistantCardModel().set(5, card2);
+        gameInstance.getPlayersModel().get(2).getDeckAssistantCardModel().set(3, card3);
+
+        assertTrue(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0).equals(ColorPawns.RED));
         assertEquals(0, gameInstance.getPlayersModel().get(0).getStudentInHall().get(ColorPawns.RED));
         assertEquals(0, gameInstance.getPlayersModel().get(2).getStudentInHall().get(ColorPawns.BLUE));
         assertEquals(4, gameInstance.getCloudsModel().get(0).getStudents().size());
