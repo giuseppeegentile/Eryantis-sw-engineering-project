@@ -121,6 +121,8 @@ class GameControllerAdvancedTest3 {
         card2.setOwner(gameInstance.getPlayerByNickname(player2));
         card3.setOwner(gameInstance.getPlayerByNickname(player3));
 
+        System.out.println(gameInstance.getPlayerByNickname(player1).getStudentInEntrance());
+
         gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().set(5, card1);
         gameInstance.getPlayersModel().get(1).getDeckAssistantCardModel().set(5, card2);
         gameInstance.getPlayersModel().get(2).getDeckAssistantCardModel().set(3, card3);
@@ -136,6 +138,8 @@ class GameControllerAdvancedTest3 {
         assertEquals("ExcludeColorInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(2).getEffect().getClass().getSimpleName());
         assertEquals(3, gameInstance.getCloudsModel().size());
 
+        System.out.println(gameInstance.getPlayerByNickname(player1).getStudentInEntrance());
+
         gameInstance.getPlayersModel().forEach(p -> {
             assertEquals(6, p.getTowerNumber());
             assertEquals(9, p.getStudentInEntrance().size());
@@ -149,6 +153,8 @@ class GameControllerAdvancedTest3 {
         int priority1 = gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().get(5).getPriority();
         int movement1 = gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().get(5).getMotherNatureMovement();
         AssistantCardModel after = gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().get(6);
+
+        System.out.println(gameInstance.getPlayerByNickname(player1).getStudentInEntrance());
 
         AssistantCardModel card1 = gameInstance.getPlayersModel().get(0).getDeckAssistantCardModel().get(5);
         cardsPlayed.put(gameInstance.getPlayersModel().get(0), card1);
@@ -199,17 +205,21 @@ class GameControllerAdvancedTest3 {
         }*/
 
         //turno primo giocatore
-
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance());
         PlayedCharacterCardMessage playedCharacterCardMessage = new PlayedCharacterCardMessage(gameController.getPlayerActive().getNickname(), gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0));
         List<ColorPawns> studentsFromCard = new ArrayList<>(((InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect()).getStudents().subList(1,3));
         gameController.onMessageReceived(playedCharacterCardMessage);
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance());
         List<ColorPawns> studentsFromEntrance = new ArrayList<>(gameController.getPlayerActive().getStudentInEntrance().subList(1, 3));
         MovedFromCardToEntrance movedFromCardToEntrance = new MovedFromCardToEntrance(gameController.getPlayerActive().getNickname(), studentsFromCard, studentsFromEntrance);
         gameController.onMessageReceived(movedFromCardToEntrance);
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance());
         assertTrue(((InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect()).getStudents().containsAll(studentsFromEntrance));
         //assertTrue(gameController.getPlayerActive().getStudentInEntrance().containsAll(studentsFromCard));
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance());
 
         PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
+        System.out.println(firstPlayer.getStudentInEntrance());
         /*System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
         System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
         System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(1));*/
@@ -218,8 +228,10 @@ class GameControllerAdvancedTest3 {
         List<ColorPawns> playersToMove = new ArrayList<>();
         playersToMove.add(student1ToMove);
         playersToMove.add(student2ToMove);
-        MovedStudentOnIslandMessage msgPlayer1 = new MovedStudentOnIslandMessage(firstPlayer.getNickname(), playersToMove, 1);
+        MovedStudentOnIslandMessage msgPlayer1 = new MovedStudentOnIslandMessage(gameController.getPlayerActive().getNickname(), playersToMove, 1);
+        System.out.println(gameController.getPlayerActive().getStudentInEntrance());
         gameController.onMessageReceived(msgPlayer1);
+        System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance());
         //assertEquals(gameController.getPlayerActive().getNickname(), firstPlayer.getNickname());
 
         //gameInstance.getIslandsModel().get(1).getStudents().forEach(System.out::println);
