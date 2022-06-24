@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.effects.InitialConfigEffect;
 import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.observer.ViewObservable;
-import it.polimi.ingsw.view.gui.SceneController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +20,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -67,7 +66,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     @FXML
     private Label moneyPlayerLbl;
 
-    private String nickname;
+    private PlayerModel nickname;
 
     private List<TextField> texts;
     private List<Label> labels;
@@ -106,31 +105,36 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
             int maxStudentToMove = 1;
             String effectName = card.getEffect().getClass().getSimpleName();
-            if(effectName.equals("AddToHallEffect") || effectName.equals("AddToIslandEffect")) {
-                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
-            } else if (effectName.equals("ExchangeConfigEntranceEffect")){
-                maxStudentToMove = 3;
-                gridEntrance.setVisible(true);
-                placeStudentsOnEntrance(gridEntrance, entrance, 3);
-                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
-            } else if(effectName.equals("ProhibitionEffect")){
-                int finalIdx = i;
-                imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                    texts.get(finalIdx).setVisible(true);
-                    labels.get(finalIndex).setVisible(true);
-                    texts.get(finalIndex).setOnKeyPressed(ev->{
-                        if( ev.getCode() == KeyCode.ENTER ) {
-                            int indexIsland = Integer.parseInt(texts.get(finalIdx).getText());
-                            new Thread(() -> notifyObserver(obs -> obs.onUpdateBanCard(nickname, indexIsland-1))).start();
-                            ((Stage)card1.getScene().getWindow()).close();
-                        }
+            switch (effectName) {
+                case "AddToHallEffect":
+                case "AddToIslandEffect":
+                    placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+                    break;
+                case "ExchangeConfigEntranceEffect":
+                    maxStudentToMove = 3;
+                    gridEntrance.setVisible(true);
+                    placeStudentsOnEntrance(gridEntrance, entrance, 3);
+                    placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+                    break;
+                case "ProhibitionEffect":
+                    int finalIdx = i;
+                    imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                        texts.get(finalIdx).setVisible(true);
+                        labels.get(finalIndex).setVisible(true);
+                        texts.get(finalIndex).setOnKeyPressed(ev -> {
+                            if (ev.getCode() == KeyCode.ENTER) {
+                                int indexIsland = Integer.parseInt(texts.get(finalIdx).getText());
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateBanCard(nickname.getNickname(), indexIsland - 1))).start();
+                                ((Stage) card1.getScene().getWindow()).close();
+                            }
+                        });
                     });
-                });
+                    break;
             }
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-                new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
+                new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname.getNickname(), cards.get(finalIndex)))).start();
                 List<String> effectsNotConfig = List.of("AddInfluenceEffect", "ControlProfEffect", "ExtraMovementMotherEffect", "IgnoreTowerEffect");
-                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()) && card.enoughCoins())
+                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()) && card.enoughCoins(this.nickname.getCoins()))  //CONTROLLARE
                     ((Stage) card1.getScene().getWindow()).close();
             });
 
@@ -218,7 +222,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
                 System.out.println(effect);
                 switch (effect) {
                     case "AddToHallEffect":
-                        new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, colorToMove))).start();
+                        new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname.getNickname(), colorToMove))).start();
                         ((Stage)card1.getScene().getWindow()).close();
                         break;
                     case "AddToIslandEffect":
@@ -227,13 +231,13 @@ public class CharacterSceneController extends ViewObservable implements GenericS
                         texts.get(numCard).setOnKeyPressed(ev->{
                             if( ev.getCode() == KeyCode.ENTER ) {
                                 int indexIsland = Integer.parseInt(texts.get(numCard).getText());
-                                new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname, indexIsland-1, colorToMove))).start();
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentFromCardToIsland(nickname.getNickname(), indexIsland-1, colorToMove))).start();
                                 ((Stage)card1.getScene().getWindow()).close();
                             }
                         });
                         break;
                     case "ExchangeConfigEntranceEffect":
-                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname.getNickname(), studentsFromCard, studentsFromEntrance))).start();
                         break;
                 }
             }
@@ -241,7 +245,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         });
     }
 
-    public void setNickname(String nickname) {
+    public void setPlayer(PlayerModel nickname) {
         this.nickname = nickname;
     }
 

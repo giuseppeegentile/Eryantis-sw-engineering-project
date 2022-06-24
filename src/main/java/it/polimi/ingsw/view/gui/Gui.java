@@ -233,7 +233,7 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck, boolean existsCardPlayable) {
         characterSceneController.setIslands(islands);
-        characterSceneController.setNickname(active.getNickname());
+        characterSceneController.setPlayer(active);
         Platform.runLater(()-> {
             characterSceneController.setDeck(characterDeck);
             characterSceneController.setPlayerMoney(active.getCoins());

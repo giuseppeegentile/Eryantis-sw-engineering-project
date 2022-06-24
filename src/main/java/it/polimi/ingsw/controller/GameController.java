@@ -30,7 +30,7 @@ public class GameController implements Observer, Serializable {
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
     private String effectPlayed;
-    private boolean shuffle = false;
+    private boolean shuffle = true;
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
     private PlayerModel playerWithEffectAdditionalInfluence;
@@ -1178,7 +1178,9 @@ public class GameController implements Observer, Serializable {
         boolean existsCardPlayable  =false;
         if(gameInstance.getGameMode() == GameMode.ADVANCED) {
             if (!activatedEffect) {
-                existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
+                for(CharacterCardModel c : playerActive.getCharacterDeck())
+                    if(c.enoughCoins(playerActive.getCoins()))
+                        existsCardPlayable = true;
                 String active = playerActive.getNickname();
                 virtualViewMap.get(active).askPlayCharacterCard(playerActive, playerActive.getCharacterDeck(), existsCardPlayable);
 

@@ -20,7 +20,7 @@ public class CharacterCardModel implements Serializable {
      * @param characterId The identifier of the character card
      */
     public CharacterCardModel(int moneyOnCard, Effect effect, int characterId){
-        this.moneyOnCard = moneyOnCard;
+        this.moneyOnCard = 0;
         this.effect = effect;
         this.characterId = characterId;
     }
@@ -68,8 +68,8 @@ public class CharacterCardModel implements Serializable {
      *
      * @return True if the money placed on card are enough to activate the card
      */
-    public boolean enoughCoins(){
-        return effect.getCoinsForEffect() >= moneyOnCard;
+    public boolean enoughCoins(int money){
+        return money >= effect.getCoinsForEffect();
     }
 
     /**
