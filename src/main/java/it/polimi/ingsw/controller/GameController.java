@@ -211,6 +211,7 @@ public class GameController implements Observer, Serializable {
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
                     effectPlayed = characterCardPlayed.getEffect().getClass().getSimpleName();
+                    playerActive.removeCoins(characterCardPlayed.getEffect().getCoinsForEffect());
                     InitialConfigEffect initialConfigEffect;
                     switch (this.effectPlayed) {
                         case "AddToHallEffect":
