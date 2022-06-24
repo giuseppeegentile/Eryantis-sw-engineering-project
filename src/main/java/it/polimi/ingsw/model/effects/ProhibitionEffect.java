@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class ProhibitionEffect implements Effect, Serializable {
     private static final long serialVersionUID = -3636736011809156600L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     private int chosenIndexIsland;
     private int numberProhibition = 4;
 
@@ -34,7 +35,12 @@ public class ProhibitionEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     /**

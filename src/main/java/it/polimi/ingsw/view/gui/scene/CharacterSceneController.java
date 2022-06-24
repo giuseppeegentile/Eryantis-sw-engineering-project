@@ -132,11 +132,12 @@ public class CharacterSceneController extends ViewObservable implements GenericS
                     break;
             }
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                if (cards.get(finalIndex).enoughCoins(this.nickname.getCoins())){
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname.getNickname(), cards.get(finalIndex)))).start();
                 List<String> effectsNotConfig = List.of("AddInfluenceEffect", "ControlProfEffect", "ExtraMovementMotherEffect", "IgnoreTowerEffect");
-                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()) && card.enoughCoins(this.nickname.getCoins()))  //CONTROLLARE
+                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()) && card.enoughCoins(this.nickname.getCoins()))
                     ((Stage) card1.getScene().getWindow()).close();
-            });
+            }});
 
             Tooltip tooltip = new Tooltip(card.getEffect().getDescription());
             Tooltip.install(imagesList.get(finalIndex), tooltip);
@@ -183,7 +184,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         List<HBox> hboxes = List.of(boxCost_1, boxCost_2, boxCost_3);
         for(int k = 0; k < hboxes.size(); k++){
             hboxes.get(k).getChildren().clear();
-            for(int j = 0; j < cards.get(k).getMoneyOnCard(); j++)
+            for(int j = 0; j < cards.get(k).getEffect().getMoneyOnCard(); j++)
                 hboxes.get(k).getChildren().add(getStyledCoins());
         }
     }
@@ -291,7 +292,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
         for (int i = 0; i < cards.size(); i++) {
             hboxList.get(i).getChildren().clear();
-            for (int j = 0; j < cards.get(i).getMoneyOnCard(); j++) {
+            for (int j = 0; j < cards.get(i).getEffect().getMoneyOnCard(); j++) {
                 hboxList.get(i).getChildren().add(getStyledCoins());
             }
         }

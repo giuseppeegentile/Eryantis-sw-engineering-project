@@ -51,21 +51,6 @@ public class CharacterCardModel implements Serializable {
 
     /**
      *
-     * @return The number of the money placed on the character card
-     */
-    public int getMoneyOnCard() {
-        return moneyOnCard;
-    }
-
-    /**
-     * It increments by 1 the cost of the activation of the character card effect
-     */
-    public void incrementMoneyCost(){
-        this.moneyOnCard++;
-    }
-
-    /**
-     *
      * @return True if the money placed on card are enough to activate the card
      */
     public boolean enoughCoins(int money){

@@ -12,6 +12,7 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 3251436688028470073L;
     private int costForEffect;
     private int indexIslandEffect;
+    private int moneyOnCard = 0;
     private final GameController gameController;
 
     /**
@@ -41,7 +42,12 @@ public class PickIslandInfluenceEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

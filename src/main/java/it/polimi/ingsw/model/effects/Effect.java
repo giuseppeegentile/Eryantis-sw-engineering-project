@@ -10,5 +10,7 @@ public interface Effect{
 
     void incrementCost();
 
+    int getMoneyOnCard();
+
     String getDescription();
 }
