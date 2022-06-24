@@ -178,7 +178,7 @@ public class IslandModel implements Serializable {
                 copyStudents.addAll(playerWithEffectAdditionalInfluence.getProfs());
             }
             if (ignoreColorEffect != null) {
-                System.out.println("sono nell'if che rimuove");
+                //System.out.println("sono nell'if che rimuove");
                 copyStudents.removeIf(c -> c.equals(ignoreColorEffect));
                 if (copyStudents.size() == 0) return new PlayerModel();
             }

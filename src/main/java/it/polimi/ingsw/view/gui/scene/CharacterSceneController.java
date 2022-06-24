@@ -176,6 +176,12 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
     public void setDeck(List<CharacterCardModel> cards) {
         this.cards = cards;
+        List<HBox> hboxes = List.of(boxCost_1, boxCost_2, boxCost_3);
+        for(int k = 0; k < hboxes.size(); k++){
+            hboxes.get(k).getChildren().clear();
+            for(int j = 0; j < cards.get(k).getMoneyOnCard(); j++)
+                hboxes.get(k).getChildren().add(getStyledCoins());
+        }
     }
 
     private Button getStyledCoins() {

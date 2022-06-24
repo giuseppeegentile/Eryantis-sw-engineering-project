@@ -38,8 +38,6 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
         getFromBag();
     }
 
-
-
     /**
      * Gets the description of the character card
      */

@@ -290,11 +290,6 @@ class GameControllerAdvancedTest1 {
         MovedMotherNatureMessage motherNatureMessage2 = new MovedMotherNatureMessage(secondPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage2);
 
-<<<<<<< HEAD
-        //assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%gameInstance.getIslandsModel().size());
-
-=======
->>>>>>> working_beginner_0.0
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting2 = new AddStudentFromCloudToEntranceMessage(secondPlayer.getNickname(), 0);
         cloud = gameInstance.getCloudsModel().get(1);
         gameController.onMessageReceived(msgCloudToWaiting2);
@@ -347,10 +342,7 @@ class GameControllerAdvancedTest1 {
         indexOldMother = gameInstance.getMotherNatureIndex();
         MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);
         gameController.onMessageReceived(motherNatureMessage3);
-<<<<<<< HEAD
-        //assertEquals(gameInstance.getMotherNatureIndex(), (indexOldMother+1)%gameInstance.getIslandsModel().size());
-=======
->>>>>>> working_beginner_0.0
+
 
         AddStudentFromCloudToEntranceMessage msgCloudToWaiting3 = new AddStudentFromCloudToEntranceMessage(thirdPlayer.getNickname(), 0);
         gameController.onMessageReceived(msgCloudToWaiting3);

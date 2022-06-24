@@ -564,7 +564,7 @@ public class Cli extends ViewObservable implements View {
 
 
     @Override
-    public void askPlayCharacterCard(PlayerModel activePlayer, List<CharacterCardModel> characterDeck) {
+    public void askPlayCharacterCard(PlayerModel activePlayer, List<CharacterCardModel> characterDeck, boolean existsCardPlayable) {
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
         out.println(activePlayer.getNickname() + " you have " + activePlayer.getCoins() + " coins, select your character card for this round.\nThis is your deck:\n");

@@ -22,7 +22,6 @@ public class ProhibitionEffect implements Effect, Serializable {
     /**
      * Constructor for the character card tha has "prohibition" as effect: costForEffect is set to 2
      */
-
     public ProhibitionEffect(){
         this.costForEffect =2;
     }

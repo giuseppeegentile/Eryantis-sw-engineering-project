@@ -92,7 +92,7 @@ public class Gui extends ViewObservable implements View {
         if(!checkpointBoard)
             boardSceneController = new GameBoardSceneController();
         boardSceneController.setClouds(clouds);
-        boardSceneController.setGameMode(gameMode);
+        Platform.runLater(()->boardSceneController.setGameMode(gameMode));
         if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
     }
 
@@ -160,7 +160,7 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void showStartTurn(String nick){
         Platform.runLater(() -> {
-            boardSceneController.setTurnLabel("Sposta fino a 3 studenti nell'entrata");
+            boardSceneController.setTurnLabel("Sposta fino a 3 studenti su un'isola");
             boardSceneController.setNewTurn();
         });
     }
@@ -203,7 +203,7 @@ public class Gui extends ViewObservable implements View {
         TowerColorSceneController towerColorSceneController = new TowerColorSceneController();
 
         towerColorSceneController.addAllObservers(observers);
-
+        this.gameMode = gameMode;
         towerColorSceneController.setAvailableTowers(availableColorTowers);
         Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
     }
@@ -231,14 +231,19 @@ public class Gui extends ViewObservable implements View {
 
     CharacterSceneController characterSceneController = new CharacterSceneController();
     @Override
-    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
+    public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck, boolean existsCardPlayable) {
         characterSceneController.setIslands(islands);
         characterSceneController.setNickname(active.getNickname());
         Platform.runLater(()-> {
             characterSceneController.setDeck(characterDeck);
             characterSceneController.setPlayerMoney(active.getCoins());
-            boardSceneController.setTurnLabel("Gioca una carta carattere");
-            boardSceneController.setSubtitleText("Puoi saltare questa fase");
+            if(!existsCardPlayable) {
+                boardSceneController.setTurnLabel("Non hai nessuna carta carattere giocabile");
+                new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+            }else{
+                boardSceneController.setTurnLabel("Gioca una carta carattere");
+                boardSceneController.setSubtitleText("Puoi saltare questa fase");
+            }
         });
         characterSceneController.addAllObservers(observers);
         boardSceneController.setCharacterSceneController(characterSceneController);

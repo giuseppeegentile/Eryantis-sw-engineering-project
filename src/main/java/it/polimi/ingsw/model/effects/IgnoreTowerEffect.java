@@ -20,15 +20,18 @@ public class IgnoreTowerEffect implements Effect, Serializable {
         this.controller = controller;
         this.costForEffect = 3;
     }
+
     @Override
     public void enable(PlayerModel playerModel) {
         controller.setConsiderTower(false);
     }
+
     @Override
     public void incrementCost() {
         this.costForEffect++;
         System.out.println(this.costForEffect);
     }
+
     @Override
     public int getCoinsForEffect() {
         return costForEffect;

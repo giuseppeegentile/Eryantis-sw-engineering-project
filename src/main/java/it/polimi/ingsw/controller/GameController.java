@@ -412,6 +412,7 @@ public class GameController implements Observer, Serializable {
         for (CharacterCardModel card : playerActive.getCharacterDeck()){
             if(card.getEffect().getDescription().equals(characterCardPlayed.getEffect().getDescription())){
                 card.getEffect().incrementCost();
+
                 break;
             }
         }
@@ -452,21 +453,29 @@ public class GameController implements Observer, Serializable {
             return;
         }
         String activeNick = playerActive.getNickname();
-        moveMotherNature(movement);
+        //moveMotherNature(movement);
 
-        if(!gameInstance.getIslandWithMother().hasProhibition()) { //check he doesn't have a prohib card on
-            computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
-        }else{
-            virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
-            gameInstance.getIslandWithMother().setHasProhibition(false);
-            for(CharacterCardModel c: playerActive.getCharacterDeck()) {
-                if (c.getEffect().getClass().getSimpleName().equals("ProhibitionEffect"))
-                    ((ProhibitionEffect)c.getEffect()).endEffect();
+        if(movement!=0) {
+            int indexOldMotherNature = 0;
+            List<IslandModel> islandsModels = gameInstance.getIslandsModel();
+            while (!islandsModels.get(indexOldMotherNature).getMotherNature()) indexOldMotherNature++;
+            int newIndex = (indexOldMotherNature + movement) % (gameInstance.getIslandsModel().size());
+            if(!islandsModels.get(newIndex).hasProhibition()) {
+                gameInstance.getIslandsModel().get(indexOldMotherNature).setMotherNature(false);
+                gameInstance.getIslandsModel().get(newIndex).setMotherNature(true);
+                computeIslandsChanges(playerActive, gameInstance.getIslandWithMother());
+            }else{
+                virtualViewMap.get(activeNick).showSkippingMotherMovement(activeNick);
+                gameInstance.getIslandsModel().get(newIndex).setHasProhibition(false);
+                for(CharacterCardModel c: playerActive.getCharacterDeck()) {
+                    if (c.getEffect().getClass().getSimpleName().equals("ProhibitionEffect"))
+                        ((ProhibitionEffect)c.getEffect()).endEffect();
+                }
             }
-
+            for(String gamer: virtualViewMap.keySet())
+                virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
         }
-        for(String gamer: virtualViewMap.keySet())
-            virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
+
         virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
     }
 
@@ -1112,12 +1121,12 @@ public class GameController implements Observer, Serializable {
         List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
 
         List<Effect> effects = List.of(
-                new ProhibitionEffect(),
+
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
                 new PickIslandInfluenceEffect(this),
                 new ExtraMovementMotherEffect(),
-
+                new ProhibitionEffect(),
                 new IgnoreTowerEffect(this),
                 new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),
@@ -1161,6 +1170,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Ask the client to play the character card (if game mode is expert)
      * @param oldState the state of the game the player was before calling the effect
+     * @return true iff exist a card that can be played (so that has enough money)
      */
     private boolean askCharacter(MessageType oldState){
         this.oldState = oldState;
@@ -1168,10 +1178,9 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.getGameMode() == GameMode.ADVANCED) {
             if (!activatedEffect) {
                 existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
-                if (existsCardPlayable) {
-                    String active = playerActive.getNickname();
-                    virtualViewMap.get(active).askPlayCharacterCard(playerActive, playerActive.getCharacterDeck());
-                }
+                String active = playerActive.getNickname();
+                virtualViewMap.get(active).askPlayCharacterCard(playerActive, playerActive.getCharacterDeck(), existsCardPlayable);
+
             } else
                 continueFromOldState();
         }

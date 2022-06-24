@@ -163,15 +163,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         islandsDisplay();
         cloudsDisplay();
 
-        if(gameMode == GameMode.BEGINNER) {
-            character.setVisible(false);
-            skipCardGame.setVisible(false);
-        }
-
         skipCardGame.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
         });
-
 
         skipMove.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             new Thread(()-> notifyObserver(obs->obs.onUpdateStudentToIsland(nickname, List.of(), 0))).start();
@@ -573,6 +567,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+
+        if(gameMode == GameMode.BEGINNER) {
+            character.setVisible(false);
+            skipCardGame.setVisible(false);
+        }
     }
 
     public void setVisibleSubtitle() {

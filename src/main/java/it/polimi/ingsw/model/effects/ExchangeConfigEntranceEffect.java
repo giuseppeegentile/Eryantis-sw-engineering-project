@@ -26,9 +26,9 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
 
     /**
      * Constructor for the character card tha has "exchange entrance's configuration" as effect : costForEffect is set
-     * to 1, numStudents is set to 6
+     *  to 1, numStudents is set to 6
+     * @param students students total: 3 from card and 3 from entrance
      */
-
     public ExchangeConfigEntranceEffect(List<ColorPawns> students) {
         super(students, 1, 6);
     }
