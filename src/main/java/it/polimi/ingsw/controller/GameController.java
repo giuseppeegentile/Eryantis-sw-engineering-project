@@ -273,7 +273,7 @@ public class GameController implements Observer, Serializable {
                         ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
                         ChosenColorToIgnore chosenColorToIgnore = (ChosenColorToIgnore)receivedMessage;
                         excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
-                        //this.colorToExclude =  chosenColorToIgnore.getChosenColor();
+                        this.colorToExclude =  chosenColorToIgnore.getChosenColor();
                         break;
                     case "PickIslandInfluenceEffect":
                         PickIslandInfluenceEffect pickIslandInfluenceEffect = (PickIslandInfluenceEffect)characterCardPlayed.getEffect();
@@ -1132,7 +1132,6 @@ public class GameController implements Observer, Serializable {
                 new ExcludeColorInfluenceEffect(this),
                 new ExchangeHallEntranceEffect(),
                 new AddToHallEffect(subBag3, this)
-//*+++++++++++++++++++++++++++++++++++++++++++++
         );
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);
