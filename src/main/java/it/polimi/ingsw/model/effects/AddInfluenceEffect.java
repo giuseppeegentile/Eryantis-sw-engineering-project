@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class AddInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1073341693883814645L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     GameController gameController;
 
     /**
@@ -28,6 +29,12 @@ public class AddInfluenceEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

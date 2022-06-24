@@ -9,6 +9,7 @@ import java.util.List;
 public class ExchangeHallEntranceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 8204489708195898922L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromHall;
 
@@ -37,14 +38,18 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
     public void enable(PlayerModel playerModel) {
         playerModel.addStudentsHall(studentFromEntrance);
         playerModel.addStudentsEntrance(studentFromHall);
-
         playerModel.removeStudentFromEntrance(studentFromEntrance);
         playerModel.removeStudentFromHall(studentFromHall);
     }
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     /**

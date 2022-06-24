@@ -83,7 +83,7 @@ class PlayerModelTest {
         assertEquals(player, playerSame);
         assertEquals(1786650663, player.hashCode());
         List<CharacterCardModel> characterCard = new ArrayList<>();
-        CharacterCardModel cards = new CharacterCardModel(1, new ControlProfEffect(), 1);
+        CharacterCardModel cards = new CharacterCardModel(new ControlProfEffect(), 1);
         characterCard.add(cards);
         player.assignCharacterDeck(characterCard);
         assertEquals(characterCard, player.getCharacterDeck());

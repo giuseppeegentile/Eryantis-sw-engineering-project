@@ -11,6 +11,7 @@ import java.util.List;
 public class InitialConfigEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     final List<ColorPawns> students;
     private final int numStudents;
 
@@ -51,7 +52,12 @@ public class InitialConfigEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

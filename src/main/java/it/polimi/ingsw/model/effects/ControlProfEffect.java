@@ -12,6 +12,7 @@ import java.util.Map;
 public class ControlProfEffect implements Effect, Serializable {
     private static final long serialVersionUID = 8743730422346855395L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     private PlayerModel playerWithProfs;
     private Map<ColorPawns, PlayerModel> oldAssociationProfs;
 
@@ -40,7 +41,12 @@ public class ControlProfEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

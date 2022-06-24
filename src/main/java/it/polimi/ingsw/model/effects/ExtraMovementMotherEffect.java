@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class ExtraMovementMotherEffect implements Effect, Serializable {
     private static final long serialVersionUID = -5520393474357646858L;
     private int costForEffect;
+    private int moneyOnCard = 0;
 
     /**
      * Constructor for the character card tha has "extra mother nature movement" as effect: costForEffect is set to 1
@@ -24,6 +25,12 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

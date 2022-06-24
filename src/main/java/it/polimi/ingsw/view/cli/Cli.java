@@ -570,7 +570,7 @@ public class Cli extends ViewObservable implements View {
         out.println(activePlayer.getNickname() + " you have " + activePlayer.getCoins() + " coins, select your character card for this round.\nThis is your deck:\n");
         stringBuilder.append("0 -> Not playing a character card\n");
         for (CharacterCardModel card : characterDeck) {
-            if(card.enoughCoins()) {
+            if(existsCardPlayable) {
                 stringBuilder.append(i).append(" -> Money needed for effect = ").append(card.getEffect().getCoinsForEffect()).append(", ").append(card.getEffect().getDescription()).append("\n");
             }
             i++;

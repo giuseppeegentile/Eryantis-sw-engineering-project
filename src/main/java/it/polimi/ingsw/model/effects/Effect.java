@@ -6,6 +6,8 @@ public interface Effect{
 
     void enable(PlayerModel playerModel);
 
+    int getMoneyOnCard();
+
     int getCoinsForEffect();
 
     void incrementCost();

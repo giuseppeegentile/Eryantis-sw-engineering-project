@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class IgnoreTowerEffect implements Effect, Serializable {
     private static final long serialVersionUID = 2400877543729271601L;
     private int costForEffect;
+    private int moneyOnCard = 0;
     private final GameController controller;
 
     /**
@@ -29,7 +30,12 @@ public class IgnoreTowerEffect implements Effect, Serializable {
     @Override
     public void incrementCost() {
         this.costForEffect++;
-        System.out.println(this.costForEffect);
+        moneyOnCard++;
+    }
+
+    @Override
+    public int getMoneyOnCard() {
+        return moneyOnCard;
     }
 
     @Override

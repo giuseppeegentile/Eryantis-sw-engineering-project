@@ -30,7 +30,7 @@ public class GameController implements Observer, Serializable {
     private List<PlayerModel> playersThatHavePlayedCard;
     private boolean activatedEffect = false;
     private String effectPlayed;
-    private boolean shuffle = false;
+    private boolean shuffle = true;
     private CharacterCardModel characterCardPlayed;
     private int numberPlayersPlayedCard;
     private PlayerModel playerWithEffectAdditionalInfluence;
@@ -211,6 +211,7 @@ public class GameController implements Observer, Serializable {
                 characterCardPlayed = ((PlayedCharacterCardMessage)receivedMessage).getCharacterPlayed();
                 if(characterCardPlayed != null) {
                     effectPlayed = characterCardPlayed.getEffect().getClass().getSimpleName();
+                    playerActive.removeCoins(characterCardPlayed.getEffect().getCoinsForEffect());
                     InitialConfigEffect initialConfigEffect;
                     switch (this.effectPlayed) {
                         case "AddToHallEffect":
@@ -269,10 +270,10 @@ public class GameController implements Observer, Serializable {
                         exchangeHallEntranceEffect.choose(chosenChangeEntranceHall.getStudentsFromEntrance(), chosenChangeEntranceHall.getStudentsFromHall());
                         break;
                     case "ExcludeColorInfluenceEffect":
-                        //ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
+                        ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
                         ChosenColorToIgnore chosenColorToIgnore = (ChosenColorToIgnore)receivedMessage;
-                        //excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
-                        this.colorToExclude =  chosenColorToIgnore.getChosenColor();
+                        excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
+                        //this.colorToExclude =  chosenColorToIgnore.getChosenColor();
                         break;
                     case "PickIslandInfluenceEffect":
                         PickIslandInfluenceEffect pickIslandInfluenceEffect = (PickIslandInfluenceEffect)characterCardPlayed.getEffect();
@@ -1120,7 +1121,6 @@ public class GameController implements Observer, Serializable {
         List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
 
         List<Effect> effects = List.of(
-                new ExcludeColorInfluenceEffect(this),
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
                 new PickIslandInfluenceEffect(this),
@@ -1129,7 +1129,7 @@ public class GameController implements Observer, Serializable {
                 new IgnoreTowerEffect(this),
                 new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),
-
+                new ExcludeColorInfluenceEffect(this),
                 new ExchangeHallEntranceEffect(),
                 new AddToHallEffect(subBag3, this)
 //*+++++++++++++++++++++++++++++++++++++++++++++
@@ -1137,7 +1137,7 @@ public class GameController implements Observer, Serializable {
 
         List<CharacterCardModel> characterDeck = new ArrayList<>(11);
         for(int i = 0; i < 11; i++){
-            characterDeck.add(new CharacterCardModel(0,effects.get(i), i));
+            characterDeck.add(new CharacterCardModel(effects.get(i), i));
         }
 
         if(shuffle)
@@ -1176,7 +1176,9 @@ public class GameController implements Observer, Serializable {
         boolean existsCardPlayable  =false;
         if(gameInstance.getGameMode() == GameMode.ADVANCED) {
             if (!activatedEffect) {
-                existsCardPlayable = playerActive.getCharacterDeck().stream().anyMatch(CharacterCardModel::enoughCoins);
+                for(CharacterCardModel c : playerActive.getCharacterDeck())
+                    if(c.enoughCoins(playerActive.getCoins()))
+                        existsCardPlayable = true;
                 String active = playerActive.getNickname();
                 virtualViewMap.get(active).askPlayCharacterCard(playerActive, playerActive.getCharacterDeck(), existsCardPlayable);
 
