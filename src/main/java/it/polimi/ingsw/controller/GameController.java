@@ -269,9 +269,10 @@ public class GameController implements Observer, Serializable {
                         exchangeHallEntranceEffect.choose(chosenChangeEntranceHall.getStudentsFromEntrance(), chosenChangeEntranceHall.getStudentsFromHall());
                         break;
                     case "ExcludeColorInfluenceEffect":
-                        ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
+                        //ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
                         ChosenColorToIgnore chosenColorToIgnore = (ChosenColorToIgnore)receivedMessage;
-                        excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
+                        //excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
+                        this.colorToExclude =  chosenColorToIgnore.getChosenColor();
                         break;
                     case "PickIslandInfluenceEffect":
                         PickIslandInfluenceEffect pickIslandInfluenceEffect = (PickIslandInfluenceEffect)characterCardPlayed.getEffect();
@@ -430,8 +431,6 @@ public class GameController implements Observer, Serializable {
                 virtualViewMap.get(p.getNickname()).showPlayerBoardMessage(p,
                         towers, p.getStudentInHall(), p.getStudentInEntrance(), p.getProfs());
             }
-
-
         }
 
         activatedEffect = true;
@@ -1121,7 +1120,7 @@ public class GameController implements Observer, Serializable {
         List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
 
         List<Effect> effects = List.of(
-
+                new ExcludeColorInfluenceEffect(this),
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
                 new PickIslandInfluenceEffect(this),
@@ -1130,7 +1129,7 @@ public class GameController implements Observer, Serializable {
                 new IgnoreTowerEffect(this),
                 new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),
-                new ExcludeColorInfluenceEffect(this),
+
                 new ExchangeHallEntranceEffect(),
                 new AddToHallEffect(subBag3, this)
 //*+++++++++++++++++++++++++++++++++++++++++++++

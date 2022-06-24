@@ -105,27 +105,65 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             int finalIndex = i;
 
             int maxStudentToMove = 1;
+            int finalIdx = i;
             String effectName = card.getEffect().getClass().getSimpleName();
-            if(effectName.equals("AddToHallEffect") || effectName.equals("AddToIslandEffect")) {
-                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
-            } else if (effectName.equals("ExchangeConfigEntranceEffect")){
-                maxStudentToMove = 3;
-                gridEntrance.setVisible(true);
-                placeStudentsOnEntrance(gridEntrance, entrance, 3);
-                placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
-            } else if(effectName.equals("ProhibitionEffect")){
-                int finalIdx = i;
-                imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                    texts.get(finalIdx).setVisible(true);
-                    labels.get(finalIndex).setVisible(true);
-                    texts.get(finalIndex).setOnKeyPressed(ev->{
-                        if( ev.getCode() == KeyCode.ENTER ) {
-                            int indexIsland = Integer.parseInt(texts.get(finalIdx).getText());
-                            new Thread(() -> notifyObserver(obs -> obs.onUpdateBanCard(nickname, indexIsland-1))).start();
-                            ((Stage)card1.getScene().getWindow()).close();
-                        }
+            switch (effectName) {
+                case "AddToHallEffect":
+                case "AddToIslandEffect":
+                    placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+                    break;
+                case "ExchangeConfigEntranceEffect":
+                    maxStudentToMove = 3;
+                    gridEntrance.setVisible(true);
+                    placeStudentsOnEntrance(gridEntrance, entrance, 3);
+                    placeStudentsOnCard(gridPaneList, i, card, maxStudentToMove, effectName);
+                    break;
+                case "ProhibitionEffect":
+                    imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                        texts.get(finalIdx).setVisible(true);
+                        labels.get(finalIndex).setVisible(true);
+                        texts.get(finalIndex).setOnKeyPressed(ev -> {
+                            if (ev.getCode() == KeyCode.ENTER) {
+                                int indexIsland = Integer.parseInt(texts.get(finalIdx).getText());
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateBanCard(nickname, indexIsland - 1))).start();
+                                ((Stage) card1.getScene().getWindow()).close();
+                            }
+                        });
                     });
-                });
+                    break;
+                case "ExcludeColorInfluenceEffect":
+                    imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                        labels.get(finalIndex).setVisible(true);
+                        labels.get(finalIndex).setText("Seleziona il colore che vuoi ignorare");
+                        List<ColorPawns> colors = List.of(ColorPawns.BLUE, ColorPawns.RED, ColorPawns.PINK, ColorPawns.GREEN);
+                        int k = 0;
+                        int j = 0;
+                        for(; k < 2; k++){
+                            Button b = getPawnByColor(colors.get(j));
+                            int finalJ1 = j;
+                            b.addEventHandler(MouseEvent.MOUSE_CLICKED, (ev) -> {
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateColorToIgnore(nickname, colors.get(finalJ1)))).start();
+                                ((Stage) card1.getScene().getWindow()).close();
+                            });
+                            gridPaneList.get(finalIndex).add(b, 0, k);
+                            j+=1;
+                            Button b2 = getPawnByColor(colors.get(j));
+                            int finalJ = j;
+                            b2.addEventHandler(MouseEvent.MOUSE_CLICKED, (ev) -> {
+                                new Thread(() -> notifyObserver(obs -> obs.onUpdateColorToIgnore(nickname, colors.get(finalJ)))).start();
+                                ((Stage) card1.getScene().getWindow()).close();
+                            });
+                            gridPaneList.get(finalIndex).add(b2, 1, k);
+                            j+=1;
+                        }
+                        Button b = getPawnByColor(ColorPawns.YELLOW);
+                        b.addEventHandler(MouseEvent.MOUSE_CLICKED, (ev) -> {
+                            new Thread(() -> notifyObserver(obs -> obs.onUpdateColorToIgnore(nickname, ColorPawns.YELLOW))).start();
+                            ((Stage) card1.getScene().getWindow()).close();
+                        });
+                        gridPaneList.get(finalIndex).add(b, 0, 2);
+                    });
+                    break;
             }
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
