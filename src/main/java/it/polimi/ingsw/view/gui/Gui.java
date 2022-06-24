@@ -78,10 +78,10 @@ public class Gui extends ViewObservable implements View {
     public void showTextMessage(String player, String text){}
 
     @Override
-    public void showLobbyMessage(List<String> nicknameList){
-        /*boardSceneController.setPlayersLobby(nicknameList);
-        boardSceneController.addAllObservers(observers);
-        Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));*/
+    public void showLobbyMessage(List<PlayerModel> nicknameList){
+        Platform.runLater(()->boardSceneController.setNicknameList(nicknameList));
+        //boardSceneController.addAllObservers(observers);
+        //Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
     }
 
     @Override
@@ -301,11 +301,7 @@ public class Gui extends ViewObservable implements View {
             boardSceneController.setTurnLabel("Aspetta il tuo turno");
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
-            board.setTowers(towers);
-            board.setHall(hall);
-            board.setEntrance(entrance);
-            board.setProfs(profs);
-            board.setPlayer(nickname.getNickname());
+            board.setPlayer(nickname);
             Platform.runLater(()-> {
                 try {
                     SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml");

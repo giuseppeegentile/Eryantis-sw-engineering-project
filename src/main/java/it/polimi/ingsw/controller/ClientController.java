@@ -34,7 +34,6 @@ public class ClientController implements ViewObserver, Observer {
         this.queueTasks = Executors.newSingleThreadExecutor();
     }
 
-
     /**
      * Takes action based on the message type received from the server. Destination: client, who's going to change the view.
      *

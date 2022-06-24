@@ -601,10 +601,10 @@ public class Cli extends ViewObservable implements View {
      * @param nicknameList list of players.
      */
     @Override
-    public void showLobbyMessage(List<String> nicknameList) {
+    public void showLobbyMessage(List<PlayerModel> nicknameList) {
         out.println("LOBBY:");
-        for (String nick : nicknameList) {
-            out.println(nick + "\n");
+        for (PlayerModel nick : nicknameList) {
+            out.println(nick.getNickname() + "\n");
         }
     }
 

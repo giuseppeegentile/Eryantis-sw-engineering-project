@@ -38,7 +38,7 @@ public interface View {
 
     void showTextMessage(String player, String text);
 
-    void showLobbyMessage(List<String> nicknameList);
+    void showLobbyMessage(List<PlayerModel> nicknameList);
 
     void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex);
 

@@ -2,122 +2,110 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.enums.GameMode;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.observer.ViewObservable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
 public class OtherGameBoardSceneController extends ViewObservable implements GenericSceneController{
-    private List<ColorTower> towers;
+    private PlayerModel player;
     private Map<ColorPawns, Integer> hall;
     private List<ColorPawns> profs;
     private List<ColorPawns> entrance;
-    private String nickname;
-    private int numClouds;
 
     @FXML
-    private ImageView cloud_3;
-
-    @FXML
-    private ImageView cloud_4;
-
-    @FXML
-    private Button student_1;
-
-    @FXML
-    private Button student_2;
-
+    private Label titleLabel;
     @FXML
     private AnchorPane pane;
 
-    private boolean readOnly;
     @FXML
-    private Button lobbyBtn;
+    private GridPane profsGrid;
 
     @FXML
-    private TableView<String> lobbyTable;
+    private GridPane hallGrid;
+
+    @FXML
+    private GridPane entrancePane;
+
+    @FXML
+    private GridPane towersGrid;
+
+
+    private boolean readOnly;
 
     @FXML
     TableColumn<String, String> gamersCol;
     @FXML
     private void initialize() throws InterruptedException {
-        int gapX = 41;
-        int gapY = 30;
-        for(int i = 2, j = 1, k=1; i < entrance.size();i++){
-            ColorPawns s = entrance.get(i);
-            if(i%2 == 0){
-                Button btn = new Button();//da mettere poi le image view al posto dei bottoni, con l'immagine dello studente corrispondente a colorPawns
-                btn.setText("S");
-                btn.setLayoutX(student_1.getLayoutX() + (j*gapX));
-                btn.setLayoutY(student_2.getLayoutY() - (k*gapY));
-                j++;
-            }else{
-                Button btn = new Button();//da mettere poi le image view al posto dei bottoni, con l'immagine dello studente corrispondente a colorPawns
-                btn.setText("S");
-                btn.setLayoutY(student_2.getLayoutY() + (k*gapY));
-                btn.setLayoutX(student_1.getLayoutX() - (j*gapX));
-                k++;
-            }
-        }
-
-        lobbyBtn.setVisible(false);
-        lobbyTable.setVisible(false);
-        gamersCol.setVisible(false);
-
-        showCorrectClouds();
-
+        entranceDisplay();
+        hallDisplay();
+        titleLabel.setText("Plancia di gioco id: " + player.getNickname());
     }
-
-
-    private void showCorrectClouds(){
-        if(numClouds == 3){
-            cloud_4.setVisible(false);
-        }else if (numClouds == 2){
-            cloud_3.setVisible(false);
-            cloud_4.setVisible(false);
+    public void entranceDisplay() {
+        entrancePane.getChildren().clear();
+        Button b = getPawnByColor(entrance.get(0));
+        entrancePane.add(b, 1, 0);
+        int idx = 1;
+        int rowGrid = 2;
+        for(int j = 1; j < rowGrid; j++){
+            Button bt = getPawnByColor(entrance.get(idx));
+            bt.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt, true);
+            entrancePane.add(bt, 0, j);
+            idx++;
+            if(idx == entrance.size()) break;
+            Button bt2 = getPawnByColor(entrance.get(idx));
+            bt2.setMaxHeight(30.0);
+            GridPane.setFillWidth(bt2, true);
+            entrancePane.add(bt2, 1, j);
+            idx++;
+            if(idx == entrance.size()) break;
+            rowGrid++;
         }
     }
-
-    public void setTowers(List<ColorTower> towers) {
-        this.towers =towers;
+    public void hallDisplay() {
+        for(int i=0; i < hall.get(ColorPawns.GREEN); i++){
+            hallGrid.add(getPawnByColor(ColorPawns.GREEN) , i, 0);
+        }
+        for(int i=0; i < hall.get(ColorPawns.RED); i++){
+            hallGrid.add(getPawnByColor(ColorPawns.RED) , i, 1);
+        }
+        for(int i=0; i < hall.get(ColorPawns.YELLOW); i++){
+            hallGrid.add(getPawnByColor(ColorPawns.YELLOW) , i, 2);
+        }
+        for(int i=0; i < hall.get(ColorPawns.PINK); i++){
+            hallGrid.add(getPawnByColor(ColorPawns.PINK) , i, 3);
+        }
+        for(int i=0; i < hall.get(ColorPawns.BLUE); i++){
+            hallGrid.add(getPawnByColor(ColorPawns.BLUE) , i, 4);
+        }
     }
 
-    public void setEntrance(List<ColorPawns> entrance) {
-        this.entrance =entrance;
+    private Button getPawnByColor(ColorPawns s) {
+        Button b = new Button();
+        b.setPrefHeight(30.0);
+        b.setPrefWidth(35.0);
+        String path = "/images_cranio/pawns/" + s.name() +  ".png";
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        b.setBackground(background);
+        return b;
     }
 
-    public void setProfs(List<ColorPawns> profs) {
-        this.profs =profs;
-    }
-
-    public void setHall(Map<ColorPawns, Integer> hall) {
-        this.hall =hall;
-    }
-
-    public void setPlayer(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setNumClouds(int numClouds) {
-        this.numClouds = numClouds;
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+        hall = player.getStudentInHall();
+        entrance = player.getStudentInEntrance();
     }
 }

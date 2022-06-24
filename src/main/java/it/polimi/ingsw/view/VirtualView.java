@@ -109,7 +109,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showLobbyMessage(List<String> nicknameList) {
+    public void showLobbyMessage(List<PlayerModel> nicknameList) {
         clientHandler.sendMessage(new LobbyInfoMessage(nicknameList));
     }
 

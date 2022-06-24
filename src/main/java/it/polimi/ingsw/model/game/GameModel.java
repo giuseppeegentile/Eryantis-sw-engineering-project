@@ -74,11 +74,10 @@ public class GameModel extends Observable implements Serializable {
      * @return The outcome of the removal
      */
     public boolean removePlayerByNickname(String nickname) {
-        boolean result = playersModels.remove(getPlayerByNickname(nickname));
+        PlayerModel playerToRemove = getPlayerByNickname(nickname);
+        boolean result = playersModels.remove(playerToRemove);
 
-        List<String> nicknames = playersModels.stream().map(PlayerModel::getNickname).collect(Collectors.toList());
-
-        notifyObserver(new LobbyInfoMessage(nicknames));
+        notifyObserver(new LobbyInfoMessage(playersModels));
 
 
         return result;

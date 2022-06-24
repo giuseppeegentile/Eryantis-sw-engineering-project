@@ -6,17 +6,23 @@ import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.islands.IslandModel;
+import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.gui.SceneController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,13 +99,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private Button lobbyBtn;
 
     @FXML
-    private TableView<String> lobbyTable;
+    private GridPane lobbyTable;
 
     @FXML
-    ImageView wizardView;
-
-    @FXML
-    TableColumn<String, String> gamersCol;
+    private ImageView wizardView;
 
     @FXML
     private VBox vboxCloud1;
@@ -142,7 +145,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
 
     private List<CloudModel> cloudModels;
-    private List<String> nicknameList;
+    private List<PlayerModel> nicknameList;
     private DeckSceneController deckSceneController;
     private List<IslandModel> islands;
     private String turnText;
@@ -154,9 +157,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private void initialize(){
         skipMove.setVisible(false);
         lobbyTable.setVisible(false);
-        lobbyBtn.setVisible(false);
         this.turnLabel.setText(turnText);
-        //setLobbyTable();
+
         entranceDisplay();
         towersDisplay();
         showCorrectClouds();
@@ -173,10 +175,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             this.alreadyMovedStudent = true;
         });
 
-/*        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+        lobbyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             lobbyTable.setVisible(!lobbyTable.isVisible());//toggle
-            gamersCol.setVisible(!gamersCol.isVisible());
-        });*/
+            new Thread(()->notifyObserver(obs->obs.onRequestLobby(nickname))).start();
+        });
 
         wizardView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             try {
@@ -196,8 +198,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         });
 
+/*
 
-/*        lobbyTable.setRowFactory(tv -> {
+        lobbyTable.setRowFactory(tv -> {
             TableRow<String> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY  && event.getClickCount() == 2) {
@@ -208,7 +211,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 }
             });
             return row ;
-        });*/
+        });
+*/
 
     }
 
@@ -578,6 +582,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         subtitle.setVisible(true);
     }
 
+    public void setNicknameList(List<PlayerModel> nicknameList) {
+        this.nicknameList = nicknameList;
+        setLobbyTable();
+    }
+
 
 //    public void enableOnlyIsland(){
 //        entrancePane.setDisable(true);
@@ -630,12 +639,35 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 //        vboxIsland12.setDisable(true);
 //
 //    }
-/*
+
     private void setLobbyTable() {
-        ObservableList<String> data = FXCollections.observableArrayList(nicknameList);
-        lobbyTable.getColumns().clear();
-        lobbyTable.getColumns().add(gamersCol);
-        gamersCol.setCellValueFactory(d->new SimpleStringProperty(d.getValue()));
-        lobbyTable.setItems(data);
-    }*/
+        lobbyTable.getChildren().clear();
+        for(int i = 0; i < nicknameList.size(); i++){
+            Label lb = new Label(nicknameList.get(i).getNickname());
+            int id = i;
+            lb.setFont(new Font(22.0));
+            lb.setStyle("-fx-background-color: lightgray;");
+            lb.addEventHandler(MouseEvent.MOUSE_ENTERED, (e)-> {
+                lb.setStyle("-fx-background-color: lightblue;");
+            });
+            lb.addEventHandler(MouseEvent.MOUSE_EXITED, (e)-> {
+                lb.setStyle("-fx-background-color: transparent;");
+            });
+            lb.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+
+                if (e.getClickCount() == 2) {
+                    OtherGameBoardSceneController g = new OtherGameBoardSceneController();
+                    g.setPlayer(nicknameList.get(id));
+                    try {
+                        SceneController.showWindow(g, nicknameList.get(id).getNickname(), "OtherBoardScene.fxml");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            lobbyTable.add(lb,0 ,i);
+
+        }
+        //lobbyTable.getItems().addAll(data);
+    }
 }

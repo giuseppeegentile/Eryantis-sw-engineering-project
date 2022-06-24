@@ -1,10 +1,12 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.model.player.PlayerModel;
+
 import java.util.List;
 
 public class LobbyInfoMessage extends Message {
     private static final long serialVersionUID = -5041101920182206083L;
-    private final List<String> nicknameList;
+    private final List<PlayerModel> nicknameList;
 
     /**
      * Message sent to display the players' list
@@ -12,12 +14,12 @@ public class LobbyInfoMessage extends Message {
      * @param nicknameList list of players
      */
 
-    public LobbyInfoMessage(List<String> nicknameList) {
+    public LobbyInfoMessage(List<PlayerModel> nicknameList) {
         super("Server_nickname", MessageType.LOBBY);
         this.nicknameList = nicknameList;
     }
 
-    public List<String> getNicknameList() {
+    public List<PlayerModel> getNicknameList() {
         return nicknameList;
     }
 

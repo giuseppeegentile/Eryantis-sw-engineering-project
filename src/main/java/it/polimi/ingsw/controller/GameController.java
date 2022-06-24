@@ -116,9 +116,9 @@ public class GameController implements Observer, Serializable {
                 );
                 break;
             case REQ_LOBBY:
-                List<String> players = new ArrayList<>();
+                List<PlayerModel> players = new ArrayList<>();
                 for(PlayerModel p: gameInstance.getPlayersModel()){
-                    if(!p.getNickname().equals(receivedMessage.getNickname())) players.add(p.getNickname());
+                    if(!p.getNickname().equals(receivedMessage.getNickname())) players.add(p);
                 }
                 virtualViewMap.get(receivedMessage.getNickname()).showLobbyMessage(players);
                 break;
