@@ -6,11 +6,22 @@ public class PlayAssistantCardMessage extends Message{
     private final String playerModel;
     private final int indexAssistantCardModel;
 
+    /**
+     * Message sent when playing an assistant card
+     * Parameters are set by the constructor
+     * @param playerModel current player
+     * @param indexAssistantCardModel assistant card played
+     */
+
     public PlayAssistantCardMessage(String playerModel, int indexAssistantCardModel){
         super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
         this.playerModel = playerModel;
         this.indexAssistantCardModel = indexAssistantCardModel;
     }
+
+    /**
+     * @return the assistant card played
+     */
 
     public int getIndexCard(){
         return indexAssistantCardModel;

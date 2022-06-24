@@ -219,6 +219,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void setSubtitleText(String text){
+        subtitle.setVisible(true);
         subtitle.setText(text);
     }
 
@@ -514,21 +515,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 if(!alreadyMovedMother) {
-                    if(idx != islandProhib) {
-                        if(gameMode == GameMode.ADVANCED)
-                            new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+                    if(gameMode == GameMode.ADVANCED)
+                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
 
-                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
-                        towersDisplay();
-                        tempIndex = idx;
-                        //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
+                    new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
+                    towersDisplay();
+                    tempIndex = idx;
+                    //vBoxes.get(idx).getChildren().add(getStyledMotherButton());
 
-                        //enableOnlyClouds();
+                    //enableOnlyClouds();
 
-                    }else{
-                        vBoxes.get(idx).getChildren().remove(getProhib());
-                        new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte)0))).start();
-                    }
                     turnLabel.setText("Seleziona una nuvola");
                     subtitle.setText("Sposterai gli studenti nell'ingresso");
 
@@ -573,9 +569,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void setCharacterSceneController(CharacterSceneController characterSceneController){
         this.characterSceneController = characterSceneController;
         characterSceneController.setEntrance(entrance);
-        if(this.turnLabel != null){
-            this.turnLabel.setText("Gioca una carta");
-        }
     }
 
     public void setGameMode(GameMode gameMode) {

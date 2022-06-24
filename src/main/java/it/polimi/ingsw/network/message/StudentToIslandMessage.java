@@ -13,6 +13,7 @@ public class StudentToIslandMessage extends Message{
 
     /**
      * Message sent to move a student from the entrance to the island
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param entrance player's entrance
      * @param islands island to which move the student
@@ -23,6 +24,10 @@ public class StudentToIslandMessage extends Message{
         this.entrance = entrance;
         this.islands = islands;
     }
+
+    /**
+     * @return player's entrance
+     */
 
     public List<ColorPawns> getEntrance() {
         return entrance;

@@ -232,15 +232,16 @@ public class Gui extends ViewObservable implements View {
     CharacterSceneController characterSceneController = new CharacterSceneController();
     @Override
     public void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck) {
-        characterSceneController.setDeck(characterDeck);
         characterSceneController.setIslands(islands);
         characterSceneController.setNickname(active.getNickname());
-        characterSceneController.setPlayerMoney(active.getCoins());
-        characterSceneController.addAllObservers(observers);
         Platform.runLater(()-> {
-            boardSceneController.setTurnLabel("Scegli un effetto");
-            boardSceneController.setCharacterSceneController(characterSceneController);
+            characterSceneController.setDeck(characterDeck);
+            characterSceneController.setPlayerMoney(active.getCoins());
+            boardSceneController.setTurnLabel("Gioca una carta carattere");
+            boardSceneController.setSubtitleText("Puoi saltare questa fase");
         });
+        characterSceneController.addAllObservers(observers);
+        boardSceneController.setCharacterSceneController(characterSceneController);
     }
 
     @Override

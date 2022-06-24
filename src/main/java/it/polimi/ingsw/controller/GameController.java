@@ -1112,11 +1112,12 @@ public class GameController implements Observer, Serializable {
         List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
 
         List<Effect> effects = List.of(
+                new ProhibitionEffect(),
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
                 new PickIslandInfluenceEffect(this),
                 new ExtraMovementMotherEffect(),
-                new ProhibitionEffect(),
+
                 new IgnoreTowerEffect(this),
                 new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),

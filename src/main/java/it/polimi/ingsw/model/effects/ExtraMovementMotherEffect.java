@@ -10,7 +10,7 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
     private int costForEffect;
 
     /**
-     * Gets the card's cost in number of coins
+     * Constructor for the character card tha has "extra mother nature movement" as effect: costForEffect is set to 1
      */
     public ExtraMovementMotherEffect(){
         this.costForEffect = 1;

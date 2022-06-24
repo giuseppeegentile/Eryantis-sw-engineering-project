@@ -18,7 +18,8 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final PlayerModel player;
 
     /**
-     * Message shown to display  player's game board
+     * Message sent to display  player's game board
+     * Parameters are set by the constructor
      * @param nickname player's whom game board is shown
      * @param towers towers of the current player
      * @param hall hall of the current player
@@ -53,8 +54,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the profs of the current player
-     * @return the profs
+     * @return the player's profs
      */
 
     public List<ColorPawns> getProfs() {
@@ -62,8 +62,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's entrance
-     * @return the entrance
+     * @return the player's entrance
      */
 
     public List<ColorPawns> getEntrance() {
@@ -71,8 +70,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's hall
-     * @return the hall
+     * @return the player's hall
      */
 
     public Map<ColorPawns, Integer> getHall() {
@@ -80,14 +78,16 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's towers
-     * @return the towers
+     * @return the player's towers
      */
 
     public List<ColorTower> getTowers() {
         return towers;
     }
 
+    /**
+     * @return the player
+     */
     public PlayerModel getPlayer() {
         return player;
     }

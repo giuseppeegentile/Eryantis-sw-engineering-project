@@ -14,7 +14,8 @@ public class InitialConfigurationResponseMessage extends Message {
     private final ColorTower colorTower;
 
     /**
-     * Message shown as a response to the initial configuration
+     * Message sent as a response to the initial configuration
+     * Parameters are set by the constructor
      * @param player current player
      * @param playerDeck current player's deck
      * @param colorTower current player's tower's color

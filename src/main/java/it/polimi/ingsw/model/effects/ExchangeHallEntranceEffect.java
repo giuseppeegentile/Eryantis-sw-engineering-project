@@ -12,12 +12,17 @@ public class ExchangeHallEntranceEffect implements Effect, Serializable {
     private List<ColorPawns> studentFromEntrance;
     private List<ColorPawns> studentFromHall;
 
+    /**
+     * Constructor for the character card tha has "exchange the hall configuration whit entrance's" as effect:
+     * costForEffect is set to 1
+     */
+
     public ExchangeHallEntranceEffect(){
         this.costForEffect = 1;
     }
 
     /**
-     * Gets the parameters chosen by the player
+     * Constructor made to initialize the parameters chosen by the player
      * @param studentFromEntrance students chosen from the entrance
      * @param studentFromHall students chosen from the hall
      */

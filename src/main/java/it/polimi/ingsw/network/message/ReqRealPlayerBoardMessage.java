@@ -7,6 +7,7 @@ public class ReqRealPlayerBoardMessage extends Message {
 
     /**
      * Message sent to show the another player's board
+     * Parameters are set by the constructor
      * @param nick current player
      * @param nickChosen player chosen
      */
@@ -15,6 +16,10 @@ public class ReqRealPlayerBoardMessage extends Message {
         super(nick, MessageType.REQ_PLAYER_BOARD);
         this.nickToSend = nickChosen;
     }
+
+    /**
+     * @return the nickname to send
+     */
 
     public String getNickToSend() {
         return nickToSend;

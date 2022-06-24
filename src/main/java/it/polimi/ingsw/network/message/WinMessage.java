@@ -13,7 +13,8 @@ public class WinMessage  extends Message {
     private final PlayerModel winner;
 
     /**
-     * Message shown when a player wins the game
+     * Message sent when a player wins the game
+     * Parameters are set by the constructor
      * @param winnerNickname nickname of the winner
      */
 

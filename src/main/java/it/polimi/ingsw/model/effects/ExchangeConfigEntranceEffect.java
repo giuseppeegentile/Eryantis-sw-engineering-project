@@ -14,7 +14,7 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     private List<ColorPawns> studentFromCard;
 
     /**
-     * Gets the parameters chosen by the player
+     * Constructor made to assign the parameters chosen by the player
      * @param studentFromCard students chosen from the card
      * @param studentFromEntrance students chosen from the card
      */
@@ -25,7 +25,8 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
     }
 
     /**
-     * Activates the card's effect
+     * Constructor for the character card tha has "exchange entrance's configuration" as effect : costForEffect is set
+     * to 1, numStudents is set to 6
      */
 
     public ExchangeConfigEntranceEffect(List<ColorPawns> students) {
@@ -48,9 +49,17 @@ public class ExchangeConfigEntranceEffect extends InitialConfigEffect implements
         return getCostForEffect();
     }
 
+    /**
+     * @return the student taken from the card
+     */
+
     public List<ColorPawns> getStudentFromCard() {
         return studentFromCard;
     }
+
+    /**
+     * @return the student taken from the entrance
+     */
 
     public List<ColorPawns> getStudentFromEntrance() {
         return studentFromEntrance;

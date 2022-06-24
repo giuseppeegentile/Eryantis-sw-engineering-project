@@ -10,7 +10,8 @@ public class TowerMessage extends Message {
     private final int towerNumber;
 
     /**
-     * Message shown to display the player's towers
+     * Message sent to display the player's towers
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param colorTower towers' color
      * @param towerNumber number of towers
@@ -23,9 +24,17 @@ public class TowerMessage extends Message {
         this.towerNumber = towerNumber;
     }
 
+    /**
+     * @return the towers' color
+     */
+
     public ColorTower getColorTower() {
         return colorTower;
     }
+
+    /**
+     * @return the towers' number
+     */
 
     public int getTowerNumber() {
         return towerNumber;

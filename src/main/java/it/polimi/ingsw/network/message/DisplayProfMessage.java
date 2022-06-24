@@ -11,7 +11,8 @@ public class DisplayProfMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display a player's profs
+     * Message sent to display a player's profs
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param profs current player's profs
      */
@@ -22,9 +23,14 @@ public class DisplayProfMessage extends DisplayMessage{
         this.objectDisplay = ObjectDisplay.ENTRANCE;
     }
 
+    /**
+     * @return the player's profs
+     */
+
     public List<ColorPawns> getProfs() {
         return this.profs;
     }
+
 
     public ObjectDisplay getObjectDisplay() {
         return objectDisplay;

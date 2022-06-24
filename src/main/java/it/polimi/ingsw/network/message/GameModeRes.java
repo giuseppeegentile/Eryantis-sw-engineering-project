@@ -7,7 +7,8 @@ public class GameModeRes extends Message{
     private static final long serialVersionUID = 1622383409250771615L;
 
     /**
-     * Message shown as a response to the game mode's request
+     * Message sent as a response to the game mode's request
+     * Parameters are set by the constructor
      */
 
     private final GameMode gameMode;
@@ -17,6 +18,9 @@ public class GameModeRes extends Message{
         this.gameMode = gameMode;
     }
 
+    /**
+     * @return the game mode chosen
+     */
 
     public GameMode getGameMode() {
         return gameMode;

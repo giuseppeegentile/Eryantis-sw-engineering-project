@@ -11,7 +11,8 @@ public class MovedStudentOnIslandMessage extends Message {
     private final int indexIsland;
 
     /**
-     * Message shown when a player successfully moves a student to an island
+     * Message sent when a player successfully moves a student to an island
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param students students moved
      * @param indexIsland index of the island in which students are moved
@@ -23,9 +24,17 @@ public class MovedStudentOnIslandMessage extends Message {
         this.indexIsland = indexIsland;
     }
 
+    /**
+     * @return the index of the island chosen
+     */
+
     public int getIslandIndex() {
         return indexIsland;
     }
+
+    /**
+     * @return the list of the students chosen
+     */
 
     public List<ColorPawns> getStudents() {
         return students;

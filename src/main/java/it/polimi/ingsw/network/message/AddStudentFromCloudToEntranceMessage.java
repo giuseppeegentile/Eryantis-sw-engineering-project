@@ -6,7 +6,8 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
     private final int cloudIndex;
 
     /**
-     * Message shown when a student is added from a cloud to a player's board's entrance
+     * Message sent when a student is added from a cloud to a player's board's entrance
+     * Parameters are set by the constructor
      * @param nickname nickname of the player who makes the move
      * @param cloudIndex index of the cloud chosen
      */
@@ -17,7 +18,6 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
     }
 
     /**
-     * Gets the index of the cloud from which a student is taken
      * @return the cloud's index
      */
 

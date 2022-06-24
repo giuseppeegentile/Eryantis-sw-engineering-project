@@ -15,8 +15,9 @@ public class AssignPlayerDeckResponseMessage extends Message {
     //è una response
 
     /**
-     * Message shown as a response to the assignment of a deck to a player
-     * @param nickname nickname of the player to which the deck is assogned
+     * Message sent as a response to the assignment of a deck to a player
+     * Parameters are set by the constructor
+     * @param nickname nickname of the player to which the deck is assigned
      * @param assistantCardModels model of the assistant card
      */
 

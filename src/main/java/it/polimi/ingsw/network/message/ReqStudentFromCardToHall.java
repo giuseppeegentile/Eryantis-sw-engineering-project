@@ -11,6 +11,7 @@ public class ReqStudentFromCardToHall extends Message{
 
     /**
      * Message sent to move a student from the character's card to the hall
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param studentsOnCard students to move
      */
@@ -19,6 +20,10 @@ public class ReqStudentFromCardToHall extends Message{
         super(nickname, MessageType.REQ_CARD_TO_HALL);
         this.studentsOnCard = studentsOnCard;
     }
+
+    /**
+     * @return list of the students on the character card
+     */
 
     public List<ColorPawns> getStudentsOnCard() {
         return studentsOnCard;

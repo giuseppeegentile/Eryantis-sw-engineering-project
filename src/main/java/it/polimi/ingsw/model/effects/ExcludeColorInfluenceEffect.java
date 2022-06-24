@@ -14,7 +14,8 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     private ColorPawns colorToExclude;
 
     /**
-     * Adds the card's effect to game controller
+     * Constructor for the character card that has "exclude color influence" as effect: costForEffect is set to 3
+     * @param gameController it's the game controller
      */
 
     public ExcludeColorInfluenceEffect(GameController gameController){
@@ -23,6 +24,7 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     }
 
     /**
+     * Constructor made to initialize the parameter chosen by the player
      * @param colorToExclude gets the color to exclude chosen by the player
      */
 

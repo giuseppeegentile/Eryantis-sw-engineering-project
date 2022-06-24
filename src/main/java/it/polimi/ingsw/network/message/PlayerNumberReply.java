@@ -9,7 +9,8 @@ public class PlayerNumberReply extends Message {
     private final int playerNumber;
 
     /**
-     * Message shown as a response to the number of players' choice
+     * Message sent as a response to the number of players' choice
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param playerNumber number of players chosen
      */
@@ -18,6 +19,10 @@ public class PlayerNumberReply extends Message {
         super(nickname, MessageType.PLAYERNUMBER_REPLY);
         this.playerNumber = playerNumber;
     }
+
+    /**
+     * @return the number of players
+     */
 
     public int getPlayerNumber() {
         return playerNumber;

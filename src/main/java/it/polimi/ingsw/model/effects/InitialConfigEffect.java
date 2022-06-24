@@ -14,6 +14,13 @@ public class InitialConfigEffect implements Effect, Serializable {
     final List<ColorPawns> students;
     private final int numStudents;
 
+    /**
+     * Constructor for the character card tha has "change initial configuration" as effect
+     * @param students it's the list of the students
+     * @param costForEffect it's the cost of the card
+     * @param numStudents it's the number of students
+     */
+
     public InitialConfigEffect(List<ColorPawns>  students, int costForEffect, int numStudents){
         this.students = students;
         this.costForEffect = costForEffect;
@@ -76,7 +83,7 @@ public class InitialConfigEffect implements Effect, Serializable {
     }
 
     /**
-     * Sets the effect's cost
+     * Constructor to set the card effect cost
      * @param costForEffect is the cost for the activation of the effect
      */
 

@@ -9,7 +9,8 @@ public class DisplayIslandMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display an island
+     * Message sent to display an island
+     * Parameters are set by the constructor
      * @param nickname player's who's making the move
      * @param islandModel model of the island
      * @param islandIndex index of the island
@@ -22,9 +23,17 @@ public class DisplayIslandMessage extends DisplayMessage{
         this.objectDisplay = ObjectDisplay.ISLAND;
     }
 
+    /**
+     * @return the island model
+     */
+
     public IslandModel getIslandModel() {
         return islandModel;
     }
+
+    /**
+     * @return the island index
+     */
 
     public int getIslandIndex() {
         return islandIndex;

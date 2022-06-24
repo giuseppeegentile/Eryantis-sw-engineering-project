@@ -12,6 +12,7 @@ public class ReqPlayCharacterCardMessage extends Message {
 
     /**
      * Message sent to player a character card
+     * Parameters are set by the constructor
      * @param active current player
      * @param characterDeck list of character cards
      */
@@ -20,6 +21,10 @@ public class ReqPlayCharacterCardMessage extends Message {
         this.characterDeck = characterDeck;
         player = active;
     }
+
+    /**
+     * @return the list of character cards
+     */
 
     public List<CharacterCardModel> getCharacterDeck() {
         return characterDeck;

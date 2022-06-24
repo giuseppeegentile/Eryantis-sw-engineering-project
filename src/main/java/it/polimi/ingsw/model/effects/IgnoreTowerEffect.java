@@ -12,7 +12,8 @@ public class IgnoreTowerEffect implements Effect, Serializable {
     private final GameController controller;
 
     /**
-     * Gets the card's effect in number of coins
+     * Constructor for the character card tha has "ignore tower" as effect: costForEffect is set to 3
+     * @param controller it's the game controller
      */
 
     public IgnoreTowerEffect(GameController controller){

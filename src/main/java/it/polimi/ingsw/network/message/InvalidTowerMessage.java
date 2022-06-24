@@ -7,7 +7,8 @@ public class InvalidTowerMessage extends Message{
     private final ColorTower colorTower;
 
     /**
-     * Message shown when a player chooses the wring tower's color
+     * Message sent when a player chooses the wring tower's color
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param colorTower color chosen
      */
@@ -16,6 +17,10 @@ public class InvalidTowerMessage extends Message{
         super(nickname, MessageType.ERROR);
         this.colorTower = colorTower;
     }
+
+    /**
+     * @return the towers' color
+     */
 
     public ColorTower getColorTower(){
         return this.colorTower;

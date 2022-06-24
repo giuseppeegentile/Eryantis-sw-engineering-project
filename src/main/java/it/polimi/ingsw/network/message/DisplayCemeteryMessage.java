@@ -13,7 +13,8 @@ public class DisplayCemeteryMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     *Message shown to display  player's cemetery
+     * Message sent to display  player's cemetery
+     * Parameters are set by the constructor
      * @param nickname the nickname of the player whom cemetery is displayed
      * @param cemetery the cemetery of the player
      */
@@ -23,6 +24,10 @@ public class DisplayCemeteryMessage extends DisplayMessage{
         this.cemetery = cemetery;
         this.objectDisplay = ObjectDisplay.CEMETERY;
     }
+
+    /**
+     * @return the cemetery
+     */
 
     public List<AssistantCardModel> getCemetery() {
         return cemetery;

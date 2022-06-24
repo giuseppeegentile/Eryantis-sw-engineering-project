@@ -10,7 +10,8 @@ public class AssignProfResponseMessage extends  Message{
     private final List<ColorPawns> profs;
 
     /**
-     * Message shown as a response to the assignment of a prof to a player
+     * Message sent as a response to the assignment of a prof to a player
+     * Parameters are set by the constructor
      * @param nickname nickname of the player to which a prof is assigned
      * @param profs prof assigned to a player
      */

@@ -10,7 +10,8 @@ public class DisplayEntranceMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display a player's board's entrance
+     * Message sent to display a player's board's entrance
+     * Parameters are set by the constructor
      * @param nickname player whom entrance is shown
      * @param entrance entrance shown
      */
@@ -21,9 +22,14 @@ public class DisplayEntranceMessage extends DisplayMessage{
         this.objectDisplay = ObjectDisplay.ENTRANCE;
     }
 
+    /**
+     * @return the player's entrance
+     */
+
     public List<ColorPawns> getEntrance() {
         return entrance;
     }
+
 
     public ObjectDisplay getObjectDisplay() {
         return objectDisplay;

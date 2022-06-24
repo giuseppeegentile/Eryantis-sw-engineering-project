@@ -91,7 +91,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         texts = List.of(label_1, label_2, label_3);
         labels = List.of(text_1, text_2, text_3);
         initialHide();
-        moneyPlayerLbl.setText(String.valueOf(playerMoney));
+        moneyPlayerLbl.setText(String.valueOf(1));
 
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
@@ -103,10 +103,6 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             imagesList.get(i).setImage(new Image(Objects.requireNonNull(CharacterSceneController.class.getResourceAsStream(path))));
 
             int finalIndex = i;
-            hboxList.get(i).getChildren().clear();
-            for(int j=0; j<card.getEffect().getCoinsForEffect();j++) {
-                hboxList.get(i).getChildren().add(getStyledCoins());
-            }
 
             int maxStudentToMove = 1;
             String effectName = card.getEffect().getClass().getSimpleName();
@@ -134,7 +130,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             imagesList.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 new Thread(() -> notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(this.nickname, cards.get(finalIndex)))).start();
                 List<String> effectsNotConfig = List.of("AddInfluenceEffect", "ControlProfEffect", "ExtraMovementMotherEffect", "IgnoreTowerEffect");
-                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()))
+                if (effectsNotConfig.contains(card.getEffect().getClass().getSimpleName()) && card.enoughCoins())
                     ((Stage) card1.getScene().getWindow()).close();
             });
 
@@ -213,6 +209,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             if (studentsFromCard.size() < 3)
                 studentsFromCard.add(colorToMove);
             if (studentsFromCard.size() == maxStudents){
+                System.out.println(effect);
                 switch (effect) {
                     case "AddToHallEffect":
                         new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname, colorToMove))).start();
@@ -228,6 +225,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
                                 ((Stage)card1.getScene().getWindow()).close();
                             }
                         });
+                        break;
                     case "ExchangeConfigEntranceEffect":
                         new Thread(() -> notifyObserver(obs -> obs.onUpdateMovedStudentsFromCardToEntrance(nickname, studentsFromCard, studentsFromEntrance))).start();
                         break;
@@ -278,9 +276,15 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
     public void setPlayerMoney(int playerMoney) {
         this.playerMoney = playerMoney;
-    }
+        if(moneyPlayerLbl != null)
+            moneyPlayerLbl.setText(String.valueOf(playerMoney));
+        List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
+        for (int i = 0; i < cards.size(); i++) {
+            hboxList.get(i).getChildren().clear();
+            for (int j = 0; j < cards.get(i).getMoneyOnCard(); j++) {
+                hboxList.get(i).getChildren().add(getStyledCoins());
+            }
+        }
 
-    public int getPlayerMoney() {
-        return playerMoney;
     }
 }
