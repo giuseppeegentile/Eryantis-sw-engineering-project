@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.effects;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;

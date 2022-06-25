@@ -133,7 +133,7 @@ class GameControllerAdvancedTest1 {
         assertEquals(3, gameInstance.getPlayersModel().get(0).getCharacterDeck().size());
         assertEquals("AddToIslandEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect().getClass().getSimpleName());
         assertEquals("ControlProfEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(1).getEffect().getClass().getSimpleName());
-        assertEquals("PickIslandInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(2).getEffect().getClass().getSimpleName());
+        assertEquals("AddToHallEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(2).getEffect().getClass().getSimpleName());
         assertEquals(3, gameInstance.getCloudsModel().size());
 
         gameInstance.getPlayersModel().forEach(p -> {
@@ -303,9 +303,6 @@ class GameControllerAdvancedTest1 {
         thirdStudentsToMove.add(thirdStudent1ToMove);
         thirdStudentsToMove.add(thirdStudent2ToMove);
 
-
-
-
         MovedStudentOnIslandMessage msgPlayer3 = new MovedStudentOnIslandMessage(thirdPlayer.getNickname(), thirdStudentsToMove, 8);
         gameController.onMessageReceived(msgPlayer3);
         assertEquals(gameController.getPlayerActive().getNickname(), thirdPlayer.getNickname());
@@ -325,19 +322,13 @@ class GameControllerAdvancedTest1 {
         else
             assertEquals(2, thirdPlayer.getStudentInHall().get(color3));
 
-        gameInstance.getPlayersModel().get(2).addCoins();
-        gameInstance.getPlayersModel().get(2).addCoins();
-        playedCharacterCardMessage = new PlayedCharacterCardMessage(gameInstance.getPlayersModel().get(2).getNickname(), gameInstance.getPlayersModel().get(2).getCharacterDeck().get(2));
+        playedCharacterCardMessage = new PlayedCharacterCardMessage(gameController.getPlayerActive().getNickname(), gameController.getPlayerActive().getCharacterDeck().get(2));
         gameController.onMessageReceived(playedCharacterCardMessage);
-        gameInstance.getPlayersModel().get(0).getProfs().clear();
-        gameInstance.getPlayersModel().get(1).getProfs().clear();
-        gameInstance.getPlayersModel().get(2).getProfs().clear();
-        gameInstance.getPlayersModel().get(2).addProf(ColorPawns.GREEN);
-        gameInstance.getIslandsModel().get(2).getStudents().clear();
-        gameInstance.getIslandsModel().get(2).addStudent(ColorPawns.GREEN);
-        ExtraGetInfluence extraGetInfluence = new ExtraGetInfluence(gameInstance.getPlayersModel().get(2).getNickname(), 2);
-        gameController.onMessageReceived(extraGetInfluence);
-        assertEquals(gameInstance.getPlayersModel().get(2).getColorTower(), gameInstance.getIslandsModel().get(2).getTowerColor());
+        ColorPawns toMove = ((InitialConfigEffect) gameController.getPlayerActive().getCharacterDeck().get(2).getEffect()).getStudents().get(1);
+        int previous = gameController.getPlayerActive().getStudentInHall().get(toMove);
+        MovedStudentFromCardToHall movedStudentFromCardToHall = new MovedStudentFromCardToHall(gameController.getPlayerActive().getNickname(), toMove);
+        gameController.onMessageReceived(movedStudentFromCardToHall);
+        assertEquals(previous + 1, gameController.getPlayerActive().getStudentInHall().get(toMove));
 
         indexOldMother = gameInstance.getMotherNatureIndex();
         MovedMotherNatureMessage motherNatureMessage3 = new MovedMotherNatureMessage(thirdPlayer.getNickname(), (byte) 1);

@@ -1123,15 +1123,12 @@ public class GameController implements Observer, Serializable {
         List<Effect> effects = List.of(
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
-                new PickIslandInfluenceEffect(this),
+                new AddToHallEffect(subBag3, this),
                 new ExtraMovementMotherEffect(),
                 new ProhibitionEffect(),
                 new IgnoreTowerEffect(this),
-                new ExchangeConfigEntranceEffect(subBag2),
                 new AddInfluenceEffect(this),
-                new ExcludeColorInfluenceEffect(this),
-                new ExchangeHallEntranceEffect(),
-                new AddToHallEffect(subBag3, this)
+                new ExcludeColorInfluenceEffect(this)
         );
 
         List<CharacterCardModel> characterDeck = new ArrayList<>( effects.size()-3);
@@ -1143,7 +1140,7 @@ public class GameController implements Observer, Serializable {
         if(shuffle)
             Collections.shuffle(characterDeck);
         List<CharacterCardModel> tempToAssign = new ArrayList<>();;
-        for(int j = test; j<3 + test; j++) {
+        for(int j = test; j<3 + test && j<8; j++) {
             tempToAssign.add(characterDeck.get(j));
             if(characterDeck.get(j).getCharacterId() == 0){
                 gameInstance.getBag().subList(0,4).clear();

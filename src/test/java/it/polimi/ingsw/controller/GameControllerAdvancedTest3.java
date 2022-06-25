@@ -3,7 +3,6 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.effects.InitialConfigEffect;
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.game.GameModel;
@@ -20,7 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameControllerAdvancedTest3 {
 
@@ -130,10 +130,9 @@ class GameControllerAdvancedTest3 {
         assertEquals(0, gameInstance.getPlayersModel().get(2).getStudentInHall().get(ColorPawns.BLUE));
         assertEquals(4, gameInstance.getCloudsModel().get(0).getStudents().size());
         assertEquals(gameInstance.getPlayersModel().get(0), gameController.getPlayerActive());
-        assertEquals(3, gameInstance.getPlayersModel().get(0).getCharacterDeck().size());
-        assertEquals("ExchangeConfigEntranceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect().getClass().getSimpleName());
-        assertEquals("AddInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(1).getEffect().getClass().getSimpleName());
-        assertEquals("ExcludeColorInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(2).getEffect().getClass().getSimpleName());
+        assertEquals(2, gameInstance.getPlayersModel().get(0).getCharacterDeck().size());
+        assertEquals("AddInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect().getClass().getSimpleName());
+        assertEquals("ExcludeColorInfluenceEffect", gameInstance.getPlayersModel().get(0).getCharacterDeck().get(1).getEffect().getClass().getSimpleName());
         assertEquals(3, gameInstance.getCloudsModel().size());
 
         gameInstance.getPlayersModel().forEach(p -> {
@@ -200,15 +199,6 @@ class GameControllerAdvancedTest3 {
 
         //turno primo giocatore
 
-        PlayedCharacterCardMessage playedCharacterCardMessage = new PlayedCharacterCardMessage(gameController.getPlayerActive().getNickname(), gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0));
-        List<ColorPawns> studentsFromCard = new ArrayList<>(((InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect()).getStudents().subList(1,3));
-        gameController.onMessageReceived(playedCharacterCardMessage);
-        List<ColorPawns> studentsFromEntrance = new ArrayList<>(gameController.getPlayerActive().getStudentInEntrance().subList(1, 3));
-        MovedFromCardToEntrance movedFromCardToEntrance = new MovedFromCardToEntrance(gameController.getPlayerActive().getNickname(), studentsFromCard, studentsFromEntrance);
-        gameController.onMessageReceived(movedFromCardToEntrance);
-        assertTrue(((InitialConfigEffect) gameInstance.getPlayersModel().get(0).getCharacterDeck().get(0).getEffect()).getStudents().containsAll(studentsFromEntrance));
-        //assertTrue(gameController.getPlayerActive().getStudentInEntrance().containsAll(studentsFromCard));
-
         PlayerModel firstPlayer = gameInstance.getPhaseOrder().get(0);
         /*System.out.println(gameInstance.getIslandsModel().get(1).getStudents());
         System.out.println(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0));
@@ -253,7 +243,7 @@ class GameControllerAdvancedTest3 {
         assertEquals(cloud, gameInstance.getCloudsModel().get(1));
 
         //turno secondo giocatore
-        playedCharacterCardMessage = new PlayedCharacterCardMessage(gameController.getPlayerActive().getNickname(), gameController.getPlayerActive().getCharacterDeck().get(1));
+        PlayedCharacterCardMessage playedCharacterCardMessage = new PlayedCharacterCardMessage(gameController.getPlayerActive().getNickname(), gameController.getPlayerActive().getCharacterDeck().get(0));
         gameController.onMessageReceived(playedCharacterCardMessage);
         assertEquals(gameController.getPlayerWithEffectAdditionalInfluence(), gameController.getPlayerActive());
 
@@ -288,7 +278,7 @@ class GameControllerAdvancedTest3 {
         assertEquals(cloud, gameInstance.getCloudsModel().get(0));
 
         //turno terzo giocatore
-        playedCharacterCardMessage = new PlayedCharacterCardMessage (gameController.getPlayerActive().getNickname(), gameController.getPlayerActive().getCharacterDeck().get(2));
+        playedCharacterCardMessage = new PlayedCharacterCardMessage (gameController.getPlayerActive().getNickname(), gameController.getPlayerActive().getCharacterDeck().get(1));
         gameController.onMessageReceived(playedCharacterCardMessage);
         ChosenColorToIgnore chosenColorToIgnore = new ChosenColorToIgnore(gameController.getPlayerActive().getNickname(), ColorPawns.BLUE);
         gameController.onMessageReceived(chosenColorToIgnore);
