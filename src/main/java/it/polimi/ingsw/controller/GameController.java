@@ -75,7 +75,8 @@ public class GameController implements Observer, Serializable {
                 towers,
                 playerToDisplay.getStudentInHall(),
                 playerToDisplay.getStudentInEntrance(),
-                playerToDisplay.getProfs()
+                playerToDisplay.getProfs(),
+                gameInstance.getPlayerByNickname(nickname).isFirst()
         );
     }
 
@@ -89,7 +90,7 @@ public class GameController implements Observer, Serializable {
     private void showWhosPlaying(){
         for(PlayerModel p: gameInstance.getPlayersModel()){
             if(!p.getNickname().equals(playerActive.getNickname()))
-                virtualViewMap.get(playerActive.getNickname()).showGenericMessage("Hey " + p.getNickname() + ", "+  playerActive.getNickname() + " is playing...");
+                virtualViewMap.get(p.getNickname()).showGenericMessage("Hey " + p.getNickname() + ", "+  playerActive.getNickname() + " is playing...");
         }
     }
     /**
@@ -112,7 +113,8 @@ public class GameController implements Observer, Serializable {
                         towers,
                         playerToDisplay.getStudentInHall(),
                         playerToDisplay.getStudentInEntrance(),
-                        playerToDisplay.getProfs()
+                        playerToDisplay.getProfs(),
+                        gameInstance.getPlayerByNickname(nickname).isFirst()
                 );
                 break;
             case REQ_LOBBY:
@@ -142,29 +144,52 @@ public class GameController implements Observer, Serializable {
                     setTowers(receivedMessage, chosenTower, numPlayers);
                     setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                     //at the first player I ask also the gameMode
+                    for (PlayerModel p : gameInstance.getPlayersModel())
+                        System.out.println(p.getNickname());
                     if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
                         virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
                         //prepareGame();
-                    } else if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber() - 1).getNickname())) {
-                        gameStarted = true;
-                        //prepareGame();
-                        for (String nick : virtualViewMap.keySet()) {
-                            virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
-                            virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
-                            showBoard(nick);
-                            //virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
+                    } else if (gameInstance.getPlayersModel().size() == gameInstance.getPlayersNumber()) {
+                        if(receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(gameInstance.getPlayersNumber() - 1).getNickname()))
 
-                        }
-                        if(gameInstance.getGameMode() == GameMode.ADVANCED){
-                            setCharacterCards();
-                            for(PlayerModel pl : gameInstance.getPlayersModel())
-                                pl.setCoins();
-                        }
-                        playerActive = gameInstance.getPlayersModel().get(0);
-                        //virtualViewMap.get(playerActive.getNickname()).askPlayCards(playerActive.getNickname(), playerActive.getDeckAssistantCardModel());
+                            if (gameInstance.getPlayersNumber() == 4) {
+                                int j = 0;
+                                for (int i = 0; i < gameInstance.getPlayersModel().size() && j != 2; i++) {
+                                    if (gameInstance.getPlayersModel().get(i).getColorTower() == ColorTower.WHITE) {
+                                        j++;
+                                    }
+                                    if (j == 2)
+                                        gameInstance.getPlayersModel().get(i).setIsFirst();
+                                }
+                                j = 0;
+                                for (int i = 0; i < gameInstance.getPlayersModel().size() && j != 2; i++) {
+                                    if (gameInstance.getPlayersModel().get(i).getColorTower() == ColorTower.BLACK) {
+                                        j++;
+                                    }
+                                    if (j == 2)
+                                        gameInstance.getPlayersModel().get(i).setIsFirst();
+                                }
+                            }
 
-                        gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
-                        askPlayCardsController(playerActive.getNickname());
+                            gameStarted = true;
+                            //prepareGame();
+                            for (String nick : virtualViewMap.keySet()) {
+                                virtualViewMap.get(nick).showCloudsMessage(nick, gameInstance.getCloudsModel());
+                                virtualViewMap.get(nick).showIslands(nick, gameInstance.getIslandsModel());
+                                showBoard(nick);
+                                //virtualViewMap.get(nick).showDeckMessage(nick, gameInstance.getPlayerByNickname(nick).getDeckAssistantCardModel());
+
+                            }
+                            if(gameInstance.getGameMode() == GameMode.ADVANCED){
+                                setCharacterCards();
+                                for(PlayerModel pl : gameInstance.getPlayersModel())
+                                    pl.setCoins();
+                            }
+                            playerActive = gameInstance.getPlayersModel().get(0);
+                            //virtualViewMap.get(playerActive.getNickname()).askPlayCards(playerActive.getNickname(), playerActive.getDeckAssistantCardModel());
+
+                            gameInstance.setPhaseOrder(gameInstance.getPlayersModel());
+                            askPlayCardsController(playerActive.getNickname());
                     }
                 }
                 break;
@@ -293,7 +318,8 @@ public class GameController implements Observer, Serializable {
                             updatedTowers,
                             p.getStudentInHall(),
                             p.getStudentInEntrance(),
-                            p.getProfs()
+                            p.getProfs(),
+                            p.isFirst()
                     );
                 }
                 break;
@@ -415,7 +441,7 @@ public class GameController implements Observer, Serializable {
                     towers.add(p.getColorTower());
                 }
                 virtualViewMap.get(p.getNickname()).showPlayerBoardMessage(p,
-                        towers, p.getStudentInHall(), p.getStudentInEntrance(), p.getProfs());
+                        towers, p.getStudentInHall(), p.getStudentInEntrance(), p.getProfs(), p.isFirst());
             }
         }
 
@@ -601,8 +627,9 @@ public class GameController implements Observer, Serializable {
             return result;
         }
         else{
-            List<ColorTower> result = new ArrayList<>(List.of(ColorTower.BLACK, ColorTower.WHITE, ColorTower.BLACK, ColorTower.WHITE));
-            result.removeAll(alreadyChosen);
+            List<ColorTower> result = new ArrayList<>(List.of(ColorTower.BLACK, ColorTower.BLACK, ColorTower.WHITE, ColorTower.WHITE));
+            for(ColorTower t : alreadyChosen)
+                result.remove(t);
             return result;
         }
     }

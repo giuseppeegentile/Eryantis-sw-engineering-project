@@ -366,7 +366,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs) {
+    public void showPlayerBoardMessage(PlayerModel player, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs, boolean isFirst) {
         StringBuilder strBoardBld = new StringBuilder();
         if(gameMode == GameMode.BEGINNER) {
             strBoardBld.append("-----------------------------------\n");
@@ -389,7 +389,7 @@ public class Cli extends ViewObservable implements View {
                     strBoardBld.append("  |\n");
                 }
             }
-            playerBoardBase(player, towers, strBoardBld);
+            playerBoardBase(player, towers, strBoardBld, isFirst);
         } else {
             strBoardBld.append("-----------------------------------\n");
             strBoardBld.append("  Entry          Hall         Profs\n");
@@ -414,17 +414,19 @@ public class Cli extends ViewObservable implements View {
                     strBoardBld.append("  |\n");
                 }
             }
-            playerBoardBase(player, towers, strBoardBld);
+            playerBoardBase(player, towers, strBoardBld, isFirst);
         }
     }
 
-    private void playerBoardBase(PlayerModel player, List<ColorTower> towers, StringBuilder strBoardBld) {
+    private void playerBoardBase(PlayerModel player, List<ColorTower> towers, StringBuilder strBoardBld, boolean isFirst) {
         strBoardBld.append("-----------------------------------\n");
-        strBoardBld.append("  Towers ");
-        for (int i = 0; i < towers.size(); i++) {
-            strBoardBld.append(ColorCli.getEquivalentColorTower(towers.get(0))).append("0 ");
+        if (isFirst) {
+            strBoardBld.append("  Towers ");
+            for (int i = 0; i < towers.size(); i++) {
+                strBoardBld.append(ColorCli.getEquivalentColorTower(towers.get(0))).append("0 ");
+            }
+            strBoardBld.append(ColorCli.RESET).append("\n");
         }
-        strBoardBld.append(ColorCli.RESET).append("\n");
         if (GameModel.getInstance().getGameMode() == GameMode.ADVANCED)
             strBoardBld.append("   Coins " + player.getCoins());
         out.println(strBoardBld);

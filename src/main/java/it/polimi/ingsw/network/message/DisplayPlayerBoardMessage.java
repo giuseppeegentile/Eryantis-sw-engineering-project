@@ -16,6 +16,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final List<ColorPawns> entrance;
     private final List<ColorPawns> profs;
     private final PlayerModel player;
+    private final boolean isFirst;
 
     /**
      * Message sent to display  player's game board
@@ -25,9 +26,10 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
      * @param hall hall of the current player
      * @param entrance entrance of the current player
      * @param profs profs of the current player
+     * @param isFirst if the player is the first with the chosen tower color
      */
 
-    public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
+    public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst) {
         super(nickname.getNickname());
         this.player = nickname;
         this.objectDisplay = ObjectDisplay.BOARD;
@@ -35,6 +37,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
         this.hall = hall;
         this.entrance = entrance;
         this.profs = profs;
+        this.isFirst = isFirst;
     }
 
 
@@ -90,5 +93,13 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
      */
     public PlayerModel getPlayer() {
         return player;
+    }
+
+    /**
+     *
+     * @return true if the player is the first player with the chosen tower color
+     */
+    public boolean isFirst(){
+        return this.isFirst;
     }
 }

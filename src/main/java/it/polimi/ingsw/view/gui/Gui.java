@@ -315,7 +315,7 @@ public class Gui extends ViewObservable implements View {
 
     int f = 0;
     @Override
-    public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
+    public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst){
         if(!checkpointBoard){
             Platform.runLater(()-> {
                 boardSceneController.setTurnLabel("Aspetta il tuo turno...");

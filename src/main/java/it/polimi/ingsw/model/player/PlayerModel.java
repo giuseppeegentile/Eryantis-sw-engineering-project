@@ -23,6 +23,7 @@ public class PlayerModel implements Serializable {
     private List<ColorPawns> studentInEntrance;
     private byte movementMotherNatureCurrentActionPhase;
     private int coins;
+    private boolean isFirst = true;
     private List<CharacterCardModel> characterDeck = new ArrayList<>();
 
 
@@ -363,5 +364,13 @@ public class PlayerModel implements Serializable {
      */
     public List<CharacterCardModel> getCharacterDeck() {
         return characterDeck;
+    }
+
+    public void setIsFirst(){
+        isFirst = false;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
     }
 }
