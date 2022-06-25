@@ -23,18 +23,18 @@
                      <font>
                         <Font name="High Tower Text" size="18.0" />
                      </font>
-                  </Button>
-                  <Button fx:id="backToTitleButton" layoutX="822.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Menù principale">
-                     <font>
-                        <Font name="High Tower Text" size="18.0" />
-                     </font>
                      <effect>
-                        <DropShadow>
+                        <DropShadow spread="0.14">
                            <color>
                               <Color red="0.615686297416687" green="0.545098066329956" blue="0.24705882370471954" />
                            </color>
                         </DropShadow>
                      </effect>
+                  </Button>
+                  <Button fx:id="backToTitleButton" layoutX="822.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Menù principale">
+                     <font>
+                        <Font name="High Tower Text" size="18.0" />
+                     </font>
                      <effect>
                         <DropShadow>
                            <color>
