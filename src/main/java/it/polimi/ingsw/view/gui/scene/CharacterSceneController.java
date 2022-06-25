@@ -90,7 +90,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         texts = List.of(label_1, label_2, label_3);
         labels = List.of(text_1, text_2, text_3);
         initialHide();
-        moneyPlayerLbl.setText(String.valueOf(1));
+        moneyPlayerLbl.setText(String.valueOf(playerMoney));
 
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
@@ -260,14 +260,11 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             if (studentsFromCard.size() < 3)
                 studentsFromCard.add(colorToMove);
             if (studentsFromCard.size() == maxStudents){
-                System.out.println(effect);
                 switch (effect) {
                     case "AddToHallEffect":
                         if(card.enoughCoins(nickname.getCoins())) {
-                            if(card.enoughCoins(nickname.getCoins())) {
                                 new Thread(() -> notifyObserver(obs -> obs.onMovedStudentsFromCardToHall(nickname.getNickname(), colorToMove))).start();
                                 ((Stage) card1.getScene().getWindow()).close();
-                            }
                         }
                         break;
                     case "AddToIslandEffect":
@@ -336,6 +333,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     public void setPlayerMoney(int playerMoney) {
         this.playerMoney = playerMoney;
         if(moneyPlayerLbl != null)
+            System.out.println("sono dentro");
             moneyPlayerLbl.setText(String.valueOf(playerMoney));
         if(boxCost_1!= null) {
             List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);

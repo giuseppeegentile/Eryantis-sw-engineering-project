@@ -259,26 +259,11 @@ public class GameController implements Observer, Serializable {
                         MovedFromCardToIsland movedFromCardToIsland = (MovedFromCardToIsland)receivedMessage;
                         addToIslandEffect.choose(movedFromCardToIsland.getStudentToMove(), movedFromCardToIsland.getIslandIndex());
                         break;
-                    case "ExchangeConfigEntranceEffect":
-                        ExchangeConfigEntranceEffect exchangeConfigEntranceEffect = (ExchangeConfigEntranceEffect)characterCardPlayed.getEffect();
-                        MovedFromCardToEntrance movedFromCardToEntrance = (MovedFromCardToEntrance)receivedMessage;
-                        exchangeConfigEntranceEffect.choose(movedFromCardToEntrance.getStudentsFromCard(), movedFromCardToEntrance.getStudentsFromEntrance());
-                        break;
-                    case "ExchangeHallEntranceEffect":
-                        ExchangeHallEntranceEffect exchangeHallEntranceEffect = (ExchangeHallEntranceEffect)characterCardPlayed.getEffect();
-                        ChosenChangeEntranceHall chosenChangeEntranceHall = (ChosenChangeEntranceHall)receivedMessage;
-                        exchangeHallEntranceEffect.choose(chosenChangeEntranceHall.getStudentsFromEntrance(), chosenChangeEntranceHall.getStudentsFromHall());
-                        break;
                     case "ExcludeColorInfluenceEffect":
                         ExcludeColorInfluenceEffect excludeColorInfluenceEffect = (ExcludeColorInfluenceEffect)characterCardPlayed.getEffect();
                         ChosenColorToIgnore chosenColorToIgnore = (ChosenColorToIgnore)receivedMessage;
                         excludeColorInfluenceEffect.choose(chosenColorToIgnore.getChosenColor());
                         this.colorToExclude =  chosenColorToIgnore.getChosenColor();
-                        break;
-                    case "PickIslandInfluenceEffect":
-                        PickIslandInfluenceEffect pickIslandInfluenceEffect = (PickIslandInfluenceEffect)characterCardPlayed.getEffect();
-                        ExtraGetInfluence extraGetInfluence = (ExtraGetInfluence)receivedMessage;
-                        pickIslandInfluenceEffect.choose(extraGetInfluence.getIndexIsland());
                         break;
                     case "ProhibitionEffect":
                         ProhibitionEffect prohibitionEffect = (ProhibitionEffect)characterCardPlayed.getEffect();
