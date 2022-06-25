@@ -39,6 +39,11 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void askMoveCloudToEntrance(String nickname, List<CloudModel> clouds){
         boardSceneController.setClouds(clouds);
+        Platform.runLater(()->{
+            boardSceneController.setVisibleSubtitle();
+            boardSceneController.setTurnLabel("Seleziona una nuvola");
+            boardSceneController.setSubtitleText("Sposterai gli studenti nell'ingresso");
+        });
     }
 
     @Override
@@ -46,6 +51,7 @@ public class Gui extends ViewObservable implements View {
         boardSceneController.setNumberToMove(numberStudentsToMove);
         Platform.runLater(() -> {
             boardSceneController.setTurnLabel("Sposta " + numberStudentsToMove + " studenti dall'ingresso alla sala");
+            boardSceneController.hideSubtitle();
             boardSceneController.entranceDisplay();
         });
     }
@@ -68,7 +74,7 @@ public class Gui extends ViewObservable implements View {
             boardSceneController.setEntrance(colorPawns);
             boardSceneController.entranceDisplay();
             boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola");
-            //boardSceneController.enableOnlyEntrance();
+            boardSceneController.hideSubtitle();
         });
     }
 
@@ -80,8 +86,6 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void showLobbyMessage(List<PlayerModel> nicknameList){
         Platform.runLater(()->boardSceneController.setNicknameList(nicknameList));
-        //boardSceneController.addAllObservers(observers);
-        //Platform.runLater(()->SceneController.changeRootPane(boardSceneController, "GameBoardScene.fxml"));
     }
 
     @Override
@@ -140,7 +144,8 @@ public class Gui extends ViewObservable implements View {
         deckSceneController.setNickname(player);
         deckSceneController.addAllObservers(observers);
         Platform.runLater(()-> {
-            boardSceneController.setTurnLabel("Gioca una carta");
+            boardSceneController.setTurnLabel("Gioca una carta assistente");
+            boardSceneController.hideSubtitle();
             boardSceneController.setDeckSceneController(deckSceneController);
 
         });
@@ -149,7 +154,8 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void showEndTurn(String nick){
         Platform.runLater(() -> {
-            boardSceneController.setTurnLabel("Aspetta il tuo turno");
+            boardSceneController.setTurnLabel("Aspetta il tuo turno...");
+            boardSceneController.hideSubtitle();
             boardSceneController.setEndTurn();
         });
 
@@ -160,7 +166,7 @@ public class Gui extends ViewObservable implements View {
     @Override
     public void showStartTurn(String nick){
         Platform.runLater(() -> {
-            boardSceneController.setTurnLabel("Sposta fino a 3 studenti su un'isola");
+            boardSceneController.hideSubtitle();
             boardSceneController.setNewTurn();
         });
     }
@@ -180,6 +186,12 @@ public class Gui extends ViewObservable implements View {
     public void showGenericMessage(String message){
         if(!message.contains("is playing..."))
             Platform.runLater(() -> SceneController.showAlert("Info Message", message));
+        else {
+            Platform.runLater(() -> {
+                boardSceneController.setTurnLabel("Aspetta il tuo turno...");
+                boardSceneController.hideSubtitle();
+            });
+        }
     }
     @Override
     public void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted){}
@@ -237,14 +249,19 @@ public class Gui extends ViewObservable implements View {
         Platform.runLater(()-> {
             characterSceneController.setDeck(characterDeck);
             characterSceneController.setPlayerMoney(active.getCoins());
-            if(!existsCardPlayable) {
+        });
+        if(!existsCardPlayable) {
+            Platform.runLater(()-> {
                 boardSceneController.setTurnLabel("Non hai nessuna carta carattere giocabile");
-                new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
-            }else{
+                boardSceneController.hideSubtitle();
+            });
+            new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+        }else{
+            Platform.runLater(()->{
                 boardSceneController.setTurnLabel("Gioca una carta carattere");
                 boardSceneController.setSubtitleText("Puoi saltare questa fase");
-            }
-        });
+            });
+        }
         characterSceneController.addAllObservers(observers);
         boardSceneController.setCharacterSceneController(characterSceneController);
     }
@@ -295,10 +312,17 @@ public class Gui extends ViewObservable implements View {
         Platform.runLater(() -> boardSceneController.entranceDisplay());
     }
 
+    int f = 0;
     @Override
     public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs){
-        if(!checkpointBoard)
-            boardSceneController.setTurnLabel("Aspetta il tuo turno");
+        if(!checkpointBoard){
+            Platform.runLater(()-> {
+                boardSceneController.setTurnLabel("Aspetta il tuo turno...");
+                boardSceneController.hideSubtitle();
+            });
+
+        }
+
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setPlayer(nickname);

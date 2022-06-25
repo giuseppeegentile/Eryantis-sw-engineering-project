@@ -463,7 +463,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void setDeckSceneController(DeckSceneController deckSceneController) {
         this.deckSceneController = deckSceneController;
         if(this.turnLabel != null){
-            this.turnLabel.setText("Gioca una carta");
+            this.turnLabel.setText("Gioca una carta assistente");
         }
     }
 
@@ -662,5 +662,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             lobbyTable.add(lb,0 ,i);
 
         }
+    }
+
+    public void hideSubtitle() {
+        this.subtitle.setVisible(false);
     }
 }

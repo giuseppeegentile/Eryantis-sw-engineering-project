@@ -11,7 +11,7 @@ public class ExtraMovementMotherEffect implements Effect, Serializable {
     private int moneyOnCard = 0;
 
     /**
-     * Constructor for the character card tha has "extra mother nature movement" as effect: costForEffect is set to 1
+     * Constructor for the character card that has "extra mother nature movement" as effect: costForEffect is set to 1
      */
     public ExtraMovementMotherEffect(){
         this.costForEffect = 1;

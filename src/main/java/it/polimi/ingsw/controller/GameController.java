@@ -1134,8 +1134,9 @@ public class GameController implements Observer, Serializable {
                 new AddToHallEffect(subBag3, this)
         );
 
-        List<CharacterCardModel> characterDeck = new ArrayList<>(11);
-        for(int i = 0; i < 11; i++){
+        List<CharacterCardModel> characterDeck = new ArrayList<>( effects.size()-3);
+        for(int i = 0; i < effects.size(); i++){
+            //if(i != 2 && i != 6 && i != 9) effetti da togliere
             characterDeck.add(new CharacterCardModel(effects.get(i), i));
         }
 

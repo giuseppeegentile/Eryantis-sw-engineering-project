@@ -125,7 +125,7 @@ class GameControllerAdvancedTest3 {
         gameInstance.getPlayersModel().get(1).getDeckAssistantCardModel().set(5, card2);
         gameInstance.getPlayersModel().get(2).getDeckAssistantCardModel().set(3, card3);
 
-        assertTrue(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0).equals(ColorPawns.RED));
+        assertEquals(gameInstance.getPlayersModel().get(0).getStudentInEntrance().get(0), ColorPawns.RED);
         assertEquals(0, gameInstance.getPlayersModel().get(0).getStudentInHall().get(ColorPawns.RED));
         assertEquals(0, gameInstance.getPlayersModel().get(2).getStudentInHall().get(ColorPawns.BLUE));
         assertEquals(4, gameInstance.getCloudsModel().get(0).getStudents().size());

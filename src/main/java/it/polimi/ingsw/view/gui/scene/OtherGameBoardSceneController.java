@@ -44,11 +44,12 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
 
     @FXML
     TableColumn<String, String> gamersCol;
+
     @FXML
-    private void initialize() throws InterruptedException {
+    private void initialize() {
         entranceDisplay();
         hallDisplay();
-        titleLabel.setText("Plancia di gioco id: " + player.getNickname());
+        titleLabel.setText("Plancia di gioco di: " + player.getNickname());
     }
     public void entranceDisplay() {
         entrancePane.getChildren().clear();
