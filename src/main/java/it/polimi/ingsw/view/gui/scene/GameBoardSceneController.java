@@ -399,18 +399,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }else{
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 System.out.println("entered to hall");
-                if (studentToHall.size() <= this.numberStudentsToMove) {
-                    this.studentToHall.add(colorToMove);
-
-                    this.numberStudentsToMove-=1;
-                    if(this.numberStudentsToMove == 0){
-                        this.alreadyMovedMother = false;
-                        new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
-                        //enableOnlyIsland();
-
-                    }
+                System.out.println(this.numberStudentsToMove);
+                System.out.println(studentToHall.size());
+                studentToHall.add(colorToMove);
+                if(studentToHall.size() == this.numberStudentsToMove){
+                    this.alreadyMovedMother = false;
+                    new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
+                    this.numberStudentsToMove = 0;
+                    //enableOnlyIsland();
                 }
-
             });
         }
     }
@@ -665,6 +662,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void hideSubtitle() {
-        this.subtitle.setVisible(false);
+        if(this.subtitle != null)
+            this.subtitle.setVisible(false);
     }
 }

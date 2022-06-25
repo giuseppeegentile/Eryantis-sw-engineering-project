@@ -332,9 +332,10 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
     public void setPlayerMoney(int playerMoney) {
         this.playerMoney = playerMoney;
-        if(moneyPlayerLbl != null)
+        if(moneyPlayerLbl != null) {
             System.out.println("sono dentro");
             moneyPlayerLbl.setText(String.valueOf(playerMoney));
+        }
         if(boxCost_1!= null) {
             List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
             for (int i = 0; i < cards.size(); i++) {
