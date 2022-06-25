@@ -96,7 +96,7 @@ public class Gui extends ViewObservable implements View {
         if(!checkpointBoard)
             boardSceneController = new GameBoardSceneController();
         boardSceneController.setClouds(clouds);
-        Platform.runLater(()->boardSceneController.setGameMode(gameMode));
+
         if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
     }
 
@@ -216,6 +216,7 @@ public class Gui extends ViewObservable implements View {
 
         towerColorSceneController.addAllObservers(observers);
         this.gameMode = gameMode;
+        Platform.runLater(()->boardSceneController.setGameMode(gameMode));
         towerColorSceneController.setAvailableTowers(availableColorTowers);
         Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
     }
@@ -322,7 +323,7 @@ public class Gui extends ViewObservable implements View {
             });
 
         }
-
+        Platform.runLater(()->boardSceneController.setGameMode(gameMode));
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setPlayer(nickname);

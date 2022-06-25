@@ -504,8 +504,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             int finalIdx = i;
             vBoxes.get(idx).addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 if(!alreadyMovedMother) {
-                    if(gameMode == GameMode.ADVANCED)
-                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
+                    /*if(gameMode == GameMode.ADVANCED)
+                        new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();*/
 
                     new Thread(() -> notifyObserver(obs -> obs.onUpdateMotherNature(nickname, (byte) (finalIdx - tempIndex)))).start();
                     towersDisplay();
