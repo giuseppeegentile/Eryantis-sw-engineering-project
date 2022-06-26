@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui.scene;
 
 import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.observer.ViewObservable;
+import it.polimi.ingsw.view.gui.Gui;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
@@ -38,11 +39,13 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
 
     private void onAdvancedClick(Event e) {
         new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.ADVANCED))).start();
+        Gui.setMode(GameMode.ADVANCED);
         showWaitOtherPlayers();
     }
 
     private void onBeginnerClick(Event e) {
         new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.BEGINNER))).start();
+        Gui.setMode(GameMode.BEGINNER);
         showWaitOtherPlayers();
     }
 

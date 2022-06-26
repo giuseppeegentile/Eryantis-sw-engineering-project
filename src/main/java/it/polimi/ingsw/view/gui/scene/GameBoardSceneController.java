@@ -159,6 +159,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         islandsDisplay();
         cloudsDisplay();
 
+        if(gameMode == GameMode.BEGINNER) {
+            character.setVisible(false);
+            skipCardGame.setVisible(false);
+        }
         skipCardGame.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
             new Thread(()->notifyObserver(obs->obs.onUpdateCharacterCardPlayed(nickname, null))).start();
         });
@@ -227,6 +231,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(cloudModels.size() > 3) cloudsVboxes.add(vboxCloud4);
         int index = 0;
         for (VBox clBox: cloudsVboxes) clBox.getChildren().clear();
+        vboxCloud3.getChildren().clear();
+        vboxCloud4.getChildren().clear();
         for(CloudModel c: cloudModels){
             cloudsVboxes.get(index).setAlignment(Pos.CENTER);
             for (ColorPawns s: c.getStudents()){
@@ -562,11 +568,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
-
-        if(gameMode == GameMode.BEGINNER) {
-            character.setVisible(false);
-            skipCardGame.setVisible(false);
-        }
     }
 
     public void setVisibleSubtitle() {

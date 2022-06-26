@@ -361,7 +361,6 @@ public class GameModel extends Observable implements Serializable {
         }
     }
 
-    //********************DA TESTARE
 
     /**
      *

@@ -93,8 +93,7 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void showCloudsMessage(String nickname, List<CloudModel> clouds){
-        if(!checkpointBoard)
-            boardSceneController = new GameBoardSceneController();
+
         boardSceneController.setClouds(clouds);
 
         if(checkpointBoard) Platform.runLater(()->boardSceneController.cloudsDisplay());
@@ -216,6 +215,8 @@ public class Gui extends ViewObservable implements View {
 
         towerColorSceneController.addAllObservers(observers);
         this.gameMode = gameMode;
+        if(!checkpointBoard)
+            boardSceneController = new GameBoardSceneController();
         Platform.runLater(()->boardSceneController.setGameMode(gameMode));
         towerColorSceneController.setAvailableTowers(availableColorTowers);
         Platform.runLater(() -> SceneController.changeRootPane(towerColorSceneController, "TowerColorScene.fxml"));
@@ -316,6 +317,11 @@ public class Gui extends ViewObservable implements View {
     int f = 0;
     @Override
     public void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst){
+        if(m!= null) {
+            boardSceneController.setGameMode(m);
+        }else{
+            Platform.runLater(()->boardSceneController.setGameMode(gameMode));
+        }
         if(!checkpointBoard){
             Platform.runLater(()-> {
                 boardSceneController.setTurnLabel("Aspetta il tuo turno...");
@@ -323,7 +329,7 @@ public class Gui extends ViewObservable implements View {
             });
 
         }
-        Platform.runLater(()->boardSceneController.setGameMode(gameMode));
+
         if(this.nickname!=null && !nickname.getNickname().equals(this.nickname)){
             OtherGameBoardSceneController board = new OtherGameBoardSceneController();
             board.setPlayer(nickname);
@@ -359,5 +365,8 @@ public class Gui extends ViewObservable implements View {
         }
     }
 
-
+    private static GameMode m = null;
+    public static void setMode(GameMode mode){
+        m = mode;
+    }
 }

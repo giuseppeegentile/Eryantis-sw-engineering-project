@@ -855,7 +855,7 @@ public class GameController implements Observer, Serializable {
                 gameInstance.addCardToDeck(new AssistantCardModel(i + 1, j));
             }
         }
-        Collections.shuffle(gameInstance.getDeck());
+        //Collections.shuffle(gameInstance.getDeck());
     }
 
 
