@@ -91,7 +91,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         labels = List.of(text_1, text_2, text_3);
         initialHide();
         moneyPlayerLbl.setText(String.valueOf(playerMoney));
-
+        setDeck(cards);
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
         List<GridPane> gridPaneList = List.of(gridStudent_1, gridStudent_2, gridStudent_3);
