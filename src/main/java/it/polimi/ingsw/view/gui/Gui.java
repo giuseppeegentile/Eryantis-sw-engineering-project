@@ -73,8 +73,7 @@ public class Gui extends ViewObservable implements View {
             boardSceneController.setVisibleSkip();
             boardSceneController.setEntrance(colorPawns);
             boardSceneController.entranceDisplay();
-            boardSceneController.setTurnLabel("Sposta fino a 3 studenti dall'ingresso in un'isola");
-            boardSceneController.hideSubtitle();
+
         });
     }
 

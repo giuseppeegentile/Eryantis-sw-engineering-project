@@ -136,7 +136,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private Label subtitle;
     @FXML
     private ImageView character;
-
+    @FXML
+    private Button skipCardGame;
 
     private List<CloudModel> cloudModels;
     private List<PlayerModel> nicknameList;
@@ -195,23 +196,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
             }
         });
-
-/*
-
-        lobbyTable.setRowFactory(tv -> {
-            TableRow<String> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY  && event.getClickCount() == 2) {
-
-                    String nickChosen = row.getItem();
-                    System.out.println(nickChosen);
-                    new Thread(() -> notifyObserver(obs -> obs.onRequestBoard(this.nickname, nickChosen))).start();
-                }
-            });
-            return row ;
-        });
-*/
-
     }
 
     public void setSubtitleText(String text){
@@ -389,30 +373,33 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
-    @FXML
-    private Button skipCardGame;
+
+
+
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
+        if(sizeEntrance == 9) sizeEntrance = 4;
+        else if (sizeEntrance == 7) sizeEntrance = 3;
         if(this.numberStudentsToMove == 0) {
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 System.out.println("entered to island");
                 skipMove.setVisible(false);
-                if(gameMode == GameMode.ADVANCED)
+                if(gameMode == GameMode.ADVANCED && studentToIsland.size() == 0)
                     new Thread(()->notifyObserver(obs -> obs.onUpdateCharacterCardPlayed(nickname, null))).start();
-                if (studentToIsland.size() < 3)
+                if (studentToIsland.size() < sizeEntrance && e.getClickCount() == 1)
                     studentToIsland.add(colorToMove);
                 //if(studentToIsland.size() == 3) this.alreadyMovedMother = false;
             });
         }else{
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 System.out.println("entered to hall");
-                System.out.println(this.numberStudentsToMove);
-                System.out.println(studentToHall.size());
-                studentToHall.add(colorToMove);
-                if(studentToHall.size() == this.numberStudentsToMove){
-                    this.alreadyMovedMother = false;
-                    new Thread(()->notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
-                    this.numberStudentsToMove = 0;
-                    //enableOnlyIsland();
+                if(e.getClickCount() == 1) {
+                    studentToHall.add(colorToMove);
+                    if (studentToHall.size() == this.numberStudentsToMove) {
+                        this.alreadyMovedMother = false;
+                        new Thread(() -> notifyObserver(obs -> obs.onUpdateStudentToHall(nickname, studentToHall))).start();
+                        this.numberStudentsToMove = 0;
+                        //enableOnlyIsland();
+                    }
                 }
             });
         }
@@ -446,9 +433,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         this.towers =towers;
     }
 
+    private int sizeEntrance;
     public void setEntrance(List<ColorPawns> entrance) {
         this.entrance =entrance;
-        for(ColorPawns c: entrance) System.out.println(c.name());
+        sizeEntrance = entrance.size();
+        if(turnLabel != null) {
+            hideSubtitle();
+            if (sizeEntrance == 9) turnLabel.setText("Sposta fino a 4 studenti dall'ingresso in un'isola");
+            else turnLabel.setText("Sposta fino a 3 studenti dall'ingresso in un'isola");
+        }
     }
 
     public void setProfs(List<ColorPawns> profs) {
@@ -556,7 +549,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         displayProfs();
         islandsDisplay();
         entranceDisplay();
-        System.out.println("new turn entered");
         this.studentToIsland.clear();
         this.studentToHall.clear();
     }
@@ -578,59 +570,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         this.nicknameList = nicknameList;
         setLobbyTable();
     }
-
-
-//    public void enableOnlyIsland(){
-//        entrancePane.setDisable(true);
-//        vboxCloud1.setDisable(true);
-//        vboxCloud2.setDisable(true);
-//        vboxCloud3.setDisable(true);
-//        vboxCloud4.setDisable(true);
-//        wizardView.setDisable(true);
-//    }
-//
-//    public void enableOnlyClouds(){
-//        entrancePane.setDisable(true);
-//        vboxCloud1.setDisable(false);
-//        vboxCloud2.setDisable(false);
-//        vboxCloud3.setDisable(false);
-//        vboxCloud4.setDisable(false);
-//        wizardView.setDisable(true);
-//        vboxIsland1.setDisable(true);
-//        vboxIsland2.setDisable(true);
-//        vboxIsland3.setDisable(true);
-//        vboxIsland4.setDisable(true);
-//        vboxIsland5.setDisable(true);
-//        vboxIsland6.setDisable(true);
-//        vboxIsland7.setDisable(true);
-//        vboxIsland8.setDisable(true);
-//        vboxIsland9.setDisable(true);
-//        vboxIsland10.setDisable(true);
-//        vboxIsland11.setDisable(true);
-//        vboxIsland12.setDisable(true);
-//    }
-//
-//    public void enableOnlyEntrance(){
-//        entrancePane.setDisable(false);
-//        vboxCloud1.setDisable(true);
-//        vboxCloud2.setDisable(true);
-//        vboxCloud3.setDisable(true);
-//        vboxCloud4.setDisable(true);
-//        wizardView.setDisable(true);
-//        vboxIsland1.setDisable(true);
-//        vboxIsland2.setDisable(true);
-//        vboxIsland3.setDisable(true);
-//        vboxIsland4.setDisable(true);
-//        vboxIsland5.setDisable(true);
-//        vboxIsland6.setDisable(true);
-//        vboxIsland7.setDisable(true);
-//        vboxIsland8.setDisable(true);
-//        vboxIsland9.setDisable(true);
-//        vboxIsland10.setDisable(true);
-//        vboxIsland11.setDisable(true);
-//        vboxIsland12.setDisable(true);
-//
-//    }
 
     private void setLobbyTable() {
         lobbyTable.getChildren().clear();

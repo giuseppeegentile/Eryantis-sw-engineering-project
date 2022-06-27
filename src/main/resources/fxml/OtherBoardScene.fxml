@@ -23,7 +23,7 @@
                         <Image url="@../images_cranio/PLANCIA GIOCO_2.png" />
                      </image>
                   </ImageView>
-                  <GridPane fx:id="entrancePane" layoutX="302.0" layoutY="233.0" prefHeight="252.0" prefWidth="99.0">
+                  <GridPane fx:id="entrancePane" layoutX="310.0" layoutY="233.0" prefHeight="252.0" prefWidth="99.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.0" minWidth="10.0" prefWidth="44.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="55.0" />
