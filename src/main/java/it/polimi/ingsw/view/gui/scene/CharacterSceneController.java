@@ -234,7 +234,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(30.0);
         String path = "/images_cranio/coin.png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -247,7 +247,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);

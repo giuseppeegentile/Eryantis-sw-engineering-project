@@ -334,7 +334,7 @@ public class Gui extends ViewObservable implements View {
             board.setPlayer(nickname);
             Platform.runLater(()-> {
                 try {
-                    SceneController.showWindow(board, nickname.getNickname(),  "GameBoardScene.fxml");
+                    SceneController.showWindow(board, nickname.getNickname(),  "OtherBoardScene.fxml");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
     private List<ColorTower> towers;
@@ -252,7 +253,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -304,7 +305,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(62.0);
         b.setPrefWidth(53.0);
         String path = "/images_cranio/cards/prohibition.png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -326,7 +327,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/pawns/MOTHER.png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -339,7 +340,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/towers/" + colorTower + ".png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -406,18 +407,20 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void towersDisplay() {
-        String colorTower = towers.get(0).name().toLowerCase();
+        String colorTower = towers.get(0).name();
         int i;
         towersGrid.getChildren().clear();
-        for (i = 0; i < towers.size() / 2; i++) {
+        if(!colorTower.equals("NULL")) {
+            for (i = 0; i < towers.size() / 2; i++) {
+                Button bt = getStyledTower(colorTower);
+                towersGrid.add(bt, 0, i);
+                Button bt2 = getStyledTower(colorTower);
+                towersGrid.add(bt2, 1, i);
+            }
+            i += 1;
             Button bt = getStyledTower(colorTower);
-            towersGrid.add(bt, 0, i);
-            Button bt2 = getStyledTower(colorTower);
-            towersGrid.add(bt2, 1, i);
+            if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
         }
-        i+=1;
-        Button bt = getStyledTower(colorTower);
-        if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
     }
 
     private void showCorrectClouds(){

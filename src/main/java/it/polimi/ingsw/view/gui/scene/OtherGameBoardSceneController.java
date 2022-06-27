@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class OtherGameBoardSceneController extends ViewObservable implements GenericSceneController{
     private PlayerModel player;
@@ -96,7 +97,8 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(OtherGameBoardSceneController.class
+                .getResourceAsStream(path))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
