@@ -10,7 +10,8 @@ public class OrderMessage extends Message{
     private final List<PlayerModel> order;
 
     /**
-     * Message shown to display the players' order
+     * Message sent to display the players' order
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param order players' order
      */
@@ -19,6 +20,10 @@ public class OrderMessage extends Message{
         super(nickname, MessageType.ORDER);
         this.order = order;
     }
+
+    /**
+     * @return the players order
+     */
 
     public List<PlayerModel> getOrder() {
         return order;

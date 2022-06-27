@@ -13,7 +13,8 @@ public class DisplayDeckMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display a player's deck
+     * Message sent to display a player's deck
+     * Parameters are set by the constructor
      * @param nickname player whom deck is shown
      * @param deck deck of the player
      */
@@ -24,13 +25,17 @@ public class DisplayDeckMessage extends DisplayMessage{
         this.deck = deck;
     }
 
+    /**
+     * @return the player's deck
+     */
+
     public List<AssistantCardModel> getDeck() {
         return deck;
     }
 
     @Override
     public String toString() {
-        return "ShowCemeteryMessage{" +
+        return "DisplayDeckMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", deck=" + deck +

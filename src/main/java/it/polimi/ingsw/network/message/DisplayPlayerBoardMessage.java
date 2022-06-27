@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.GameModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
@@ -16,23 +15,29 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final List<ColorTower> towers;
     private final List<ColorPawns> entrance;
     private final List<ColorPawns> profs;
+    private final PlayerModel player;
+    private final boolean isFirst;
 
     /**
-     * Message shown to display  player's game board
+     * Message sent to display  player's game board
+     * Parameters are set by the constructor
      * @param nickname player's whom game board is shown
      * @param towers towers of the current player
      * @param hall hall of the current player
      * @param entrance entrance of the current player
      * @param profs profs of the current player
+     * @param isFirst if the player is the first with the chosen tower color
      */
 
-    public DisplayPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs) {
-        super(nickname);
+    public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst) {
+        super(nickname.getNickname());
+        this.player = nickname;
         this.objectDisplay = ObjectDisplay.BOARD;
         this.towers  =towers;
         this.hall = hall;
         this.entrance = entrance;
         this.profs = profs;
+        this.isFirst = isFirst;
     }
 
 
@@ -52,8 +57,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the profs of the current player
-     * @return the profs
+     * @return the player's profs
      */
 
     public List<ColorPawns> getProfs() {
@@ -61,8 +65,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's entrance
-     * @return the entrance
+     * @return the player's entrance
      */
 
     public List<ColorPawns> getEntrance() {
@@ -70,8 +73,7 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's hall
-     * @return the hall
+     * @return the player's hall
      */
 
     public Map<ColorPawns, Integer> getHall() {
@@ -79,11 +81,25 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     }
 
     /**
-     * Gets the current player's towers
-     * @return the towers
+     * @return the player's towers
      */
 
     public List<ColorTower> getTowers() {
         return towers;
+    }
+
+    /**
+     * @return the player
+     */
+    public PlayerModel getPlayer() {
+        return player;
+    }
+
+    /**
+     *
+     * @return true if the player is the first player with the chosen tower color
+     */
+    public boolean isFirst(){
+        return this.isFirst;
     }
 }

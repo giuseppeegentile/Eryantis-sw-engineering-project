@@ -12,7 +12,8 @@ public class DisplayCloudsMessage extends DisplayMessage {
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message shown to display the clouds
+     * Message sent to display the clouds
+     * Parameters are set by the constructor
      * @param nickname nickname of the player's who is playing in that moment
      * @param clouds clouds shown
      */
@@ -23,13 +24,17 @@ public class DisplayCloudsMessage extends DisplayMessage {
         this.objectDisplay = ObjectDisplay.CLOUDS;
     }
 
+    /**
+     * @return the list of clouds
+     */
+
     public List<CloudModel> getClouds() {
         return clouds;
     }
 
     @Override
     public String toString() {
-        return "CloudsMessage{" +
+        return "DisplayCloudsMessage{" +
                 "player=" + getNickname() +
                 ", objectDisplay=" + getObjectDisplay() +
                 ", clouds=" + clouds +

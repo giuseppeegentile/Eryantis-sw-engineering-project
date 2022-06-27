@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
@@ -24,11 +24,15 @@ public class ClientController implements ViewObserver, Observer {
     public static final int UNDO_TIME = 5000;
     private final ExecutorService queueTasks;
 
+    /**
+     * Client controller, on the client side. Handles the message received from the server and perform actions based on that.
+     * @param view the view of the client.
+     */
+
     public ClientController(View view){
         this.view = view;
         this.queueTasks = Executors.newSingleThreadExecutor();
     }
-
 
     /**
      * Takes action based on the message type received from the server. Destination: client, who's going to change the view.
@@ -42,8 +46,20 @@ public class ClientController implements ViewObserver, Observer {
                 WinMessage winMessage = (WinMessage)message;
                 queueTasks.execute(() -> view.showWinMessage(winMessage.getWinner()));
                 break;
+            case REQ_PLAY_CHAR_CARD:
+                queueTasks.execute(() -> view.askPlayCharacterCard(((ReqPlayCharacterCardMessage)message).getPlayer(), ((ReqPlayCharacterCardMessage)message).getCharacterDeck(), ((ReqPlayCharacterCardMessage)message).getExistsCardPlayable()));
+                break;
+            case REQ_ENTRANCE_TO_HALL:
+                queueTasks.execute(() -> view.askMoveEntranceToIsland(message.getNickname(), ((StudentToIslandMessage)message).getEntrance(), ((StudentToIslandMessage)message).getIslands()));
+                break;
+            case REQ_ENTRANCE_TO_ISLAND:
+                queueTasks.execute(() -> view.askMoveEntranceToHall(message.getNickname(), ((StudentToHallMessage)message).getEntrance(), ((StudentToHallMessage)message).getNumberStudentsToMove()));
+                break;
+            case REQ_CARD_TO_HALL:
+                queueTasks.execute(() -> view.askStudentFromCardToHall(message.getNickname(), ((ReqStudentFromCardToHall)message).getStudentsOnCard()));
+                break;
             case INIT:
-                queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers()));
+                queueTasks.execute(()->view.askTowerColor(message.getNickname(), ((InitialResMessage)message).getAvailableTowers(), ((InitialResMessage)message).getGameMode()));
                 break;
             case GAMEMODE_REQUEST:
                 queueTasks.execute(view::askGameMode);
@@ -67,11 +83,43 @@ public class ClientController implements ViewObserver, Observer {
                 queueTasks.execute(() -> view.showOrderPhase(orderMessage.getNickname(), orderMessage.getOrder()));
                 break;
             case MOVE_MOTHER_REQ:
-                queueTasks.execute(() -> view.askMotherNatureMovements(message.getNickname(), ((ReqMoveMotherNatureMessage)message).getMaxMovementAllowed()));
+                ReqMoveMotherNatureMessage motherMassage = ((ReqMoveMotherNatureMessage)message);
+                queueTasks.execute(() -> view.askMotherNatureMovements(motherMassage.getPlayer(), motherMassage.getMaxMovementAllowed()));
+                break;
+            case MOVE_CLOUD_TO_ENTRANCE:
+                queueTasks.execute(() -> view.askMoveCloudToEntrance(message.getNickname(), ((ReqMoveCloudToEntranceMessage)message).getClouds()));
                 break;
             case LOBBY:
                 LobbyInfoMessage lobbyMessage = (LobbyInfoMessage)message;
                 queueTasks.execute(() -> view.showLobbyMessage(lobbyMessage.getNicknameList()));
+                break;
+            case MOVING_ONE_STUDENT_FROM_CARD:
+                AskMoveStudentFromCardToIslandMessage oneStudentMessage = (AskMoveStudentFromCardToIslandMessage)message;
+                queueTasks.execute(()-> view.askMoveStudentFromCardToIsland(oneStudentMessage.getNickname(), oneStudentMessage.getIslands(), oneStudentMessage.getStudentsOnCard()));
+                break;
+            case ASK_EXTRA_GET_INFLUENCE:
+                AskExtraGetInfluenceMessage extraGetInfluenceMessage = (AskExtraGetInfluenceMessage)message;
+                queueTasks.execute(()-> view.askExtraGetInfluence(extraGetInfluenceMessage.getNickname(), extraGetInfluenceMessage.getIslands()));
+                break;
+            case ASK_MOVE_BAN_CARD:
+                AskMoveBanCardMessage askMoveBanCardMessage = (AskMoveBanCardMessage)message;
+                queueTasks.execute(()-> view.askMoveBanCard(askMoveBanCardMessage.getNickname(), askMoveBanCardMessage.getIslands()));
+                break;
+            case MOVE_FROM_CARD_TO_HALL:
+                AskMoveStudentsFromCardToEntrance askMoveStudentsFromCardToHall = (AskMoveStudentsFromCardToEntrance)message;
+                queueTasks.execute(()-> view.askMoveFromCardToEntrance(askMoveStudentsFromCardToHall.getNickname(), askMoveStudentsFromCardToHall.getStudentsOnCard(), askMoveStudentsFromCardToHall.getEntrance()));
+                break;
+            case ASK_COLOR_TO_IGNORE:
+                AskColorToIgnore askColorToIgnore = (AskColorToIgnore)message;
+                queueTasks.execute(()-> view.askColorStudentToIgnore(askColorToIgnore.getNickname()));
+                break;
+            case ASK_CHANGE_ENTRANCE_HALL:
+                AskStudentsChangeEntranceHall msg = (AskStudentsChangeEntranceHall)message;
+                queueTasks.execute(()-> view.askStudentsChangeEntranceHall(message.getNickname(), msg.getEntrance(), msg.getHall()));
+                break;
+            case ENTRANCE_CHANGES:
+                EntranceChangeMessage entranceChangeMessage = (EntranceChangeMessage)message;
+                queueTasks.execute(() -> view.showEntranceChange(entranceChangeMessage.getNickname(), entranceChangeMessage.getStudentInEntrance()));
                 break;
             case DISPLAY:
                 ObjectDisplay objectDisplay =((DisplayMessage) message).getObjectDisplay();
@@ -84,26 +132,14 @@ public class ClientController implements ViewObserver, Observer {
                         DisplayIslandsMessage displayIslands = (DisplayIslandsMessage)message;
                         queueTasks.execute(() -> view.showIslands(displayIslands.getNickname(), displayIslands.getIslandModels()));
                         break;
-                    /*case PROF:
-                        DisplayProfMessage displayProfMessage = (DisplayProfMessage)message;
-                        queueTasks.execute(() -> view.showProfsMessage(displayProfMessage.getNickname(), displayProfMessage.getProfs()));
-                        break;*/
                     case CLOUDS:
                         DisplayCloudsMessage displayClouds = (DisplayCloudsMessage)message;
                         queueTasks.execute(() -> view.showCloudsMessage(displayClouds.getNickname(), displayClouds.getClouds()));
                         break;
                     case DECK:
-                        DisplayDeckMessage displayDeckMessage = (DisplayDeckMessage)message;
-                        queueTasks.execute(() -> view.showDeckMessage(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
+                        DisplayDeckAndAskCardMessage displayDeckMessage = (DisplayDeckAndAskCardMessage)message;
+                        queueTasks.execute(() -> view.askPlayCard(displayDeckMessage.getNickname(), displayDeckMessage.getDeck()));
                         break;
-                   /* case HALL:
-                        DisplayHallMessage displayHall = (DisplayHallMessage)message;
-                        queueTasks.execute(() -> view.showHallMessage(displayHall.getNickname(), displayHall.getHall()));
-                        break;
-                    case ENTRANCE:
-                        DisplayEntranceMessage displayEntrance = (DisplayEntranceMessage)message;
-                        queueTasks.execute(() -> view.showEntranceMessage(displayEntrance.getNickname(), displayEntrance.getEntrance()));
-                        break;*/
                     case CEMETERY:
                         DisplayCemeteryMessage displayCemetery = (DisplayCemeteryMessage)message;
                         queueTasks.execute(() -> view.showCemeteryMessage(displayCemetery.getNickname(), displayCemetery.getCemetery()));
@@ -111,15 +147,15 @@ public class ClientController implements ViewObserver, Observer {
                     case BOARD:
                         DisplayPlayerBoardMessage displayPlayerBoardMessage = (DisplayPlayerBoardMessage)message;
 
-                        queueTasks.execute(() -> view.showPlayerBoardMessage(message.getNickname(),
+                        queueTasks.execute(() -> view.showPlayerBoardMessage(displayPlayerBoardMessage.getPlayer(),
                                 displayPlayerBoardMessage.getTowers(),
                                 displayPlayerBoardMessage.getHall(),
                                 displayPlayerBoardMessage.getEntrance(),
-                                displayPlayerBoardMessage.getProfs()
+                                displayPlayerBoardMessage.getProfs(),
+                                displayPlayerBoardMessage.isFirst()
                         ));
                         break;
                 }
-
                 break;
             case GENERIC_MESSAGE:
                 queueTasks.execute(() -> view.showGenericMessage(message.toString()));
@@ -144,6 +180,61 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateGameMode(GameMode gameMode) {
         client.sendMessage(new GameModeRes(this.nickname, gameMode));
+    }
+
+    @Override
+    public void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard) {
+        client.sendMessage(new PlayedCharacterCardMessage(activePlayer, chosenCard));
+    }
+
+    @Override
+    public void onUpdateColorToIgnore(String active, ColorPawns color) {
+        client.sendMessage(new ChosenColorToIgnore(active, color));
+    }
+
+    @Override
+    public void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex) {
+        client.sendMessage(new MovedFromCardToIsland(active, indexIsland, colorChosenIndex));
+    }
+
+    @Override
+    public void onUpdateExtraGetInfluence(String active, int indexIsland) {
+        client.sendMessage(new ExtraGetInfluence(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateBanCard(String active, int indexIsland) {
+        client.sendMessage(new MovedBanCardMessage(active, indexIsland));
+    }
+
+    @Override
+    public void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new MovedFromCardToEntrance(active, studentsFromCard, studentsFromEntrance));
+    }
+
+    @Override
+    public void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent) {
+        client.sendMessage(new MovedStudentFromCardToHall(nickname, pickedStudent));
+    }
+
+    @Override
+    public void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns) {
+        client.sendMessage(new ChosenColorRemoveForAll(active, equivalentColorPawns));
+    }
+
+    @Override
+    public void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance) {
+        client.sendMessage(new ChosenChangeEntranceHall(active, studentsFromHall, studentsFromEntrance));
+    }
+
+    @Override
+    public void onRequestLobby(String nickname) {
+        client.sendMessage(new RequestPlayersBoard(nickname));
+    }
+
+    @Override
+    public void onRequestBoard(String nick,String nickChosen) {
+        client.sendMessage(new ReqRealPlayerBoardMessage(nick, nickChosen));
     }
 
     @Override
@@ -185,7 +276,7 @@ public class ClientController implements ViewObserver, Observer {
 
     @Override
     public void onUpdateMotherNature(String player, byte movement){
-        client.sendMessage(new MoveMotherNatureMessage(nickname, movement));
+        client.sendMessage(new MovedMotherNatureMessage(player, movement));
     }
 
     @Override
@@ -194,7 +285,7 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateCardPlayed(String nickname, AssistantCardModel assistantCardModel){
+    public void onUpdateCardPlayed(String nickname, int assistantCardModel){
         client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
     }
 

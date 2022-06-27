@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
+import it.polimi.ingsw.model.enums.GameMode;
 import it.polimi.ingsw.model.game.CloudModel;
 import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
@@ -22,9 +24,9 @@ public interface View {
 
     void askMoveEntranceToHall(String player,List<ColorPawns> students, int numberStudentsToMove);
 
-    void askMotherNatureMovements(String player, byte maxMovement);
+    void askMotherNatureMovements(PlayerModel player, byte maxMovement);
 
-    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns);
+    void askMoveEntranceToIsland(String player,List<ColorPawns> colorPawns, List<IslandModel> islands);
 
     //void showHallMessage(String player, Map<ColorPawns, Integer> hall);
 
@@ -36,15 +38,13 @@ public interface View {
 
     void showTextMessage(String player, String text);
 
-    void showLobbyMessage(List<String> nicknameList);
+    void showLobbyMessage(List<PlayerModel> nicknameList);
 
     void showIslandMessage(String nickname, IslandModel islandModel, int islandIndex);
 
     void showCloudsMessage(String nickname, List<CloudModel> clouds);
 
-    void showMoveMotherNatureMessage(String player, byte movement);
-
-    void showPlayAssistantCardMessage(String player, AssistantCardModel assistantCard);
+    void showMoveMotherNatureMessage(PlayerModel player, byte movement);
 
     //void updateIslands(String nickname);
 
@@ -60,7 +60,7 @@ public interface View {
 
     //void showTowerMessage(String player, ColorTower colorTower, int towerNumber);
 
-    void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
+    //void showDeckMessage(String player, List<AssistantCardModel> playerDeck);
 
     //void updateTowerOnIsland(String nickname, IslandModel islandModel);
 
@@ -86,16 +86,39 @@ public interface View {
 
     void showErrorAndExit(String error);
 
-    void askPlayCards(String nickname, List<AssistantCardModel> playerDeck);
+    void askPlayCard(String nickname, List<AssistantCardModel> playerDeck);
 
     void showOrderPhase(String nickname, List<PlayerModel> order);
 
-    void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers);
+    void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode);
 
 
     void askPlayersNumber();
 
     void askGameMode();
 
-    void showPlayerBoardMessage(String nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance,List<ColorPawns> profs);
+    void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst);
+
+    void showSkippingMotherMovement(String activeNick);
+
+    void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck, boolean existsCardPlayable);
+
+    //da implementare nella cli
+    void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard);
+
+    void askExtraGetInfluence(String active, List<IslandModel> islands);
+
+    void askMoveBanCard(String active, List<IslandModel> islands);
+
+    void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance);
+
+    void askColorStudentToIgnore(String active);
+
+    void askColorRemoveForAll(String active);
+
+    void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall);
+
+    void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard);
+
+    void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance);
 }

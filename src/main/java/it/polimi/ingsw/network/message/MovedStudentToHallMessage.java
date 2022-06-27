@@ -9,7 +9,8 @@ public class MovedStudentToHallMessage extends  Message{
     private final List<ColorPawns> students;
 
     /**
-     * Message shown when a student is successfully moved into the player's hall
+     * Message sent when a student is successfully moved into the player's hall
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param students students moved
      */
@@ -19,6 +20,9 @@ public class MovedStudentToHallMessage extends  Message{
         this.students = students;
     }
 
+    /**
+     * @return the list of students
+     */
 
     public List<ColorPawns> getStudents() {
         return students;
@@ -26,7 +30,7 @@ public class MovedStudentToHallMessage extends  Message{
 
     @Override
     public String toString() {
-        return "StudentToHallMessage{" +
+        return "MovedStudentToHallMessage{" +
                 "player=" + getNickname() +
                 ", students=" + students +
                 '}';

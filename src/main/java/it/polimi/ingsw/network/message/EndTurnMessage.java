@@ -4,7 +4,8 @@ public class EndTurnMessage extends Message{
     private static final long serialVersionUID = 1168012558305627763L;
 
     /**
-     * Message shown to display the end of a player's turn
+     * Message sent to display the end of a player's turn
+     * Parameters are set by the constructor
      * @param nickname current player
      */
 

@@ -6,18 +6,18 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
     private final int cloudIndex;
 
     /**
-     * Message shown when a student is added from a cloud to a player's board's entrance
+     * Message sent when a student is added from a cloud to a player's board's entrance
+     * Parameters are set by the constructor
      * @param nickname nickname of the player who makes the move
      * @param cloudIndex index of the cloud chosen
      */
 
     public AddStudentFromCloudToEntranceMessage(String nickname, int cloudIndex) {
-        super(nickname, MessageType.MOVE);
+        super(nickname, MessageType.MOVED_CLOUD_TO_ENTRANCE);
         this.cloudIndex = cloudIndex;
     }
 
     /**
-     * Gets the index of the cloud from which a student is taken
      * @return the cloud's index
      */
 
@@ -27,7 +27,7 @@ public class AddStudentFromCloudToEntranceMessage extends Message {
 
     @Override
     public String toString() {
-        return "AddStudentFromCloudToWaitingMessage{" +
+        return "AddStudentFromCloudToEntranceMessage{" +
                 "nickname=" + getNickname() +
                 ", cloudIndex=" + cloudIndex +
                 '}';

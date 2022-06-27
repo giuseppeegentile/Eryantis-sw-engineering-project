@@ -5,7 +5,7 @@ public class GameModeReq extends Message {
     private static final long serialVersionUID = 4978053369068882855L;
 
     /**
-     * Message shown when requesting the game mode
+     * Message sent when requesting the game mode
      */
 
     public GameModeReq() {
@@ -14,7 +14,7 @@ public class GameModeReq extends Message {
 
     @Override
     public String toString() {
-        return "PlayerNumberRequest{" +
+        return "GameModeReq{" +
                 "player=" + getNickname() +
                 '}';
     }

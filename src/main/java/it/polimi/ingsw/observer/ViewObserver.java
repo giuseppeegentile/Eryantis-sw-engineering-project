@@ -1,10 +1,9 @@
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
+import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.CloudModel;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public interface ViewObserver {
 
     void onUpdateWaiting(String nickname, int cloudIndex);
 
-    void onUpdateCardPlayed(String playerModel, AssistantCardModel assistantCardModel);
+    void onUpdateCardPlayed(String playerModel, int assistantCardModel);
 
     void onUpdatePlayersNumber(int playersNumber);
     /**
@@ -57,4 +56,25 @@ public interface ViewObserver {
 
     void onUpdateGameMode(GameMode finalMode);
 
+    void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
+
+    void onUpdateColorToIgnore(String active, ColorPawns color);
+
+    void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex);
+
+    void onUpdateExtraGetInfluence(String active, int indexIsland);
+
+    void onUpdateBanCard(String active, int indexIsland);
+
+    void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance);
+
+    void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent);
+
+    void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
+
+    void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
+
+    void onRequestLobby(String nickname);
+
+    void onRequestBoard(String nick, String nickChosen);
 }

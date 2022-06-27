@@ -1,40 +1,37 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.enums.GameMode;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.player.PlayerModel;
-
-
 public class PlayAssistantCardMessage extends Message{
-    
-    private static final long serialVersionUID = -7852587909172148582L;
-    PlayerModel playerModel;
 
-    AssistantCardModel assistantCardModel;
+    private static final long serialVersionUID = -7852587909172148582L;
+    private final String playerModel;
+    private final int indexAssistantCardModel;
 
     /**
-     * Message shown when a player is asked to play an assistant card
-     * @param playerModel model of the player
-     * @param assistantCardModel model of the assistant card
+     * Message sent when playing an assistant card
+     * Parameters are set by the constructor
+     * @param playerModel current player
+     * @param indexAssistantCardModel assistant card played
      */
 
-    public PlayAssistantCardMessage(String playerModel, AssistantCardModel assistantCardModel){
+    public PlayAssistantCardMessage(String playerModel, int indexAssistantCardModel){
         super(playerModel, MessageType.PLAYED_ASSISTANT_CARD);
-        this.playerModel = GameModel.getInstance().getPlayerByNickname(playerModel);
-        this.assistantCardModel = assistantCardModel;
+        this.playerModel = playerModel;
+        this.indexAssistantCardModel = indexAssistantCardModel;
     }
 
-    public AssistantCardModel getCard(){
-        return assistantCardModel;
+    /**
+     * @return the assistant card played
+     */
+
+    public int getIndexCard(){
+        return indexAssistantCardModel;
     }
 
     @Override
     public String toString() {
         return "PlayAssistantCardMessage{" +
-                "player=" + playerModel.getNickname() +
-                ", priority=" + assistantCardModel.getPriority() +
-                ", movement=" + assistantCardModel.getMotherNatureMovement() +
+                "player=" + playerModel +
+                ", indexAssistantCardModel=" + indexAssistantCardModel +
                 '}';
     }
 }

@@ -8,7 +8,8 @@ public class InvalidMovementMessage extends Message{
     private final byte movementInserted;
 
     /**
-     * Message shown when a player makes an invalid movement
+     * Message sent when a player makes an invalid movement
+     * Parameters are set by the constructor
      * @param nickname current player
      * @param movementAllowed movement that is allowed
      * @param movementInserted movement made by the player
@@ -20,9 +21,17 @@ public class InvalidMovementMessage extends Message{
         this.movementAllowed = movementAllowed;
     }
 
+    /**
+     * @return the movement selected
+     */
+
     public byte getMovementInserted() {
         return movementInserted;
     }
+
+    /**
+     * @return the movement allowed
+     */
 
     public byte getMovementAllowed() {
         return movementAllowed;

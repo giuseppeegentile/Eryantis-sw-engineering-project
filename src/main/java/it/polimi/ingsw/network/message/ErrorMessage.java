@@ -8,7 +8,8 @@ public class ErrorMessage extends Message {
     private final String error;
 
     /**
-     * Message shown to display a general error
+     * Message sent to display a general error
+     *Parameters are set by the constructor
      * @param nickname current player
      * @param error error shown
      */
@@ -17,6 +18,10 @@ public class ErrorMessage extends Message {
         super(nickname, MessageType.ERROR);
         this.error = error;
     }
+
+    /**
+     * @return the error
+     */
 
     public String getError() {
         return error;

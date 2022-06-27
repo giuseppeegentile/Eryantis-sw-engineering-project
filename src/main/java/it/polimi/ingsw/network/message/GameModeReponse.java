@@ -8,8 +8,9 @@ class GameModeResponse extends Message{
     private final GameMode gameMode;
 
     /**
-     * Message shown as a resonse when selecting game mode
-     * @param nickname current player
+     * Message sent as a response when selecting game mode
+     * Parameters are set by the constructor
+     *  @param nickname current player
      * @param gameMode game mode chosen
      */
 
@@ -18,6 +19,10 @@ class GameModeResponse extends Message{
         this.gameMode = gameMode;
 
     }
+
+    /**
+     * @return the game mode
+     */
 
     public GameMode getMode() {
         return this.gameMode;

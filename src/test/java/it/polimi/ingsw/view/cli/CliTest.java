@@ -1,22 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.model.cards.AssistantCardModel;
-import it.polimi.ingsw.model.colors.ColorPawns;
-import it.polimi.ingsw.model.colors.ColorTower;
-import it.polimi.ingsw.model.game.CloudModel;
-import it.polimi.ingsw.model.game.GameModel;
-import it.polimi.ingsw.model.islands.IslandModel;
-import it.polimi.ingsw.model.player.PlayerModel;
-import it.polimi.ingsw.network.message.TextMessage;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 class CliTest {
-
+/*
     @Test
     void showOrderPhaseUpperRightCorner4(){
         Cli cli = new Cli();
@@ -56,7 +41,7 @@ class CliTest {
         cli.showOrderPhase("Davide", playerOrder);
     }
 
-    @Test
+    *//*@Test
     void showCards(){
         Cli cli = new Cli();
         AssistantCardModel cardOne = new AssistantCardModel(5, (byte)4);
@@ -69,7 +54,7 @@ class CliTest {
         cards.add(cardThree);
         cards.add(cardFour);
         cli.showDeckMessage("John Snow", cards);
-    }
+    }*//*
 
     @Test
     void printEriantys(){
@@ -118,12 +103,12 @@ class CliTest {
         cards.add(cardFour);
         cli.showCemeteryMessage("J Jonah Jameson Junior", cards);
     }
-    @Test
+    *//*@Test
     void showAssistantCardPlayed(){
         Cli cli = new Cli();
         AssistantCardModel card = new AssistantCardModel(5, (byte)2);
         cli.showPlayAssistantCardMessage("Jovanotti", card);
-    }
+    }*//*
 
     @Test
     void showStudentsOnClouds(){
@@ -202,8 +187,9 @@ class CliTest {
         islandModel2.setTowerColor(ColorTower.NULL);
         IslandModel islandModel3 = new IslandModel(Boolean.FALSE, students);
         islandModel3.setTowerColor(ColorTower.GREY);
-        IslandModel islandModel4 = new IslandModel(Boolean.FALSE, students);
+        IslandModel islandModel4 = new IslandModel(Boolean.TRUE, students);
         islandModel4.setTowerColor(ColorTower.WHITE);
+        islandModel4.setHasProhibition(true);
         IslandModel islandModel5 = new IslandModel(Boolean.FALSE, students);
         islandModel5.setTowerColor(ColorTower.WHITE);
         IslandModel islandModel6 = new IslandModel(Boolean.FALSE, students);
@@ -269,8 +255,10 @@ class CliTest {
         cli.showIslands("Batman", islands);
     }
 
+
     @Test
     void showPlayerBoard(){
+        GameModel.getInstance().setGameMode(GameMode.ADVANCED);
         Cli cli = new Cli();
         PlayerModel player = new PlayerModel("Paolo Bitta");
         player.setTowers(ColorTower.WHITE, 5);
@@ -296,7 +284,12 @@ class CliTest {
         studentsHall.put(ColorPawns.YELLOW, 3);
         studentsHall.put(ColorPawns.PINK, 1);
         player.setStudentHall(studentsHall);
-        //cli.showPlayerBoardMessage(player.getNickname());
+        List<ColorTower> towers = new ArrayList<>();
+        player.setCoins();
+        for(int i = 0; i < player.getTowerNumber(); i++){
+            towers.add(player.getColorTower());
+        }
+        cli.showPlayerBoardMessage(player, towers, player.getStudentInHall(), player.getStudentInEntrance(), player.getProfs());
     }
 
     @Test
@@ -304,5 +297,11 @@ class CliTest {
         Cli cli = new Cli();
         TextMessage message = new TextMessage("Massimo Ruggero", "JOINING ISLANDS...");
         cli.showMessageJoiningIsland(message);
+
+    @Test
+    void askColorToIgnore(){
+        Cli cli = new Cli();
+        cli.askColorStudentToIgnore("Thomas Shelby");
     }
+    */
 }
