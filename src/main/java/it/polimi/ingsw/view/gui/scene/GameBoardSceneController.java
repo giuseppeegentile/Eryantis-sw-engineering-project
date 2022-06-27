@@ -440,7 +440,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(turnLabel != null) {
             hideSubtitle();
             if (sizeEntrance == 9) turnLabel.setText("Sposta fino a 4 studenti dall'ingresso in un'isola");
-            else turnLabel.setText("Sposta fino a 3 studenti dall'ingresso in un'isola");
+            else if (sizeEntrance == 7) turnLabel.setText("Sposta fino a 3 studenti dall'ingresso in un'isola");
         }
     }
 
