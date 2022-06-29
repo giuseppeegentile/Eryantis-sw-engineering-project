@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Client controller, on the client side. Handles the message received from the server and perform actions based on that.
+ */
 public class ClientController implements ViewObserver, Observer {
     private final View view;
     private Client client;
@@ -25,7 +28,7 @@ public class ClientController implements ViewObserver, Observer {
     private final ExecutorService queueTasks;
 
     /**
-     * Client controller, on the client side. Handles the message received from the server and perform actions based on that.
+     * Constructor for ClientController: initializes the view and the ExecutorService
      * @param view the view of the client.
      */
 
@@ -35,8 +38,7 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     /**
-     * Takes action based on the message type received from the server. Destination: client, who's going to change the view.
-     *
+     * Takes action based on the message type received from the server. Updates the game in the client side
      * @param message the message from the server.
      */
     @Override
@@ -172,6 +174,10 @@ public class ClientController implements ViewObserver, Observer {
         }
     }
 
+    /**
+     * Sends a message to the server with the number of players of the match
+     * @param playersNumber
+     */
     @Override
     public void onUpdatePlayersNumber(int playersNumber) {
         client.sendMessage(new PlayerNumberReply(this.nickname, playersNumber));
@@ -280,11 +286,6 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateWaiting(String nickname, int cloudIndex){
-        client.sendMessage(new AddStudentFromCloudToEntranceMessage(nickname, cloudIndex));
-    }
-
-    @Override
     public void onUpdateCardPlayed(String nickname, int assistantCardModel){
         client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
     }
@@ -293,11 +294,6 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateNickname(String nickname) {
         this.nickname = nickname;
         client.sendMessage(new LoginRequest(nickname));
-    }
-
-    @Override
-    public void onUpdateInitialConfig(String nickname, int numberPlayers, ColorTower colorTowerStr, GameMode gameMode) {
-        client.sendMessage(new InitialReqMessage(nickname, numberPlayers, colorTowerStr,gameMode));
     }
 
     @Override
@@ -310,6 +306,11 @@ public class ClientController implements ViewObserver, Observer {
         client.disconnect();
     }
 
+    /**
+     * Checks if the ip typed by the player is valid or not
+     * @param ip The ip to check
+     * @return True if the ip valid, false if not
+     */
     public static boolean isValidIpAddress(String ip) {
         String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                 "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
