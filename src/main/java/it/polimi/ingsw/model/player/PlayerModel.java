@@ -16,7 +16,7 @@ public class PlayerModel implements Serializable {
     private String nickname;
     private List<ColorPawns> profs = null;
     private int numProfs;
-    private int towerNumber; //da settare con il controller, strategy
+    private int towerNumber;
     private ColorTower colorTower;
     private List<AssistantCardModel> deckAssistantCardModel;
     private Map<ColorPawns, Integer> studentInHall = new HashMap<>();

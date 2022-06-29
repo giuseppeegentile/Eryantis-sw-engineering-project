@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.islands.IslandModel;
 
 import java.util.List;
 
+/**
+ * Sent from server to client after a client played the effect that allows to move card's student to island.
+ */
 public class AskMoveStudentFromCardToIslandMessage extends Message {
 
     private static final long serialVersionUID = -2436545940503369104L;
@@ -14,7 +17,7 @@ public class AskMoveStudentFromCardToIslandMessage extends Message {
     /**
      * Message sent to ask to move a student from a card to an island
      * Parameters are set by the constructor
-     * @param active active player
+     * @param active player that played the effect
      * @param islands list of islands
      * @param studentsOnCard list of students on the card
      */
@@ -28,8 +31,6 @@ public class AskMoveStudentFromCardToIslandMessage extends Message {
     /**
      * @return the list of students on the card
      */
-
-
     public List<ColorPawns> getStudentsOnCard(){
         return this.studentsOnCard;
     }
@@ -37,7 +38,6 @@ public class AskMoveStudentFromCardToIslandMessage extends Message {
     /**
      * @return the list of islands
      */
-
     public List<IslandModel> getIslands() {
         return islands;
     }

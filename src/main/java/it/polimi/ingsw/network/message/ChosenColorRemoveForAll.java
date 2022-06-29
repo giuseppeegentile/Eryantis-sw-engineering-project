@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.colors.ColorPawns;
 
+/**
+ * Message from client to sever, where who played the effect card to remove 3 student of a certain color, send the color to the server.
+ */
 public class ChosenColorRemoveForAll extends Message {
 
     private static final long serialVersionUID = -8490777083842367071L;
@@ -8,7 +11,6 @@ public class ChosenColorRemoveForAll extends Message {
 
     /**
      * Message sent to set the chosen color to remove
-     * Parameters are set by the constructor
      * @param active active player
      * @param equivalentColorPawns color to remove
      */
@@ -21,7 +23,6 @@ public class ChosenColorRemoveForAll extends Message {
     /**
      * @return the color chosen
      */
-
     public ColorPawns getColor() {
         return color;
     }

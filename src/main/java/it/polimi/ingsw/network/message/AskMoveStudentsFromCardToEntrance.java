@@ -2,7 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 import java.util.List;
-
+/**
+ * Sent from server to client after a client played the effect that allows to move card's student to entrance.
+ */
 public class AskMoveStudentsFromCardToEntrance extends Message {
 
     private static final long serialVersionUID = 8920514414226827005L;
@@ -11,8 +13,7 @@ public class AskMoveStudentsFromCardToEntrance extends Message {
 
     /**
      * Message sent to ask to move students from the character card to the entrance.
-     * Parameters are set by the constructor
-     * @param active active player
+     * @param active player that played the effect
      * @param studentsOnCard list of students on the card
      * @param entrance player's entrance
      */
