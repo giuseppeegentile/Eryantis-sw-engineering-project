@@ -2,6 +2,10 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.cards.CharacterCardModel;
 
+/**
+ * Client to server. Message sent when playing a character card
+ */
+
 public class PlayedCharacterCardMessage extends Message {
 
     private static final long serialVersionUID = -3805305477253299296L;
@@ -9,7 +13,7 @@ public class PlayedCharacterCardMessage extends Message {
     private final CharacterCardModel cardPlayed;
 
     /**
-     * Message sent when playing a character card
+     * Default constructor
      * Parameters are set by the constructor
      * @param nickname current player
      * @param cardPlayed character card played

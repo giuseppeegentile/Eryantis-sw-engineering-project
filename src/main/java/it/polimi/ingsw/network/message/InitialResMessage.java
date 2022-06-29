@@ -5,7 +5,9 @@ import it.polimi.ingsw.model.enums.GameMode;
 
 import java.util.List;
 
-//from server to client
+/**
+ * Server to client. Message sent as a response to the initial configuration request
+ */
 public class InitialResMessage extends Message{
 
     private static final long serialVersionUID = 4898299466144192135L;
@@ -14,7 +16,7 @@ public class InitialResMessage extends Message{
     private GameMode gameMode;
 
     /**
-     * Message sent as a response to the initial configuration request
+     * Default constructor
      * Parameters are set by the constructor
      * @param nickname current player
      * @param availableTowers list of tower's colors available

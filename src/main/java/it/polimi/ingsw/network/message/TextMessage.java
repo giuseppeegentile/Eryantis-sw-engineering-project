@@ -1,13 +1,17 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * Server to client.Message sent as text
+ */
+
 public class TextMessage extends Message{
     private static final long serialVersionUID = 5073360700808368691L;
 
     private final String text;
 
     /**
-     * Text message sent
-     * Parameters are set by the constructor
+     * Default constructor.
+     * Parameters are set by the constructor.
      * @param nickname current player
      * @param text text in the message
      */

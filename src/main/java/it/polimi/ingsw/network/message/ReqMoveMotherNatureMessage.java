@@ -2,6 +2,10 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.player.PlayerModel;
 
+/**
+ * Server to client. Message sent to move mother nature
+ */
+
 public class ReqMoveMotherNatureMessage extends Message {
     private static final long serialVersionUID = -4800360044137978922L;
 
@@ -9,7 +13,7 @@ public class ReqMoveMotherNatureMessage extends Message {
     private final PlayerModel player;
 
     /**
-     * Message sent to move mother nature
+     * Default constructor
      * Parameters are set by the constructor
      * @param player current player
      * @param maxMovementAllowed number of movements allowed

@@ -4,12 +4,16 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 
+/**
+ * Server to client. Message sent to display the players' list
+ */
+
 public class LobbyInfoMessage extends Message {
     private static final long serialVersionUID = -5041101920182206083L;
     private final List<PlayerModel> nicknameList;
 
     /**
-     * Message sent to display the players' list
+     * Default constructor
      * Parameters are set by the constructor
      * @param nicknameList list of players
      */

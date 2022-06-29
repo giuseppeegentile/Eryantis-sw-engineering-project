@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-
+/**
+ * Message to notify generic information to the user.
+ */
 
 public class GenericMessage extends Message {
 
@@ -8,8 +10,9 @@ public class GenericMessage extends Message {
     private final String message;
 
     /**
-     * Message to notify generic information to the user.
+     * Default constructor
      * Parameters are set by the constructor
+     * @param message message's content
      */
 
     public GenericMessage(String message) {

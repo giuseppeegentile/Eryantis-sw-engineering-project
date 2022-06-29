@@ -2,6 +2,10 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.player.PlayerModel;
 
+/**
+ *  Client to server. Message sent when moving mother nature
+ */
+
 
 public class MovedMotherNatureMessage extends Message{
 
@@ -12,7 +16,7 @@ public class MovedMotherNatureMessage extends Message{
     private final byte movement;
 
     /**
-     * Message sent when moving mother nature
+     * Default constructor
      * Parameters are set by the constructor
      * @param player current player
      * @param movement movement chosen

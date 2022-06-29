@@ -4,6 +4,10 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 
 import java.util.List;
 
+/**
+ * Client to server. Message sent when a player successfully moves a student to an island
+ */
+
 public class MovedStudentOnIslandMessage extends Message {
     private static final long serialVersionUID = 3175046343207320998L;
 
@@ -11,7 +15,7 @@ public class MovedStudentOnIslandMessage extends Message {
     private final int indexIsland;
 
     /**
-     * Message sent when a player successfully moves a student to an island
+     * Default constructor
      * Parameters are set by the constructor
      * @param nickname current player
      * @param students students moved

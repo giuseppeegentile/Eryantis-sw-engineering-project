@@ -5,12 +5,16 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
 
+/**
+ * Server to client. Message sent to display the players' order
+ */
+
 public class OrderMessage extends Message{
     private static final long serialVersionUID = 9051276094255654184L;
     private final List<PlayerModel> order;
 
     /**
-     * Message sent to display the players' order
+     * Default constructor
      * Parameters are set by the constructor
      * @param nickname current player
      * @param order players' order

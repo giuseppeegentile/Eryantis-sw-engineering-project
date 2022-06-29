@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.game.GameModel;
 
+/**
+ * Server to client. Message used to confirm or discard a login request of a client.
+ */
 
 public class LoginReply extends Message {
 
@@ -10,7 +13,7 @@ public class LoginReply extends Message {
     private final boolean connectionSuccessful;
 
     /**
-     * Message used to confirm or discard a login request of a client.
+     * Default constructor
      * Parameters are set by the constructor
      * @param connectionSuccessful boolean to verify whether the connection is successful or not
      * @param nicknameAccepted boolean to verify whether the nickname is accepted or not

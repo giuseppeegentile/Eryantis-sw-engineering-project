@@ -4,13 +4,17 @@ import it.polimi.ingsw.model.colors.ColorPawns;
 
 import java.util.List;
 
+/**
+ * Client to server.Message sent to move a student from the entrance to the hall
+ */
+
 public class StudentToHallMessage extends Message {
     private static final long serialVersionUID = -2680595509070093221L;
     private final List<ColorPawns> entrance;
     private final int numberStudentsToMove;
 
     /**
-     * Message sent to move a student from the entrance to the hall
+     * Default constructor.
      * Parameters are set by the constructor
      * @param player current player
      * @param entrance player's entrance

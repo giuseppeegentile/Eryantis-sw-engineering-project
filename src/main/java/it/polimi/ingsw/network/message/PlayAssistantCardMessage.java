@@ -1,5 +1,9 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * Client to server. Message sent when playing an assistant card
+ */
+
 public class PlayAssistantCardMessage extends Message{
 
     private static final long serialVersionUID = -7852587909172148582L;
@@ -7,7 +11,7 @@ public class PlayAssistantCardMessage extends Message{
     private final int indexAssistantCardModel;
 
     /**
-     * Message sent when playing an assistant card
+     * Default constructor
      * Parameters are set by the constructor
      * @param playerModel current player
      * @param indexAssistantCardModel assistant card played
