@@ -14,6 +14,14 @@ public class CloudModel implements Serializable {
     private final int size; //number of student in the cloud
 
     /**
+     * Constructor for cloud in the model: initializes size depending on the number of the players
+     * @param size The number of students on the cloud. It depends on the game mode
+     */
+    public CloudModel(int size){
+        this.size = size;
+    }
+
+    /**
      *
      * @return The list of students on the cloud
      */
@@ -26,14 +34,6 @@ public class CloudModel implements Serializable {
      */
     public void cleanStudent(){
         this.students = new ArrayList<>(size);
-    }
-
-    /**
-     *
-     * @param size The number of students on the cloud. It depends on the game mode
-     */
-    public CloudModel(int size){
-        this.size = size;
     }
 
     /**

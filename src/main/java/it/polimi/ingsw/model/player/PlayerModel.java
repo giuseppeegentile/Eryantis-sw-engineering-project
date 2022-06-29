@@ -28,7 +28,7 @@ public class PlayerModel implements Serializable {
 
 
     /**
-     * Initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
+     * Constructor for player in the model: initializes coins, numProf and mother nature movement to zero. Also set the map for the student hall
      * @param nickname nickname choose by player
      * @param colorTower tower color assigned to a player, identifier for the team in 4-player version
      */
@@ -50,7 +50,7 @@ public class PlayerModel implements Serializable {
     }
 
     /**
-     * Constructor for player in the model: initialize coins, numProf and mother nature movement to zero. Also set the map for the student hall
+     * Constructor for player in the model: initializes coins, numProf and mother nature movement to zero. Also set the map for the student hall
      * @param nickname nickname choose by player
      */
     public PlayerModel(String nickname){
