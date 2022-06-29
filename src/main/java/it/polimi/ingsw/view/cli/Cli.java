@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.islands.IslandModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.TextMessage;
+import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -25,6 +26,10 @@ import static java.lang.Integer.parseInt;
 
 
 //sout per fare printout
+
+/**
+ * Class the manages the game played through the CLI
+ */
 
 public class Cli extends ViewObservable implements View {
 
@@ -228,6 +233,14 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
+    /**
+     * Asks to move the students from the player board's entrance to the destination
+     * @param entrance list of students based on their color in the entrance
+     * @param colors list of pawns' colors
+     * @param numberStudents number of students to move
+     * @param destination string the contains the destination of the students
+     */
+
     private void askingMoveStudentsFromEntrance(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
@@ -236,6 +249,14 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
+    /**
+     * Asks to move the students to the player board's entrance
+     * @param origin list of students based on their color to move from the original position
+     * @param originName string that contains the original position
+     * @param colors list of pawns' colors
+     * @param numberStudents number of students to move
+     */
+
     private void askingMoveStudents(List<ColorPawns> origin, String originName, List<ColorPawns> colors, int numberStudents) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
@@ -243,6 +264,13 @@ public class Cli extends ViewObservable implements View {
             creatingStudentsList(origin, colors, str);
         }
     }
+
+    /**
+     * Creates a list of students based on the pawns' colors
+     * @param origin list of students based on their color in the original position
+     * @param colors list of pawns' colors
+     * @param str string equivalent to the student's list
+     */
 
     private void creatingStudentsList(List<ColorPawns> origin, List<ColorPawns> colors, StringBuilder str) {
         int chosenIndex;
@@ -418,6 +446,14 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
+    /**
+     * Creates the player's board
+     * @param player current player
+     * @param towers list of player's towers
+     * @param strBoardBld string equivalent to the object board
+     * @param isFirst boolean to determine whether the player is the first one or not
+     */
+
     private void playerBoardBase(PlayerModel player, List<ColorTower> towers, StringBuilder strBoardBld, boolean isFirst) {
         strBoardBld.append("-----------------------------------\n");
         if (isFirst) {
@@ -500,6 +536,14 @@ public class Cli extends ViewObservable implements View {
         System.exit(1);
     }
 
+    /**
+     * Asks to choose an index until it is valid
+     * @param size range of valid indexes
+     * @param invalidMessage error message printed until the correct index is chosen
+     * @param stringBuilder string printed until the correct index is chosen
+     * @return the correct chosen index
+     */
+
     private int askUntilValid(int size, String invalidMessage, StringBuilder stringBuilder){
         int chosenIndex = 0;
         while(chosenIndex > size || chosenIndex <= 0){
@@ -552,6 +596,11 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateTower(availableColorTowers.get(finalChosenIndex)));
     }
 
+    /**
+     * Reads the user's input
+     * @return the line read
+     * @exception if the input is canceled returns nothing
+     */
 
     private String read(){
         String read;
@@ -673,6 +722,14 @@ public class Cli extends ViewObservable implements View {
         else if (islands.get(i).getMotherNature() && islands.get(i).getTowerColor() != ColorTower.NULL && islands.get(i).hasProhibition())
 
      */
+
+    /**
+     * Methods used to place mother nature in the expert mode
+     * @param islands list of the islands
+     * @param strBoardBld2 string equivalent to the object mother nature
+     * @param i counter
+     */
+
     private void placeMotherNatureExpert(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
         if(islands.get(i).getMotherNature())
             if(islands.get(i).getTowerColor() == ColorTower.NULL)
@@ -697,6 +754,13 @@ public class Cli extends ViewObservable implements View {
                 else
                     strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
     }
+
+    /**
+     * Methods used to place mother nature in the beginner mode
+     * @param islands list of the islands
+     * @param strBoardBld2 string equivalent to the object mother nature
+     * @param i counter
+     */
 
     private void placeMotherNature(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
         if(islands.get(i).getMotherNature())
