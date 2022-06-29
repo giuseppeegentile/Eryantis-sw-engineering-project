@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-
+/**
+ * Message sent to display a general error. Usually sent from server to client.
+ */
 public class ErrorMessage extends Message {
 
     private static final long serialVersionUID = 3796309698593755714L;
@@ -8,10 +10,9 @@ public class ErrorMessage extends Message {
     private final String error;
 
     /**
-     * Message sent to display a general error
-     *Parameters are set by the constructor
-     * @param nickname current player
-     * @param error error shown
+     * Generic message error.
+     * @param nickname current player.
+     * @param error error shown.
      */
 
     public ErrorMessage(String nickname, String error) {
@@ -20,7 +21,7 @@ public class ErrorMessage extends Message {
     }
 
     /**
-     * @return the error
+     * @return The String description error.
      */
 
     public String getError() {

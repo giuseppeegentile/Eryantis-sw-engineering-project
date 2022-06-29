@@ -144,8 +144,8 @@ public class GameController implements Observer, Serializable {
                     setTowers(receivedMessage, chosenTower, numPlayers);
                     setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                     //at the first player I ask also the gameMode
-                    for (PlayerModel p : gameInstance.getPlayersModel())
-                        System.out.println(p.getNickname());
+                    /*for (PlayerModel p : gameInstance.getPlayersModel())
+                        System.out.println(p.getNickname());*/
                     if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
                         virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
                         //prepareGame();
@@ -331,7 +331,8 @@ public class GameController implements Observer, Serializable {
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
-                System.out.println(chosenCloud.getStudents().get(0));
+               //
+                // System.out.println(chosenCloud.getStudents().get(0));
                 if (chosenCloud.getStudents().size() == 0) { //if cloud isn't valid
                     //Mandare messaggio di scegliere una nuvola non scelta da un altro player
                     virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
@@ -948,7 +949,7 @@ public class GameController implements Observer, Serializable {
             //conta le occorrenze per ogni studente di un colore
             if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0 && oldValue != player.getStudentInHall().get(student)) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
-                System.out.println("incremento di 1");
+               // System.out.println("incremento di 1");
             }
 
             if(canProfBeAssignedToPlayer(player, student))
@@ -1019,7 +1020,7 @@ public class GameController implements Observer, Serializable {
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
-        System.out.println(colorToExclude);
+        //System.out.println(colorToExclude);
         PlayerModel playerWithInfluence = islandWithMother.getInfluence(playerWithEffectAdditionalInfluence, colorToExclude, considerTower);
         if(playerWithInfluence.getColorTower()!=ColorTower.NULL) { //if a player has influence
             if (!islandWithMother.hasTower() && playerWithInfluence.getColorTower() != ColorTower.NULL) {

@@ -54,7 +54,7 @@ public class SocketClient extends Client {
                 Message message;
                 try {
                     message = (Message) inputStream.readObject();
-                    Client.LOGGER.info("Received: " + message);
+                    //Client.LOGGER.info("Received: " + message);
                 } catch (IOException | ClassNotFoundException e) {
                     System.out.println(e.getMessage());
                     message = new ErrorMessage(null, "Connection lost with the server.");

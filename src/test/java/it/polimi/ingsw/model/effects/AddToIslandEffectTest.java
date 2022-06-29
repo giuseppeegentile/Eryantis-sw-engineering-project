@@ -26,7 +26,7 @@ class AddToIslandEffectTest {
         effect.choose(ColorPawns.RED, 1);
         effect.enable(new PlayerModel("Joice"));
         effect.incrementCost();
-        assertEquals(asList(ColorPawns.RED) ,GameModel.getInstance().getIslandsModel().get(1).getStudents());
+        assertEquals(List.of(ColorPawns.RED),GameModel.getInstance().getIslandsModel().get(1).getStudents());
         assertEquals(2, effect.getCostForEffect());
         assertEquals(ColorPawns.RED, effect.getStudentChosen());
         assertEquals(GameModel.getInstance().getIslandsModel().get(1), effect.getIslandChosen());

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.network.message;
-
-
 import it.polimi.ingsw.model.cards.AssistantCardModel;
 
 import java.util.List;
 
-//da completare
+/**
+ * Message sent to display cards played, used at the start of the global round for each player before he plays the card. Sent from server, received to client.
+ */
 public class DisplayCemeteryMessage extends DisplayMessage{
     private static final long serialVersionUID = -7509713511298375285L;
 
@@ -13,10 +13,9 @@ public class DisplayCemeteryMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-     * Message sent to display  player's cemetery
-     * Parameters are set by the constructor
+     * Message sent to display game's cemetery.
      * @param nickname the nickname of the player whom cemetery is displayed
-     * @param cemetery the cemetery of the player
+     * @param cemetery the cemetery, a list of cards played.
      */
 
     public DisplayCemeteryMessage(String nickname, List<AssistantCardModel> cemetery) {
@@ -41,7 +40,10 @@ public class DisplayCemeteryMessage extends DisplayMessage{
                 ", cemetery=" + cemetery +
                 '}';
     }
-
+    /**
+     *
+     * @return The object to display to the view. In this case are the cards played.
+     */
     public ObjectDisplay getObjectDisplay() {
         return objectDisplay;
     }

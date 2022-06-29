@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.islands.IslandModel;
 
+/**
+ * Message sent to display a specific islands, used when an island is updated after a move. Sent from server, received to client.
+ * */
 public class DisplayIslandMessage extends DisplayMessage{
     private static final long serialVersionUID = 7835538492117196101L;
     private final IslandModel islandModel;
@@ -48,7 +51,10 @@ public class DisplayIslandMessage extends DisplayMessage{
                 ", islandIndex=" + islandIndex +
                 '}';
     }
-
+    /**
+     *
+     * @return The object to display to the view. In this case is the island.
+     */
     public ObjectDisplay getObjectDisplay() {
         return objectDisplay;
     }
