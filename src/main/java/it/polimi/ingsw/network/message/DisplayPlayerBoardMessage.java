@@ -7,6 +7,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * Message sent to update the view of the player with the up-to-date player's game board. Sent to client
+ */
 public class DisplayPlayerBoardMessage extends DisplayMessage {
 
     private static final long serialVersionUID = 1872426844665326365L;
@@ -19,14 +23,21 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final boolean isFirst;
 
     /**
+<<<<<<< HEAD
      * Message sent to display  player's game board
+=======
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname player's whom game board is shown
      * @param towers towers of the current player
      * @param hall hall of the current player
      * @param entrance entrance of the current player
      * @param profs profs of the current player
+<<<<<<< HEAD
      * @param isFirst if the player is the first with the chosen tower color
+=======
+     * @param isFirst if the player is the first with the chosen tower color. Mainly used for AF 4 players
+>>>>>>> main
      */
 
     public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst) {
@@ -59,7 +70,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     /**
      * @return the player's profs
      */
-
     public List<ColorPawns> getProfs() {
         return profs;
     }
@@ -67,7 +77,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     /**
      * @return the player's entrance
      */
-
     public List<ColorPawns> getEntrance() {
         return entrance;
     }
@@ -75,7 +84,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     /**
      * @return the player's hall
      */
-
     public Map<ColorPawns, Integer> getHall() {
         return hall;
     }
@@ -83,7 +91,6 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     /**
      * @return the player's towers
      */
-
     public List<ColorTower> getTowers() {
         return towers;
     }

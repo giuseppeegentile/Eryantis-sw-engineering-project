@@ -3,6 +3,10 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 
+/**
+ * Client to server. Message sent to ask the initial game configuration
+ */
+
 public class InitialReqMessage extends Message{
 
     private static final long serialVersionUID = -2372566173559326843L;
@@ -11,7 +15,11 @@ public class InitialReqMessage extends Message{
     private final GameMode gameMode;
 
     /**
+<<<<<<< HEAD
      * Message sent to ask the initial game configuration
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param numberPlayers number of players

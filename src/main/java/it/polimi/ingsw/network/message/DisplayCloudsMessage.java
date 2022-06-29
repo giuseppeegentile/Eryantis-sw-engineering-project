@@ -4,6 +4,9 @@ import it.polimi.ingsw.model.game.CloudModel;
 
 import java.util.List;
 
+/**
+ * Message sent to display clouds, used at the start of the turn and at the end, when a player has moved the students to the entrance, so that can view the clouds updated. Sent from server, received to client.
+ */
 public class DisplayCloudsMessage extends DisplayMessage {
 
     private static final long serialVersionUID = 3791217817387328964L;
@@ -25,9 +28,14 @@ public class DisplayCloudsMessage extends DisplayMessage {
     }
 
     /**
+<<<<<<< HEAD
      * @return the list of clouds
      */
 
+=======
+     * @return the list of clouds.
+     */
+>>>>>>> main
     public List<CloudModel> getClouds() {
         return clouds;
     }
@@ -40,7 +48,10 @@ public class DisplayCloudsMessage extends DisplayMessage {
                 ", clouds=" + clouds +
                 '}';
     }
-
+    /**
+     *
+     * @return The object to display to the view. In this case are the clouds.
+     */
     public ObjectDisplay getObjectDisplay() {
         return objectDisplay;
     }

@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.islands.IslandModel;
 
 import java.util.List;
 
+/**
+ * Client to server. Message sent to move a student from the entrance to the island
+ */
+
 public class StudentToIslandMessage extends Message{
     private static final long serialVersionUID = 1729951793698626264L;
 
@@ -12,7 +16,11 @@ public class StudentToIslandMessage extends Message{
     private final List<IslandModel> islands;
 
     /**
+<<<<<<< HEAD
      * Message sent to move a student from the entrance to the island
+=======
+     * Default constructor.
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param entrance player's entrance

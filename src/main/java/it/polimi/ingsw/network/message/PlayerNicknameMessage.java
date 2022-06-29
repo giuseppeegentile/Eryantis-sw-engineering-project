@@ -3,6 +3,10 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.colors.ColorTower;
 import it.polimi.ingsw.model.enums.GameMode;
 
+/**
+ * Client to server. Message sent when a player is asked to choose a nickname
+ */
+
 public class PlayerNicknameMessage extends Message{
     private static final long serialVersionUID = -8598871481251948405L;
 
@@ -11,7 +15,11 @@ public class PlayerNicknameMessage extends Message{
     private final GameMode gameMode;
 
     /**
+<<<<<<< HEAD
      * Message sent when a player is asked to choose a nickname
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname nickname chosen
      * @param numPlayers number of players

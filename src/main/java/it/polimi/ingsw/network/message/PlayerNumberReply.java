@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * Message used to send to the server the number of players picked by the client.
+ * Client to server. Message sent as a response to the number of players' choice
  */
 public class PlayerNumberReply extends Message {
 
@@ -9,7 +9,11 @@ public class PlayerNumberReply extends Message {
     private final int playerNumber;
 
     /**
+<<<<<<< HEAD
      * Message sent as a response to the number of players' choice
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param playerNumber number of players chosen

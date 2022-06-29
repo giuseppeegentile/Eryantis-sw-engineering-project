@@ -3,6 +3,13 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.model.colors.ColorPawns;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+/**
+ *  Client to server. Message sent when moving students from a character card to the player's entrance
+ */
+
+>>>>>>> main
 public class MovedFromCardToEntrance extends Message {
 
     private static final long serialVersionUID = -3022331922530053063L;
@@ -10,7 +17,11 @@ public class MovedFromCardToEntrance extends Message {
     private final List<ColorPawns> studentsFromEntrance;
 
     /**
+<<<<<<< HEAD
      * Message sent when moving students from a character card to the player's entrance
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param active current player
      * @param studentsFromCard list of students from the character card

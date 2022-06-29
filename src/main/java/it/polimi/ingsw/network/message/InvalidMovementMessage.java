@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-//da controllare
+/**
+ * Server to client. Message sent when a player makes an invalid movement
+ */
 public class InvalidMovementMessage extends Message{
     private static final long serialVersionUID = -7676451993818349286L;
 
@@ -8,13 +10,16 @@ public class InvalidMovementMessage extends Message{
     private final byte movementInserted;
 
     /**
+<<<<<<< HEAD
      * Message sent when a player makes an invalid movement
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param movementAllowed movement that is allowed
      * @param movementInserted movement made by the player
      */
-
     public InvalidMovementMessage(String nickname, byte movementAllowed, byte movementInserted) {
         super(nickname, MessageType.ERROR);
         this.movementInserted = movementInserted;

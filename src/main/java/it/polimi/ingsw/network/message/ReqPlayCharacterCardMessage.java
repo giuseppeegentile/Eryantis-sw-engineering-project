@@ -4,6 +4,13 @@ import it.polimi.ingsw.model.cards.CharacterCardModel;
 import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
+/**
+ * Server to client. Message sent to player a character card
+ */
+
+>>>>>>> main
 
 public class ReqPlayCharacterCardMessage extends Message {
     private static final long serialVersionUID = -668254545407621488L;
@@ -11,7 +18,11 @@ public class ReqPlayCharacterCardMessage extends Message {
     private final PlayerModel player;
     private final boolean existCard;
     /**
+<<<<<<< HEAD
      * Message sent to player a character card
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param active current player
      * @param characterDeck list of character cards

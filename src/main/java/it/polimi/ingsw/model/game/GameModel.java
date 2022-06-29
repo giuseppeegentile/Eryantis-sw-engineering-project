@@ -27,6 +27,10 @@ public class GameModel extends Observable implements Serializable {
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery = new ArrayList<>();
     private List<PlayerModel> phaseOrder;
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
     private static GameModel instance = new GameModel();
@@ -45,6 +49,10 @@ public class GameModel extends Observable implements Serializable {
         return playersModels;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     /**
      *
      * @param playersNumber The number of the players joined the current match
@@ -53,6 +61,11 @@ public class GameModel extends Observable implements Serializable {
         this.playersNumber = playersNumber;
     }
 
+<<<<<<< HEAD
+=======
+    //da testare
+
+>>>>>>> main
     /**
      *
      * @param player A player that has to be added to the current match
@@ -69,7 +82,14 @@ public class GameModel extends Observable implements Serializable {
     public boolean removePlayerByNickname(String nickname) {
         PlayerModel playerToRemove = getPlayerByNickname(nickname);
         boolean result = playersModels.remove(playerToRemove);
+<<<<<<< HEAD
         notifyObserver(new LobbyInfoMessage(playersModels));
+=======
+
+        notifyObserver(new LobbyInfoMessage(playersModels));
+
+
+>>>>>>> main
         return result;
     }
 

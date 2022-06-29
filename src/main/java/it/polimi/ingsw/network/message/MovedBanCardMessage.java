@@ -1,12 +1,23 @@
 package it.polimi.ingsw.network.message;
 
+<<<<<<< HEAD
+=======
+/**
+ *  Client to server. Message sent when playing a character card with a prohibition effect
+ */
+
+>>>>>>> main
 public class MovedBanCardMessage extends Message {
 
     private static final long serialVersionUID = -7727095324726678974L;
     private final int indexIsland;
 
     /**
+<<<<<<< HEAD
      * Message sent when playing a character card with a prohibition effect
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param active current player
      * @param indexIsland index of the island chosen by the player to be banned

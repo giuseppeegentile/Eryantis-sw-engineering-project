@@ -1,5 +1,8 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * Client to server. Ping message to check the connection
+ */
 
 public class PingMessage extends Message {
 

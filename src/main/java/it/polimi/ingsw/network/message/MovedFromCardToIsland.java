@@ -2,13 +2,24 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.colors.ColorPawns;
 
+<<<<<<< HEAD
+=======
+/**
+ *  Client to server. Message sent when moving a student from a character card to an island
+ */
+
+>>>>>>> main
 public class MovedFromCardToIsland extends Message{
     private static final long serialVersionUID = 5594665525893264015L;
     private final int islandIndex;
     private final ColorPawns studentToMove;
 
     /**
+<<<<<<< HEAD
      * Message sent when moving a student from a character card to an island
+=======
+     * Default constructor
+>>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param islandIndex index of the island chosen

@@ -56,6 +56,10 @@ public class SceneController extends ViewObservable {
             activeScene.setRoot(root);
         } catch (IOException e) {
             Client.LOGGER.severe(e.getMessage());
+<<<<<<< HEAD
+=======
+            e.printStackTrace();
+>>>>>>> main
         }
         return controller;
     }
@@ -97,7 +101,10 @@ public class SceneController extends ViewObservable {
         try {
             FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/" + fxml));
 
+<<<<<<< HEAD
             // Setting the controller BEFORE the load() method.
+=======
+>>>>>>> main
             loader.setController(controller);
             activeController = controller;
             Parent root = loader.load();
@@ -106,6 +113,10 @@ public class SceneController extends ViewObservable {
             activeScene.setRoot(root);
         } catch (IOException e) {
             Client.LOGGER.severe(e.getMessage());
+<<<<<<< HEAD
+=======
+            e.printStackTrace();
+>>>>>>> main
         }
     }
 
@@ -147,6 +158,10 @@ public class SceneController extends ViewObservable {
             parent = loader.load();
         } catch (IOException e) {
             Client.LOGGER.severe(e.getMessage());
+<<<<<<< HEAD
+=======
+            e.printStackTrace();
+>>>>>>> main
             return;
         }
         ErrorSceneController alertSceneController = loader.getController();
@@ -164,19 +179,30 @@ public class SceneController extends ViewObservable {
      * @param nameFxml the name of the fxml file.
      */
     public static void showWindow(OtherGameBoardSceneController board, String nickname, String nameFxml) throws IOException {
+<<<<<<< HEAD
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(board);
 
         fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+=======
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getClassLoader().getResource("/fxml/" + nameFxml));
+        fxmlLoader.setController(board);
+
+>>>>>>> main
         String title = "Plancia di gioco di: " + nickname;
         buildWindow(title, fxmlLoader);
     }
 
 
     public static void showDeck(DeckSceneController deckSceneController, String nameFxml) throws IOException {
+<<<<<<< HEAD
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(deckSceneController);
         fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+=======
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
+        fxmlLoader.setController(deckSceneController);
+>>>>>>> main
         String title = "Carte disponibili: ";
         buildWindow(title, fxmlLoader);
     }
@@ -195,9 +221,14 @@ public class SceneController extends ViewObservable {
         }
     }
     public static void showCharacter(CharacterSceneController characterSceneController, String nameFxml)  throws IOException{
+<<<<<<< HEAD
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(characterSceneController);
         fxmlLoader.setLocation(SceneController.class.getResource("/fxml/" + nameFxml));
+=======
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
+        fxmlLoader.setController(characterSceneController);
+>>>>>>> main
         String title = "Carte disponibili: ";
         buildWindow(title, fxmlLoader);
     }

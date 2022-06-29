@@ -1,7 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.model.game.GameModel;
-
+/**
+ * Message sent when a player disconnects from the game. Sent to all other players that are still in the game.
+ */
 public class DisconnectionMessage extends Message {
     private static final long serialVersionUID = -5422965079989607600L;
 
@@ -10,8 +11,12 @@ public class DisconnectionMessage extends Message {
     private final String messageStr;
 
     /**
+<<<<<<< HEAD
      * Message sent when a player disconnects from the game
      * Parameters are set by the constructor
+=======
+     *
+>>>>>>> main
      * @param nicknameDisconnected nickname of the player who disconnected
      * @param messageStr text message shown
      */
@@ -21,14 +26,22 @@ public class DisconnectionMessage extends Message {
         this.nicknameDisconnected = nicknameDisconnected;
         this.messageStr = messageStr;
     }
+
+    /**
+     *
+     * @return the player who's disconnected.
+     */
     public String getNicknameDisconnected() {
         return nicknameDisconnected;
     }
 
     /**
+<<<<<<< HEAD
      * @return the message's text
+=======
+     * @return the message's text. Saying who disconnected.
+>>>>>>> main
      */
-
     public String getMessageStr() {
         return messageStr;
     }
