@@ -13,11 +13,7 @@ public class MovedStudentToHallMessage extends  Message{
     private final List<ColorPawns> students;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a student is successfully moved into the player's hall
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param students students moved

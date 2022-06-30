@@ -11,11 +11,7 @@ public class InvalidTowerMessage extends Message{
     private final ColorTower colorTower;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player chooses the wring tower's color
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param colorTower color chosen

@@ -28,11 +28,7 @@ public class ClientController implements ViewObserver, Observer {
     private final ExecutorService queueTasks;
 
     /**
-<<<<<<< HEAD
-     * Client controller, on the client side. Handles the message received from the server and perform actions based on that.
-=======
      * Constructor for ClientController: initializes the view and the ExecutorService
->>>>>>> main
      * @param view the view of the client.
      */
 
@@ -290,14 +286,6 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
-<<<<<<< HEAD
-    public void onUpdateWaiting(String nickname, int cloudIndex){
-        client.sendMessage(new AddStudentFromCloudToEntranceMessage(nickname, cloudIndex));
-    }
-
-    @Override
-=======
->>>>>>> main
     public void onUpdateCardPlayed(String nickname, int assistantCardModel){
         client.sendMessage(new PlayAssistantCardMessage(nickname, assistantCardModel));
     }

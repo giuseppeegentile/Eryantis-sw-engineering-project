@@ -28,14 +28,8 @@ public class DisplayCloudsMessage extends DisplayMessage {
     }
 
     /**
-<<<<<<< HEAD
-     * @return the list of clouds
-     */
-
-=======
      * @return the list of clouds.
      */
->>>>>>> main
     public List<CloudModel> getClouds() {
         return clouds;
     }

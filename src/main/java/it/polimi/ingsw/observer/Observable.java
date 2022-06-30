@@ -17,6 +17,7 @@ public class Observable {
         observers.remove(obs);
     }
 
+
     protected void notifyObserver(Message message) {
         for (Observer observer : observers) {
             observer.update(message);

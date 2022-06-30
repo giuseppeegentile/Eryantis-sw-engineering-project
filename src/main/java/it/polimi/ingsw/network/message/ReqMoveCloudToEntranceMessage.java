@@ -3,13 +3,17 @@ import it.polimi.ingsw.model.game.CloudModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Server to client. Message sent to move students from clouds to the entrance
+ */
+
 public class ReqMoveCloudToEntranceMessage extends Message{
 
     private static final long serialVersionUID = -175250577233070966L;
     private final List<CloudModel> clouds;
 
     /**
-     * Message sent to move students from clouds to the entrance
+     * Default constructor
      * Parameters are set by the constructor
      * @param nickname current player
      * @param clouds list of clouds

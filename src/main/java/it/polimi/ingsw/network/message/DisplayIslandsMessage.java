@@ -14,16 +14,9 @@ public class DisplayIslandsMessage extends DisplayMessage{
     private final List<IslandModel> islandModels;
 
     /**
-<<<<<<< HEAD
-     * Message sent to display all the islands
-     * Parameters are set by the constructor
-     * @param nickname player who's making the move
-     * @param islandsModel model of the island
-=======
      *
      * @param nickname player who's making the move.
      * @param islandsModel islands to be shown.
->>>>>>> main
      */
     public DisplayIslandsMessage(String nickname, List<IslandModel> islandsModel) {
         super(nickname);
@@ -32,14 +25,8 @@ public class DisplayIslandsMessage extends DisplayMessage{
     }
 
     /**
-<<<<<<< HEAD
-     * @return the island model
-     */
-
-=======
      * @return The islands to be shown.
      */
->>>>>>> main
     public List<IslandModel> getIslandModels() {
         return this.islandModels;
     }

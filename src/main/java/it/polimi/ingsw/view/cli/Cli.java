@@ -233,8 +233,6 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateStudentToIsland(player, colors, indexIsland));
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Asks to move the students from the player board's entrance to the destination
      * @param entrance list of students based on their color in the entrance
@@ -243,7 +241,6 @@ public class Cli extends ViewObservable implements View {
      * @param destination string the contains the destination of the students
      */
 
->>>>>>> main
     private void askingMoveStudentsFromEntrance(List<ColorPawns> entrance, List<ColorPawns> colors, int numberStudents, String destination) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
@@ -252,8 +249,6 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Asks to move the students to the player board's entrance
      * @param origin list of students based on their color to move from the original position
@@ -262,7 +257,6 @@ public class Cli extends ViewObservable implements View {
      * @param numberStudents number of students to move
      */
 
->>>>>>> main
     private void askingMoveStudents(List<ColorPawns> origin, String originName, List<ColorPawns> colors, int numberStudents) {
         for(int j=0; j<numberStudents; j++) {
             StringBuilder str = new StringBuilder();
@@ -271,8 +265,6 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Creates a list of students based on the pawns' colors
      * @param origin list of students based on their color in the original position
@@ -280,7 +272,6 @@ public class Cli extends ViewObservable implements View {
      * @param str string equivalent to the student's list
      */
 
->>>>>>> main
     private void creatingStudentsList(List<ColorPawns> origin, List<ColorPawns> colors, StringBuilder str) {
         int chosenIndex;
         int finalChosenIndex;
@@ -455,8 +446,6 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Creates the player's board
      * @param player current player
@@ -465,7 +454,6 @@ public class Cli extends ViewObservable implements View {
      * @param isFirst boolean to determine whether the player is the first one or not
      */
 
->>>>>>> main
     private void playerBoardBase(PlayerModel player, List<ColorTower> towers, StringBuilder strBoardBld, boolean isFirst) {
         strBoardBld.append("-----------------------------------\n");
         if (isFirst) {
@@ -734,8 +722,6 @@ public class Cli extends ViewObservable implements View {
         else if (islands.get(i).getMotherNature() && islands.get(i).getTowerColor() != ColorTower.NULL && islands.get(i).hasProhibition())
 
      */
-<<<<<<< HEAD
-=======
 
     /**
      * Methods used to place mother nature in the expert mode
@@ -744,7 +730,6 @@ public class Cli extends ViewObservable implements View {
      * @param i counter
      */
 
->>>>>>> main
     private void placeMotherNatureExpert(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
         if(islands.get(i).getMotherNature())
             if(islands.get(i).getTowerColor() == ColorTower.NULL)
@@ -770,8 +755,6 @@ public class Cli extends ViewObservable implements View {
                     strBoardBld2.append("|    ").append(ColorCli.getEquivalentColorTower(islands.get(i).getTowerColor())).append(" T ").append(ColorCli.RESET).append("    |      ");
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Methods used to place mother nature in the beginner mode
      * @param islands list of the islands
@@ -779,7 +762,6 @@ public class Cli extends ViewObservable implements View {
      * @param i counter
      */
 
->>>>>>> main
     private void placeMotherNature(List<IslandModel> islands, StringBuilder strBoardBld2, int i) {
         if(islands.get(i).getMotherNature())
             if(islands.get(i).getTowerColor() == ColorTower.NULL)
@@ -828,7 +810,6 @@ public class Cli extends ViewObservable implements View {
         int chosenIndex = askUntilValid(listColor.size(), message, stringBuilder);
         int finalChosenIndex = chosenIndex - 1;
         notifyObserver(obs -> obs.onUpdateColorToIgnore(active, ColorPawns.getEquivalentColorPawns(listColor.get(finalChosenIndex).name())));
-<<<<<<< HEAD
     }
 
     @Override
@@ -852,31 +833,6 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-=======
-    }
-
-    @Override
-    public void askExtraGetInfluence(String active, List<IslandModel> islands) {
-        StringBuilder str = new StringBuilder();
-        out.println("Choose the island that you want to calculate the influence from the following list: \n");
-        int sizeIslands= islands.size();
-        showIslands(active, islands);
-        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str) - 1;
-        notifyObserver(obs -> obs.onUpdateExtraGetInfluence(active, indexIsland));
-    }
-
-    @Override
-    public void askMoveBanCard(String active, List<IslandModel> islands) {
-        StringBuilder str = new StringBuilder();
-        out.println("Choose the island where you want to place a prohibition card \n");
-        int sizeIslands= islands.size();
-        showIslands(active, islands);
-        int indexIsland = askUntilValid( sizeIslands, "Invalid index for island, must be between 1 and "+ sizeIslands, str) - 1;
-        notifyObserver(obs -> obs.onUpdateBanCard(active, indexIsland));
-    }
-
-    @Override
->>>>>>> main
     public void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance) {
         System.out.println("How many students do you want to move from the card to your entrance? You can take up to 3 students");
         String message = "You've entered an invalid number, please select a number from 1 to 3 from the list shown\n";

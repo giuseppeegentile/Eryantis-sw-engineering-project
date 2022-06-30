@@ -21,13 +21,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-<<<<<<< HEAD
-/**
- * This class controls the evolution of the game. Depending on the message received, it performs a specific portion of the game.
- */
-
-=======
->>>>>>> main
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
     private boolean gameStarted = false;
@@ -58,12 +51,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Constructor for gameController: initializes the virtualViewMap, gameInstance, numberPlayersPlayedCard, playersThatHavePlayedCard
-     * and playerWithEffectAdditionalInfluence to default value.
-=======
      * Game controller. Handles the phase of the game. On the server side.
->>>>>>> main
      */
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
@@ -92,13 +80,10 @@ public class GameController implements Observer, Serializable {
         );
     }
 
-<<<<<<< HEAD
-=======
     public Map<String, VirtualView> getVirtualViewMap(){
         return this.virtualViewMap;
     }
 
->>>>>>> main
     /**
      * send a message showing who's playing on the current turn
      */
@@ -108,14 +93,8 @@ public class GameController implements Observer, Serializable {
                 virtualViewMap.get(p.getNickname()).showGenericMessage("Hey " + p.getNickname() + ", "+  playerActive.getNickname() + " is playing...");
         }
     }
-<<<<<<< HEAD
-
-    /**
-     * Switch on Game State. Controls the logic of the game.
-=======
     /**
      * Switch on Game State. Logic of the game.
->>>>>>> main
      *
      * @param receivedMessage Message from client to server.
      */
@@ -165,13 +144,8 @@ public class GameController implements Observer, Serializable {
                     setTowers(receivedMessage, chosenTower, numPlayers);
                     setInitialStudentEntrance(gameInstance.getPlayerByNickname(receivedMessage.getNickname()));
                     //at the first player I ask also the gameMode
-<<<<<<< HEAD
-                    for (PlayerModel p : gameInstance.getPlayersModel())
-                        System.out.println(p.getNickname());
-=======
                     /*for (PlayerModel p : gameInstance.getPlayersModel())
                         System.out.println(p.getNickname());*/
->>>>>>> main
                     if (receivedMessage.getNickname().equals(gameInstance.getPlayersModel().get(0).getNickname())) {
                         virtualViewMap.get(receivedMessage.getNickname()).askGameMode();
                         //prepareGame();
@@ -357,12 +331,8 @@ public class GameController implements Observer, Serializable {
             case MOVED_CLOUD_TO_ENTRANCE:
                 int cloudIndex = ((AddStudentFromCloudToEntranceMessage) receivedMessage).getCloudIndex();
                 CloudModel chosenCloud = gameInstance.getCloudsModel().get(cloudIndex);
-<<<<<<< HEAD
-                System.out.println(chosenCloud.getStudents().get(0));
-=======
                //
                 // System.out.println(chosenCloud.getStudents().get(0));
->>>>>>> main
                 if (chosenCloud.getStudents().size() == 0) { //if cloud isn't valid
                     //Mandare messaggio di scegliere una nuvola non scelta da un altro player
                     virtualViewMap.get(playerActive.getNickname()).showInvalidCloud(playerActive.getNickname());
@@ -449,29 +419,19 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Enable the effect and return to the phase of the game where the player was before applying the card's effect
-<<<<<<< HEAD
-     * @param characterCardPlayed The card played sent by the client
-=======
      * @param characterCardPlayed the card played sent by the client
->>>>>>> main
      */
     private void performEffectAndReset(CharacterCardModel characterCardPlayed){
         characterCardPlayed.getEffect().enable(playerActive);
         for (CharacterCardModel card : playerActive.getCharacterDeck()){
             if(card.getEffect().getDescription().equals(characterCardPlayed.getEffect().getDescription())){
                 card.getEffect().incrementCost();
-<<<<<<< HEAD
-                break;
-            }
-        }
-=======
 
                 break;
             }
         }
 
 
->>>>>>> main
         if(characterCardPlayed.getEffect().getClass().getSimpleName().equals("AddToIslandEffect") ||
                 characterCardPlayed.getEffect().getClass().getSimpleName().equals("ProhibitionEffect"))
             for(String p: virtualViewMap.keySet()) virtualViewMap.get(p).showIslands(p, gameInstance.getIslandsModel());
@@ -485,10 +445,7 @@ public class GameController implements Observer, Serializable {
                         towers, p.getStudentInHall(), p.getStudentInEntrance(), p.getProfs(), p.isFirst());
             }
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         activatedEffect = true;
         continueFromOldState();
     }
@@ -496,11 +453,7 @@ public class GameController implements Observer, Serializable {
 
     /**
      * All actions occurring by the movement of mother nature: incorrect movement, influence evaluation, possible join of islands, switch to next phase
-<<<<<<< HEAD
-     * @param movement Movement of mother nature performed by the client
-=======
      * @param movement movement performed by the client
->>>>>>> main
      */
     private void motherActions(byte movement) {
         this.movement = movement;
@@ -512,11 +465,8 @@ public class GameController implements Observer, Serializable {
             return;
         }
         String activeNick = playerActive.getNickname();
-<<<<<<< HEAD
-=======
         //moveMotherNature(movement);
 
->>>>>>> main
         if(movement!=0) {
             int indexOldMotherNature = 0;
             List<IslandModel> islandsModels = gameInstance.getIslandsModel();
@@ -537,20 +487,13 @@ public class GameController implements Observer, Serializable {
             for(String gamer: virtualViewMap.keySet())
                 virtualViewMap.get(gamer).showIslands(gamer, gameInstance.getIslandsModel());
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         virtualViewMap.get(activeNick).askMoveCloudToEntrance(activeNick, getAvailableClouds());
     }
 
     /**
      * Calling the method to move student on hall, showing the board updated and switch to next phase
-<<<<<<< HEAD
-     * @param receivedMessage Message received from the client
-=======
      * @param receivedMessage message received from the client
->>>>>>> main
      */
     private void studentsOnHallActions(Message receivedMessage) {
         if (((MovedStudentToHallMessage) receivedMessage).getStudents() != null) {
@@ -560,16 +503,9 @@ public class GameController implements Observer, Serializable {
         if(gameInstance.getGameMode()==GameMode.BEGINNER)
             virtualViewMap.get(receivedMessage.getNickname()).askMotherNatureMovements(playerActive, playerActive.getMovementMotherNatureCurrentActionPhase());
     }
-<<<<<<< HEAD
-
-    /**
-     * Calling the method to move student on island, showing the islands updated and switch to next phase
-     * @param receivedMessage Message received from the client
-=======
     /**
      * Calling the method to move student on island, showing the islands updated and switch to next phase
      * @param receivedMessage message received from the client
->>>>>>> main
      */
     private void studentsOnIslandActions(Message receivedMessage) {
         List<ColorPawns> movedStudents = ((MovedStudentOnIslandMessage) receivedMessage).getStudents();
@@ -606,10 +542,6 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Set the number of towers for each player according to the number of players
-<<<<<<< HEAD
-     * @param receivedMessage The message received by the server
-=======
->>>>>>> main
      * @param chosenTower tower's color chosen by the player
      * @param numPlayers number of players
      */
@@ -631,11 +563,6 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Handles the login procedure for each player. Separate logic to first players from next
-<<<<<<< HEAD
-     * @param nickname The nickname of the player who is trying to login to the server
-     * @param vv The virtualview assigned to the client
-=======
->>>>>>> main
      */
     public void handleLogin(String nickname, VirtualView vv){
         if(virtualViewMap.isEmpty()){ // at the first player I ask the number of players
@@ -671,34 +598,19 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Assigns to every card the player who owns it
-     * @param nickname Owner of the card
-=======
      * Assign to every card of player the owner of that
      * @param nickname player to be given the card
->>>>>>> main
      */
     public void setOwnerDeck(String nickname) {
         PlayerModel playerCorrespond = gameInstance.getPlayerByNickname(nickname);
         int startingIndex = (gameInstance.getPlayersModel().indexOf(playerCorrespond) + 1) * 10 - 10;
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         for (int idx = startingIndex; idx < startingIndex + 10; idx++) {
             gameInstance.getDeck().get(idx).setOwner(playerCorrespond);
         }
     }
-<<<<<<< HEAD
-
-    /**
-     *
-     * @return The list of the tower colors available depending on the number of the players of the match
-=======
     /**
      * Assigns the tower's color to the players according to the number of players
->>>>>>> main
      */
     private List<ColorTower> getAvailableTowers(){
         List<ColorTower> alreadyChosen = new ArrayList<>();
@@ -738,11 +650,7 @@ public class GameController implements Observer, Serializable {
      */
     private void checkWin(){
         ColorTower winner = gameInstance.checkWin();
-<<<<<<< HEAD
-        if(winner != ColorTower.NULL){
-=======
         if(winner != ColorTower.NULL){ //se c'è un vincitore
->>>>>>> main
             String winnerNick = gameInstance.getPlayerByColorTower(winner).getNickname();
             virtualViewMap.get(winnerNick).showWinMessage(gameInstance.getPlayerByNickname(winnerNick));
         }//else
@@ -751,11 +659,7 @@ public class GameController implements Observer, Serializable {
 
     /**
      *
-<<<<<<< HEAD
-     * @return The player who's playing in this phase
-=======
      * @return the player who's playing in this phase
->>>>>>> main
      */
     public PlayerModel getPlayerActive() {
         return playerActive;
@@ -763,13 +667,8 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Checks if the nickname chosen by a player is valid
-<<<<<<< HEAD
-     * @param nickname Nickname chosen by a player
-     * @param view View assigned to a player
-=======
      * @param nickname nickname chosen by a player
      * @param view view assigned to a player
->>>>>>> main
      * @return returns false if the nickname is incorrect or true if it's valid
      */
     public boolean checkLoginNickname(String nickname, View view) {
@@ -786,31 +685,18 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Asks a player to choose a card sending him a deck without cards already chosen
-     * @param player The active player of the current turn
-=======
      * Checks if a player has cards that can be played
->>>>>>> main
      */
     private void askPlayCardsController(String player){
         List<AssistantCardModel> playerDeck = new ArrayList<>(gameInstance.getPlayerByNickname(player).getDeckAssistantCardModel());
         List<AssistantCardModel> copy = new ArrayList<>(playerDeck);
-<<<<<<< HEAD
-      /*playerDeck.removeAll(gameInstance.getCemetery());
-        playerDeck.removeIf(c-> {
-=======
         //playerDeck.removeAll(gameInstance.getCemetery());
 /*        playerDeck.removeIf(c-> {
->>>>>>> main
             return gameInstance.getCemetery().stream().anyMatch(card ->
                 card.getPriority() == c.getPriority() && card.getMotherNatureMovement() == c.getMotherNatureMovement()
             );
         });*/
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         for(AssistantCardModel c: playerDeck){
             for(AssistantCardModel cem: gameInstance.getCemetery()){
                 if(c.getPriority() == cem.getPriority() && (cem.getMotherNatureMovement() == c.getMotherNatureMovement())) {
@@ -823,11 +709,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Adds student from the bag to the clouds and shows them to the players
-=======
      * Adds a student from the bag to a cloud
->>>>>>> main
      */
     private void fromBagToCloud(){
         if(gameInstance.havePlayersFinishedCards() || gameInstance.getBag().size()==0) {
@@ -835,10 +717,7 @@ public class GameController implements Observer, Serializable {
         }else{
             moveStudentFromBagToClouds();
             gameInstance.setPlayers(gameInstance.getPhaseOrder());
-<<<<<<< HEAD
-=======
 
->>>>>>> main
             for (String player : virtualViewMap.keySet()) {
                 virtualViewMap.get(player).showCloudsMessage(player, gameInstance.getCloudsModel());
             }
@@ -847,19 +726,11 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Removes the virtual view of a player when a client disconnects
-     * @param nickname Nickname of the player to remove
-     */
-    public void removeVirtualView(String nickname) {
-        VirtualView vv = virtualViewMap.remove(nickname);
-=======
      * Removes the virtual view of a player when a player's nickname is removed
      */
     public void removeVirtualView(String nickname) {
         VirtualView vv = virtualViewMap.remove(nickname);
 
->>>>>>> main
         gameInstance.removeObserver(vv);
         gameInstance.removePlayerByNickname(nickname);
     }
@@ -875,33 +746,20 @@ public class GameController implements Observer, Serializable {
     @Override
     public void update(Message message) {}
     //-------------------Metodi di startGameState per inizializzare il gioco
-<<<<<<< HEAD
-
-    /**
-     * Set the initial group of islands, with mother nature and initial students configuration.
-=======
     /**
      * Set islands, with mother nature and initial students configuration.
->>>>>>> main
      */
     private void setIslands(){
         int motherNatureIndex = (int)(Math.random() * 12); //numero casuale fra 0 e 11
         List<IslandModel> islands = new ArrayList<>(12);
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         int equalNumber = 2;
         List<ColorPawns> colors;
         colors = fillListWithColors(equalNumber);
         //colors è una lista con 10 colori, 2 per ogni colore, riempita casualmente: come se fosse il sacchetto
-<<<<<<< HEAD
-        int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;
-=======
 
         int indexMirrorMotherNature = (motherNatureIndex + 6) % 12;
 
->>>>>>> main
         //counterForColors mi scorre gli elementi dell'array colors, viene incrementato solo quando assegno a un'isola
         for (int i = 0, counterForColors = 0; i < 12; i++) {
             if(i != motherNatureIndex && i != indexMirrorMotherNature) {
@@ -938,11 +796,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Creates the bag with students at every game's beginning
-=======
      * Creates the student's bag at every game's beginning
->>>>>>> main
      */
     public void assignBag(){
         List<ColorPawns> bag;
@@ -973,11 +827,7 @@ public class GameController implements Observer, Serializable {
     /**
      * Sets the initial number of students at the entrance of the gaming board according to the number of players,
      * 9 if there are 3 players, 7 if there are 2 or 4 players
-<<<<<<< HEAD
-     * @param playerToSet The current player to receive the initial number of students
-=======
      * @param playerToSet is the current player to receive the initial number of students
->>>>>>> main
      */
     private void setInitialStudentEntrance(PlayerModel playerToSet){
         int playerNumber = gameInstance.getPlayersNumber();
@@ -996,11 +846,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Method that generates the initial deck with all the assistant cards
-=======
      * Method that generates and assigns a deck of cards for each player
->>>>>>> main
      */
     public void generateDeck(){
         for(int k = 0; k < 4; k++) {
@@ -1013,23 +859,15 @@ public class GameController implements Observer, Serializable {
         //Collections.shuffle(gameInstance.getDeck());
     }
 
-<<<<<<< HEAD
-    /**
-     * Moves students from the bag to the clouds. The number of students moved is different according to the number of players.
-=======
 
     /**
      * Moves a student from the bag to the clouds. The number of students moved is different according to the number of players.
->>>>>>> main
      */
     private void moveStudentFromBagToClouds(){
         int numStudentToMove = 3; //caso base: gioco a 2 o 4 devo spostare 3 studenti dal sacchetto all'isola
         if(gameInstance.getPlayersNumber() == 3) //con 3 giocatori ne sposto 4
             numStudentToMove = 4;
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         int bagSize = gameInstance.getBag().size();
         int i = 0;
         if(gameInstance.getCloudsModel().size()==0) {
@@ -1040,18 +878,12 @@ public class GameController implements Observer, Serializable {
             }
         }else {
             for (CloudModel c : gameInstance.getCloudsModel()) {
-<<<<<<< HEAD
-                List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (i + 1), bagSize - numStudentToMove * i));
-                c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
-                //gameInstance.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
-=======
 
                 List<ColorPawns> temp = new ArrayList<>(gameInstance.getBag().subList(bagSize - numStudentToMove * (i + 1), bagSize - numStudentToMove * i));
 
                 c.setStudents(temp);// prendo dalla bag gli ultimi 3 studenti
                 //gameInstance.getBag().subList(bagSize - numStudentToMove - 1, bagSize - 1).clear(); //rimuove gli studenti appena spostati
 
->>>>>>> main
                 i++;
             }
         }
@@ -1060,15 +892,9 @@ public class GameController implements Observer, Serializable {
         gameInstance.setBag(temp);
     }
 
-<<<<<<< HEAD
-    /**
-     * When a player uses a card, puts it in the cemetery of the current round and removes it from the player's deck
-     * @param player The active player of the current turn
-=======
 
     /**
      * Check if a player can play or not a certain card, if yes puts it in the cemetery and removes it from the player's cards
->>>>>>> main
      * @param assistantCardModel The card played by the player
      */
     private void playCard(PlayerModel player, AssistantCardModel assistantCardModel){
@@ -1103,10 +929,6 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Moves the students from the entrance to the island
-<<<<<<< HEAD
-     * @param player The active player in the current turn
-=======
->>>>>>> main
      * @param students The students to place on the island
      * @param islandModel The island where the students have to be placed
      */
@@ -1117,14 +939,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Moves the students from the entrance or the card to the hall of the player depending on the game mode
-     * @param player the active player of the current turn
-     * @param students the students to move in the player's hall
-     * @param fromCard true if the students are from the card, false if they're from the entrance
-=======
      * Moves a student from the entrance to the hall of the player
->>>>>>> main
      */
     public void moveStudentToHall(PlayerModel player, List<ColorPawns> students, boolean fromCard) {
         int oldValue = 0;
@@ -1132,13 +947,6 @@ public class GameController implements Observer, Serializable {
             oldValue = player.getStudentInHall().get(student);
             player.getStudentInHall().put(student, player.getStudentInHall().get(student) + 1);
             //conta le occorrenze per ogni studente di un colore
-<<<<<<< HEAD
-            if (gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0 && oldValue != player.getStudentInHall().get(student)) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
-                player.addCoins();
-            }
-            if(canProfBeAssignedToPlayer(player, student))
-                assignProfToPlayer(player, student);
-=======
             if ( gameInstance.getGameMode() == GameMode.ADVANCED && player.getStudentInHall().get(student) % 3 == 0 && oldValue != player.getStudentInHall().get(student)) { //se lo studente che sto per aggiungere è 3° 6° o 9° prende una moneta
                 player.addCoins();
                // System.out.println("incremento di 1");
@@ -1147,20 +955,13 @@ public class GameController implements Observer, Serializable {
             if(canProfBeAssignedToPlayer(player, student))
                 assignProfToPlayer(player, student);
 
->>>>>>> main
             if(!fromCard)
                 player.removeStudentFromEntrance(student);
         }
     }
 
-<<<<<<< HEAD
-    /** da
-     * Assign a prof to the player. If another player has that prof, it removes the prof from his board
-     * @param player player to whom a prof has to be assigned
-=======
     /** da TESTARE
      * Assign a prof to the player. If another player has that prof, it removes the prof from him
->>>>>>> main
      * @param prof prof to be assigned to player
      */
     private void assignProfToPlayer(PlayerModel player, ColorPawns prof){
@@ -1184,17 +985,10 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Checks if a prof can be assigned to a player. If he has the highest number of students of the same color in the hall it can be assigned
-     * @param player player to check if he can get the prof
-     * @param prof prof to be assigned
-     */
-=======
      * Checks if a prof can be assigned to a player, if he has the highest number of students of the same color in the hall
      * @param prof prof to be assigned
      */
 
->>>>>>> main
     private boolean canProfBeAssignedToPlayer(PlayerModel player, ColorPawns prof){
         for(PlayerModel p: gameInstance.getPlayersModel()){
             if(!player.getNickname().equals(p.getNickname())){
@@ -1208,11 +1002,7 @@ public class GameController implements Observer, Serializable {
      * Updates the list of island with the new position of mother nature
      * @param movementMotherNature The number of movements mother nature is allowed to do
      */
-<<<<<<< HEAD
-    /*private void moveMotherNature(byte movementMotherNature){
-=======
     private void moveMotherNature(byte movementMotherNature){
->>>>>>> main
         if(movementMotherNature==0)return;
         int indexOldMotherNature = 0;
         List<IslandModel> islandsModels = gameInstance.getIslandsModel();
@@ -1220,11 +1010,7 @@ public class GameController implements Observer, Serializable {
         int newIndex = (indexOldMotherNature + movementMotherNature) % (gameInstance.getIslandsModel().size());
         gameInstance.getIslandsModel().get(indexOldMotherNature).setMotherNature(false);
         gameInstance.getIslandsModel().get(newIndex).setMotherNature(true);
-<<<<<<< HEAD
-    }*/
-=======
     }
->>>>>>> main
 
     /**
      * Perform action caused by mother nature movement. Set tower on island, eventually join islands and then check the winner (if any)
@@ -1234,11 +1020,7 @@ public class GameController implements Observer, Serializable {
     public void computeIslandsChanges(PlayerModel active,IslandModel islandWithMother){
         int indexOfMother = gameInstance.getIslandsModel().indexOf(islandWithMother);
         //PlayerModel playerWithInfluence = islandWithMother.getInfluence(considerTower, playerWithEffectAdditionalInfluence,ignoreColorEffect );
-<<<<<<< HEAD
-        System.out.println(colorToExclude);
-=======
         //System.out.println(colorToExclude);
->>>>>>> main
         PlayerModel playerWithInfluence = islandWithMother.getInfluence(playerWithEffectAdditionalInfluence, colorToExclude, considerTower);
         if(playerWithInfluence.getColorTower()!=ColorTower.NULL) { //if a player has influence
             if (!islandWithMother.hasTower() && playerWithInfluence.getColorTower() != ColorTower.NULL) {
@@ -1262,13 +1044,6 @@ public class GameController implements Observer, Serializable {
 
             showBoard(playerWithInfluence.getNickname());//shows the updated board (towers changed) to the player who has influence on this island
         }
-<<<<<<< HEAD
-        //controllo se posso unificare, se sì, le unisco
-        ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
-        if(islandWithMother.getTowerColor() == ColorTower.NULL || direction == ColorDirectionAdjacentIsland.NONE){
-            return;
-        }
-=======
 
         //controllo se posso unificare, se sì, le unisco
         ColorDirectionAdjacentIsland direction = gameInstance.getAdjacentSameColor(islandWithMother);
@@ -1277,16 +1052,12 @@ public class GameController implements Observer, Serializable {
             return;
         }
 
->>>>>>> main
         //messaggio di attrazione delle isole
         for (String pp : virtualViewMap.keySet()) {
             PlayerModel p = gameInstance.getPlayerByNickname(pp);
             virtualViewMap.get(pp).showMessageJoiningIsland(new TextMessage(p.getNickname(), "JOINING ISLANDS..."));
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         if(direction == ColorDirectionAdjacentIsland.RIGHT){
             if(indexOfMother == gameInstance.getIslandsModel().size()-1)
                 joinIsland(islandWithMother, gameInstance.getIslandsModel().get(0), indexOfMother);
@@ -1315,10 +1086,7 @@ public class GameController implements Observer, Serializable {
             virtualViewMap.get(n).showIslands(n, gameInstance.getIslandsModel());
             if(!p.getProfs().isEmpty())
                 showBoard(n);
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         }
         if(gameInstance.getIslandsModel().size()==3){
             checkWin();
@@ -1331,10 +1099,7 @@ public class GameController implements Observer, Serializable {
      */
     public List<CloudModel> getAvailableClouds(){
         List<CloudModel> availableClouds = new ArrayList<>();
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         for(CloudModel c: gameInstance.getCloudsModel()){
             if(c.getStudents().size() != 0) availableClouds.add(c);
         }
@@ -1343,11 +1108,7 @@ public class GameController implements Observer, Serializable {
 
     /**
      * Checks if there are students left to move from a cloud to the player's board's entrance
-<<<<<<< HEAD
-     * @param receivedMessage Message received by the server
-=======
      * @param receivedMessage Message received
->>>>>>> main
      * @return false if there aren't any students left to move
      */
     private boolean moveStudentFromCloudToWaiting(Message receivedMessage){
@@ -1371,10 +1132,7 @@ public class GameController implements Observer, Serializable {
         List<ColorPawns> subBag = new ArrayList<>(gameInstance.getBag().subList(0, 4));
         List<ColorPawns> subBag2 = new ArrayList<>(gameInstance.getBag().subList(4, 10));
         List<ColorPawns> subBag3 = new ArrayList<>(gameInstance.getBag().subList(10, 14));
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         List<Effect> effects = List.of(
                 new AddToIslandEffect(subBag),
                 new ControlProfEffect(),
@@ -1385,19 +1143,13 @@ public class GameController implements Observer, Serializable {
                 new AddInfluenceEffect(this),
                 new ExcludeColorInfluenceEffect(this)
         );
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         List<CharacterCardModel> characterDeck = new ArrayList<>( effects.size()-3);
         for(int i = 0; i < effects.size(); i++){
             //if(i != 2 && i != 6 && i != 9) effetti da togliere
             characterDeck.add(new CharacterCardModel(effects.get(i), i));
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         if(shuffle)
             Collections.shuffle(characterDeck);
         List<CharacterCardModel> tempToAssign = new ArrayList<>();;
@@ -1417,14 +1169,9 @@ public class GameController implements Observer, Serializable {
 
     /**
      *
-<<<<<<< HEAD
-     * @param incr test is incremented by incr's value depending on which test is running
-     */
-=======
      * @param incr test is incremented by "incr"'s value
      */
 
->>>>>>> main
     public void incrementTest(int incr){
         test += incr;
     }
@@ -1452,28 +1199,17 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Called when the corresponding effect of a character card occurs
-=======
      * Called when the effect of a character card occurs
->>>>>>> main
      * @param colorToExclude color that is not going to be evaluated in the influence
      */
     public void setIgnoreColorEffect(ColorPawns colorToExclude) {
         this.colorToExclude = colorToExclude;
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     }
 
     //prende due isole da unire, e l'indice della prima isola da unire in questione, restituisce la lista delle isole aggiornata con quella unita
     /**
      * Joins the islands with the same influence according to the motherNature's position
-<<<<<<< HEAD
-     * @param islandModelToCheck Island that has to be checked when a tower is placed on it
-=======
->>>>>>> main
      * @param islandToJoin Island to join with
      * @param indexFirstIsland The index of the first island in the islandModels list
      * @return The list of islandModels with the two joined island
@@ -1484,10 +1220,7 @@ public class GameController implements Observer, Serializable {
         //aggiungo gli studenti delle isole da unire alla lista degli studenti uniti
         joinedStudents.addAll(islandModelToCheck.getStudents());
         joinedStudents.addAll(islandToJoin.getStudents());
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         IslandModel joined = new IslandModel(islandModelToCheck.getMotherNature() || islandToJoin.getMotherNature(), joinedStudents);
         joined.setTowerColor(islandToJoin.getTowerColor());
         gameInstance.getPlayerByColorTower(islandToJoin.getTowerColor()).addTowerToBoard();
@@ -1503,10 +1236,6 @@ public class GameController implements Observer, Serializable {
      * @param islandModels The list of island in the current game
      * @param joined The joining result of the two islands
      * @param indexFirstIsland Index of the first joined island
-<<<<<<< HEAD
-     * @param indexToRemove Index of the islands list that has to be removed
-=======
->>>>>>> main
      * @return The list of islandModels with the two joined island
      */
     private List<IslandModel> compressIsland(List<IslandModel> islandModels, IslandModel joined, int indexFirstIsland, int indexToRemove){
@@ -1516,11 +1245,7 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     * Called when the corresponding effect of a character card occurs
-=======
      * Called when the effect of a character card occurs
->>>>>>> main
      * @param considerTower true if the towers are going to be evaluated in the influence algorithm
      */
     public void setConsiderTower(boolean considerTower) {
@@ -1536,28 +1261,18 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-<<<<<<< HEAD
-     *Sets shuffle to false. Used in tests
-     */
-=======
      * sets shuffle to false
      */
 
->>>>>>> main
     public void setShuffleFalse() {
         this.shuffle = false;
     }
 
     /**
      *
-<<<<<<< HEAD
-     * @return return the player that used the character card with the additional influence effect
-     */
-=======
      * @return return the player that used the character's card with the additional influence effect
      */
 
->>>>>>> main
     public PlayerModel getPlayerWithEffectAdditionalInfluence(){
         return playerWithEffectAdditionalInfluence;
     }
@@ -1565,10 +1280,7 @@ public class GameController implements Observer, Serializable {
     /**
      * @return the color to exclude due to a usage of a character card
      */
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     public ColorPawns getColorToExclude(){
         return colorToExclude;
     }

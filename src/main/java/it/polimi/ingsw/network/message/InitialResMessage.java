@@ -16,11 +16,7 @@ public class InitialResMessage extends Message{
     private GameMode gameMode;
 
     /**
-<<<<<<< HEAD
-     * Message sent as a response to the initial configuration request
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param availableTowers list of tower's colors available

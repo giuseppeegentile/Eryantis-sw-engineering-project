@@ -23,21 +23,13 @@ public class DisplayPlayerBoardMessage extends DisplayMessage {
     private final boolean isFirst;
 
     /**
-<<<<<<< HEAD
-     * Message sent to display  player's game board
-=======
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname player's whom game board is shown
      * @param towers towers of the current player
      * @param hall hall of the current player
      * @param entrance entrance of the current player
      * @param profs profs of the current player
-<<<<<<< HEAD
-     * @param isFirst if the player is the first with the chosen tower color
-=======
      * @param isFirst if the player is the first with the chosen tower color. Mainly used for AF 4 players
->>>>>>> main
      */
 
     public DisplayPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst) {

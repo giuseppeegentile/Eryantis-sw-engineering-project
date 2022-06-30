@@ -23,10 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-<<<<<<< HEAD
-=======
 import java.util.Objects;
->>>>>>> main
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
     private List<ColorTower> towers;
@@ -256,11 +253,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -312,11 +305,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(62.0);
         b.setPrefWidth(53.0);
         String path = "/images_cranio/cards/prohibition.png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -338,11 +327,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/pawns/MOTHER.png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -355,11 +340,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/towers/" + colorTower + ".png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(GameBoardSceneController.class.getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -426,20 +407,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void towersDisplay() {
-<<<<<<< HEAD
-        String colorTower = towers.get(0).name().toLowerCase();
-        int i;
-        towersGrid.getChildren().clear();
-        for (i = 0; i < towers.size() / 2; i++) {
-            Button bt = getStyledTower(colorTower);
-            towersGrid.add(bt, 0, i);
-            Button bt2 = getStyledTower(colorTower);
-            towersGrid.add(bt2, 1, i);
-        }
-        i+=1;
-        Button bt = getStyledTower(colorTower);
-        if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
-=======
         String colorTower = towers.get(0).name();
         int i;
         towersGrid.getChildren().clear();
@@ -454,7 +421,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             Button bt = getStyledTower(colorTower);
             if (towers.size() % 2 != 0) towersGrid.add(bt, 0, i);
         }
->>>>>>> main
     }
 
     private void showCorrectClouds(){
@@ -477,11 +443,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(turnLabel != null) {
             hideSubtitle();
             if (sizeEntrance == 9) turnLabel.setText("Sposta fino a 4 studenti dall'ingresso in un'isola");
-<<<<<<< HEAD
-            else turnLabel.setText("Sposta fino a 3 studenti dall'ingresso in un'isola");
-=======
             else if (sizeEntrance == 7) turnLabel.setText("Sposta fino a 3 studenti dall'ingresso in un'isola");
->>>>>>> main
         }
     }
 

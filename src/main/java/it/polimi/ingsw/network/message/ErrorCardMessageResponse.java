@@ -11,16 +11,9 @@ public class ErrorCardMessageResponse extends Message{
     private final AssistantCardModel card;
 
     /**
-<<<<<<< HEAD
-     * Message sent as a response of an error when playing a card
-     * Parameters are set by the constructor
-     * @param nickname current player
-     * @param card card played
-=======
      * Parameters are set by the constructor.
      * @param nickname current player.
      * @param card card played.
->>>>>>> main
      */
 
     public ErrorCardMessageResponse(String nickname, AssistantCardModel card) {
@@ -29,14 +22,8 @@ public class ErrorCardMessageResponse extends Message{
     }
 
     /**
-<<<<<<< HEAD
-     * @return the card selected
-     */
-
-=======
      * @return the card that can't be played.
      */
->>>>>>> main
     public AssistantCardModel getCard() {
         return card;
     }

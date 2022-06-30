@@ -13,12 +13,7 @@ public class DisplayCemeteryMessage extends DisplayMessage{
     private final ObjectDisplay objectDisplay;
 
     /**
-<<<<<<< HEAD
-     * Message sent to display  player's cemetery
-     * Parameters are set by the constructor
-=======
      * Message sent to display game's cemetery.
->>>>>>> main
      * @param nickname the nickname of the player whom cemetery is displayed
      * @param cemetery the cemetery, a list of cards played.
      */

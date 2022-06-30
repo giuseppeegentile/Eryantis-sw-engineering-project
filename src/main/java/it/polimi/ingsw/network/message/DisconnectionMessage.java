@@ -11,12 +11,7 @@ public class DisconnectionMessage extends Message {
     private final String messageStr;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player disconnects from the game
-     * Parameters are set by the constructor
-=======
      *
->>>>>>> main
      * @param nicknameDisconnected nickname of the player who disconnected
      * @param messageStr text message shown
      */
@@ -36,11 +31,7 @@ public class DisconnectionMessage extends Message {
     }
 
     /**
-<<<<<<< HEAD
-     * @return the message's text
-=======
      * @return the message's text. Saying who disconnected.
->>>>>>> main
      */
     public String getMessageStr() {
         return messageStr;

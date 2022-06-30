@@ -9,11 +9,7 @@ public class PlayerNumberReply extends Message {
     private final int playerNumber;
 
     /**
-<<<<<<< HEAD
-     * Message sent as a response to the number of players' choice
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param playerNumber number of players chosen

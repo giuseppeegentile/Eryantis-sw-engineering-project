@@ -8,12 +8,8 @@ public class AskColorRemoveFromAll extends Message {
     private static final long serialVersionUID = 5650419507381102124L;
 
     /**
-<<<<<<< HEAD:src/main/java/it/polimi/ingsw/network/message/GameModeRequest.java
-     * Message sent when requesting game mode
-=======
      * Message sent to ask which color remove for every player, after the correspondent effect card has been played.
      * @param active player that played the effect
->>>>>>> main:src/main/java/it/polimi/ingsw/network/message/AskColorRemoveFromAll.java
      */
     public AskColorRemoveFromAll(String active) {
         super(active, MessageType.COLOR_REMOVE_ALL);

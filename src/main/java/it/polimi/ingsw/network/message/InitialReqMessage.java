@@ -15,11 +15,7 @@ public class InitialReqMessage extends Message{
     private final GameMode gameMode;
 
     /**
-<<<<<<< HEAD
-     * Message sent to ask the initial game configuration
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param numberPlayers number of players

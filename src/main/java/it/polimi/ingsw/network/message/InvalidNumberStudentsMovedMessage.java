@@ -9,12 +9,8 @@ public class InvalidNumberStudentsMovedMessage extends Message{
     private static final long serialVersionUID = -1491746583143505822L;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player moves the wrong number of students
-=======
      * Default constructor
      * Parameter is set by the constructor
->>>>>>> main
      * @param nickname current player
      */
 

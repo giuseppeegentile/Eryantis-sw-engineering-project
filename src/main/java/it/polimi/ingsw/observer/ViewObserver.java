@@ -57,16 +57,11 @@ public interface ViewObserver {
      */
     void onUpdateMotherNature(String player, byte movement);
 
-<<<<<<< HEAD
-    void onUpdateWaiting(String nickname, int cloudIndex);
-
-=======
     /**
      * Sends a message to the server when a player chooses the assistant card for the current turn
      * @param playerModel The active player in the current turn
      * @param assistantCardModel The card chosen by the player
      */
->>>>>>> main
     void onUpdateCardPlayed(String playerModel, int assistantCardModel);
 
     /**
@@ -98,28 +93,6 @@ public interface ViewObserver {
      */
     void onUpdateGameMode(GameMode finalMode);
 
-<<<<<<< HEAD
-    void onUpdateCharacterCardPlayed(String activePlayer, CharacterCardModel chosenCard);
-
-    void onUpdateColorToIgnore(String active, ColorPawns color);
-
-    void onUpdateMovedStudentFromCardToIsland(String active, int indexIsland, ColorPawns colorChosenIndex);
-
-    void onUpdateExtraGetInfluence(String active, int indexIsland);
-
-    void onUpdateBanCard(String active, int indexIsland);
-
-    void onUpdateMovedStudentsFromCardToEntrance(String active, List<ColorPawns> studentsFromCard, List<ColorPawns> studentsFromEntrance);
-
-    void onMovedStudentsFromCardToHall(String nickname, ColorPawns pickedStudent);
-
-    void onUpdateColorRemoveForAll(String active, ColorPawns equivalentColorPawns);
-
-    void onUpdateChangeHallEntrance(String active, List<ColorPawns> studentsFromHall, List<ColorPawns> studentsFromEntrance);
-
-    void onRequestLobby(String nickname);
-
-=======
     /**
      * Sends a message to the server when a player chooses a character card
      * @param activePlayer The active player in the current turn
@@ -197,6 +170,5 @@ public interface ViewObserver {
      * @param nick The active player in the current turn
      * @param nickChosen
      */
->>>>>>> main
     void onRequestBoard(String nick, String nickChosen);
 }

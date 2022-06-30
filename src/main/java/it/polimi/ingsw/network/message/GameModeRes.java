@@ -9,13 +9,6 @@ public class GameModeRes extends Message{
 
     private static final long serialVersionUID = 1622383409250771615L;
 
-<<<<<<< HEAD
-    /**
-     * Message sent as a response to the game mode's request
-     * Parameters are set by the constructor
-     */
-=======
->>>>>>> main
 
     private final GameMode gameMode;
 

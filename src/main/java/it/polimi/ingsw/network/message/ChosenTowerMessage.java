@@ -12,12 +12,7 @@ public class ChosenTowerMessage extends Message{
     private final ColorTower colorTower;
 
     /**
-<<<<<<< HEAD
-     * Message sent as a response to the choice of the tower's color by a player
-     * Parameters are set by the constructor
-=======
      * Message sent as a response to the choice of the tower's color by a player.
->>>>>>> main
      * @param nickname nickname of the player who chooses the tower's color
      * @param colorTower color of the tower chosen by the player
      */
@@ -28,14 +23,8 @@ public class ChosenTowerMessage extends Message{
     }
 
     /**
-<<<<<<< HEAD
-     * @return color chosen
-     */
-
-=======
      * @return color of the tower chosen.
      */
->>>>>>> main
     public ColorTower getColorTowers() {
         return colorTower;
     }

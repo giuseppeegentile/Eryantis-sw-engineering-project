@@ -14,11 +14,7 @@ public class StudentToHallMessage extends Message {
     private final int numberStudentsToMove;
 
     /**
-<<<<<<< HEAD
-     * Message sent to move a student from the entrance to the hall
-=======
      * Default constructor.
->>>>>>> main
      * Parameters are set by the constructor
      * @param player current player
      * @param entrance player's entrance

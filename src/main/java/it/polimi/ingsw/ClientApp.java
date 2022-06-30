@@ -9,11 +9,7 @@ public class ClientApp {
 
     public static void main(String[] args) {
 
-<<<<<<< HEAD
-        boolean cli = false; //default launch gui
-=======
         boolean cli = true; //default launch gui
->>>>>>> main
 
         for(String param: args){
             if (param.equals("--c") || param.equals("--cli")) {

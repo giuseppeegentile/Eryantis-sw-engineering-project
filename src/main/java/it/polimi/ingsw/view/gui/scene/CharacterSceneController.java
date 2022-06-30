@@ -91,11 +91,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         labels = List.of(text_1, text_2, text_3);
         initialHide();
         moneyPlayerLbl.setText(String.valueOf(playerMoney));
-<<<<<<< HEAD
-
-=======
         setDeck(cards);
->>>>>>> main
         List<ImageView> imagesList = List.of(card1,card2,card3);
         List<HBox> hboxList = List.of(boxCost_1, boxCost_2, boxCost_3);
         List<GridPane> gridPaneList = List.of(gridStudent_1, gridStudent_2, gridStudent_3);
@@ -238,11 +234,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(30.0);
         String path = "/images_cranio/coin.png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -255,11 +247,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);

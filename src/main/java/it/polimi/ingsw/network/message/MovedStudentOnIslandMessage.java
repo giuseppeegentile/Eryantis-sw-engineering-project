@@ -15,11 +15,7 @@ public class MovedStudentOnIslandMessage extends Message {
     private final int indexIsland;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player successfully moves a student to an island
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param students students moved

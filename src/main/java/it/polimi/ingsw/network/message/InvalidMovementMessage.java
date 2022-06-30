@@ -10,11 +10,7 @@ public class InvalidMovementMessage extends Message{
     private final byte movementInserted;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player makes an invalid movement
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param movementAllowed movement that is allowed

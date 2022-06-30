@@ -15,10 +15,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameModel extends Observable implements Serializable {
     private static final long serialVersionUID = -8113521898963437960L;
     private List<IslandModel> islandModels;
+
     private int playersNumber=0;
     private List<PlayerModel> playersModels = new ArrayList<>();
     private List<CloudModel> cloudsModel;
@@ -27,18 +29,16 @@ public class GameModel extends Observable implements Serializable {
     private List<AssistantCardModel> deck = null;
     private List<AssistantCardModel> cemetery = new ArrayList<>();
     private List<PlayerModel> phaseOrder;
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     private boolean havePlayerFinishedCards = false;
     public static final String SERVER_NICKNAME = "server";
-    private static GameModel instance = new GameModel();
+
+    private static GameModel istance = new GameModel();
 
     /**
      *
      * @return The list of the player in game or an empty list if there aren't players
-     * @throws NullPointerException If playersModel is null
+     * @throws NullPointerException
      */
     public List<PlayerModel> getPlayersModel() throws NullPointerException{
         /*try{
@@ -49,10 +49,7 @@ public class GameModel extends Observable implements Serializable {
         return playersModels;
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     /**
      *
      * @param playersNumber The number of the players joined the current match
@@ -61,11 +58,8 @@ public class GameModel extends Observable implements Serializable {
         this.playersNumber = playersNumber;
     }
 
-<<<<<<< HEAD
-=======
     //da testare
 
->>>>>>> main
     /**
      *
      * @param player A player that has to be added to the current match
@@ -82,14 +76,10 @@ public class GameModel extends Observable implements Serializable {
     public boolean removePlayerByNickname(String nickname) {
         PlayerModel playerToRemove = getPlayerByNickname(nickname);
         boolean result = playersModels.remove(playerToRemove);
-<<<<<<< HEAD
-        notifyObserver(new LobbyInfoMessage(playersModels));
-=======
 
         notifyObserver(new LobbyInfoMessage(playersModels));
 
 
->>>>>>> main
         return result;
     }
 
@@ -97,7 +87,7 @@ public class GameModel extends Observable implements Serializable {
      * It sets the istance to null
      */
     public static void resetInstance() {
-        GameModel.instance = null;
+        GameModel.istance = null;
     }
     //singleton pattern: quando dovrò usare Game in un'altra classe dovrò fare:
     //Game g = Game.getInstance();
@@ -108,9 +98,9 @@ public class GameModel extends Observable implements Serializable {
      * @return The instance of the current game
      */
     public static synchronized GameModel getInstance(){
-        if (instance == null)
-            instance = new GameModel();
-        return instance;
+        if (istance == null)
+            istance = new GameModel();
+        return istance;
     }
 
     /**

@@ -13,10 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Objects;
->>>>>>> main
 
 public class IslandSelectionSceneController extends ViewObservable implements GenericSceneController{
     @FXML
@@ -145,11 +142,7 @@ public class IslandSelectionSceneController extends ViewObservable implements Ge
         b.setPrefHeight(30.0);
         b.setPrefWidth(35.0);
         String path = "/images_cranio/pawns/" + s.name() +  ".png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -162,11 +155,7 @@ public class IslandSelectionSceneController extends ViewObservable implements Ge
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/pawns/MOTHER.png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -179,11 +168,7 @@ public class IslandSelectionSceneController extends ViewObservable implements Ge
         b.setPrefHeight(30.0);
         b.setPrefWidth(23.0);
         String path = "/images_cranio/towers/" + colorTower + ".png";
-<<<<<<< HEAD
-        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(path).toExternalForm()),
-=======
         BackgroundImage backgroundImage = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))),
->>>>>>> main
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);

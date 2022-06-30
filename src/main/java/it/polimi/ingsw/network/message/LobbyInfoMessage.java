@@ -13,11 +13,7 @@ public class LobbyInfoMessage extends Message {
     private final List<PlayerModel> nicknameList;
 
     /**
-<<<<<<< HEAD
-     * Message sent to display the players' list
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nicknameList list of players
      */

@@ -14,11 +14,7 @@ public class OrderMessage extends Message{
     private final List<PlayerModel> order;
 
     /**
-<<<<<<< HEAD
-     * Message sent to display the players' order
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname current player
      * @param order players' order

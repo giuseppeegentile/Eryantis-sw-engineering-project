@@ -15,11 +15,7 @@ public class PlayerNicknameMessage extends Message{
     private final GameMode gameMode;
 
     /**
-<<<<<<< HEAD
-     * Message sent when a player is asked to choose a nickname
-=======
      * Default constructor
->>>>>>> main
      * Parameters are set by the constructor
      * @param nickname nickname chosen
      * @param numPlayers number of players
