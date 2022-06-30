@@ -11,6 +11,7 @@
 - Cli interface
 - Advanced rules
 - GUI
+- 4 players game (AF)
 
 ## How to run the project
 Make sure you have installed java.
