@@ -13,6 +13,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 
+/**
+ * Class that manages every interaction of the player in game mode selection scene.
+ */
+
 public class GameModeSceneController extends ViewObservable implements GenericSceneController{
     @FXML
     private Label insertGameMode;
@@ -29,6 +33,10 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
     @FXML
     private RadioButton advanced_button;
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene.
+     */
+
     @FXML
     private void initialize() {
         waitOtherPlayers.setVisible(false);
@@ -37,17 +45,31 @@ public class GameModeSceneController extends ViewObservable implements GenericSc
         advanced_button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onAdvancedClick);
     }
 
+    /**
+     * Notifies the observer when advanced mode is selected.
+     * @param e click event
+     */
+
     private void onAdvancedClick(Event e) {
         new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.ADVANCED))).start();
         Gui.setMode(GameMode.ADVANCED);
         showWaitOtherPlayers();
     }
 
+    /**
+     * Notifies the observer when advanced mode is selected.
+     * @param e click event
+     */
+
     private void onBeginnerClick(Event e) {
         new Thread(() -> notifyObserver(obs -> obs.onUpdateGameMode(GameMode.BEGINNER))).start();
         Gui.setMode(GameMode.BEGINNER);
         showWaitOtherPlayers();
     }
+
+    /**
+     * Shows a pop when waiting for the other players.
+     */
 
     private void showWaitOtherPlayers(){
         advanced_button.setVisible(false);

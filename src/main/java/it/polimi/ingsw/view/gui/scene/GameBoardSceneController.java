@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Class that manages every interaction of the player with the game board scene.
+ */
+
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
     private List<ColorTower> towers;
     private Map<ColorPawns, Integer> hall;
@@ -149,6 +153,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private boolean alreadyMovedMother = false;
     private GameMode gameMode;
 
+    /**
+     * Manages every interaction of the player with graphical objects in the scene.
+     */
+
     @FXML
     private void initialize(){
         skipMove.setVisible(false);
@@ -199,16 +207,30 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         });
     }
 
+    /**
+     * Sets the subtitle text visible
+     * @param text text to show
+     */
+
     public void setSubtitleText(String text){
         subtitle.setVisible(true);
         subtitle.setText(text);
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param turnLabel turn's label
+     */
 
     public void setTurnLabel(String turnLabel) {
         this.turnText = turnLabel;
         if(this.turnLabel != null)
             this.turnLabel.setText(turnLabel);
     }
+
+    /**
+     * Displays the clouds in the game board.
+     */
 
     public void cloudsDisplay() {
         List<VBox> cloudsVboxes = new ArrayList<>(List.of(vboxCloud1, vboxCloud2));
@@ -232,6 +254,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Notifies the observer whenever the player interacts with the clouds.
+     * The clouds number changes based on the players number.
+     */
 
     public void setHandlerClouds(){
         List<VBox> cloudsVboxes = new ArrayList<>(List.of(vboxCloud1, vboxCloud2));
@@ -248,6 +274,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Gets the image of the students
+     * @param s color of the student
+     * @return the button with the image of the student based on the color
+     */
+
     private Button getPawnByColor(ColorPawns s) {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -260,6 +292,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setBackground(background);
         return b;
     }
+
+    /**
+     * Displays the islands in the game board.
+     */
 
     public void islandsDisplay() {
         int k = 0;
@@ -300,6 +336,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Gets the image of the prohibition.
+     * @return the button with the prohibition
+     */
+
     private Button getProhib() {
         Button b = new Button();
         b.setPrefHeight(62.0);
@@ -313,6 +354,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         return b;
     }
     private int islandProhib;
+
+    /**
+     * Notifies the observer whenever the player interacts with an island.
+     * @param vBox
+     * @param islandIndex
+     */
+
     private void setIslandEventListener(VBox vBox, int islandIndex) {
         vBox.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
             if(!alreadyMovedStudent) {
@@ -321,6 +369,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         });
     }
+
+    /**
+     * Gets the image of mother nature
+     * @return the button with the image of mother nature
+     */
 
     private Button getStyledMotherButton() {
         Button b = new Button();
@@ -335,6 +388,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         return b;
     }
 
+    /**
+     * Gets the image of the towers
+     * @param colorTower color of the towers
+     * @return the button with the image of the towers
+     */
+
     private Button getStyledTower(String colorTower) {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -347,6 +406,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         b.setBackground(background);
         return b;
     }
+
+    /**
+     * Displays the player game board's entrance
+     */
 
     public void entranceDisplay() {
         entrancePane.getChildren().clear();
@@ -375,7 +438,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         entrancePane.setEffect(new DropShadow(10, Color.YELLOW));
     }
 
-
+    /**
+     * Notifies the observer whenever the player interacts with the entrance.
+     * The entrance size changes based on the players number.
+     * @param button button that represents the students.
+     * @param colorToMove color of the student to move
+     */
 
     private void setEntranceEventListener(Button button, ColorPawns colorToMove) {
         if(sizeEntrance == 9) sizeEntrance = 4;
@@ -406,6 +474,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Displays the towers in the game board
+     */
+
     public void towersDisplay() {
         String colorTower = towers.get(0).name();
         int i;
@@ -423,6 +495,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Shows the correct number of clouds.
+     */
+
     private void showCorrectClouds(){
         if(cloudModels.size() == 3){
             cloud_4.setVisible(false);
@@ -432,11 +508,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Default constructor. The parameter is set by the constructor
+     * @param towers list of towers' color
+     */
+
     public void setTowers(List<ColorTower> towers) {
         this.towers =towers;
     }
 
     private int sizeEntrance;
+
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param entrance list of students in the entrance
+     */
     public void setEntrance(List<ColorPawns> entrance) {
         this.entrance =entrance;
         sizeEntrance = entrance.size();
@@ -447,17 +533,37 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param profs list of the profs.
+     */
+
     public void setProfs(List<ColorPawns> profs) {
         this.profs =profs;
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param hall map of the students in the hall
+     */
 
     public void setHall(Map<ColorPawns, Integer> hall) {
         this.hall = hall;
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param nickname current player
+     */
+
     public void setPlayer(String nickname) {
         this.nickname = nickname;
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param deckSceneController controller of the deck scene
+     */
 
     public void setDeckSceneController(DeckSceneController deckSceneController) {
         this.deckSceneController = deckSceneController;
@@ -466,9 +572,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param islands list of the islands
+     */
+
     public void setIslands(List<IslandModel> islands){
         this.islands = islands;
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param cloudModels list of the clouds
+     */
 
     public void setClouds(List<CloudModel> cloudModels) {
         this.cloudModels = cloudModels;
@@ -476,9 +592,18 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     private int numberStudentsToMove = 0;
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param numberStudentsToMove number of students to move
+     */
+
     public void setNumberToMove(int numberStudentsToMove) {
         this.numberStudentsToMove = numberStudentsToMove;
     }
+
+    /**
+     * Displays the player game board's hall.
+     */
 
     public void hallDisplay() {
         for(int i=0; i < hall.get(ColorPawns.GREEN); i++){
@@ -497,6 +622,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             hallGrid.add(getPawnByColor(ColorPawns.BLUE) , i, 4);
         }
     }
+
+    /**
+     * Notifies the observer whenever the player interact with mother nature
+     * @param maxMovement max number islands that mother nature can reach
+     */
 
     public void islandHandlerMother(byte maxMovement) {
         List<VBox> vBoxes = List.of(vboxIsland1,vboxIsland2,vboxIsland3,vboxIsland4,vboxIsland5,vboxIsland6,vboxIsland7,vboxIsland8,vboxIsland9,vboxIsland10,vboxIsland11,vboxIsland12);
@@ -527,9 +657,17 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Sets the skip button to visible
+     */
+
     public void setVisibleSkip() {
         this.skipMove.setVisible(true);
     }
+
+    /**
+     * Displays the profs on the player game board
+     */
 
     public void displayProfs(){
         int row = 0;
@@ -542,11 +680,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor. alreadyMovedStudent is set to false,
+     * numberStudentsToMove is set to 0, alreadyMovedMother is set to true.
+     * Sets the end of the player's turn.
+     */
+
     public void setEndTurn() {
         this.alreadyMovedStudent = false;
         this.numberStudentsToMove = 0;
         this.alreadyMovedMother = true;
     }
+
+    /**
+     * Sets the start of a player's turn.
+     */
 
     public void setNewTurn(){
         displayProfs();
@@ -556,23 +704,46 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         this.studentToHall.clear();
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param characterSceneController controller of the character cards scene
+     */
+
     public void setCharacterSceneController(CharacterSceneController characterSceneController){
         this.characterSceneController = characterSceneController;
         characterSceneController.setEntrance(entrance);
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param gameMode chosen game mode
+     */
+
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }
+
+    /**
+     * Sets the subtitle to visible
+     */
 
     public void setVisibleSubtitle() {
         subtitle.setVisible(true);
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor.
+     * @param nicknameList list of the players' nicknames
+     */
+
     public void setNicknameList(List<PlayerModel> nicknameList) {
         this.nicknameList = nicknameList;
         setLobbyTable();
     }
+
+    /**
+     * Sets the lobby table
+     */
 
     private void setLobbyTable() {
         lobbyTable.getChildren().clear();
@@ -603,6 +774,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
         }
     }
+
+    /**
+     * Hides the subtitle.
+     */
 
     public void hideSubtitle() {
         if(this.subtitle != null)

@@ -173,6 +173,13 @@ public class SceneController extends ViewObservable {
         buildWindow(title, fxmlLoader);
     }
 
+    /**
+     * Shows a scene which contains the player's list of assistant cards
+     * @param deckSceneController controller of the deck scene
+     * @param nameFxml name of the fxml file
+     * @throws IOException
+     */
+
 
     public static void showDeck(DeckSceneController deckSceneController, String nameFxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
@@ -180,6 +187,12 @@ public class SceneController extends ViewObservable {
         String title = "Carte disponibili: ";
         buildWindow(title, fxmlLoader);
     }
+
+    /**
+     * Builds the main game's window
+     * @param title scene's title
+     * @param fxmlLoader the loader of every game's scene
+     */
 
     private static void buildWindow(String title, FXMLLoader fxmlLoader) {
         try {
@@ -194,6 +207,13 @@ public class SceneController extends ViewObservable {
             logger.log(SEVERE, "Failed to create new Window.", e);
         }
     }
+
+    /**
+     * Shows a scene which contains a list of three character cards in the esxpert mode
+     * @param characterSceneController controller of the cards scene
+     * @param nameFxml name of the fxml file
+     * @throws IOException
+     */
     public static void showCharacter(CharacterSceneController characterSceneController, String nameFxml)  throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
         fxmlLoader.setController(characterSceneController);

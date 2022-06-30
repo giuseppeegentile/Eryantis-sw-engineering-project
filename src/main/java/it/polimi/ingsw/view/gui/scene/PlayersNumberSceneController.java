@@ -27,6 +27,11 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
 
     @FXML
     private Label number_players;
+
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene
+     */
+
     @FXML
     public void initialize() {
         number_players.setText("2");
@@ -59,9 +64,19 @@ public class PlayersNumberSceneController extends ViewObservable implements Gene
         });
     }
 
+    /**
+     * Changes the scene to ScreenTitle if the button is clicked.
+     * @param event click event
+     */
+
     private void onBackToMenu(Event event) {
         SceneController.changeRootPane(observers, event, "ScreenTitle.fxml");
     }
+
+    /**
+     * Notifies the observer to change the scene if the button is clicked.
+     * @param event click event
+     */
 
     private void onNextStageClicked(Event event){
         nextStageBtn.setDisable(true);

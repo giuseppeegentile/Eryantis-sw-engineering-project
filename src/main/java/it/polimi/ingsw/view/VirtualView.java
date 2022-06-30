@@ -15,6 +15,10 @@ import it.polimi.ingsw.observer.Observer;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class the manages the game's view on the client side
+ */
+
 public class VirtualView implements View, Observer {
     private final ClientHandler clientHandler;
 

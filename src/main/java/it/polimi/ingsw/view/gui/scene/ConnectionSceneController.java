@@ -42,6 +42,10 @@ public class ConnectionSceneController extends ViewObservable implements Generic
     @FXML
     private Label serverPortLabel;
 
+    /**
+     * Manages every interaction of the player with graphical objects in the scene.
+     */
+
     @FXML
     public void initialize() {
         connectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onConnectButtonClick);

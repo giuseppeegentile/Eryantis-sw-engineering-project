@@ -12,6 +12,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
+/**
+ * Class that implements the scene with the selection of the towers' color.
+ */
+
 public class TowerColorSceneController extends ViewObservable implements GenericSceneController{
 
     private List<ColorTower> availableColorTowers;
@@ -27,11 +31,19 @@ public class TowerColorSceneController extends ViewObservable implements Generic
     @FXML
     private RadioButton black_button;
 
+    /**
+     * Hides the radio button
+     * @param btnToHide button that has to be hidden
+     */
 
     private void hide(RadioButton btnToHide){
         btnToHide.setVisible(false);
         btnToHide.managedProperty().bind(btnToHide.visibleProperty());
     }
+
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene.
+     */
 
     @FXML
     private void initialize() {
@@ -67,6 +79,11 @@ public class TowerColorSceneController extends ViewObservable implements Generic
 
     }
 
+    /**
+     * Notifies the observer when the player confirms the color chosen
+     * @param e click event
+     */
+
     private void onBtnClick(Event e) {
         ColorTower colorChosen;
         if(black_button.isSelected()){
@@ -88,6 +105,11 @@ public class TowerColorSceneController extends ViewObservable implements Generic
 
     }
 
+    /**
+     * Disables the other radio buttons when black color is chosen.
+     * @param e click event
+     */
+
     private void onBlackBtnClick(Event e) {
         if (!white_button.isDisabled() && !grey_button.isDisabled()){
             white_button.setDisable(true);
@@ -97,6 +119,11 @@ public class TowerColorSceneController extends ViewObservable implements Generic
             grey_button.setDisable(false);
         }
     }
+
+    /**
+     * Disables the other radio buttons when white color is chosen.
+     * @param e click event
+     */
 
     private void onWhiteBtnClick(Event e) {
         if (!black_button.isDisabled() && !grey_button.isDisabled()){
@@ -108,6 +135,11 @@ public class TowerColorSceneController extends ViewObservable implements Generic
         }
     }
 
+    /**
+     * Disables the other radio buttons when grey color is chosen.
+     * @param e click event
+     */
+
     private void onGreyBtnClick(Event e) {
         if (!white_button.isDisabled() && !black_button.isDisabled()){
             white_button.setDisable(true);
@@ -117,6 +149,11 @@ public class TowerColorSceneController extends ViewObservable implements Generic
             black_button.setDisable(false);
         }
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor
+     * @param availableColorTowers list of available towers' colors
+     */
 
     public void setAvailableTowers(List<ColorTower> availableColorTowers) {
         this.availableColorTowers =availableColorTowers;

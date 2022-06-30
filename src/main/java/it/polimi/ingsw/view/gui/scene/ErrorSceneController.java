@@ -44,6 +44,10 @@ public class ErrorSceneController implements GenericSceneController {
         yOffset = 0;
     }
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene.
+     */
+
     @FXML
     public void initialize() {
         rootPane.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onRootPaneMousePressed);

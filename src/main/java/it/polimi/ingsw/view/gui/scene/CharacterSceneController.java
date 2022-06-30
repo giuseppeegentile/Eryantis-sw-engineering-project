@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class the manages the interactions in the character cards' scene
+ */
+
 public class CharacterSceneController extends ViewObservable implements GenericSceneController {
 
     private List<CharacterCardModel> cards;
@@ -73,9 +77,18 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private int playerMoney;
     private List<IslandModel> islands;
 
+    /**
+     * Default constructor
+     * @param islands list of the islands
+     */
+
     public void setIslands(List<IslandModel> islands) {
         this.islands = islands;
     }
+
+    /**
+     * Initially hides labels and text fields
+     */
 
     private void initialHide(){
         gridEntrance.setVisible(false);
@@ -84,6 +97,10 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         for (TextField t : texts)
             t.setVisible(false);
     }
+
+    /**
+     * Manages every interaction of the player with graphical objects in the scene
+     */
 
     @FXML
     private void initialize(){
@@ -192,6 +209,15 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Allows to use the effect of the card "place student on card"
+     * @param gridPaneList list of grid panes
+     * @param i counter
+     * @param card character card
+     * @param maxStudents max number of students that can be moved
+     * @param effect string that explains the effect
+     */
+
     private void placeStudentsOnCard(List<GridPane> gridPaneList, int i, CharacterCardModel card, int maxStudents, String effect) {
         List<ColorPawns> students = ((InitialConfigEffect) card.getEffect()).getStudents();
         gridPaneList.get(i).getChildren().clear();
@@ -217,6 +243,11 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         gridPaneList.get(i).setEffect(new DropShadow(10, Color.YELLOW));
     }
 
+    /**
+     * Sets the list of the character cards usable during the game
+     * @param cards list of character cards
+     */
+
     public void setDeck(List<CharacterCardModel> cards) {
         this.cards = cards;
         if(boxCost_1 != null) {
@@ -228,6 +259,11 @@ public class CharacterSceneController extends ViewObservable implements GenericS
             }
         }
     }
+
+    /**
+     * Gets the coin image
+     * @return the button with the coin's image
+     */
 
     private Button getStyledCoins() {
         Button b = new Button();
@@ -242,6 +278,12 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         return b;
     }
 
+    /**
+     * Gets the image of the students
+     * @param s color of the student
+     * @return the button with the student's image
+     */
+
     private Button getPawnByColor(ColorPawns s) {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -254,6 +296,16 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         b.setBackground(background);
         return b;
     }
+
+    /**
+     * Notifies the observer whenever a player uses a character card
+     * @param button button clicked
+     * @param colorToMove color of the student to move
+     * @param maxStudents max number of students that can be moved
+     * @param effect character card's effect
+     * @param numCard index of the card
+     * @param card character card model
+     */
 
     private void setStudentsEventListener(Button button, ColorPawns colorToMove, int maxStudents, String effect, int numCard, CharacterCardModel card) {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -291,13 +343,30 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         });
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor
+     * @param nickname current player
+     */
+
     public void setNickname(PlayerModel nickname) {
         this.nickname = nickname;
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor
+     * @param studentInEntrance list of students in the entrance
+     */
+
     public void setEntrance(List<ColorPawns> studentInEntrance) {
         this.entrance = studentInEntrance;
     }
+
+    /**
+     * Places students in the player board's entrance
+     * @param gridPane object grid pane
+     * @param entrance list of students in the entrance
+     * @param maxStudents max number of students that can be placed on entrance
+     */
 
     private void placeStudentsOnEntrance(GridPane gridPane, List<ColorPawns> entrance, int maxStudents) {
         gridPane.getChildren().clear();
@@ -323,12 +392,24 @@ public class CharacterSceneController extends ViewObservable implements GenericS
         gridPane.setEffect(new DropShadow(10, Color.YELLOW));
     }
 
+    /**
+     *
+     * @param button
+     * @param colorToMove
+     * @param maxStudents
+     */
+
     private void setStudentsEventListenerEntrance(Button button, ColorPawns colorToMove, int maxStudents) {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if (studentsFromEntrance.size() < maxStudents)
                 studentsFromEntrance.add(colorToMove);
         });
     }
+
+    /**
+     * Default constructor. Sets the number of player's coins.
+     * @param playerMoney number of player's coins
+     */
 
     public void setPlayerMoney(int playerMoney) {
         this.playerMoney = playerMoney;

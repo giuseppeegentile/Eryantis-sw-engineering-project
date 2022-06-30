@@ -5,6 +5,10 @@ import it.polimi.ingsw.view.cli.Cli;
 import it.polimi.ingsw.view.gui.JavaFXGui;
 import javafx.application.Application;
 
+/**
+ * Game's client
+ */
+
 public class ClientApp {
 
     public static void main(String[] args) {

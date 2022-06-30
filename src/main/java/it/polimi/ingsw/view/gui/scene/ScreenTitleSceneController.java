@@ -21,6 +21,10 @@ public class ScreenTitleSceneController extends ViewObservable implements Generi
     @FXML
     private Button quitGameButton;
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene.
+     */
+
     @FXML
     public void initialize() {
         newGameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNewGameButtonClick);

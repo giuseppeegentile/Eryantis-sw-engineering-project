@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class the manages every interaction in the player's deck scene.
+ */
+
 public class DeckSceneController extends ViewObservable implements GenericSceneController {
     private List<AssistantCardModel> cards;
 
@@ -40,6 +44,10 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
 
     private String nickname;
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene
+     */
+
     @FXML
     private void initialize()  {
         List<ImageView> imagesList = List.of(card_1,card_2,card_3,card_4,card_5,card_6,card_7,card_8,card_9,card_10);
@@ -65,9 +73,19 @@ public class DeckSceneController extends ViewObservable implements GenericSceneC
         }
     }
 
+    /**
+     * Default constructor. Parameter is set by the constructor
+     * @param cards list of assistant cards
+     */
+
     public void setDeck(List<AssistantCardModel> cards) {
         this.cards =cards;
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor
+     * @param nickname current player
+     */
 
     public void setNickname(String nickname) {
         this.nickname = nickname;

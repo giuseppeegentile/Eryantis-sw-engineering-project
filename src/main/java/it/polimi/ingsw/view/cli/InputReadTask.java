@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 
+/**
+ * Class used to read input lines
+ */
+
 public class InputReadTask implements Callable<String> {
     private final BufferedReader br;
 

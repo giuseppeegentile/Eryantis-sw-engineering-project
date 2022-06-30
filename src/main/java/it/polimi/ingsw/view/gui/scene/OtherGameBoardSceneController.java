@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Class the implements the scene with the other players game board
+ */
+
 public class OtherGameBoardSceneController extends ViewObservable implements GenericSceneController{
     private PlayerModel player;
     private Map<ColorPawns, Integer> hall;
@@ -46,12 +50,21 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
     @FXML
     TableColumn<String, String> gamersCol;
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene
+     */
+
     @FXML
     private void initialize() {
         entranceDisplay();
         hallDisplay();
         titleLabel.setText("Plancia di gioco di: " + player.getNickname());
     }
+
+    /**
+     * Displays the player board's entrance
+     */
+
     public void entranceDisplay() {
         entrancePane.getChildren().clear();
         Button b = getPawnByColor(entrance.get(0));
@@ -74,6 +87,11 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
             rowGrid++;
         }
     }
+
+    /**
+     * Display the player board's hall
+     */
+
     public void hallDisplay() {
         for(int i=0; i < hall.get(ColorPawns.GREEN); i++){
             hallGrid.add(getPawnByColor(ColorPawns.GREEN) , i, 0);
@@ -92,6 +110,12 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
         }
     }
 
+    /**
+     * Gets the image of the students from the resources.
+     * @param s student associated with the color
+     * @return the button with the students image
+     */
+
     private Button getPawnByColor(ColorPawns s) {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -105,6 +129,11 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
         b.setBackground(background);
         return b;
     }
+
+    /**
+     * Default constructor. Parameter is set by the constructor. Also sets the students in the hall and in the entrance.
+     * @param player current player
+     */
 
     public void setPlayer(PlayerModel player) {
         this.player = player;

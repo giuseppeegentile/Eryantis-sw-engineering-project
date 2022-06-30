@@ -26,6 +26,10 @@ public class LoginSceneController extends ViewObservable implements GenericScene
     @FXML
     private Button backToTitleButton;
 
+    /**
+     * Manages every interaction of the player with the graphical objects in the scene.
+     */
+
     @FXML
     public void initialize() {
         nextStageButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNextStageButtonClick);
