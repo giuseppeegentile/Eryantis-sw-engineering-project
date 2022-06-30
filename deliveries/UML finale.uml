@@ -1,0 +1,1678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/david/OneDrive/Documenti/ing-sw-2022-Galbiati-Giosia-Gentile</OriginalElement>
+  <nodes>
+    <node x="8399.0" y="1424.0">it.polimi.ingsw.network.message.ChosenColorToIgnore</node>
+    <node x="6134.0" y="1424.0">it.polimi.ingsw.network.message.DisplayEntranceMessage</node>
+    <node x="4417.0" y="1498.0">it.polimi.ingsw.model.colors.ColorTower</node>
+    <node x="2977.0" y="1498.0">it.polimi.ingsw.network.message.ErrorMessage</node>
+    <node x="8194.852418267614" y="1269.0">it.polimi.ingsw.controller.GameController</node>
+    <node x="6748.102418267613" y="833.0">it.polimi.ingsw.network.message.EntranceChangeMessage</node>
+    <node x="10468.0" y="1424.0">it.polimi.ingsw.network.message.AskColorToIgnore</node>
+    <node x="5755.102418267613" y="517.0">it.polimi.ingsw.model.effects.ControlProfEffectTest</node>
+    <node x="9800.0" y="1424.0">it.polimi.ingsw.network.message.GameModeRequest</node>
+    <node x="2261.0" y="1424.0">it.polimi.ingsw.network.message.MovedStudentToHallMessage</node>
+    <node x="5048.666666666666" y="517.0">it.polimi.ingsw.model.effects.AddToHallEffect</node>
+    <node x="4342.577561509925" y="91.0">it.polimi.ingsw.model.effects.Effect</node>
+    <node x="6393.0" y="1424.0">it.polimi.ingsw.model.cards.CharacterCardModelTest</node>
+    <node x="5612.0" y="1424.0">it.polimi.ingsw.network.message.MovedFromCardToIsland</node>
+    <node x="3890.0" y="1498.0">it.polimi.ingsw.network.client.SocketClient</node>
+    <node x="2097.833333333333" y="1136.0">it.polimi.ingsw.view.gui.Gui</node>
+    <node x="3710.0" y="1498.0">it.polimi.ingsw.network.server.SocketServer</node>
+    <node x="0.0" y="1498.0">it.polimi.ingsw.model.player.PlayerModelTest</node>
+    <node x="9671.704120323564" y="517.0">it.polimi.ingsw.network.message.AskExtraGetInfluenceMessage</node>
+    <node x="5041.416666666666" y="91.0">it.polimi.ingsw.network.message.DisplayPlayerBoardMessage</node>
+    <node x="5032.666666666666" y="204.0">it.polimi.ingsw.model.effects.AddInfluenceEffect</node>
+    <node x="4812.0" y="1424.0">it.polimi.ingsw.network.message.PlayAssistantCardMessage</node>
+    <node x="1163.1024182676138" y="517.0">it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController</node>
+    <node x="9342.0" y="1424.0">it.polimi.ingsw.network.message.DisplayProfMessage</node>
+    <node x="4244.0" y="1498.0">it.polimi.ingsw.model.enums.GameMode</node>
+    <node x="205.0" y="1498.0">it.polimi.ingsw.model.game.CloudModelTest</node>
+    <node x="6911.0" y="1424.0">it.polimi.ingsw.network.message.MovedBanCardMessage</node>
+    <node x="3529.0" y="1498.0">it.polimi.ingsw.network.message.TextMessage</node>
+    <node x="9112.0" y="1424.0">it.polimi.ingsw.network.server.SocketClientHandler</node>
+    <node x="3704.0" y="1424.0">it.polimi.ingsw.network.message.MovedFromCardToEntrance</node>
+    <node x="3901.600143242311" y="833.0">it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage</node>
+    <node x="4699.370786990232" y="1350.0">it.polimi.ingsw.ClientApp</node>
+    <node x="7420.0" y="1424.0">it.polimi.ingsw.network.message.StudentToHallMessage</node>
+    <node x="5175.975143242311" y="1136.0">it.polimi.ingsw.controller.ClientController</node>
+    <node x="9479.704120323564" y="517.0">it.polimi.ingsw.model.effects.AddToIslandEffect</node>
+    <node x="9571.0" y="1424.0">it.polimi.ingsw.network.message.DisplayHallMessage</node>
+    <node x="4263.0" y="1424.0">it.polimi.ingsw.network.message.ChosenChangeEntranceHall</node>
+    <node x="2022.4357516009468" y="517.0">it.polimi.ingsw.observer.ViewObservable</node>
+    <node x="10545.704120323564" y="517.0">it.polimi.ingsw.network.message.DisplayIslandMessage</node>
+    <node x="5843.0" y="1498.0">it.polimi.ingsw.network.client.Client</node>
+    <node x="3289.1192281765916" y="833.0">it.polimi.ingsw.network.message.DisplayDeckAndAskCardMessage</node>
+    <node x="1652.0" y="1424.0">it.polimi.ingsw.network.message.MovedStudentOnIslandMessage</node>
+    <node x="4251.102418267613" y="204.0">it.polimi.ingsw.model.cards.CharacterCardModel</node>
+    <node x="10300.704120323564" y="517.0">it.polimi.ingsw.network.message.AskMoveBanCardMessage</node>
+    <node x="944.583333333333" y="204.0">it.polimi.ingsw.view.gui.scene.GenericSceneController</node>
+    <node x="8938.620786990232" y="1136.0">it.polimi.ingsw.controller.GameControllerTest</node>
+    <node x="5081.0" y="1424.0">it.polimi.ingsw.network.message.InvalidMovementMessage</node>
+    <node x="5100.0" y="1498.0">it.polimi.ingsw.ServerApp</node>
+    <node x="5707.0" y="1498.0">it.polimi.ingsw.network.server.Server</node>
+    <node x="1493.9357516009468" y="517.0">it.polimi.ingsw.view.gui.scene.DeckSceneController</node>
+    <node x="4540.0" y="1424.0">it.polimi.ingsw.network.message.ChosenColorRemoveForAll</node>
+    <node x="4477.666666666666" y="204.0">it.polimi.ingsw.model.effects.ControlProfEffect</node>
+    <node x="4220.916666666666" y="517.0">it.polimi.ingsw.model.effects.InitialConfigEffectTest</node>
+    <node x="3347.0" y="1498.0">it.polimi.ingsw.network.message.PingMessage</node>
+    <node x="1623.0" y="1498.0">it.polimi.ingsw.model.colors.ColorPawnsTest</node>
+    <node x="6983.102418267613" y="833.0">it.polimi.ingsw.network.message.InitialResMessage</node>
+    <node x="10444.016809908979" y="204.0">it.polimi.ingsw.model.islands.IslandModel</node>
+    <node x="6355.850143242311" y="660.0">it.polimi.ingsw.network.message.MessageType</node>
+    <node x="3137.0" y="1424.0">it.polimi.ingsw.network.message.AssignProfResponseMessage</node>
+    <node x="4842.666666666666" y="204.0">it.polimi.ingsw.model.effects.InitialConfigEffect</node>
+    <node x="7166.0" y="1424.0">it.polimi.ingsw.model.cards.AssistantCardModelTest</node>
+    <node x="956.1024182676138" y="517.0">it.polimi.ingsw.view.gui.scene.ErrorSceneController</node>
+    <node x="5418.0" y="1498.0">it.polimi.ingsw.AppTest</node>
+    <node x="2791.0" y="1498.0">it.polimi.ingsw.network.server.ClientHandler</node>
+    <node x="86.10241826761376" y="833.0">it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController</node>
+    <node x="6147.102418267613" y="833.0">it.polimi.ingsw.network.message.RequestPlayersBoard</node>
+    <node x="7915.0" y="1424.0">it.polimi.ingsw.network.message.PlayerNumberRequest</node>
+    <node x="4398.600143242311" y="833.0">it.polimi.ingsw.network.message.DisplayCemeteryMessage</node>
+    <node x="8876.0" y="1424.0">it.polimi.ingsw.network.message.GameModeResponse</node>
+    <node x="5562.102418267613" y="204.0">it.polimi.ingsw.model.effects.IgnoreTowerEffect</node>
+    <node x="0.0" y="1424.0">it.polimi.ingsw.network.message.InvalidNumberStudentsMovedMessage</node>
+    <node x="2902.3692281765916" y="91.0">it.polimi.ingsw.network.message.InitialConfigurationResponseMessage</node>
+    <node x="589.5" y="660.0">it.polimi.ingsw.view.gui.SceneController</node>
+    <node x="4931.0" y="1498.0">it.polimi.ingsw.network.message.LoginReply</node>
+    <node x="4589.0" y="1498.0">it.polimi.ingsw.model.colors.ColorPawns</node>
+    <node x="234.10241826761376" y="517.0">it.polimi.ingsw.view.gui.scene.WinSceneController</node>
+    <node x="704.1024182676138" y="517.0">it.polimi.ingsw.view.gui.scene.TowerColorSceneController</node>
+    <node x="5821.850143242311" y="660.0">it.polimi.ingsw.model.effects.AddToHallEffectTest</node>
+    <node x="9106.352418267614" y="1269.0">it.polimi.ingsw.view.cli.Cli</node>
+    <node x="10682.0" y="1424.0">it.polimi.ingsw.network.message.StartTurnMessage</node>
+    <node x="7171.102418267613" y="833.0">it.polimi.ingsw.network.message.PlayedCharacterCardMessage</node>
+    <node x="11106.0" y="1424.0">it.polimi.ingsw.network.message.EndTurnMessage</node>
+    <node x="1034.0" y="1424.0">it.polimi.ingsw.network.message.EffectSkippingInfluenceMessage</node>
+    <node x="133.7041203235658" y="1269.0">it.polimi.ingsw.view.gui.scene.ConnectionSceneController</node>
+    <node x="1343.0" y="1424.0">it.polimi.ingsw.network.message.AskStudentsChangeEntranceHall</node>
+    <node x="2847.0" y="1424.0">it.polimi.ingsw.model.islands.ColorDirectionAdjacentIsland</node>
+    <node x="8386.620786990232" y="1136.0">it.polimi.ingsw.controller.GameControllerAdvancedTest3</node>
+    <node x="705.0" y="1424.0">it.polimi.ingsw.network.message.ReqMoveCloudToEntranceMessage</node>
+    <node x="7186.581774519693" y="1136.0">it.polimi.ingsw.controller.GameControllerAdvancedTest1</node>
+    <node x="1423.0" y="1498.0">it.polimi.ingsw.model.enums.GameModeTest</node>
+    <node x="8662.620786990232" y="1136.0">it.polimi.ingsw.controller.GameControllerAdvancedTest2</node>
+    <node x="11225.954120323564" y="517.0">it.polimi.ingsw.model.effects.ProhibitionEffectTest</node>
+    <node x="4761.0" y="1498.0">it.polimi.ingsw.observer.Observable</node>
+    <node x="6652.0" y="1424.0">it.polimi.ingsw.network.message.PlayerNicknameMessage</node>
+    <node x="1960.0" y="1424.0">it.polimi.ingsw.network.message.MovedStudentFromCardToHall</node>
+    <node x="2021.0" y="1498.0">it.polimi.ingsw.network.message.GameModeRes</node>
+    <node x="5302.102418267613" y="204.0">it.polimi.ingsw.model.effects.ExtraMovementMotherEffect</node>
+    <node x="3189.452561509925" y="517.0">it.polimi.ingsw.view.gui.scene.CharacterSceneController</node>
+    <node x="1713.6857516009468" y="517.0">it.polimi.ingsw.view.gui.scene.GameModeSceneController</node>
+    <node x="7437.102418267613" y="833.0">it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage</node>
+    <node x="5976.0" y="1498.0">it.polimi.ingsw.App</node>
+    <node x="1822.0" y="1498.0">it.polimi.ingsw.network.message.GameModeReq</node>
+    <node x="1222.0" y="1498.0">it.polimi.ingsw.network.message.PlayingMessage</node>
+    <node x="5787.352418267613" y="204.0">it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffect</node>
+    <node x="10984.704120323564" y="517.0">it.polimi.ingsw.network.message.StudentToIslandMessage</node>
+    <node x="8228.120786990232" y="1136.0">it.polimi.ingsw.view.VirtualView</node>
+    <node x="10761.704120323564" y="517.0">it.polimi.ingsw.network.message.DisplayIslandsMessage</node>
+    <node x="8052.602418267612" y="517.0">it.polimi.ingsw.model.effects.ExtraMovementMotherEffectTest</node>
+    <node x="4661.666666666666" y="204.0">it.polimi.ingsw.model.effects.ProhibitionEffect</node>
+    <node x="8638.0" y="1424.0">it.polimi.ingsw.network.message.InvalidTowerMessage</node>
+    <node x="10026.0" y="1424.0">it.polimi.ingsw.network.message.PlayerNumberReply</node>
+    <node x="4067.0" y="1498.0">it.polimi.ingsw.model.game.CloudModel</node>
+    <node x="3423.0" y="1424.0">it.polimi.ingsw.network.message.ReqStudentFromCardToHall</node>
+    <node x="3387.3692281765916" y="91.0">it.polimi.ingsw.network.message.OrderMessage</node>
+    <node x="6825.600143242311" y="517.0">it.polimi.ingsw.model.effects.AddToIslandEffectTest</node>
+    <node x="6356.102418267613" y="833.0">it.polimi.ingsw.network.message.ReqRealPlayerBoardMessage</node>
+    <node x="505.10241826761376" y="833.0">it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController</node>
+    <node x="3162.0" y="1498.0">it.polimi.ingsw.network.message.LoginRequest</node>
+    <node x="2603.0" y="1498.0">it.polimi.ingsw.network.message.ObjectDisplay</node>
+    <node x="4176.600143242311" y="833.0">it.polimi.ingsw.network.message.DisplayCloudsMessage</node>
+    <node x="409.0" y="1498.0">it.polimi.ingsw.model.game.GameModelTest</node>
+    <node x="833.8524182676138" y="833.0">it.polimi.ingsw.view.gui.scene.LoginSceneController</node>
+    <node x="5349.0" y="1424.0">it.polimi.ingsw.network.message.InvalidNicknameMessage</node>
+    <node x="2555.0" y="1424.0">it.polimi.ingsw.network.message.MovedMotherNatureMessage</node>
+    <node x="7792.102418267613" y="517.0">it.polimi.ingsw.model.effects.AddInfluenceEffectTest</node>
+    <node x="3554.3692281765916" y="91.0">it.polimi.ingsw.model.cards.AssistantCardModel</node>
+    <node x="1734.4357516009468" y="833.0">it.polimi.ingsw.view.gui.scene.GameBoardSceneController</node>
+    <node x="5314.350143242311" y="0.0">it.polimi.ingsw.model.player.PlayerModel</node>
+    <node x="8157.0" y="1424.0">it.polimi.ingsw.network.message.ChosenTowerMessage</node>
+    <node x="6619.102418267613" y="833.0">it.polimi.ingsw.network.message.Message</node>
+    <node x="10252.0" y="1424.0">it.polimi.ingsw.network.message.InitialReqMessage</node>
+    <node x="2309.935751600947" y="204.0">it.polimi.ingsw.observer.ViewObserver</node>
+    <node x="10895.0" y="1424.0">it.polimi.ingsw.network.message.ExtraGetInfluence</node>
+    <node x="10255.498441186359" y="1136.0">it.polimi.ingsw.view.cli.ColorCli</node>
+    <node x="5966.102418267613" y="517.0">it.polimi.ingsw.model.game.GameModel</node>
+    <node x="2217.0" y="1498.0">it.polimi.ingsw.network.message.TowerMessage</node>
+    <node x="354.0" y="1424.0">it.polimi.ingsw.network.message.AskMoveStudentsFromCardToEntrance</node>
+    <node x="7668.0" y="1424.0">it.polimi.ingsw.network.message.DisconnectionMessage</node>
+    <node x="5874.0" y="1424.0">it.polimi.ingsw.network.message.AskColorRemoveFromAll</node>
+    <node x="817.0" y="1498.0">it.polimi.ingsw.network.message.GenericMessage</node>
+    <node x="3757.3692281765916" y="91.0">it.polimi.ingsw.network.message.AssignPlayerDeckResponseMessage</node>
+    <node x="613.0" y="1498.0">it.polimi.ingsw.model.islands.IslandModelTest</node>
+    <node x="2411.0" y="1498.0">it.polimi.ingsw.view.cli.InputReadTask</node>
+    <node x="8587.785894843259" y="833.0">it.polimi.ingsw.view.View</node>
+    <node x="8419.285894843259" y="517.0">it.polimi.ingsw.model.effects.IgnoreTowerEffectTest</node>
+    <node x="1020.0" y="1498.0">it.polimi.ingsw.network.message.DisplayMessage</node>
+    <node x="5568.0" y="1498.0">it.polimi.ingsw.view.cli.CliTest</node>
+    <node x="9939.704120323564" y="517.0">it.polimi.ingsw.network.message.AskMoveStudentFromCardToIslandMessage</node>
+    <node x="2481.935751600947" y="91.0">it.polimi.ingsw.network.message.ReqMoveMotherNatureMessage</node>
+    <node x="3984.0" y="1424.0">it.polimi.ingsw.network.message.ErrorCardMessageResponse</node>
+    <node x="3705.6001432423113" y="833.0">it.polimi.ingsw.network.message.LobbyInfoMessage</node>
+    <node x="9158.954120323564" y="517.0">it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffectTest</node>
+    <node x="5264.0" y="1498.0">it.polimi.ingsw.observer.Observer</node>
+    <node x="3221.3692281765916" y="91.0">it.polimi.ingsw.network.message.WinMessage</node>
+    <node x="1246.7874536568997" y="1269.0">it.polimi.ingsw.view.gui.JavaFXGui</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.model.effects.AddInfluenceEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="7893.602" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="2.130097673216369E-4" y="-14.5" />
+      <point x="9029.621" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="15.000248399053135" y="-14.5" />
+      <point x="1866.436" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-29.999561509925115" y="-14.5" />
+      <point x="3268.453" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.GameModel" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="6047.102" y="304.0" />
+      <point x="3633.0" y="304.0" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.DeckSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="94.0" y="0.0" />
+      <point x="1698.0" y="531.5" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.InitialConfigEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="4927.167" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.EntranceChangeMessage" relationship="DEPENDENCY">
+      <point x="44.999856757689486" y="14.5" />
+      <point x="5297.975" y="1182.5" />
+      <point x="6855.602418267613" y="1182.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="5904.852" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.AssistantCardModel" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-2.2817659146312508E-4" y="-14.5" />
+      <point x="3645.369" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameModeSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="2.4839905313456256E-4" y="14.5" />
+      <point x="1830.186" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExtraMovementMotherEffectTest" target="it.polimi.ingsw.model.effects.ExtraMovementMotherEffect" relationship="CREATE">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="8201.101999999999" y="280.5" />
+      <point x="5422.102418267613" y="280.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="4.384900748846121E-4" y="14.5" />
+      <point x="3298.453" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.InitialConfigEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="-14.99966666666569" y="-14.5" />
+      <point x="4912.167" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="5919.852" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.DisplayDeckAndAskCardMessage" relationship="CREATE">
+      <point x="-48.268368722618106" y="14.5" />
+      <point x="8242.352418267614" y="1197.5" />
+      <point x="3445.5" y="1197.5" />
+      <point x="20.880771823408395" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AssignPlayerDeckResponseMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-2.2817659146312508E-4" y="-14.5" />
+      <point x="3900.869" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqMoveMotherNatureMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="2.4839905336193624E-4" y="-14.5" />
+      <point x="2613.936" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="-15.000333333332946" y="-14.5" />
+      <point x="2118.833" y="931.0" />
+      <point x="1113.0" y="931.0" />
+      <point x="1113.0" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.RequestPlayersBoard" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="6241.602" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage" relationship="DEPENDENCY">
+      <point x="-55.000143242310514" y="-14.5" />
+      <point x="5197.975" y="1014.0" />
+      <point x="4029.100143242311" y="1014.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.TowerColorSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="-4.182676137816088E-4" y="-14.5" />
+      <point x="820.102" y="446.0" />
+      <point x="1698.0" y="446.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.GameModel" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="6032.102" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="14.999581732386247" y="-14.5" />
+      <point x="215.102" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="9139.852" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ProhibitionEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="4742.167" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="5850.602" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.PlayedCharacterCardMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="7294.102" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.CharacterCardModel" target="it.polimi.ingsw.model.effects.Effect" relationship="DEPENDENCY">
+      <point x="-93.5" y="0.0" />
+      <point x="4222.0" y="218.5" />
+      <point x="4222.0" y="105.5" />
+      <point x="-43.999561509924206" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ConnectionSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="82.89787967643417" y="-14.5" />
+      <point x="331.602" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.ClientApp" target="it.polimi.ingsw.view.cli.Cli" relationship="CREATE">
+      <point x="58.0" y="-2.5" />
+      <point x="5254.475" y="1362.0" />
+      <point x="5254.475" y="1382.0" />
+      <point x="9139.852418267614" y="1382.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayPlayerBoardMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="3.3333333431073697E-4" y="14.5" />
+      <point x="5159.917" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.view.View" relationship="TO_ONE">
+      <point x="54.02485675768912" y="14.5" />
+      <point x="5307.0" y="1372.5" />
+      <point x="9216.352" y="1372.5" />
+      <point x="9216.352" y="847.5" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="2.130097673216369E-4" y="-14.5" />
+      <point x="8290.621" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.DisplayCemeteryMessage" relationship="DEPENDENCY">
+      <point x="56.62727502530197" y="-14.5" />
+      <point x="5309.602418267613" y="847.5" />
+      <point x="110.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayIslandsMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="10862.704" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ProhibitionEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="11319.954" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-14.999561509925115" y="-14.5" />
+      <point x="3283.453" y="304.0" />
+      <point x="3633.0" y="304.0" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-14.999561509925115" y="14.5" />
+      <point x="3283.453" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ConnectionSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="-1.2032356579538828E-4" y="-14.5" />
+      <point x="248.704" y="931.0" />
+      <point x="1113.0" y="931.0" />
+      <point x="1113.0" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskMoveBanCardMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="10412.704" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.CharacterSceneController" relationship="TO_ONE">
+      <point x="-3.333333329464949E-4" y="14.5" />
+      <point x="2133.833" y="1182.5" />
+      <point x="2571.0" y="1182.5" />
+      <point x="2571.0" y="897.0" />
+      <point x="3253.453" y="897.0" />
+      <point x="-44.999561509925115" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="127.49958173238622" y="0.0" />
+      <point x="797.0" y="847.5" />
+      <point x="797.0" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.ErrorSceneController" relationship="DEPENDENCY">
+      <point x="19.601999999999975" y="-14.5" />
+      <point x="686.602" y="603.0" />
+      <point x="1064.602" y="603.0" />
+      <point x="14.999581732386332" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="DEPENDENCY">
+      <point x="-30.0" y="-14.5" />
+      <point x="637.0" y="60.0" />
+      <point x="1062.083333333333" y="60.0" />
+      <point x="15.0" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ErrorSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="78.39758173238624" y="14.5" />
+      <point x="1128.0" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.IgnoreTowerEffectTest" target="it.polimi.ingsw.model.effects.IgnoreTowerEffect" relationship="CREATE">
+      <point x="-14.999894843258517" y="-14.5" />
+      <point x="8503.786" y="265.5" />
+      <point x="5648.102418267613" y="265.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToHallEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="5128.667" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.InitialResMessage" relationship="CREATE">
+      <point x="-55.49978699023268" y="-14.5" />
+      <point x="8235.121" y="962.5" />
+      <point x="7077.602418267613" y="962.5" />
+      <point x="10.5" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskExtraGetInfluenceMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="9795.204" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="-14.99966666666569" y="-14.5" />
+      <point x="4544.667" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.Message" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="6673.102" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-1.4324231051432434E-4" y="-14.5" />
+      <point x="6925.1" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest1" target="it.polimi.ingsw.network.message.PlayedCharacterCardMessage" relationship="CREATE">
+      <point x="15.000225480307563" y="-14.5" />
+      <point x="7329.582" y="1102.0" />
+      <point x="7284.582" y="1102.0" />
+      <point x="-9.520418267612513" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest2" target="it.polimi.ingsw.network.message.PlayedCharacterCardMessage" relationship="CREATE">
+      <point x="-29.99978699023268" y="-14.5" />
+      <point x="8760.621" y="1102.0" />
+      <point x="7284.582" y="1102.0" />
+      <point x="-9.520418267612513" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest3" target="it.polimi.ingsw.network.message.PlayedCharacterCardMessage" relationship="CREATE">
+      <point x="15.000213009767322" y="-14.5" />
+      <point x="8529.621" y="1102.0" />
+      <point x="7284.582" y="1102.0" />
+      <point x="-9.520418267612513" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="-4.182676137816088E-4" y="-14.5" />
+      <point x="632.602" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.view.View" relationship="DEPENDENCY">
+      <point x="65.49985675768949" y="14.5" />
+      <point x="5318.475" y="1407.5" />
+      <point x="10408.204" y="1407.5" />
+      <point x="10408.204" y="853.5" />
+      <point x="41.0" y="6.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToHallEffect" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="GENERALIZATION">
+      <point x="-14.99966666666569" y="-14.5" />
+      <point x="5113.667" y="447.0" />
+      <point x="4912.167" y="447.0" />
+      <point x="-14.99966666666569" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" relationship="TO_ONE">
+      <point x="36.0" y="10.5" />
+      <point x="2182.833333333333" y="1161.0" />
+      <point x="2182.833333333333" y="847.5" />
+      <point x="117.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="15.00033333333431" y="-14.5" />
+      <point x="4574.667" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffect" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="GENERALIZATION">
+      <point x="14.99987967643574" y="-14.5" />
+      <point x="9580.704" y="447.0" />
+      <point x="4912.167" y="447.0" />
+      <point x="-14.99966666666569" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" relationship="CREATE">
+      <point x="-14.999751600946865" y="14.5" />
+      <point x="1836.436" y="1059.0" />
+      <point x="1313.602" y="1059.0" />
+      <point x="14.999581732386332" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffectTest" target="it.polimi.ingsw.model.islands.IslandModel" relationship="CREATE">
+      <point x="14.999856757689486" y="-14.5" />
+      <point x="6940.1" y="465.0" />
+      <point x="10525.017" y="465.0" />
+      <point x="15.000190091021068" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.WinSceneController" relationship="CREATE">
+      <point x="14.999666666667054" y="14.5" />
+      <point x="2148.833" y="1315.5" />
+      <point x="68.60241826761376" y="1315.5" />
+      <point x="68.60241826761376" y="531.5" />
+      <point x="-90.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.view.View" relationship="REALIZATION">
+      <point x="-26.731418267614572" y="-14.5" />
+      <point x="9113.121" y="1212.5" />
+      <point x="8027.602" y="1212.5" />
+      <point x="8027.602" y="1119.0" />
+      <point x="8613.786" y="1119.0" />
+      <point x="-14.999894843258517" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" relationship="DEPENDENCY">
+      <point x="-45.0" y="-14.5" />
+      <point x="622.0" y="45.0" />
+      <point x="1268.602" y="45.0" />
+      <point x="-30.000418267613668" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskMoveStudentFromCardToIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="10109.704" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddInfluenceEffectTest" target="it.polimi.ingsw.model.effects.AddInfluenceEffect" relationship="CREATE">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="7908.602" y="319.0" />
+      <point x="5113.667" y="319.0" />
+      <point x="-6.999666666665689" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.view.VirtualView" relationship="DEPENDENCY">
+      <point x="-15.0" y="-14.5" />
+      <point x="-33.268368722618106" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.InitialResMessage" relationship="DEPENDENCY">
+      <point x="-30.000143242310514" y="14.5" />
+      <point x="5222.975" y="1256.0" />
+      <point x="7062.602418267613" y="1256.0" />
+      <point x="-4.5" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="29.999581732387014" y="-14.5" />
+      <point x="9169.852" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskExtraGetInfluenceMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="9795.204" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_ONE">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="10643.704" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.DeckSceneController" relationship="DEPENDENCY">
+      <point x="45.000248399053135" y="-14.5" />
+      <point x="1896.436" y="707.0" />
+      <point x="1572.936" y="707.0" />
+      <point x="-14.999751600946865" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="10643.704" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-15.000418267613668" y="-14.5" />
+      <point x="1283.602" y="304.0" />
+      <point x="3633.0" y="304.0" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-15.000143242310969" y="-14.5" />
+      <point x="4014.1" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.InitialConfigurationResponseMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-2.2817659146312508E-4" y="14.5" />
+      <point x="3051.869" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayIslandsMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="10862.704" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.ReqRealPlayerBoardMessage" relationship="CREATE">
+      <point x="-30.000143242310514" y="-14.5" />
+      <point x="5222.975" y="1059.0" />
+      <point x="6477.602418267613" y="1059.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.Message" target="it.polimi.ingsw.network.message.MessageType" relationship="TO_ONE">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="6688.102" y="806.0" />
+      <point x="6440.85" y="806.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.DisplayPlayerBoardMessage" relationship="DEPENDENCY">
+      <point x="29.999856757689486" y="14.5" />
+      <point x="5282.975" y="1397.0" />
+      <point x="9453.454" y="1397.0" />
+      <point x="9453.454" y="105.5" />
+      <point x="118.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="30.000248399053135" y="-14.5" />
+      <point x="1881.436" y="632.0" />
+      <point x="6467.0" y="632.0" />
+      <point x="6467.0" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="-4.1826761298580095E-4" y="14.5" />
+      <point x="8272.352" y="1315.5" />
+      <point x="3633.0" y="1315.5" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="-36.0" y="0.0" />
+      <point x="1698.0" y="1150.5" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskMoveBanCardMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="10412.704" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="14.999666666667054" y="-14.5" />
+      <point x="2148.833" y="632.0" />
+      <point x="6467.0" y="632.0" />
+      <point x="6467.0" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="15.000438490074885" y="-14.5" />
+      <point x="3313.453" y="446.0" />
+      <point x="1698.0" y="446.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExtraMovementMotherEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="5437.102" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerTest" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-14.999786990232678" y="-14.5" />
+      <point x="9014.621" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="4.384900748846121E-4" y="-14.5" />
+      <point x="3298.453" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffectTest" target="it.polimi.ingsw.model.effects.ControlProfEffect" relationship="CREATE">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="5865.602" y="334.0" />
+      <point x="4559.666666666666" y="334.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.JavaFXGui" target="it.polimi.ingsw.view.gui.Gui" relationship="CREATE">
+      <point x="-1.6854536568996537" y="-14.5" />
+      <point x="1303.102" y="1161.0" />
+      <point x="-36.0" y="10.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.EntranceChangeMessage" relationship="CREATE">
+      <point x="-62.5" y="0.0" />
+      <point x="8075.102418267612" y="1150.5" />
+      <point x="8075.102418267612" y="1083.0" />
+      <point x="6918.5" y="1083.0" />
+      <point x="62.89758173238715" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.CharacterSceneController" relationship="DEPENDENCY">
+      <point x="60.000248399053135" y="-14.5" />
+      <point x="1911.436" y="670.0" />
+      <point x="3268.453" y="670.0" />
+      <point x="-29.999561509925115" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.ClientApp" target="it.polimi.ingsw.view.gui.JavaFXGui" relationship="DEPENDENCY">
+      <point x="-58.0" y="-1.5" />
+      <point x="1314.287" y="1363.0" />
+      <point x="9.499546343100292" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.DeckSceneController" relationship="TO_ONE">
+      <point x="-36.249751600946865" y="-14.5" />
+      <point x="1815.186" y="632.0" />
+      <point x="1602.936" y="632.0" />
+      <point x="15.000248399053135" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerTest" target="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" relationship="CREATE">
+      <point x="15.000213009767322" y="-14.5" />
+      <point x="9044.621" y="1068.0" />
+      <point x="7604.102" y="1068.0" />
+      <point x="-4.1826761298580095E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.observer.ViewObservable" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="2.4839905336193624E-4" y="-14.5" />
+      <point x="2100.936" y="446.0" />
+      <point x="1698.0" y="446.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="35.99966666666705" y="0.0" />
+      <point x="2502.5" y="1150.5" />
+      <point x="2502.5" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="112.75024839905313" y="-14.5" />
+      <point x="1964.186" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.view.cli.ColorCli" relationship="TO_MANY">
+      <point x="25.5" y="14.5" />
+      <point x="9165.352418267614" y="1330.5" />
+      <point x="10321.998441186359" y="1330.5" />
+      <point x="15.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.CharacterCardModel" target="it.polimi.ingsw.model.effects.Effect" relationship="TO_ONE">
+      <point x="5.475143242311788" y="-14.5" />
+      <point x="-36.5" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.LobbyInfoMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="-87.5" y="0.0" />
+      <point x="3633.0" y="847.5" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.StudentToIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="11092.204" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.PlayedCharacterCardMessage" relationship="CREATE">
+      <point x="14.999856757689486" y="-14.5" />
+      <point x="5267.975" y="1102.0" />
+      <point x="7284.582" y="1102.0" />
+      <point x="-9.520418267612513" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.LobbyInfoMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-1.4324231142381905E-4" y="-14.5" />
+      <point x="3793.1" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.StudentToIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="11092.204" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.IgnoreTowerEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="1.0515674148336984E-4" y="-14.5" />
+      <point x="8518.786" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.TowerColorSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-4.182676137816088E-4" y="14.5" />
+      <point x="820.102" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.GameModel" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="14.5" />
+      <point x="6032.102" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ErrorSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-4.18267613667922E-4" y="14.5" />
+      <point x="1049.602" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.LobbyInfoMessage" relationship="CREATE">
+      <point x="15.000213009767322" y="-14.5" />
+      <point x="8305.621" y="761.0" />
+      <point x="3778.1" y="761.0" />
+      <point x="-15.000143242311424" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ConnectionSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="114.9998796764342" y="0.0" />
+      <point x="797.0" y="1283.5" />
+      <point x="797.0" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.GameModel" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-15.000418267612986" y="-14.5" />
+      <point x="6017.102" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.DisplayCemeteryMessage" relationship="CREATE">
+      <point x="-40.49978699023268" y="-14.5" />
+      <point x="8250.121" y="735.5" />
+      <point x="4508.600143242311" y="735.5" />
+      <point x="0.0" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.LoginSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="14.999581732386218" y="-14.5" />
+      <point x="944.852" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.InitialConfigurationResponseMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-2.2817659146312508E-4" y="-14.5" />
+      <point x="3051.869" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.view.View" relationship="REALIZATION">
+      <point x="-14.999786990232678" y="-14.5" />
+      <point x="8275.621" y="1119.0" />
+      <point x="8613.786" y="1119.0" />
+      <point x="-14.999894843258517" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.JavaFXGui" target="it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController" relationship="DEPENDENCY">
+      <point x="-15.000453656899708" y="14.5" />
+      <point x="1289.787" y="1397.0" />
+      <point x="116.2041203235658" y="1397.0" />
+      <point x="-83.89829794404795" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffectTest" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="DEPENDENCY">
+      <point x="-1.4324231051432434E-4" y="14.5" />
+      <point x="6925.1" y="575.0" />
+      <point x="4927.167" y="575.0" />
+      <point x="3.3333333431073697E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddInfluenceEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="-14.99966666666569" y="-14.5" />
+      <point x="5105.667" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.Effect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="4.384900757941068E-4" y="-14.5" />
+      <point x="4386.578" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.view.cli.ColorCli" relationship="DEPENDENCY">
+      <point x="-15.0" y="14.5" />
+      <point x="9124.852418267614" y="1357.5" />
+      <point x="10336.998441186359" y="1357.5" />
+      <point x="30.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="9154.852" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffectTest" target="it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffect" relationship="CREATE">
+      <point x="14.99987967643574" y="-14.5" />
+      <point x="9304.954" y="218.5" />
+      <point x="117.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" relationship="CREATE">
+      <point x="0.0" y="-14.5" />
+      <point x="2133.833333333333" y="847.5" />
+      <point x="117.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="2.4839905313456256E-4" y="-14.5" />
+      <point x="1851.436" y="761.0" />
+      <point x="797.0" y="761.0" />
+      <point x="797.0" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="0.0" y="14.5" />
+      <point x="667.0" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqRealPlayerBoardMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="6477.602" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.DisplayCloudsMessage" relationship="DEPENDENCY">
+      <point x="-70.00014324231051" y="-14.5" />
+      <point x="5182.975" y="961.0" />
+      <point x="4277.600143242311" y="961.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" relationship="CREATE">
+      <point x="-30.000333333332946" y="-14.5" />
+      <point x="2103.833" y="1059.0" />
+      <point x="1313.602" y="1059.0" />
+      <point x="14.999581732386332" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.EntranceChangeMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="6855.602" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.LobbyInfoMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="14.999856757688576" y="-14.5" />
+      <point x="3808.1" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffect" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-1.2032356426061597E-4" y="14.5" />
+      <point x="9565.704" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.CharacterSceneController" relationship="TO_ONE">
+      <point x="15.000248399053135" y="14.5" />
+      <point x="1866.436" y="897.0" />
+      <point x="3253.453" y="897.0" />
+      <point x="-44.999561509925115" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.WinMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-2.2817659146312508E-4" y="14.5" />
+      <point x="3288.369" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest3" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-112.8347869902318" y="-14.5" />
+      <point x="8401.786" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.View" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="1.0515674148336984E-4" y="14.5" />
+      <point x="8628.786" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="7604.102" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddInfluenceEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="5120.667" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-3.333333329464949E-4" y="-14.5" />
+      <point x="2133.833" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-1.432423109690717E-4" y="-14.5" />
+      <point x="4029.1" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.TowerColorSceneController" relationship="CREATE">
+      <point x="-15.000333333332946" y="14.5" />
+      <point x="2118.833" y="1182.5" />
+      <point x="53.60241826761376" y="1182.5" />
+      <point x="53.60241826761376" y="482.0" />
+      <point x="805.102" y="482.0" />
+      <point x="-15.000418267613782" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="14.999856757689031" y="-14.5" />
+      <point x="4044.1" y="304.0" />
+      <point x="3633.0" y="304.0" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-77.5" y="0.0" />
+      <point x="8012.602" y="1283.5" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.AssistantCardModel" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-2.2817659146312508E-4" y="14.5" />
+      <point x="3645.369" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.controller.ClientController" relationship="DEPENDENCY">
+      <point x="-33.5" y="0.0" />
+      <point x="8367.352" y="1283.5" />
+      <point x="8367.352" y="1241.0" />
+      <point x="5267.975" y="1241.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameModeSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="-116.49975160094687" y="0.0" />
+      <point x="1698.0" y="531.5" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.RequestPlayersBoard" relationship="CREATE">
+      <point x="77.0" y="0.0" />
+      <point x="5356.5" y="1150.5" />
+      <point x="5356.5" y="847.5" />
+      <point x="-94.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.IgnoreTowerEffect" target="it.polimi.ingsw.model.effects.Effect" relationship="REALIZATION">
+      <point x="14.999581732387014" y="-14.5" />
+      <point x="5663.102" y="183.0" />
+      <point x="4386.578" y="183.0" />
+      <point x="4.384900757941068E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.IgnoreTowerEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="5648.102" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExtraMovementMotherEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-4.1826761207630625E-4" y="-14.5" />
+      <point x="8186.102" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.observer.ViewObserver" relationship="REALIZATION">
+      <point x="-77.0" y="0.0" />
+      <point x="3592.6192281765916" y="1150.5" />
+      <point x="3592.6192281765916" y="218.5" />
+      <point x="70.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest2" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="2.130097673216369E-4" y="-14.5" />
+      <point x="8790.621" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest1" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="128.0" y="0.0" />
+      <point x="8012.602" y="1150.5" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.ReqMoveMotherNatureMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="2.4839905336193624E-4" y="14.5" />
+      <point x="2613.936" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ConnectionSceneController" target="it.polimi.ingsw.controller.ClientController" relationship="DEPENDENCY">
+      <point x="14.999879676434205" y="-14.5" />
+      <point x="263.704" y="1241.0" />
+      <point x="5267.975" y="1241.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="2.4839905313456256E-4" y="14.5" />
+      <point x="1851.436" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.DeckSceneController" relationship="CREATE">
+      <point x="29.999666666667054" y="14.5" />
+      <point x="2163.833" y="1212.5" />
+      <point x="1461.436" y="1212.5" />
+      <point x="1461.436" y="531.5" />
+      <point x="-94.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.ClientApp" target="it.polimi.ingsw.controller.ClientController" relationship="CREATE">
+      <point x="2.130097682311316E-4" y="-14.5" />
+      <point x="4757.371" y="1333.0" />
+      <point x="5252.975" y="1333.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.DisplayDeckAndAskCardMessage" relationship="DEPENDENCY">
+      <point x="-15.000143242310514" y="14.5" />
+      <point x="5237.975" y="1212.5" />
+      <point x="3430.5" y="1212.5" />
+      <point x="5.880771823408395" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AssignPlayerDeckResponseMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-2.2817659146312508E-4" y="14.5" />
+      <point x="3900.869" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.18267613667922E-4" y="-14.5" />
+      <point x="1298.602" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.DeckSceneController" relationship="DEPENDENCY">
+      <point x="-15.0" y="14.5" />
+      <point x="652.0" y="707.0" />
+      <point x="1572.936" y="707.0" />
+      <point x="-14.999751600946865" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.CharacterSceneController" relationship="CREATE">
+      <point x="36.0" y="0.0" />
+      <point x="3179.452561509925" y="1150.5" />
+      <point x="3179.452561509925" y="531.5" />
+      <point x="-109.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.network.message.MessageType" relationship="TO_ONE">
+      <point x="-15.000418267612986" y="14.5" />
+      <point x="8257.352" y="1330.5" />
+      <point x="7788.602" y="1330.5" />
+      <point x="7788.602" y="806.0" />
+      <point x="6440.85" y="806.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.DisplayPlayerBoardMessage" relationship="CREATE">
+      <point x="0.0" y="14.5" />
+      <point x="8290.620786990232" y="1182.5" />
+      <point x="9205.852" y="1182.5" />
+      <point x="9205.852" y="618.0" />
+      <point x="9089.621" y="618.0" />
+      <point x="9089.621" y="250.5" />
+      <point x="5267.975" y="250.5" />
+      <point x="108.0583333333343" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="-14.999751600946865" y="-14.5" />
+      <point x="1836.436" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.LoginSceneController" target="it.polimi.ingsw.observer.ViewObserver" relationship="DEPENDENCY">
+      <point x="-4.182676137816088E-4" y="-14.5" />
+      <point x="929.852" y="725.0" />
+      <point x="1698.0" y="725.0" />
+      <point x="1698.0" y="218.5" />
+      <point x="-70.49975160094664" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.InitialResMessage" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="7067.102" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.OrderMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-2.2817659146312508E-4" y="-14.5" />
+      <point x="3460.369" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.effects.Effect" relationship="DEPENDENCY">
+      <point x="30.000438490074885" y="-14.5" />
+      <point x="3328.453" y="411.0" />
+      <point x="4222.0" y="411.0" />
+      <point x="4222.0" y="105.5" />
+      <point x="-43.999561509924206" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameModeSceneController" target="it.polimi.ingsw.view.gui.Gui" relationship="DEPENDENCY">
+      <point x="116.5" y="0.0" />
+      <point x="1993.4357516009468" y="531.5" />
+      <point x="1993.4357516009468" y="1140.0" />
+      <point x="-36.0" y="-10.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-4.1826761298580095E-4" y="14.5" />
+      <point x="8272.352" y="1315.5" />
+      <point x="3633.0" y="1315.5" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.ReqPlayCharacterCardMessage" relationship="CREATE">
+      <point x="36.481631277380075" y="-14.5" />
+      <point x="8327.102418267612" y="746.0" />
+      <point x="4061.8692281765916" y="746.0" />
+      <point x="32.76908493428073" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.CharacterSceneController" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="DEPENDENCY">
+      <point x="15.000438490074885" y="14.5" />
+      <point x="3313.453" y="575.0" />
+      <point x="4927.167" y="575.0" />
+      <point x="3.3333333431073697E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" relationship="CREATE">
+      <point x="-1.4324231051432434E-4" y="-14.5" />
+      <point x="5252.975" y="1068.0" />
+      <point x="7604.102" y="1068.0" />
+      <point x="-4.1826761298580095E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.GameModeSceneController" relationship="CREATE">
+      <point x="36.0" y="-10.5" />
+      <point x="2312.935751600947" y="1140.0" />
+      <point x="2312.935751600947" y="591.5" />
+      <point x="1819.686" y="591.5" />
+      <point x="-10.499751600946865" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-61.73141826761457" y="-14.5" />
+      <point x="8210.621" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToHallEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="93.49985675768949" y="0.0" />
+      <point x="6338.35" y="674.5" />
+      <point x="6338.35" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.View" relationship="REALIZATION">
+      <point x="29.999666666667054" y="-14.5" />
+      <point x="2163.833" y="1119.0" />
+      <point x="8613.786" y="1119.0" />
+      <point x="-14.999894843258517" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.LoginSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-96.0" y="0.0" />
+      <point x="797.0" y="847.5" />
+      <point x="797.0" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.OrderMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="-2.2817659146312508E-4" y="14.5" />
+      <point x="3460.369" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.WinMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-2.2817659146312508E-4" y="-14.5" />
+      <point x="3288.369" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.islands.IslandModel" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-14.999809908978932" y="14.5" />
+      <point x="10495.017" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToIslandEffect" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_ONE">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="9565.704" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="4559.667" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.JavaFXGui" target="it.polimi.ingsw.controller.ClientController" relationship="CREATE">
+      <point x="-4.536568997082213E-4" y="14.5" />
+      <point x="1304.787" y="1333.0" />
+      <point x="5252.975" y="1333.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.observer.ViewObservable" target="it.polimi.ingsw.observer.ViewObserver" relationship="TO_MANY">
+      <point x="78.5" y="0.0" />
+      <point x="2380.435751600947" y="531.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.GameBoardSceneController" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_MANY">
+      <point x="-116.99975160094687" y="0.0" />
+      <point x="1476.436" y="847.5" />
+      <point x="1476.436" y="304.0" />
+      <point x="3633.0" y="304.0" />
+      <point x="3633.0" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.OtherGameBoardSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-4.18267613667922E-4" y="14.5" />
+      <point x="1298.602" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToHallEffectTest" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="DEPENDENCY">
+      <point x="-1.4324231051432434E-4" y="-14.5" />
+      <point x="5915.35" y="575.0" />
+      <point x="4927.167" y="575.0" />
+      <point x="3.3333333431073697E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ControlProfEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="TO_ONE">
+      <point x="-14.99966666666569" y="-14.5" />
+      <point x="4544.667" y="141.0" />
+      <point x="5395.85" y="141.0" />
+      <point x="14.999856757689486" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="TO_ONE">
+      <point x="-15.0" y="-14.5" />
+      <point x="652.0" y="112.5" />
+      <point x="1047.083333333333" y="112.5" />
+      <point x="0.0" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.WinSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-4.182676137816088E-4" y="14.5" />
+      <point x="324.602" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.SceneController" target="it.polimi.ingsw.view.gui.scene.CharacterSceneController" relationship="DEPENDENCY">
+      <point x="0.0" y="-14.5" />
+      <point x="667.0" y="632.0" />
+      <point x="782.0" y="632.0" />
+      <point x="782.0" y="670.0" />
+      <point x="3268.453" y="670.0" />
+      <point x="-29.999561509925115" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.DeckSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="2.4839905313456256E-4" y="14.5" />
+      <point x="1587.936" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.network.message.MessageType" relationship="DEPENDENCY">
+      <point x="14.999581732387014" y="14.5" />
+      <point x="8287.352" y="1357.5" />
+      <point x="6027.5" y="1357.5" />
+      <point x="6027.5" y="779.0" />
+      <point x="6425.85" y="779.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExcludeColorInfluenceEffectTest" target="it.polimi.ingsw.model.player.PlayerModel" relationship="CREATE">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="9289.954" y="500.0" />
+      <point x="9154.852" y="500.0" />
+      <point x="9154.852" y="14.5" />
+      <point x="66.49985675768949" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.ScreenTitleSceneController" target="it.polimi.ingsw.view.gui.scene.GenericSceneController" relationship="REALIZATION">
+      <point x="-4.182676137531871E-4" y="-14.5" />
+      <point x="200.102" y="761.0" />
+      <point x="797.0" y="761.0" />
+      <point x="797.0" y="575.0" />
+      <point x="686.602" y="575.0" />
+      <point x="686.602" y="218.5" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.network.message.LobbyInfoMessage" relationship="DEPENDENCY">
+      <point x="-15.000143242310514" y="-14.5" />
+      <point x="5237.975" y="1029.0" />
+      <point x="3793.1001432423113" y="1029.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.AddToHallEffectTest" target="it.polimi.ingsw.model.effects.AddToHallEffect" relationship="CREATE">
+      <point x="-93.5" y="-4.5" />
+      <point x="5461.0" y="670.0" />
+      <point x="5461.0" y="531.5" />
+      <point x="80.0" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.View" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="7.000105156741483" y="-14.5" />
+      <point x="8635.786" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ProhibitionEffectTest" target="it.polimi.ingsw.model.islands.IslandModel" relationship="CREATE">
+      <point x="14.99987967643574" y="-14.5" />
+      <point x="11334.954" y="465.0" />
+      <point x="10525.017" y="465.0" />
+      <point x="15.000190091021068" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.AskMoveStudentFromCardToIslandMessage" target="it.polimi.ingsw.model.islands.IslandModel" relationship="TO_MANY">
+      <point x="-1.2032356426061597E-4" y="-14.5" />
+      <point x="10109.704" y="482.0" />
+      <point x="10510.017" y="482.0" />
+      <point x="1.9009102106792852E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.model.effects.Effect" relationship="DEPENDENCY">
+      <point x="33.499581732387014" y="0.0" />
+      <point x="9190.852" y="1283.5" />
+      <point x="9190.852" y="667.5" />
+      <point x="9059.621" y="667.5" />
+      <point x="9059.621" y="411.0" />
+      <point x="4222.0" y="411.0" />
+      <point x="4222.0" y="105.5" />
+      <point x="-43.999561509924206" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.ExtraMovementMotherEffect" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="-4.1826761298580095E-4" y="-14.5" />
+      <point x="5422.102" y="162.0" />
+      <point x="8012.602" y="162.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest1" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="DEPENDENCY">
+      <point x="-127.99977451969244" y="0.0" />
+      <point x="5386.0" y="1150.5" />
+      <point x="5386.0" y="575.0" />
+      <point x="4927.167" y="575.0" />
+      <point x="3.3333333431073697E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest3" target="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" relationship="CREATE">
+      <point x="-14.999786990232678" y="-14.5" />
+      <point x="8499.621" y="1068.0" />
+      <point x="7604.102" y="1068.0" />
+      <point x="-4.1826761298580095E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.network.message.DisplayCloudsMessage" relationship="CREATE">
+      <point x="-29.99978699023268" y="-14.5" />
+      <point x="8260.621" y="707.0" />
+      <point x="4277.600143242311" y="707.0" />
+      <point x="0.0" y="-14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest2" target="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" relationship="CREATE">
+      <point x="15.000213009767322" y="-14.5" />
+      <point x="8805.621" y="1068.0" />
+      <point x="7604.102" y="1068.0" />
+      <point x="-4.1826761298580095E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest1" target="it.polimi.ingsw.network.message.AddStudentFromCloudToEntranceMessage" relationship="CREATE">
+      <point x="-14.999774519692437" y="-14.5" />
+      <point x="7299.582" y="1068.0" />
+      <point x="7604.102" y="1068.0" />
+      <point x="-4.1826761298580095E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.effects.InitialConfigEffectTest" target="it.polimi.ingsw.model.effects.InitialConfigEffect" relationship="CREATE">
+      <point x="98.0" y="0.0" />
+      <point x="4897.167" y="531.5" />
+      <point x="-29.99966666666569" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest1" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="2.254803075629752E-4" y="-14.5" />
+      <point x="7314.582" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController" relationship="CREATE">
+      <point x="-30.000333333332946" y="14.5" />
+      <point x="2103.833" y="1197.5" />
+      <point x="632.6024182676138" y="1197.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameController" target="it.polimi.ingsw.view.VirtualView" relationship="TO_MANY">
+      <point x="0.0" y="-14.5" />
+      <point x="-18.268368722618106" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest3" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="2.130097673216369E-4" y="-14.5" />
+      <point x="8514.621" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.VirtualView" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="46.48121300976891" y="-14.5" />
+      <point x="8337.102" y="375.0" />
+      <point x="8012.602" y="375.0" />
+      <point x="8012.602" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.GameControllerAdvancedTest2" target="it.polimi.ingsw.model.islands.IslandModel" relationship="DEPENDENCY">
+      <point x="-14.999786990232678" y="-14.5" />
+      <point x="8775.621" y="999.0" />
+      <point x="1716.936" y="999.0" />
+      <point x="1716.936" y="603.0" />
+      <point x="9438.454" y="603.0" />
+      <point x="9438.454" y="218.5" />
+      <point x="-65.99980990897893" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.scene.PlayersNumberSceneController" target="it.polimi.ingsw.view.gui.SceneController" relationship="DEPENDENCY">
+      <point x="14.999581732386218" y="-14.5" />
+      <point x="647.602" y="797.0" />
+      <point x="185.102" y="797.0" />
+      <point x="185.102" y="674.5" />
+      <point x="-77.5" y="0.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.DisplayPlayerBoardMessage" target="it.polimi.ingsw.model.player.PlayerModel" relationship="DEPENDENCY">
+      <point x="3.3333333431073697E-4" y="-14.5" />
+      <point x="5159.917" y="60.0" />
+      <point x="5380.85" y="60.0" />
+      <point x="-1.4324231051432434E-4" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.12594017841525276" showDependencies="true" x="5707.000000000001" y="763.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
