@@ -13,9 +13,9 @@ public class ClientApp {
 
     public static void main(String[] args) {
 
-        boolean cli = true; //default launch gui
+        boolean cli = false; //default launch gui
 
-        for(String param: args){
+        for(String param: args){ //if --c or --cli when running the jar, the cli starts
             if (param.equals("--c") || param.equals("--cli")) {
                 cli = true;
                 break;
