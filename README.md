@@ -25,7 +25,7 @@ Remain in the directory of the previous point, and then type the following comma
 or 
 #### java -jar eryantis-client.jar --cli
 Do this for every player you want to play with. 
-### To run the CLI game 
+### To run the GUI game 
 Remain in the directory of the previous point, and then type the following command: 
 #### java -jar eryantis-client.jar 
 Do this for every player you want to play with. 
