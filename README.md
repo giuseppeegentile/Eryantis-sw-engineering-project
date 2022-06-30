@@ -26,6 +26,8 @@ Remain in the directory of the previous point, and then type the following comma
 or 
 #### java -jar eryantis-client.jar --cli
 Do this for every player you want to play with. 
+For windows users, if using CLI, make sure to enter this command:
+#### reg add HKEY_CURRENT_USER\Console /v VirtualTerminalLevel /t REG_DWORD /d 0x00000001 /f
 ### To run the GUI game 
 Remain in the directory of the previous point, and then type the following command: 
 #### java -jar eryantis-client.jar 
