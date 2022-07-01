@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Gui class. Switch the scenes and set controllers and utilities for them.
+ */
 public class Gui extends ViewObservable implements View {
 
     private static final String STR_ERROR = "ERROR";

@@ -180,58 +180,151 @@ public interface View {
     void showDisconnectionMessage(String nickname, String message);
 
     /**
-     * Used when there is a need to show a generic message
-     * @param message The content of the message
+     * Used when there is a need to show a generic message.
+     * @param message The content of the message.
      */
     void showGenericMessage(String message);
 
     /**
-     * Display a message when a player tries to move mother nature by a number of movements not allowed
-     * @param nick The active player of the current turn
-     * @param movementAllowed The number of movement the player can choose
-     * @param movementInserted The number of movement chosen by the player
+     * Display a message notifying the client that he can't move that amount of player in a certain object.
+     * @param nick The nickname that performed an illegal move.
+     * @param movementAllowed The mother nature's movement the player can do.
+     * @param movementInserted The mother nature's movement inserted by the player which is greater of what allowed.
      */
     void showInvalidMovementMessage(String nick, byte movementAllowed, byte movementInserted);
 
+    /**
+     * Display a message notifying the client that he can't move that amount of player in a certain object.
+     * @param nickname The nickname that performed an illegal move.
+     */
     void showInvalidNumberOfStudentMoved(String nickname);
-
+    /**
+     * Display the inputs for asking the nickname.
+     */
     void askNickname();
-
+    /**
+     * Display an error page and restart the game.
+     * @param error The error occurred.
+     */
     void showErrorAndExit(String error);
-
+    /**
+     * Shows to the player the available cards he has.
+     * @param nickname The nickname of the player that have to play the card.
+     * @param playerDeck The available cards of the player. Not showing the one already used by other players.
+     */
     void askPlayCard(String nickname, List<AssistantCardModel> playerDeck);
 
+    /**
+     * Shows the order of the players set by the assistant card priority for this turn.
+     * @param nickname The nickname of the player that receive the message.
+     * @param order The ordered list for the phase.
+     */
     void showOrderPhase(String nickname, List<PlayerModel> order);
 
+    /**
+     * Display the inputs for asking the what of the available color's tower will have.
+     * @param nickMessage The nickname of the player that will choose the tower color.
+     * @param availableColorTowers List of available towers not chosen by other players yet.
+     * @param gameMode The game mode previously chosen by the first player.
+     */
     void askTowerColor(String nickMessage, List<ColorTower> availableColorTowers, GameMode gameMode);
 
-
+    /**
+     * Display the inputs for asking how many player will join the server. Asked the first player who create the lobby.
+     */
     void askPlayersNumber();
 
+    /**
+     * Display the inputs for asking the game mode to the first player who create the lobby.
+     */
     void askGameMode();
 
+    /**
+     * Display the nicknames's board.
+     * @param nickname The player that own all the next parameters.
+     * @param towers The list of towers of the player.
+     * @param hall The hall of the player.
+     * @param entrance The entrance of the player.
+     * @param profs The list of profs owned by the player.
+     * @param isFirst True iff is the player who created the lobby or (in the 4-player-game) the "team leader", so the one who have all the towers. When false the player doesn't have towers, but the team is identified by the color of the towers.
+     */
     void showPlayerBoardMessage(PlayerModel nickname, List<ColorTower> towers, Map<ColorPawns, Integer> hall, List<ColorPawns> entrance, List<ColorPawns> profs, boolean isFirst);
 
+    /**
+     * Show a message saying skipping mother nature movement, this can be caused by an effect.
+     * @param activeNick The player active, that will skip the mother nature movement.
+     */
     void showSkippingMotherMovement(String activeNick);
 
+    /**
+     * Request to play a character card.
+     * @param active The player active, that can play the card in this phase of the game.
+     * @param characterDeck The available cards.
+     * @param existsCardPlayable True iff the player has enough money to play at least a card from the deck.
+     */
     void askPlayCharacterCard(PlayerModel active, List<CharacterCardModel> characterDeck, boolean existsCardPlayable);
 
-    //da implementare nella cli
+    /**
+     * Display the inputs for asking what player move from the card, and also in which island he wants to move.
+     * @param active The player active, who played the character card in this turn.
+     * @param islands The list of island that can be selected.
+     * @param studentsOnCard The students over the card that can be moved on one island.
+     */
     void askMoveStudentFromCardToIsland(String active, List<IslandModel> islands, List<ColorPawns> studentsOnCard);
 
+    /**
+     * Display the inputs for asking in which island the extra influence points will be assigned.
+     * @param active The player active, who played the character card in this turn.
+     * @param islands The list of island that can be selected.
+     */
     void askExtraGetInfluence(String active, List<IslandModel> islands);
 
+    /**
+     * Display the inputs for asking in which island the prohibition card will be moved.
+     * @param active The player active, who played the character card in this turn.
+     * @param islands The list of island that will be updated after the effect.
+     */
     void askMoveBanCard(String active, List<IslandModel> islands);
 
+    /**
+     * Display the inputs for asking what student move from the character card to the entrance.
+     * @param active The player active, who played the card in this turn.
+     * @param studentsOnCard The list of students over the card, to be moved to entrance.
+     * @param entrance The list of students in entrance.
+     */
     void askMoveFromCardToEntrance(String active, List<ColorPawns> studentsOnCard, List<ColorPawns> entrance);
 
+    /**
+     * Display the inputs for asking the color to be ignored in influence algorithm.
+     * @param active The player active, who played the card in this turn.
+     */
     void askColorStudentToIgnore(String active);
 
+    /**
+     * Display the inputs for asking the color that all the players have to remove 3 students (of the selected color) from their entrance.
+     * @param active The player active, who played the card in this turn.
+     */
     void askColorRemoveForAll(String active);
 
+    /**
+     * Display the inputs for asking what students switch from the character hall to the entrance.
+     * @param active The player active, who played the card in this turn.
+     * @param entrance The list of students in entrance for this player to be switched.
+     * @param hall The hall of the player to be switched.
+     */
     void askStudentsChangeEntranceHall(String active, List<ColorPawns> entrance, Map<ColorPawns, Integer> hall);
 
+    /**
+     * Display the inputs for asking what student move from the character card to the hall.
+     * @param nickname The nickname that played the card.
+     * @param studentsOnCard The list of students over the card.
+     */
     void askStudentFromCardToHall(String nickname, List<ColorPawns> studentsOnCard);
 
+    /**
+     * Updates the view with the received entrance from the server.
+     * @param nickname The nickname that owns the entrance.
+     * @param studentInEntrance The list of students in entrance.
+     */
     void showEntranceChange(String nickname, List<ColorPawns> studentInEntrance);
 }

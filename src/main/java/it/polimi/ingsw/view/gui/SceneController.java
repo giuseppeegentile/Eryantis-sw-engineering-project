@@ -111,19 +111,6 @@ public class SceneController extends ViewObservable {
     }
 
     /**
-     * Changes the root panel of the scene argument.
-     * Offers the possibility to set a custom controller to the FXMLLoader.
-     *
-     * @param controller the custom controller that will be set into the FXMLLoader.
-     * @param event      the event which is happened into the scene.
-     * @param fxml       the new scene fxml name. It must include the extension ".fxml" (i.e. next_scene.fxml).
-     */
-    /*public static void changeRootPane(GenericSceneController controller, Event event, String fxml) {
-        Scene scene = ((Node) event.getSource()).getScene();
-        changeRootPane(controller, scene, fxml);
-    }*/
-
-    /**
      * Changes the root panel of the active scene.
      * Offers the possibility to set a custom controller to the FXMLLoader.
      *
@@ -209,10 +196,10 @@ public class SceneController extends ViewObservable {
     }
 
     /**
-     * Shows a scene which contains a list of three character cards in the esxpert mode
-     * @param characterSceneController controller of the cards scene
-     * @param nameFxml name of the fxml file
-     * @throws IOException
+     * Shows a scene which contains a list of three character cards in the expert mode.
+     * @param characterSceneController controller of the cards scene.
+     * @param nameFxml name of the fxml file.
+     * @throws IOException If the file can't be found
      */
     public static void showCharacter(CharacterSceneController characterSceneController, String nameFxml)  throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));

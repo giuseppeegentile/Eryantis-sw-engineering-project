@@ -24,11 +24,8 @@ import java.util.concurrent.FutureTask;
 import static java.lang.Byte.parseByte;
 import static java.lang.Integer.parseInt;
 
-
-//sout per fare printout
-
 /**
- * Class the manages the game played through the CLI
+ * Class the display the cli interface of the game.
  */
 
 public class Cli extends ViewObservable implements View {

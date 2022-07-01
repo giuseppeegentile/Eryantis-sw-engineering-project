@@ -22,6 +22,10 @@ import java.util.Map;
 public class VirtualView implements View, Observer {
     private final ClientHandler clientHandler;
 
+    /**
+     * Virtual view constructor.
+     * @param clientHandler The client handler object associated with this virtual view.
+     */
     public VirtualView(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
     }

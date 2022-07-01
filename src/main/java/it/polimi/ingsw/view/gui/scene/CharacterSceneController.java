@@ -78,18 +78,16 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     private List<IslandModel> islands;
 
     /**
-     * Default constructor
+     * Set the island in this controller.
      * @param islands list of the islands
      */
-
     public void setIslands(List<IslandModel> islands) {
         this.islands = islands;
     }
 
     /**
-     * Initially hides labels and text fields
+     * Initially hides labels and text fields. Utility method.
      */
-
     private void initialHide(){
         gridEntrance.setVisible(false);
         for (Label l : labels)
@@ -101,7 +99,6 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     /**
      * Manages every interaction of the player with graphical objects in the scene
      */
-
     @FXML
     private void initialize(){
         texts = List.of(label_1, label_2, label_3);
@@ -210,12 +207,12 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Allows to use the effect of the card "place student on card"
-     * @param gridPaneList list of grid panes
-     * @param i counter
-     * @param card character card
-     * @param maxStudents max number of students that can be moved
-     * @param effect string that explains the effect
+     * Allows to use the effect of the card "place student on card".
+     * @param gridPaneList List of grid panes.
+     * @param i Counter scanning the grid pane list.
+     * @param card Character card displayed.
+     * @param maxStudents Max number of students that can be moved.
+     * @param effect Description of the effect.
      */
 
     private void placeStudentsOnCard(List<GridPane> gridPaneList, int i, CharacterCardModel card, int maxStudents, String effect) {
@@ -261,10 +258,9 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Gets the coin image
-     * @return the button with the coin's image
+     * Gets the coin image. Utility method.
+     * @return the button with the coin's image.
      */
-
     private Button getStyledCoins() {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -279,11 +275,10 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Gets the image of the students
-     * @param s color of the student
-     * @return the button with the student's image
+     * Gets the styled button of the corresponding students. Utility method.
+     * @param s Color of the student.
+     * @return The button with the student's image.
      */
-
     private Button getPawnByColor(ColorPawns s) {
         Button b = new Button();
         b.setPrefHeight(30.0);
@@ -344,7 +339,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Default constructor. Parameter is set by the constructor
+     * Parameter is set by the constructor
      * @param nickname current player
      */
 
@@ -353,8 +348,8 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Default constructor. Parameter is set by the constructor
-     * @param studentInEntrance list of students in the entrance
+     * Set the entrance in this class that will be displayed.
+     * @param studentInEntrance List of students in the entrance.
      */
 
     public void setEntrance(List<ColorPawns> studentInEntrance) {
@@ -367,7 +362,6 @@ public class CharacterSceneController extends ViewObservable implements GenericS
      * @param entrance list of students in the entrance
      * @param maxStudents max number of students that can be placed on entrance
      */
-
     private void placeStudentsOnEntrance(GridPane gridPane, List<ColorPawns> entrance, int maxStudents) {
         gridPane.getChildren().clear();
         int idx = 0;
@@ -394,11 +388,10 @@ public class CharacterSceneController extends ViewObservable implements GenericS
 
     /**
      *
-     * @param button
-     * @param colorToMove
-     * @param maxStudents
+     * @param button Button on which the listener will be placed.
+     * @param colorToMove The color corresponding to the button with listener.
+     * @param maxStudents The maximum amount of students that could be moved.
      */
-
     private void setStudentsEventListenerEntrance(Button button, ColorPawns colorToMove, int maxStudents) {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if (studentsFromEntrance.size() < maxStudents)
@@ -407,7 +400,7 @@ public class CharacterSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Default constructor. Sets the number of player's coins.
+     * Sets the number of player's coins.
      * @param playerMoney number of player's coins
      */
 
