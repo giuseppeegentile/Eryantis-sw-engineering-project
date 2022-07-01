@@ -1,16 +1,12 @@
 package it.polimi.ingsw.model.islands;
 
+/**
+ * Direction in witch islands can be joined
+ */
+
 public enum ColorDirectionAdjacentIsland {
     RIGHT,
     LEFT,
     BOTH,
     NONE
 }
-
-//implementare metodo colori adiacenti (che chiama join island) ---------
-//gestire AssistanCard                                          ---------
-//gestire stati di gioco                                        ---------
-//playerController: muovere student hall
-
-
-//moveTowerToIsland-> in checkIfConqueredState                  ---------

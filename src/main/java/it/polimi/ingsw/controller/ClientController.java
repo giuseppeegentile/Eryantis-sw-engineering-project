@@ -174,10 +174,7 @@ public class ClientController implements ViewObserver, Observer {
         }
     }
 
-    /**
-     * Sends a message to the server with the number of players of the match
-     * @param playersNumber
-     */
+
     @Override
     public void onUpdatePlayersNumber(int playersNumber) {
         client.sendMessage(new PlayerNumberReply(this.nickname, playersNumber));

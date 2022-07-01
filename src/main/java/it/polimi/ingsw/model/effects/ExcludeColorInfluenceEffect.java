@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the character card with "exclude color influence" effect
+ */
+
 //9
 public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 3426679041693564864L;
@@ -25,7 +29,7 @@ public class ExcludeColorInfluenceEffect implements Effect, Serializable {
     }
 
     /**
-     * Constructor made to initialize the parameter chosen by the player
+     * Sets the parameters with the ones chosen by the player
      * @param colorToExclude gets the color to exclude chosen by the player
      */
 

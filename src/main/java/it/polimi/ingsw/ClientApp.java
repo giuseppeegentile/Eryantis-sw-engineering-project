@@ -6,7 +6,7 @@ import it.polimi.ingsw.view.gui.JavaFXGui;
 import javafx.application.Application;
 
 /**
- * Game's client
+ * Game's client application
  */
 
 public class ClientApp {

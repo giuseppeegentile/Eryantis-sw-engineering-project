@@ -7,6 +7,11 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 import java.util.List;
+
+/**
+ * Model class of the character card with "add student to island" effect
+ */
+
 //1
 public class AddToIslandEffect extends InitialConfigEffect implements Serializable {
     private static final long serialVersionUID = -872892232191009661L;
@@ -14,7 +19,7 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     private IslandModel islandChosen;
 
     /**
-     * Constructor for the character card tha has "add island" as effect: costForEffect is set to 1,
+     * Constructor for the character card tha has "add to island" as effect: costForEffect is set to 1,
      * numStudents is set to 4
      */
     public AddToIslandEffect(List<ColorPawns> students) {
@@ -22,7 +27,7 @@ public class AddToIslandEffect extends InitialConfigEffect implements Serializab
     }
 
     /**
-     * Constructor made to assign the parameters chosen by the player
+     * Sets the parameters with the ones chosen by the player
      * @param indexStudent index of the student chosen by the player
      * @param indexIsland index of the island chosen by the player
      */

@@ -2,6 +2,10 @@ package it.polimi.ingsw.model.colors;
 
 import java.util.Random;
 
+/**
+ * Colors of the students and profs
+ */
+
 public enum ColorPawns {
     GREEN,
     RED,

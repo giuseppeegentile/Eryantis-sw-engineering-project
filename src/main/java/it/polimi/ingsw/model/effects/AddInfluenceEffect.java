@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the character card with "add influence" effect
+ */
+
 //8
 public class AddInfluenceEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1073341693883814645L;

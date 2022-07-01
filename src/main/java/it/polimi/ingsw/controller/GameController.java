@@ -21,6 +21,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Game controller's class
+ */
+
 public class GameController implements Observer, Serializable {
     private static final long serialVersionUID = 5892236063958381739L;
     private boolean gameStarted = false;
@@ -51,7 +55,8 @@ public class GameController implements Observer, Serializable {
     }
 
     /**
-     * Game controller. Handles the phase of the game. On the server side.
+     * Default constructor. Initializes the parameters virtualViewMap, gameInstance, numberPlayersPlayedCards to 0,
+     * playersThatHavePlayedCard, playerWithEffectAdditionalInfluence to 0.
      */
     public GameController(){
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());

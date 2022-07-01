@@ -17,6 +17,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Game model's class
+ */
+
 public class GameModel extends Observable implements Serializable {
     private static final long serialVersionUID = -8113521898963437960L;
     private List<IslandModel> islandModels;

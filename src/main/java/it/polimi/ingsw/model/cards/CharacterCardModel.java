@@ -4,6 +4,10 @@ import it.polimi.ingsw.model.effects.Effect;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the character card
+ */
+
 public class CharacterCardModel implements Serializable {
 
     private static final long serialVersionUID = -5946216226246714494L;

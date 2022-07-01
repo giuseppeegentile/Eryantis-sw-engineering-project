@@ -4,6 +4,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the assistant card
+ */
+
 public class AssistantCardModel implements Serializable {
 
     private static final long serialVersionUID = -7197818777051204570L;

@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the character card with "ignore tower" effect
+ */
+
 //6
 public class IgnoreTowerEffect implements Effect, Serializable {
     private static final long serialVersionUID = 2400877543729271601L;

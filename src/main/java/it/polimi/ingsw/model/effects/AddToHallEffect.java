@@ -6,14 +6,19 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 import java.util.List;
-//11
+
+/**
+ * Model class of the character card with "add student to hall" effect
+ */
+
 public class AddToHallEffect extends InitialConfigEffect implements Serializable {
     private static final long serialVersionUID = -5901051516602737452L;
     private ColorPawns studentChosen;
     private GameController controller;
+
     /**
-     * Constructor for the character card that has "add student from card to hall" as effect:costForEffect is set to
-     * 2 and numStudents to 4
+     * Constructor for the character card that has "add student from card to hall" as effect:
+     * costForEffect is set to 2 and numStudents to 4
      */
 
     public AddToHallEffect(List<ColorPawns> students, GameController controller) {
@@ -22,7 +27,7 @@ public class AddToHallEffect extends InitialConfigEffect implements Serializable
     }
 
     /**
-     * Constructor made to set the chosen the student to move
+     * Sets the chosen student
      * @param studentChosen student chosen by the player
      */
 

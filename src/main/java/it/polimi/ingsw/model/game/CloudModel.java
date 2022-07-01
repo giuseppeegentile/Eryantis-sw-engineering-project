@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model class of the clouds
+ */
 
 public class CloudModel implements Serializable {
     private static final long serialVersionUID = -8954335784271144048L;

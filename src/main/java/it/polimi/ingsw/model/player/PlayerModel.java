@@ -10,6 +10,10 @@ import java.util.*;
 
 import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
+/**
+ * Model class of the player
+ */
+
 public class PlayerModel implements Serializable {
 
     private static final long serialVersionUID = 530440588007500009L;

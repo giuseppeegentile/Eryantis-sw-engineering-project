@@ -12,6 +12,10 @@ import java.util.List;
 
 import static it.polimi.ingsw.model.colors.ColorPawns.*;
 
+/**
+ * Model class of the islands
+ */
+
 public class IslandModel implements Serializable {
     private static final long serialVersionUID = 2173471499023058671L;
     private boolean motherNature;

@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketServer;
 
 /**
- * Game's server
+ * Game's server application
  */
 
 public class ServerApp {

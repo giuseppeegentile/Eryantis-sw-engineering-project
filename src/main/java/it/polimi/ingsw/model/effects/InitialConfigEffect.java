@@ -8,6 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model class of the character card with "initial configuration" effect
+ */
+
 public class InitialConfigEffect implements Effect, Serializable {
     private static final long serialVersionUID = 1760436139614445487L;
     private int costForEffect;
@@ -89,7 +93,7 @@ public class InitialConfigEffect implements Effect, Serializable {
     }
 
     /**
-     * Constructor to set the card effect cost
+     * Sets the card effect cost
      * @param costForEffect is the cost for the activation of the effect
      */
 

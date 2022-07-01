@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.player.PlayerModel;
 
 import java.io.Serializable;
 
+/**
+ * Model class of the character card with "prohibition" effect
+ */
+
 public class ProhibitionEffect implements Effect, Serializable {
     private static final long serialVersionUID = -3636736011809156600L;
     private int costForEffect;
@@ -13,7 +17,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     private int numberProhibition = 4;
 
     /**
-     * Constructor made to initialize the parameter chosen by the player
+     * Initializes the parameter chosen by the player
      */
 
     public void choose(int chosenIndexIsland){
@@ -44,7 +48,7 @@ public class ProhibitionEffect implements Effect, Serializable {
     }
 
     /**
-     * Constructor that ends the effect of the card: HasProhibition is set to false
+     * Ends the effect of the card: HasProhibition is set to false
      */
 
     public void endEffect(){

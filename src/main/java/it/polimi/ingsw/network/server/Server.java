@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Class that manages the game's server
+ */
 
 public class Server {
 
@@ -19,6 +22,11 @@ public class Server {
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     private final Object lock;
+
+    /**
+     * Default constructor. Creates lock as Object and sets clientHandlerMap as a HashMap.
+     * @param gameController is the game controller
+     */
 
     public Server(GameController gameController) {
         this.lock = new Object();

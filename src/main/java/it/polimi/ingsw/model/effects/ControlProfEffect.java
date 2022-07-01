@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Model class of the character card with "control prof" effect
+ */
+
 //2
 public class ControlProfEffect implements Effect, Serializable {
     private static final long serialVersionUID = 8743730422346855395L;
