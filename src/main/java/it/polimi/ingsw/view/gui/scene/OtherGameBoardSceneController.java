@@ -29,8 +29,6 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
 
     @FXML
     private Label titleLabel;
-    @FXML
-    private AnchorPane pane;
 
     @FXML
     private GridPane profsGrid;
@@ -41,14 +39,8 @@ public class OtherGameBoardSceneController extends ViewObservable implements Gen
     @FXML
     private GridPane entrancePane;
 
-    @FXML
-    private GridPane towersGrid;
-
 
     private boolean readOnly;
-
-    @FXML
-    TableColumn<String, String> gamersCol;
 
     /**
      * Manages every interaction of the player with the graphical objects in the scene

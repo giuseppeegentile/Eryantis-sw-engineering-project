@@ -153,7 +153,7 @@ public class SceneController extends ViewObservable {
      * @param nameFxml the name of the fxml file.
      */
     public static void showWindow(OtherGameBoardSceneController board, String nickname, String nameFxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getClassLoader().getResource("/fxml/" + nameFxml));
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
         fxmlLoader.setController(board);
 
         String title = "Plancia di gioco di: " + nickname;
@@ -166,8 +166,6 @@ public class SceneController extends ViewObservable {
      * @param nameFxml name of the fxml file
      * @throws IOException
      */
-
-
     public static void showDeck(DeckSceneController deckSceneController, String nameFxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SceneController.class.getResource("/fxml/" + nameFxml));
         fxmlLoader.setController(deckSceneController);
